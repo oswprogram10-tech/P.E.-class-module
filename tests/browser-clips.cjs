@@ -5,6 +5,10 @@ const os = require('node:os');
 const path = require('node:path');
 const { execFileSync } = require('node:child_process');
 const color = second => [(second * 31) % 200 + 20, (second * 59) % 200 + 20, (second * 83) % 200 + 20];
+const hasCommand = command => {
+  try { execFileSync(command, ['-version'], { stdio: 'ignore' }); return true; } catch { return false; }
+};
+const hasMediaTools = hasCommand('ffprobe') && hasCommand('ffmpeg');
 
 withBrowser(async (page, errors) => {
   await page.locator('#cameraButton').click();
@@ -133,46 +137,93 @@ withBrowser(async (page, errors) => {
   assert.equal(transactionAborted, true);
   assert.equal(await page.evaluate(async () => (await allClips()).length), 0);
 
-  await page.locator('#saveClipButton').click();
-  await page.waitForFunction(() => !$('clipDialog').open, {}, { timeout: 20000 });
-  const saved = await page.evaluate(async () => {
-    const records = await allClips();
-    const blob = await decryptClip(records[0]);
-    const dataUrl = await new Promise(resolve => { const reader = new FileReader(); reader.onload = () => resolve(reader.result); reader.readAsDataURL(blob); });
-    const video = document.createElement('video'); video.muted = true; video.playsInline = true;
-    const url = URL.createObjectURL(blob); video.src = url;
-    await new Promise((resolve, reject) => { video.onloadeddata = resolve; video.onerror = reject; });
-    const firstFrame = new Promise(resolve => video.requestVideoFrameCallback(resolve));
-    await video.play(); await firstFrame; video.pause();
-    const canvas = document.createElement('canvas'); canvas.width = 640; canvas.height = 360;
-    const context = canvas.getContext('2d'); const decoded = [];
-    for (const at of [0, 2, 4.9]) {
-      if (at) { video.currentTime = at; await new Promise(resolve => { video.onseeked = resolve; }); }
-      context.drawImage(video, 0, 0); decoded.push([...context.getImageData(320, 180, 1, 1).data]);
+  async function saveAndVerify(duration, expectedCount) {
+    const ats = duration === 5 ? [0, 2, 4.9] : [0, duration / 2, duration - 0.1];
+    if (!(await page.evaluate(() => $('clipDialog').open))) await page.locator('#openClipButton').click();
+    await page.locator('#clipLength').fill(String(duration));
+    await page.locator('#clipLength').dispatchEvent('input');
+    await page.locator('#studentName').fill('가상학생');
+    await page.locator('#studentNumber').fill('1');
+    await page.evaluate(() => { window.__f02Start = getSelection().start; });
+    await page.locator('#saveClipButton').click();
+    await page.waitForFunction(() => !$('clipDialog').open, {}, { timeout: 40000 });
+    const saved = await page.evaluate(async ats => {
+      const records = await allClips();
+      const record = records.at(-1);
+      const blob = await decryptClip(record);
+      const dataUrl = await new Promise(resolve => { const reader = new FileReader(); reader.onload = () => resolve(reader.result); reader.readAsDataURL(blob); });
+      const video = document.createElement('video'); video.muted = true; video.playsInline = true;
+      const url = URL.createObjectURL(blob); video.src = url;
+      await new Promise((resolve, reject) => { video.onloadeddata = resolve; video.onerror = reject; });
+      const firstFrame = new Promise(resolve => video.requestVideoFrameCallback(resolve));
+      await video.play(); await firstFrame; video.pause();
+      const canvas = document.createElement('canvas'); canvas.width = 640; canvas.height = 360;
+      const context = canvas.getContext('2d'); const decoded = [];
+      for (const at of ats) {
+        if (at) { video.currentTime = at; await new Promise(resolve => { video.onseeked = resolve; }); }
+        context.drawImage(video, 0, 0); decoded.push([...context.getImageData(320, 180, 1, 1).data]);
+      }
+      const videoDuration = video.duration;
+      video.removeAttribute('src'); video.load(); URL.revokeObjectURL(url);
+      return { count: records.length, duration: record.durationSeconds, videoDuration, base64: dataUrl.split(',')[1], decoded, start: window.__f02Start, base: frameHistory[0].time };
+    }, ats);
+    const checks = ats.map(at => ({ at, second: Math.floor((saved.start + at * 1000 - saved.base) / 1000) }));
+    for (const [index, check] of checks.entries()) {
+      assert.equal(saved.decoded[index][3], 255);
+      for (let channel = 0; channel < 3; channel++) assert.ok(Math.abs(saved.decoded[index][channel] - color(check.second)[channel]) < 10, `Chrome playback scene at ${check.at}s (source ${check.second}s)`);
     }
-    video.removeAttribute('src'); video.load(); URL.revokeObjectURL(url);
-    return { count: records.length, duration: records[0].durationSeconds, base64: dataUrl.split(',')[1], decoded };
-  });
-  for (const [index, second] of [28, 30, 32].entries()) {
-    assert.equal(saved.decoded[index][3], 255);
-    for (let channel = 0; channel < 3; channel++) assert.ok(Math.abs(saved.decoded[index][channel] - color(second)[channel]) < 10, 'Chrome playback must preserve selected scene colors');
+    assert.equal(saved.count, expectedCount);
+    assert.ok(Math.abs(saved.duration - duration) < 0.4);
+    assert.ok(Number.isFinite(saved.videoDuration) && Math.abs(saved.videoDuration - duration) < 0.2, `Chrome duration ${saved.videoDuration} for ${duration}s`);
+    if (hasMediaTools) {
+      const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'pe-loop-scene-'));
+      try {
+        const file = path.join(directory, `${duration}.webm`);
+        fs.writeFileSync(file, Buffer.from(saved.base64, 'base64'));
+        const probe = JSON.parse(execFileSync('ffprobe', ['-v', 'error', '-show_entries', 'stream=color_range,color_space,color_transfer,color_primaries', '-of', 'json', file], { encoding: 'utf8' }));
+        assert.equal(probe.streams[0].color_range, 'pc');
+        assert.equal(probe.streams[0].color_space, 'bt709');
+        for (const check of checks) {
+          const pixels = execFileSync('ffmpeg', ['-v', 'error', '-i', file, '-ss', String(check.at), '-frames:v', '1', '-vf', 'scale=in_range=pc:out_range=pc:in_color_matrix=bt709,crop=2:2:320:180', '-pix_fmt', 'rgb24', '-f', 'rawvideo', 'pipe:1']);
+          assert.equal(pixels.length, 12);
+          const expected = color(check.second);
+          for (let channel = 0; channel < 3; channel++) assert.ok(Math.abs(pixels[channel] - expected[channel]) < 15, `scene at ${check.at}s, channel ${channel}: ${pixels[channel]}, expected ${expected[channel]}`);
+        }
+      } finally { fs.rmSync(directory, { recursive: true, force: true }); }
+    } else {
+      console.log(JSON.stringify({ duration, ffprobe: 'skipped', chromePlayback: 'passed' }));
+    }
+    console.log(JSON.stringify({ duration, count: saved.count, videoDuration: saved.videoDuration, scenes: checks.map(check => check.second), passed: true }));
   }
-  assert.equal(saved.count, 1);
-  assert.equal(saved.duration, 5);
-  const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'pe-loop-scene-'));
-  try {
-    const file = path.join(directory, 'selected.webm');
-    fs.writeFileSync(file, Buffer.from(saved.base64, 'base64'));
-    const probe = JSON.parse(execFileSync('ffprobe', ['-v', 'error', '-show_entries', 'stream=color_range,color_space,color_transfer,color_primaries', '-of', 'json', file], { encoding: 'utf8' }));
-    assert.equal(probe.streams[0].color_range, 'pc');
-    assert.equal(probe.streams[0].color_space, 'bt709');
-    for (const [at, second] of [[0, 28], [2, 30], [4.9, 32]]) {
-      const pixels = execFileSync('ffmpeg', ['-v', 'error', '-i', file, '-ss', String(at), '-frames:v', '1', '-vf', 'scale=in_range=pc:out_range=pc:in_color_matrix=bt709,crop=2:2:320:180', '-pix_fmt', 'rgb24', '-f', 'rawvideo', 'pipe:1']);
-      assert.equal(pixels.length, 12);
-      const expected = color(second);
-      for (let channel = 0; channel < 3; channel++) assert.ok(Math.abs(pixels[channel] - expected[channel]) < 15, `scene at ${at}s, channel ${channel}: ${pixels[channel]}, expected ${expected[channel]}`);
-    }
-  } finally { fs.rmSync(directory, { recursive: true, force: true }); }
+
+  for (const [duration, expectedCount] of [[5, 1], [15, 2], [30, 3]]) await saveAndVerify(duration, expectedCount);
+
+  // 기존 클립이 있는 상태에서 저장소 오류·트랜잭션 중단이 불완전한 레코드를 남기지 않는지 확인한다.
+  const beforeFailure = await page.evaluate(async () => (await allClips()).length);
+  await page.locator('#openClipButton').click();
+  await page.locator('#clipLength').fill('5');
+  await page.locator('#clipLength').dispatchEvent('input');
+  await page.locator('#studentName').fill('가상학생');
+  await page.locator('#studentNumber').fill('2');
+  await page.evaluate(() => {
+    window.realStore = repository.put.bind(repository);
+    repository.put = async () => { throw new DOMException('synthetic quota failure', 'QuotaExceededError'); };
+  });
+  await page.locator('#saveClipButton').click();
+  await page.waitForFunction(() => !saving);
+  assert.equal(await page.evaluate(() => savePhase), 'failed');
+  assert.equal(await page.evaluate(async () => (await allClips()).length), beforeFailure);
+  await page.evaluate(() => { repository.put = window.realStore; });
+  await page.locator('#clipDialog .close-button').click();
+  const abortedWithExisting = await page.evaluate(async () => {
+    const controller = new AbortController();
+    return withStore('readwrite', store => {
+      store.put({ id: 'partial-existing-test', createdAt: Date.now() });
+      controller.abort();
+    }, { signal: controller.signal }).then(() => false, () => true);
+  });
+  assert.equal(abortedWithExisting, true);
+  assert.equal(await page.evaluate(async () => (await allClips()).length), beforeFailure);
   assert.deepEqual(errors, []);
   console.log('Storage failure/retry and encoded start/middle/end scene match passed');
 }).catch(error => { console.error(error); process.exitCode = 1; });
