@@ -3,7 +3,7 @@ const http = require('node:http');
 const fs = require('node:fs');
 const path = require('node:path');
 
-async function withBrowser(run, { setupTeacher = true, beforeApp = null } = {}) {
+async function withBrowser(run, { setupTeacher = true, beforeApp = null, viewport = { width: 1280, height: 900 } } = {}) {
   const root = path.resolve(__dirname, '..');
   const mime = { '.js': 'text/javascript', '.css': 'text/css', '.png': 'image/png', '.svg': 'image/svg+xml', '.webmanifest': 'application/manifest+json' };
   const server = http.createServer((req, res) => {
@@ -23,7 +23,7 @@ async function withBrowser(run, { setupTeacher = true, beforeApp = null } = {}) 
       executablePath: process.env.CHROMIUM_PATH || (fs.existsSync('/usr/bin/chromium') ? '/usr/bin/chromium' : undefined),
       args: ['--no-sandbox', '--use-fake-device-for-media-stream', '--use-fake-ui-for-media-stream'],
     });
-    const context = await browser.newContext({ viewport: { width: 1280, height: 900 } });
+    const context = await browser.newContext({ viewport });
     const page = await context.newPage();
     const errors = [];
     page.on('pageerror', error => errors.push(error.message));

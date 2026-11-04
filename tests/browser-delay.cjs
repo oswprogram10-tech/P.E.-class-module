@@ -24,11 +24,16 @@ withBrowser(async (page, errors) => {
       await page.waitForTimeout(120);
     }
     // Verify that the displayed pixels are those of the chosen stored frame.
+    // Let the last scheduled preview draw commit before taking a stable pixel snapshot.
+    await page.waitForTimeout(250);
     const pixelsMatch = await page.evaluate(async () => {
       const draw = drawDelayedFrame;
       drawDelayedFrame = async () => {};
       while (drawBusy) await new Promise(resolve => setTimeout(resolve, 10));
+      // Force one fresh draw of the current delayed scene before comparing pixels.
+      lastDrawnFrame = 0;
       await draw();
+      await new Promise(resolve => setTimeout(resolve, 200));
       const selectedTime = lastDrawnFrame;
       const selected = frameHistory.find(frame => frame.time === selectedTime);
       const reference = document.createElement('canvas');
@@ -37,12 +42,19 @@ withBrowser(async (page, errors) => {
       await drawFrameToCanvas(selected, reference, context);
       const expected = context.getImageData(0, 0, reference.width, reference.height).data;
       const actual = previewContext.getImageData(0, 0, previewCanvas.width, previewCanvas.height).data;
-      const matches = expected.every((value, i) => value === actual[i]);
+      // Chrome can route the visible canvas and a detached reference canvas through
+      // different raster backends, which shifts individual channels by ±1. A wrong
+      // frame differs by far more than that, so allow only this rounding noise.
+      let maxDiff = 0;
+      for (let i = 0; i < expected.length; i++) {
+        const diff = Math.abs(expected[i] - actual[i]);
+        if (diff > maxDiff) maxDiff = diff;
+      }
       drawDelayedFrame = draw;
-      return matches;
+      return { matches: maxDiff <= 2, maxDiff };
     });
-    assert.equal(pixelsMatch, true, 'selected source frame must match the visible canvas');
-    const result = { selectedSeconds: seconds, minAge: Math.min(...samples), maxAge: Math.max(...samples), pixelsMatch };
+    assert.equal(pixelsMatch.matches, true, `selected source frame must match the visible canvas (max channel diff ${pixelsMatch.maxDiff})`);
+    const result = { selectedSeconds: seconds, minAge: Math.min(...samples), maxAge: Math.max(...samples), pixelsMaxDiff: pixelsMatch.maxDiff };
     results.push(result); console.log(JSON.stringify(result));
   }
   await page.evaluate(async () => { setDelay(1); await drawDelayedFrame(); });

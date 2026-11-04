@@ -33,6 +33,7 @@ let wakeLock = null;
 let savingInterrupted = false;
 let lastDrawnFrame = 0;
 let lastFrameCutoff = 0;
+let delayedDrawGeneration = 0;
 let delaySeconds = 20;
 let selectedEndOffset = 0;
 let selectedLengthSeconds = 15;
@@ -66,6 +67,10 @@ let studioState = 'idle';
 let activeSaveController = null;
 let savePhase = 'idle';
 let previewDecodeFailed = false;
+let serviceWorkerRegistration = null;
+let waitingWorker = null;
+let serviceWorkerProblem = '';
+let serviceWorkerRegistering = false;
 
 function restingState() {
   return cameraStream ? ($('clipDialog').open ? 'selecting' : 'capturing') : (cameraInterruptedReason ? 'interrupted' : 'idle');
@@ -77,6 +82,7 @@ function setStudioState(state) {
   $('cameraButton').disabled = !appReady || state === 'saving' || state === 'starting';
   $('teacherButton').disabled = !appReady || state === 'saving';
   $('openClipButton').disabled = !cameraStream || state === 'saving' || frameBuffer.duration < 5000;
+  updatePrepUi();
 }
 
 function setSaving(value) {
@@ -136,10 +142,12 @@ function setDelay(seconds, { persist = true } = {}) {
     return;
   }
   delaySeconds = next;
+  delayedDrawGeneration += 1;
   $('delayReadout').textContent = `${delaySeconds}초`;
   $('teacherDelay').value = String(delaySeconds);
   $('teacherDelayValue').textContent = String(delaySeconds);
   settings.delaySeconds = delaySeconds;
+  updatePrepUi();
 }
 
 function updateHistoryUi(now = captureNow()) {
@@ -158,6 +166,7 @@ function updateHistoryUi(now = captureNow()) {
     $('bufferStatus').textContent = `최근 ${formatDuration(availableSeconds)} 준비됨`;
   }
   if (frameBuffer.capacityLimited) $('bufferStatus').textContent = `메모리 한도로 최근 ${formatDuration(availableSeconds)} 보관`;
+  updatePrepUi(now);
   if ($('clipDialog').open && !saving && !selectionSnapshot.length) {
     const referenceTime = clipSelectionOpenedAt || now;
     const clipAge = Math.floor((referenceTime - ((selectionSnapshot[0] || frameHistory[0])?.time ?? referenceTime)) / 1000);
@@ -168,6 +177,50 @@ function updateHistoryUi(now = captureNow()) {
       updateClipRangeLabels();
     }
   }
+}
+
+function setStatusText(element, text) {
+  if (element.textContent !== text) element.textContent = text;
+}
+
+function updatePrepUi(now = captureNow()) {
+  const delayLabel = `${delaySeconds}초`;
+  setStatusText($('prepDelay'), delayLabel);
+  let state = 'idle';
+  let title = '카메라 시작 전';
+  let detail = `지연 ${delayLabel} · [카메라 시작]을 눌러야 카메라 권한을 요청해요.`;
+  if (saving) {
+    state = 'saving';
+    title = '클립 저장 중';
+    detail = '저장이 끝날 때까지 화면을 그대로 유지해 주세요.';
+  } else if (cameraStarting || studioState === 'starting') {
+    state = 'starting';
+    title = '카메라 연결 중';
+    detail = 'Chrome 권한 창이 보이면 허용해 주세요. 영상은 이 기기에서만 처리해요.';
+  } else if (cameraStream) {
+    const oldest = frameHistory[0]?.time ?? now;
+    const availableSeconds = Math.max(0, (now - oldest) / 1000);
+    if (availableSeconds < delaySeconds) {
+      state = 'warming';
+      title = '지연 영상 준비 중';
+      detail = `영상 ${Math.max(1, Math.ceil(delaySeconds - availableSeconds))}초 더 모이면 지연 재생이 시작돼요.`;
+    } else {
+      state = 'live';
+      title = '지연 영상 재생 가능';
+      detail = `최근 ${formatDuration(availableSeconds)} 중 ${delayLabel} 전 장면을 보여줘요.`;
+    }
+  } else if (cameraInterruptedReason) {
+    state = 'interrupted';
+    title = '촬영 중단';
+    detail = cameraInterruptedReason;
+  } else if ($('cameraNotice').textContent) {
+    state = 'interrupted';
+    title = '카메라 시작 대기';
+    detail = $('cameraNotice').textContent;
+  }
+  $('prepStatus').dataset.state = state;
+  setStatusText($('prepStatusTitle'), title);
+  setStatusText($('prepStatusDetail'), detail);
 }
 
 async function drawFrameToCanvas(frame, canvas, context, shouldDraw = () => true) {
@@ -225,9 +278,11 @@ async function captureTick(generation) {
 }
 
 async function drawDelayedFrame(now = captureNow()) {
-  if (!cameraStream || drawBusy || !frameHistory.length) return;
+  if (!cameraStream || !frameHistory.length) return;
   const targetTime = now - delaySeconds * 1000;
   if (frameHistory[0].time > targetTime) {
+    // 지연을 늘린 직후 진행 중이던 이전 장면 디코딩이 화면을 덮지 않게 한다.
+    delayedDrawGeneration += 1;
     $('previewWrap').classList.remove('has-video');
     $('previewEmpty').removeAttribute('aria-hidden');
     $('previewEmpty').querySelector('strong').textContent = `지연 영상 준비 중 · ${Math.ceil((frameHistory[0].time - targetTime) / 1000)}초`;
@@ -235,12 +290,14 @@ async function drawDelayedFrame(now = captureNow()) {
     lastDrawnFrame = 0;
     return;
   }
+  if (drawBusy) return;
   const frame = closestFrame(targetTime);
   if (!frame || frame.time === lastDrawnFrame) return;
   drawBusy = true;
   const generation = captureGeneration;
-  const success = await drawFrameToCanvas(frame, previewCanvas, previewContext, () => generation === captureGeneration && Boolean(cameraStream));
-  if (success) {
+  const drawToken = delayedDrawGeneration;
+  const success = await drawFrameToCanvas(frame, previewCanvas, previewContext, () => generation === captureGeneration && Boolean(cameraStream) && drawToken === delayedDrawGeneration);
+  if (success && drawToken === delayedDrawGeneration) {
     lastDrawnFrame = frame.time;
     $('previewWrap').classList.add('has-video');
     $('previewEmpty').setAttribute('aria-hidden', 'true');
@@ -260,6 +317,7 @@ function cameraErrorMessage(error) {
 function showCameraNotice(message) {
   $('cameraNotice').textContent = message;
   $('cameraNotice').hidden = !message;
+  updatePrepUi();
 }
 
 async function requestScreenLock(generation) {
@@ -315,7 +373,7 @@ async function startCamera() {
     }
     captureTick(generation);
     requestScreenLock(generation);
-    $('cameraStatus').textContent = '화면이 5분 순환 버퍼에 임시 저장돼요';
+    $('cameraStatus').textContent = `지연 ${delaySeconds}초 · 최근 5분을 순환 버퍼에 모으는 중`;
     $('liveIndicator').classList.add('is-live');
     $('recordingToast').hidden = false;
     $('cameraButton').querySelector('span:nth-child(2)').textContent = '촬영 종료';
@@ -337,6 +395,7 @@ async function startCamera() {
 function stopCamera({ preserveSession = false } = {}) {
   if (saving) { savingInterrupted = true; cancelActiveSave('interrupted'); }
   ++captureGeneration;
+  delayedDrawGeneration += 1;
   cameraStarting = false;
   captureLoop = false;
   if (captureRafId !== null) cancelAnimationFrame(captureRafId);
@@ -837,30 +896,160 @@ async function syncVaultRevision() {
   } catch { /* A guarded write still rejects stale revisions. */ }
 }
 
-function registerServiceWorker() {
-  if ('serviceWorker' in navigator && window.isSecureContext) {
-    navigator.serviceWorker.register('./sw.js').catch(() => showToast('오프라인 저장을 설정하지 못했어요.'));
+function renderAppStatus() {
+  const offline = !navigator.onLine;
+  const message = serviceWorkerProblem || (offline
+    ? '오프라인 상태예요. 이미 준비된 앱 화면과 기기에 저장한 클립은 계속 열 수 있어요.'
+    : '');
+  $('offlineStatusText').textContent = message;
+  $('offlineStatus').hidden = !message;
+  $('offlineRetryButton').hidden = !serviceWorkerProblem;
+}
+
+function waitForServiceWorker(registration, state, timeoutMs = 20000) {
+  const worker = registration.installing || registration.waiting || registration.active;
+  return new Promise((resolve, reject) => {
+    if (worker?.state === state) { resolve(worker); return; }
+    const finish = (error) => {
+      clearTimeout(timer);
+      worker?.removeEventListener('statechange', onChange);
+      if (error) reject(error); else resolve(worker);
+    };
+    const onChange = () => {
+      if (worker.state === state) finish();
+      else if (worker.state === 'redundant') finish(new Error('설치가 중단됐어요.'));
+    };
+    const timer = setTimeout(() => finish(new Error('설치 확인 시간이 초과됐어요.')), timeoutMs);
+    worker?.addEventListener('statechange', onChange);
+  });
+}
+
+const watchedServiceWorkerRegistrations = new WeakSet();
+
+function watchServiceWorkerRegistration(registration) {
+  if (watchedServiceWorkerRegistrations.has(registration)) return;
+  watchedServiceWorkerRegistrations.add(registration);
+  const watch = (worker) => {
+    if (!worker) return;
+    const check = () => {
+      if (worker.state === 'installed' && navigator.serviceWorker.controller) {
+        waitingWorker = worker;
+        $('updateStatus').hidden = false;
+      }
+    };
+    check();
+    worker.addEventListener('statechange', check);
+  };
+  watch(registration.installing);
+  watch(registration.waiting);
+  watch(registration.active);
+  registration.addEventListener('updatefound', () => {
+    if (registration.waiting) watch(registration.waiting);
+    if (registration.installing) watch(registration.installing);
+  });
+}
+
+async function registerServiceWorker({ retry = false } = {}) {
+  if (serviceWorkerRegistering) return;
+  if (!('serviceWorker' in navigator) || !window.isSecureContext) {
+    if (!window.isSecureContext) serviceWorkerProblem = '오프라인 저장은 HTTPS 주소에서만 준비할 수 있어요.';
+    renderAppStatus();
+    return;
   }
+  serviceWorkerRegistering = true;
+  try {
+    const registration = await navigator.serviceWorker.register('./sw.js', { updateViaCache: 'none' });
+    serviceWorkerRegistration = registration;
+    watchServiceWorkerRegistration(registration);
+    if (retry) await registration.update().catch(() => {});
+    const firstInstall = !navigator.serviceWorker.controller && !registration.active;
+    if (firstInstall) await waitForServiceWorker(registration, 'activated');
+    else await navigator.serviceWorker.ready;
+    serviceWorkerProblem = '';
+    renderAppStatus();
+  } catch {
+    serviceWorkerProblem = '오프라인 저장을 준비하지 못했어요. 인터넷 연결을 확인한 뒤 다시 시도해 주세요.';
+    renderAppStatus();
+  } finally {
+    serviceWorkerRegistering = false;
+  }
+}
+
+function isStandalone() {
+  return window.matchMedia?.('(display-mode: standalone)').matches || window.navigator.standalone === true;
+}
+
+function updateInstallUi() {
+  if (isStandalone()) {
+    $('installButton').hidden = true;
+    $('installHint').innerHTML = '설치된 앱으로 실행 중이에요. 앱을 완전히 닫았다 다시 열면 새 버전이 적용될 수 있어요.';
+    return;
+  }
+  if (installPrompt) {
+    $('installButton').hidden = false;
+    $('installHint').innerHTML = 'Chrome이 앱 설치를 지원해요. 아래 <b>앱 설치</b> 버튼을 누르거나 ⋮ 메뉴를 이용하세요.';
+    return;
+  }
+  $('installButton').hidden = true;
+  $('installHint').innerHTML = 'Chrome 오른쪽 위 ⋮ 메뉴에서 <b>앱 설치</b> 또는 <b>홈 화면에 추가</b>를 선택하세요.';
 }
 
 function setupInstallPrompt() {
   window.addEventListener('beforeinstallprompt', (event) => {
     event.preventDefault();
     installPrompt = event;
-    $('installButton').hidden = false;
-    $('installHint').hidden = true;
+    updateInstallUi();
   });
   $('installButton').addEventListener('click', async () => {
     if (!installPrompt) return;
     installPrompt.prompt();
-    await installPrompt.userChoice;
+    const choice = await installPrompt.userChoice;
     installPrompt = null;
-    $('installButton').hidden = true;
+    if (choice?.outcome === 'accepted') {
+      $('installHint').textContent = '설치가 시작됐어요. 홈 화면의 PE Loop 아이콘으로 열 수 있어요.';
+      $('installButton').hidden = true;
+    } else {
+      updateInstallUi();
+      $('installHint').textContent = '설치를 나중에 할 수 있어요. Chrome ⋮ 메뉴에서 다시 선택할 수 있어요.';
+    }
   });
   window.addEventListener('appinstalled', () => {
+    installPrompt = null;
     $('installButton').hidden = true;
-    $('installHint').textContent = '홈 화면에서 PE Loop를 열 수 있어요';
-    $('installHint').hidden = false;
+    $('installHint').textContent = '설치가 완료됐어요. 홈 화면의 PE Loop 아이콘으로 열 수 있어요.';
+  });
+  window.matchMedia?.('(display-mode: standalone)').addEventListener?.('change', updateInstallUi);
+  updateInstallUi();
+}
+
+function fitOpenDialogToViewport() {
+  const dialog = document.querySelector('dialog[open]');
+  if (!dialog) return;
+  const available = window.visualViewport?.height || window.innerHeight;
+  dialog.style.maxHeight = `${Math.max(240, Math.min(850, available - 24))}px`;
+}
+
+function keepFocusedFieldVisible() {
+  fitOpenDialogToViewport();
+  const dialog = document.querySelector('dialog[open]');
+  const active = document.activeElement;
+  if (!dialog || !active || !dialog.contains(active) || !['INPUT', 'TEXTAREA', 'SELECT'].includes(active.tagName)) return;
+  active.scrollIntoView({ block: 'center', inline: 'nearest' });
+}
+
+function watchSoftKeyboard() {
+  window.visualViewport?.addEventListener('resize', () => requestAnimationFrame(keepFocusedFieldVisible));
+  document.addEventListener('focusin', (event) => {
+    if (event.target.closest?.('dialog[open] input, dialog[open] textarea, dialog[open] select')) {
+      setTimeout(keepFocusedFieldVisible, 60);
+    }
+  });
+  document.querySelectorAll('dialog').forEach((dialog) => {
+    dialog.addEventListener('toggle', () => {
+      if (dialog.open) fitOpenDialogToViewport();
+      // 키보드가 열린 채 닫힌 대화상자의 높이 제한이 다음 실행까지 남지 않게 한다.
+      else dialog.style.removeProperty('max-height');
+    });
   });
 }
 
@@ -894,6 +1083,15 @@ function wireEvents() {
   $('teacherDialog').addEventListener('cancel', closeTeacherAccess);
   $('libraryRetryButton').addEventListener('click', loadLibrary);
   $('storagePersistButton').addEventListener('click', requestPersistentStorage);
+  $('offlineRetryButton').addEventListener('click', () => registerServiceWorker({ retry: true }));
+  $('dismissUpdateButton').addEventListener('click', () => { $('updateStatus').hidden = true; });
+  window.addEventListener('offline', renderAppStatus);
+  window.addEventListener('online', renderAppStatus);
+  if ('serviceWorker' in navigator) navigator.serviceWorker.addEventListener('controllerchange', () => {
+    $('updateStatus').hidden = true;
+    if (appReady) showToast('새 버전이 적용됐어요. 이 화면은 그대로 사용할 수 있어요.');
+  });
+  watchSoftKeyboard();
   $('forgotPinButton').addEventListener('click', showResetDialog);
   $('cancelResetButton').addEventListener('click', () => { if (!resetting) $('resetDialog').close(); });
   $('confirmResetButton').addEventListener('click', resetLocalData);

@@ -2,7 +2,7 @@
 <html lang="ko">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content" />
     <meta name="theme-color" content="#f4f4ef" />
     <meta name="description" content="체육 동작을 지연 재생하고, 원하는 순간을 저장하는 수업용 카메라" />
     <link rel="manifest" href="./manifest.webmanifest" />
@@ -24,6 +24,17 @@
           </button>
         </div>
       </header>
+
+      <div class="app-status-stack">
+        <div class="app-status app-status-offline" id="offlineStatus" role="status" hidden>
+          <span id="offlineStatusText"></span>
+          <button class="status-action" id="offlineRetryButton" type="button" hidden>다시 시도</button>
+        </div>
+        <div class="app-status app-status-update" id="updateStatus" role="status" aria-live="polite" hidden>
+          <span><strong>새 버전이 준비됐어요.</strong> <span id="updateStatusText">수업 중에는 지금 화면을 그대로 쓰고, 앱을 완전히 닫았다 다시 열면 적용돼요.</span></span>
+          <button class="status-action" id="dismissUpdateButton" type="button">나중에</button>
+        </div>
+      </div>
 
       <section class="welcome-row">
         <div>
@@ -63,8 +74,16 @@
         <aside class="action-card">
           <div class="card-kicker">YOUR TURN</div>
           <h2>몸을 움직여<br />확인해 보세요.</h2>
-          <p class="action-copy">태블릿에서 2~3걸음 떨어져 전신이 화면에 들어오도록 서 주세요.</p>
-          <div class="camera-check" id="cameraCheck"><span class="check-icon">1</span><span><strong>태블릿 거치 확인</strong><small>카메라를 향하도록 놓아 주세요</small></span><span class="check-mark">✓</span></div>
+          <p class="action-copy">태블릿에서 2~3걸음 떨어져 머리부터 발끝까지 화면에 들어오도록 서 주세요.</p>
+          <div class="prep-checklist" aria-label="수업 준비 확인">
+            <div class="prep-item"><span class="check-icon">1</span><span><strong>태블릿 거치</strong><small>학생 눈높이에 맞추고 흔들리지 않게 고정해요</small></span></div>
+            <div class="prep-item"><span class="check-icon">2</span><span><strong>전신이 화면에</strong><small>2~3걸음 떨어져 머리부터 발끝까지 보이게 해요</small></span></div>
+            <div class="prep-item"><span class="check-icon">3</span><span><strong>지연 <span id="prepDelay">20초</span></strong><small>교사 설정에서 1~60초로 조절할 수 있어요</small></span></div>
+          </div>
+          <div class="prep-status" id="prepStatus" data-state="idle" aria-live="polite">
+            <span class="prep-dot" aria-hidden="true"></span>
+            <span><strong id="prepStatusTitle">카메라 시작 전</strong><small id="prepStatusDetail">[카메라 시작]을 눌러야 카메라 권한을 요청해요.</small></span>
+          </div>
           <button class="primary-button" id="cameraButton" disabled type="button"><span class="button-camera">◉</span><span>카메라 시작</span><span class="button-arrow">→</span></button>
           <button class="save-button" id="openClipButton" type="button" disabled><span class="save-icon">✦</span>마음에 드는 장면 저장</button>
           <div class="steps-note"><span class="step-number">TIP</span><span>연습이 끝나면 <b>장면 저장</b>을 눌러 지난 5분에서 골라요.</span></div>
@@ -76,8 +95,8 @@
         <div class="note-divider"></div>
         <div class="note-item"><span class="note-icon note-clock">↻</span><span><strong>저장한 클립은 7일 뒤 자동 삭제돼요</strong><small>소리 없이 선택한 최대 30초만 저장해요.</small></span></div>
         <div class="note-divider"></div>
-        <button class="install-button" id="installButton" type="button" hidden><span>＋</span> 홈 화면에 추가</button>
-        <span class="install-hint" id="installHint">Chrome 메뉴에서 ‘앱 설치’를 선택할 수 있어요</span>
+        <button class="install-button" id="installButton" type="button" hidden><span>＋</span> 앱 설치</button>
+        <p class="install-hint" id="installHint" aria-live="polite">Chrome 오른쪽 위 ⋮ 메뉴에서 <b>앱 설치</b> 또는 <b>홈 화면에 추가</b>를 선택하세요.</p>
       </section>
       <footer class="app-footer"><span>PE LOOP <span class="footer-dot">·</span> 수업 중 자기 성찰을 돕는 카메라</span><span id="appVersion">PWA · LOCAL MODE</span></footer>
     </main>

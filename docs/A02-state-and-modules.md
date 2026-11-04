@@ -62,7 +62,7 @@
 | SecureSession | setup / verify / getSessionKey / lock, 후보 키 검증, 암호화·복호화 | 카메라 스트림 직접 종료·목록 DOM 수정 | `local-vault.js`로 암호화 분리, 세션·접근 수명은 `app.js`에서 관리 |
 | ClipRepository | put / list / delete / expire, IndexedDB 트랜잭션·만료 처리 | PIN 입력·DOM·영상 디코딩 | `clip-repository.js`로 분리 |
 | TeacherLibrary | 접근 확인 후 목록 표시, 한 항목씩 복호화·재생, 닫기 취소 토큰 | PIN 없이 전체 데이터 표시 | `loadLibrary`에서 목록·미디어 세대와 단일 영상 복호화 구현 |
-| OfflineManager | 앱 셸 캐시·버전 활성화·업데이트 유예 | 영상·학생 데이터 캐시 | `sw.js`, E03~E04에서 개선 |
+| OfflineManager | 앱 셸 캐시·버전 활성화·업데이트 유예 | 영상·학생 데이터 캐시 | `sw.js`에 구현·E03~E04 개발 검증 완료, A9+ 적용 대기 |
 
 모듈은 기능 검증을 유지하며 한 번에 하나씩 추출한다. A02 완료는 위 책임·경계·상태 계약의 확정이며 파일 분리 작업 전체의 완료가 아니다.
 
