@@ -149,7 +149,8 @@ withBrowser(async (page, errors) => {
     await page.waitForFunction(() => !$('clipDialog').open, {}, { timeout: 40000 });
     const saved = await page.evaluate(async ats => {
       const records = await allClips();
-      const record = records.at(-1);
+      // getAll() is ordered by key, not creation time. Select the clip written by this save.
+      const record = records.slice().sort((left, right) => right.createdAt - left.createdAt)[0];
       const blob = await decryptClip(record);
       const dataUrl = await new Promise(resolve => { const reader = new FileReader(); reader.onload = () => resolve(reader.result); reader.readAsDataURL(blob); });
       const video = document.createElement('video'); video.muted = true; video.playsInline = true;
