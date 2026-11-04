@@ -1,0 +1,18 @@
+{
+  "id": "./",
+  "name": "PE Loop · 셀프 리뷰",
+  "short_name": "PE Loop",
+  "description": "체육 동작을 지연 재생하고 원하는 순간을 저장하는 수업용 카메라",
+  "lang": "ko-KR",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#f4f4ef",
+  "theme_color": "#f4f4ef",
+  "icons": [
+    { "src": "./icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "./icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" },
+    { "src": "./icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

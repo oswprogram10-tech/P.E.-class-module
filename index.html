@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#f4f4ef" />
+    <meta name="description" content="체육 동작을 지연 재생하고, 원하는 순간을 저장하는 수업용 카메라" />
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="icon" href="./icon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./styles.css" />
+    <title>PE Loop · 셀프 리뷰</title>
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="./" aria-label="PE Loop 홈">
+          <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></span>
+          <span class="brand-copy"><strong>PE LOOP</strong><small>MOVE · REVIEW · GROW</small></span>
+        </a>
+        <div class="topbar-actions">
+          <span class="local-badge"><span class="status-dot"></span>기기에만 저장</span>
+          <button class="icon-button teacher-button" id="teacherButton" disabled type="button" aria-label="교사 메뉴 열기">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4.5 6v5.5c0 4.7 3.2 8.5 7.5 9.5 4.3-1 7.5-4.8 7.5-9.5V6L12 3Zm0 3.1 4.6 1.8v3.6c0 3.2-1.9 5.9-4.6 6.8-2.7-.9-4.6-3.6-4.6-6.8V7.9L12 6.1Zm-1 2.4v3H8.5v2H11v2.5h2v-2.5h2.5v-2H13v-3h-2Z"/></svg>
+          </button>
+        </div>
+      </header>
+
+      <section class="welcome-row">
+        <div>
+          <p class="eyebrow"><span class="eyebrow-line"></span>모둠 셀프 리뷰 스테이션</p>
+          <h1>움직임을 보고,<br class="mobile-break" /> 한 번 더 도전해요.</h1>
+          <p class="intro">방금 한 동작을 천천히 살펴보고, 가장 마음에 드는 순간을 남겨보세요.</p>
+        </div>
+        <div class="session-chip"><span class="session-icon">01</span><span><small>오늘의 스테이션</small><strong>자유 연습</strong></span></div>
+      </section>
+
+      <p id="cameraNotice" class="camera-notice" role="status" hidden></p>
+
+      <section class="studio-grid" aria-label="동작 셀프 리뷰">
+        <div class="video-card">
+          <div class="video-topline">
+            <div class="view-title"><span class="live-indicator" id="liveIndicator"></span><div><strong>셀프 리뷰 미러</strong><small id="cameraStatus">카메라를 시작하면 지연 영상이 여기에 보여요</small></div></div>
+            <div class="delay-chip"><span class="delay-glyph">◷</span><strong id="delayReadout">20초</strong><span>뒤 재생</span></div>
+          </div>
+          <div class="preview-wrap" id="previewWrap">
+            <canvas id="previewCanvas" width="640" height="360" aria-label="지연 재생 영상"></canvas>
+            <div class="preview-empty" id="previewEmpty">
+              <div class="empty-figure" aria-hidden="true"><span class="figure-head"></span><span class="figure-body"></span><span class="figure-arm left"></span><span class="figure-arm right"></span><span class="figure-leg left"></span><span class="figure-leg right"></span></div>
+              <strong>여기에 움직임이 다시 보여요</strong>
+              <span>카메라를 시작하고 편하게 움직여 보세요</span>
+            </div>
+            <div class="preview-overlay"><span class="frame-label">REPLAY</span><span class="privacy-label"><span>●</span> 영상은 이 기기에서 처리돼요</span></div>
+            <div class="recording-toast" id="recordingToast" hidden><span class="status-dot"></span>5분 순환 버퍼 작동 중</div>
+          </div>
+          <div class="timeline-row">
+            <span class="timeline-edge">5분 전</span>
+            <div class="timeline-track"><div class="timeline-progress" id="timelineProgress"></div><span class="timeline-knob" id="timelineKnob"></span></div>
+            <span class="timeline-edge">지금</span>
+          </div>
+          <div class="video-footer"><span><i class="tiny-lock"></i>임시 영상은 최대 5분만 기억해요</span><span id="bufferStatus">카메라 대기 중</span></div>
+        </div>
+
+        <aside class="action-card">
+          <div class="card-kicker">YOUR TURN</div>
+          <h2>몸을 움직여<br />확인해 보세요.</h2>
+          <p class="action-copy">태블릿에서 2~3걸음 떨어져 전신이 화면에 들어오도록 서 주세요.</p>
+          <div class="camera-check" id="cameraCheck"><span class="check-icon">1</span><span><strong>태블릿 거치 확인</strong><small>카메라를 향하도록 놓아 주세요</small></span><span class="check-mark">✓</span></div>
+          <button class="primary-button" id="cameraButton" disabled type="button"><span class="button-camera">◉</span><span>카메라 시작</span><span class="button-arrow">→</span></button>
+          <button class="save-button" id="openClipButton" type="button" disabled><span class="save-icon">✦</span>마음에 드는 장면 저장</button>
+          <div class="steps-note"><span class="step-number">TIP</span><span>연습이 끝나면 <b>장면 저장</b>을 눌러 지난 5분에서 골라요.</span></div>
+        </aside>
+      </section>
+
+      <section class="bottom-notes" aria-label="개인정보 안내">
+        <div class="note-item"><span class="note-icon note-eye">◎</span><span><strong>영상은 온라인으로 전송되지 않아요</strong><small>카메라 영상은 태블릿 안에서만 처리돼요.</small></span></div>
+        <div class="note-divider"></div>
+        <div class="note-item"><span class="note-icon note-clock">↻</span><span><strong>저장한 클립은 7일 뒤 자동 삭제돼요</strong><small>소리 없이 선택한 최대 30초만 저장해요.</small></span></div>
+        <div class="note-divider"></div>
+        <button class="install-button" id="installButton" type="button" hidden><span>＋</span> 홈 화면에 추가</button>
+        <span class="install-hint" id="installHint">Chrome 메뉴에서 ‘앱 설치’를 선택할 수 있어요</span>
+      </section>
+      <footer class="app-footer"><span>PE LOOP <span class="footer-dot">·</span> 수업 중 자기 성찰을 돕는 카메라</span><span id="appVersion">PWA · LOCAL MODE</span></footer>
+    </main>
+
+    <video id="cameraVideo" playsinline muted aria-hidden="true"></video>
+    <canvas id="captureCanvas" width="480" height="270" aria-hidden="true"></canvas>
+
+    <dialog class="modal" id="clipDialog" aria-labelledby="clipTitle">
+      <form method="dialog" class="modal-close-row"><button class="close-button" aria-label="닫기">×</button></form>
+      <div class="modal-heading"><p class="eyebrow"><span class="eyebrow-line"></span>하이라이트 저장</p><h2 id="clipTitle">마음에 드는 순간을 골라요.</h2><p>지난 5분 영상에서 최대 30초를 잘라 앱 안에 저장해요.</p></div>
+      <div class="clip-preview"><canvas id="clipCanvas" width="640" height="360"></canvas><div id="clipPreviewEmpty">카메라가 준비되면 선택한 장면을 미리 볼 수 있어요</div></div>
+      <p id="clipSelectionTime" class="clip-selection-time" aria-live="polite"></p>
+      <div class="range-control"><div class="range-heading"><label for="clipOffset">장면 끝나는 시점</label><strong id="clipOffsetValue">지금</strong></div><input id="clipOffset" type="range" min="0" max="0" value="0" step="1" /><div class="range-ends"><span>최근 장면</span><span>가장 오래된 영상</span></div></div>
+      <div class="range-control length-control"><div class="range-heading"><label for="clipLength">저장할 길이</label><strong id="clipLengthValue">15초</strong></div><input id="clipLength" type="range" min="5" max="30" value="15" step="5" /><div class="range-ends"><span>5초</span><span>최대 30초</span></div></div>
+      <div class="student-fields"><label>학생 이름<input id="studentName" type="text" maxlength="24" autocomplete="off" placeholder="이름 입력" required /></label><label class="number-field">번호<input id="studentNumber" type="text" inputmode="numeric" maxlength="4" autocomplete="off" placeholder="번호" required /></label></div>
+      <p class="privacy-small"><span>🔒</span> 학생 영상 목록은 교사 PIN으로 잠겨 있어요.</p>
+      <button class="primary-button modal-primary" id="saveClipButton" type="button" disabled><span class="save-icon">✦</span><span>이 장면 저장</span><span class="button-arrow">→</span></button>
+      <p id="clipError" class="clip-error" role="alert"></p>
+      <button id="cancelSaveButton" type="button" class="cancel-save-button" hidden>저장 취소</button>
+      <p class="save-progress" id="saveProgress" aria-live="polite"></p>
+    </dialog>
+
+    <dialog class="modal teacher-modal" id="teacherDialog" aria-labelledby="teacherTitle">
+      <form method="dialog" class="modal-close-row"><button class="close-button" aria-label="닫기">×</button></form>
+      <div class="teacher-panel" id="teacherSetupPanel">
+        <div class="shield-icon">✳</div><p class="eyebrow"><span class="eyebrow-line"></span>교사용 설정</p><h2 id="teacherTitle">교사 PIN을 설정해 주세요.</h2><p class="teacher-copy">학생 클립 목록과 수업 설정을 보호하는 6자리 PIN을 만들어요.</p>
+        <label class="pin-label">PIN<input id="newPin" type="password" inputmode="numeric" autocomplete="new-password" minlength="6" maxlength="6" placeholder="숫자 6자리" /></label>
+        <label class="pin-label">PIN 확인<input id="confirmPin" type="password" inputmode="numeric" autocomplete="new-password" minlength="6" maxlength="6" placeholder="한 번 더 입력" /></label>
+        <button class="primary-button teacher-submit" id="createPinButton" type="button">PIN 만들기 <span class="button-arrow">→</span></button>
+      </div>
+      <div class="teacher-panel" id="teacherUnlockPanel" hidden>
+        <div class="shield-icon">✳</div><p class="eyebrow"><span class="eyebrow-line"></span>교사용 설정</p><h2>교사 PIN을 입력해 주세요.</h2><p class="teacher-copy">학생 영상과 설정은 교사만 열 수 있어요.</p>
+        <label class="pin-label">6자리 PIN<input id="unlockPin" type="password" inputmode="numeric" autocomplete="current-password" minlength="6" maxlength="6" placeholder="숫자 6자리" /></label>
+        <button class="primary-button teacher-submit" id="unlockButton" type="button">잠금 해제 <span class="button-arrow">→</span></button>
+        <p class="pin-warning">PIN을 잊으면 기존 영상은 복구할 수 없어요.</p>
+        <button id="forgotPinButton" type="button" class="text-button forgot-pin">PIN 분실 · 기기 데이터 초기화</button>
+      </div>
+      <div class="teacher-panel teacher-content" id="teacherContentPanel" hidden>
+        <div class="teacher-heading-row"><div><p class="eyebrow"><span class="eyebrow-line"></span>교사용 도구</p><h2 id="teacherContentTitle">수업 설정</h2></div><button class="text-button" id="teacherLockButton" type="button">잠그기</button></div>
+        <div class="teacher-tabs"><button class="teacher-tab is-active" data-panel="settings" type="button">수업 설정</button><button class="teacher-tab" data-panel="library" type="button">저장한 클립 <span id="clipCount">0</span></button></div>
+        <section class="teacher-subpanel" id="settingsPanel">
+          <div class="setting-copy"><strong>지연 재생 시간</strong><span>학생이 움직인 뒤 미러에 다시 보여줄 시간</span></div>
+          <div class="delay-setting"><input id="teacherDelay" type="range" min="1" max="60" value="20" step="1" /><strong><span id="teacherDelayValue">20</span>초</strong></div>
+          <div class="setting-foot"><span>1초</span><span>최대 60초</span></div>
+          <div class="setting-summary"><span class="summary-icon">↻</span><span>임시 영상은 최근 5분까지 보관돼요. 저장한 클립은 7일 뒤 자동 삭제돼요.</span></div>
+          <p class="pin-warning">PIN을 잊으면 저장한 클립을 복구할 수 없어요. 7일 만료 시 앱 실행·목록 확인 때 삭제해요. 브라우저 데이터 삭제나 기기 초기화로 더 일찍 사라질 수 있어요.</p>
+          <div class="storage-card"><strong>기기 저장 공간</strong><p id="storageInfo" role="status">확인 중…</p><p id="storagePersistence"></p><button id="storagePersistButton" type="button" class="secondary-button">자동 정리 방지 요청</button></div>
+        </section>
+        <section class="teacher-subpanel library-panel" id="libraryPanel" hidden><p id="libraryStatus" role="status"></p><button id="libraryRetryButton" class="secondary-button" type="button" hidden>목록 다시 읽기</button><div class="library-list" id="libraryList"></div><div class="empty-library" id="emptyLibrary"><span>▱</span><strong>저장한 클립이 아직 없어요</strong><small>학생이 장면을 저장하면 여기에서 확인할 수 있어요.</small></div></section>
+      </div>
+      <p class="teacher-message" id="teacherMessage" role="status"></p>
+    </dialog>
+
+    <dialog class="modal confirm-dialog" id="deleteDialog" aria-labelledby="deleteTitle">
+      <div class="confirm-content"><span class="delete-mark">×</span><h2 id="deleteTitle">이 클립을 삭제할까요?</h2><p>삭제한 영상은 다시 복구할 수 없어요.</p><p id="deleteMessage" role="alert"></p><div class="confirm-actions"><button class="secondary-button" id="cancelDeleteButton" type="button">취소</button><button class="danger-button" id="confirmDeleteButton" type="button">삭제하기</button></div></div>
+    </dialog>
+    <dialog id="resetDialog" class="modal reset-dialog" aria-labelledby="resetTitle">
+      <div class="reset-content"><h2 id="resetTitle">모든 클립을 삭제하고 새 PIN 설정</h2>
+        <p>이 태블릿의 모든 학생 영상과 이름·번호가 삭제됩니다. 기존 클립은 다시 복구할 수 없어요. 다른 기기의 데이터에는 영향을 주지 않습니다.</p>
+        <label class="pin-label">새 PIN<input id="resetNewPin" type="password" inputmode="numeric" maxlength="6" autocomplete="new-password" placeholder="숫자 6자리"></label>
+        <label class="pin-label">새 PIN 확인<input id="resetConfirmPin" type="password" inputmode="numeric" maxlength="6" autocomplete="new-password" placeholder="한 번 더 입력"></label>
+        <label class="pin-label">삭제하려면 ‘모두 삭제’를 입력해 주세요<input id="resetPhrase" type="text" autocomplete="off" placeholder="모두 삭제"></label>
+        <p id="resetMessage" role="status"></p>
+        <div class="confirm-actions"><button id="cancelResetButton" type="button" class="secondary-button">취소</button><button id="confirmResetButton" type="button" class="danger-button" disabled>모두 삭제하고 새 PIN 설정</button></div>
+      </div>
+    </dialog>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="./frame-buffer.js" defer></script>
+    <script src="./timeline.js" defer></script>
+    <script src="./webm-muxer.js" defer></script>
+    <script src="./clip-exporter.js" defer></script>
+    <script src="./local-vault.js" defer></script>
+    <script src="./clip-repository.js" defer></script>
+    <script src="./app.js" defer></script>
+  </body>
+</html>
