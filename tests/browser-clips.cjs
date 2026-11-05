@@ -138,7 +138,6 @@ withBrowser(async (page, errors) => {
   assert.equal(await page.evaluate(async () => (await allClips()).length), 0);
 
   async function saveAndVerify(duration, expectedCount) {
-    const ats = duration === 5 ? [0, 2, 4.9] : [0, duration / 2, duration - 0.1];
     if (!(await page.evaluate(() => $('clipDialog').open))) await page.locator('#openClipButton').click();
     await page.locator('#clipLength').fill(String(duration));
     await page.locator('#clipLength').dispatchEvent('input');
@@ -147,7 +146,7 @@ withBrowser(async (page, errors) => {
     await page.evaluate(() => { window.__f02Start = getSelection().start; });
     await page.locator('#saveClipButton').click();
     await page.waitForFunction(() => !$('clipDialog').open, {}, { timeout: 40000 });
-    const saved = await page.evaluate(async ats => {
+    const saved = await page.evaluate(async duration => {
       const records = await allClips();
       // getAll() is ordered by key, not creation time. Select the clip written by this save.
       const record = records.slice().sort((left, right) => right.createdAt - left.createdAt)[0];
@@ -156,22 +155,60 @@ withBrowser(async (page, errors) => {
       const video = document.createElement('video'); video.muted = true; video.playsInline = true;
       const url = URL.createObjectURL(blob); video.src = url;
       await new Promise((resolve, reject) => { video.onloadeddata = resolve; video.onerror = reject; });
-      const firstFrame = new Promise(resolve => video.requestVideoFrameCallback(resolve));
-      await video.play(); await firstFrame; video.pause();
+      const start = window.__f02Start;
+      const base = frameHistory[0].time;
+      const startSeconds = (start - base) / 1000;
+      const endSeconds = startSeconds + duration;
+      // Sample the middle of a source second so a one-frame seek difference cannot cross a color boundary.
+      const startSource = Math.floor(startSeconds) + 0.5 < startSeconds ? Math.floor(startSeconds) + 1.5 : Math.floor(startSeconds) + 0.5;
+      const midSource = Math.floor((startSeconds + endSeconds) / 2) + 0.5;
+      const endSource = Math.floor(endSeconds) + 0.5 >= endSeconds ? Math.floor(endSeconds) - 0.5 : Math.floor(endSeconds) + 0.5;
+      const targets = [startSource, midSource, endSource].map(sourceSeconds => ({ at: sourceSeconds - startSeconds, second: Math.floor(sourceSeconds) }));
       const canvas = document.createElement('canvas'); canvas.width = 640; canvas.height = 360;
-      const context = canvas.getContext('2d'); const decoded = [];
-      for (const at of ats) {
-        if (at) { video.currentTime = at; await new Promise(resolve => { video.onseeked = resolve; }); }
-        context.drawImage(video, 0, 0); decoded.push([...context.getImageData(320, 180, 1, 1).data]);
-      }
+      const context = canvas.getContext('2d');
+      const readFrame = async ({ at, second }) => {
+        let removeSeeked = () => {};
+        const reached = new Promise((resolve, reject) => {
+          const timer = setTimeout(() => { removeSeeked(); reject(new Error(`seek timeout at ${at}s`)); }, 8000);
+          const onSeeked = () => {
+            if (video.seeking) { clearTimeout(timer); removeSeeked(); reject(new Error(`seeked fired while still seeking at ${at}s`)); return; }
+            clearTimeout(timer); removeSeeked();
+            if (Math.abs(video.currentTime - at) > 0.1) { reject(new Error(`seek at ${at}s landed at ${video.currentTime}s`)); return; }
+            resolve();
+          };
+          removeSeeked = () => video.removeEventListener('seeked', onSeeked);
+          video.addEventListener('seeked', onSeeked);
+        });
+        const presented = new Promise((resolve, reject) => {
+          const timer = setTimeout(() => reject(new Error(`frame presentation timeout at ${at}s`)), 8000);
+          const onFrame = (now, metadata) => {
+            if (Number.isFinite(metadata.mediaTime) && Math.abs(metadata.mediaTime - at) > 0.2) {
+              video.requestVideoFrameCallback(onFrame);
+              return;
+            }
+            clearTimeout(timer); resolve(metadata);
+          };
+          video.requestVideoFrameCallback(onFrame);
+        });
+        // Register both handlers before seeking so a fast seek cannot resolve unseen.
+        video.currentTime = at;
+        const [, metadata] = await Promise.all([reached, presented]);
+        if (video.seeking) throw new Error(`video still seeking at ${at}s`);
+        if (Math.abs(video.currentTime - at) > 0.1) throw new Error(`seek verification failed at ${at}s: ${video.currentTime}s`);
+        context.drawImage(video, 0, 0);
+        return { at, second, currentTime: video.currentTime, mediaTime: metadata.mediaTime, pixel: [...context.getImageData(320, 180, 1, 1).data] };
+      };
+      const samples = [];
+      for (const target of targets) samples.push(await readFrame(target));
       const videoDuration = video.duration;
       video.removeAttribute('src'); video.load(); URL.revokeObjectURL(url);
-      return { count: records.length, duration: record.durationSeconds, videoDuration, base64: dataUrl.split(',')[1], decoded, start: window.__f02Start, base: frameHistory[0].time };
-    }, ats);
-    const checks = ats.map(at => ({ at, second: Math.floor((saved.start + at * 1000 - saved.base) / 1000) }));
+      return { count: records.length, duration: record.durationSeconds, videoDuration, base64: dataUrl.split(',')[1], samples };
+    }, duration);
+    const checks = saved.samples;
     for (const [index, check] of checks.entries()) {
-      assert.equal(saved.decoded[index][3], 255);
-      for (let channel = 0; channel < 3; channel++) assert.ok(Math.abs(saved.decoded[index][channel] - color(check.second)[channel]) < 10, `Chrome playback scene at ${check.at}s (source ${check.second}s)`);
+      const actual = check.pixel;
+      assert.equal(actual[3], 255);
+      for (let channel = 0; channel < 3; channel++) assert.ok(Math.abs(actual[channel] - color(check.second)[channel]) < 10, `Chrome playback at ${check.at}s (source ${check.second}s, currentTime ${check.currentTime}, mediaTime ${check.mediaTime}): ${actual.slice(0, 3)} vs ${color(check.second)}`);
     }
     assert.equal(saved.count, expectedCount);
     assert.ok(Math.abs(saved.duration - duration) < 0.4);
@@ -194,7 +231,7 @@ withBrowser(async (page, errors) => {
     } else {
       console.log(JSON.stringify({ duration, ffprobe: 'skipped', chromePlayback: 'passed' }));
     }
-    console.log(JSON.stringify({ duration, count: saved.count, videoDuration: saved.videoDuration, scenes: checks.map(check => check.second), passed: true }));
+    console.log(JSON.stringify({ duration, count: saved.count, videoDuration: saved.videoDuration, samples: checks.map(({ at, second, currentTime, mediaTime, pixel }) => ({ at, second, currentTime, mediaTime, pixel: pixel.slice(0, 3) })), passed: true }));
   }
 
   for (const [duration, expectedCount] of [[5, 1], [15, 2], [30, 3]]) await saveAndVerify(duration, expectedCount);
