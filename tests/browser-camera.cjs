@@ -38,7 +38,7 @@ withBrowser(async (page, errors) => {
   assert.equal(await page.locator('#openClipButton').isDisabled(), true);
   await page.evaluate(() => openClipDialog());
   assert.equal(await page.evaluate(() => $('clipDialog').open), false);
-  await page.waitForFunction(() => frameBuffer.duration >= 5500);
+  await page.waitForFunction(() => lastDrawnFrame && lastDrawnFrame - frameHistory[0].time >= 5400);
   // Keep a chosen clip while clearing the live buffer at a capture interruption.
   await page.locator('#openClipButton').click();
   const snapshotEnd = await page.evaluate(() => selectionSnapshot.at(-1).time);
@@ -53,7 +53,7 @@ withBrowser(async (page, errors) => {
   assert.ok(await page.evaluate(previous => frameHistory[0].time > previous, snapshotEnd));
   console.log('Track interruption and clean restart passed');
 
-  await page.waitForFunction(() => frameBuffer.duration >= 5500);
+  await page.waitForFunction(() => lastDrawnFrame && lastDrawnFrame - frameHistory[0].time >= 5400);
   await page.locator('#openClipButton').click();
   await page.locator('#clipLength').fill('5');
   await page.locator('#clipLength').dispatchEvent('input');

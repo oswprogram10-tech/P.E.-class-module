@@ -11,6 +11,8 @@ withBrowser(async (page, errors) => {
   await page.waitForFunction(() => frameHistory.length > 0);
   await page.evaluate(async () => {
     captureLoop = false; ++captureGeneration; cancelAnimationFrame(captureRafId);
+    while (drawBusy) await new Promise(resolve => setTimeout(resolve, 10));
+    setDelay(1);
     const canvas = document.createElement('canvas'); canvas.width = 480; canvas.height = 270;
     const context = canvas.getContext('2d');
     const blobs = [];
@@ -23,7 +25,10 @@ withBrowser(async (page, errors) => {
     }
     frameBuffer.clear();
     const base = captureNow() - 35000;
+    window.syntheticBase = base;
     for (let index = 0; index <= 350; index++) frameBuffer.add({ time: base + index * 100, blob: blobs[Math.floor(index / 10)] });
+    lastDrawnFrame = 0;
+    await drawDelayedFrame();
   });
   await page.locator('#openClipButton').click();
   await page.locator('#clipLength').fill('5'); await page.locator('#clipLength').dispatchEvent('input');
@@ -51,7 +56,7 @@ withBrowser(async (page, errors) => {
   const after = await page.evaluate(() => [...clipContext.getImageData(320, 180, 1, 1).data]);
   assert.deepEqual(after, before, 'late old decode must not overwrite the new selection');
   await page.evaluate(() => { createImageBitmap = window.nativeBitmap; });
-  assert.match(await page.locator('#clipSelectionTime').textContent(), /5초 구간 고정/);
+  assert.match(await page.locator('#clipSelectionTime').textContent(), /5\.00초 구간 고정/);
   const encoderFailures = await page.evaluate(async () => {
     const selected = getSelection();
     const bitmap = createImageBitmap;
@@ -75,6 +80,10 @@ withBrowser(async (page, errors) => {
   assert.equal(encoderFailures.aborted, 'AbortError');
   assert.equal(encoderFailures.broken, true);
 
+  const expectedSeconds = await page.evaluate(() => {
+    const selection = getSelection();
+    return [0, 2, 4.9].map(offset => Math.floor((Timeline.frameAt(selection.frames, selection.start + offset * 1000).time - window.syntheticBase) / 1000));
+  });
   await page.locator('#saveClipButton').click();
   assert.match(await page.locator('#clipError').textContent(), /이름/);
   await page.locator('#studentName').fill('가상학생');
@@ -147,13 +156,20 @@ withBrowser(async (page, errors) => {
     const canvas = document.createElement('canvas'); canvas.width = 640; canvas.height = 360;
     const context = canvas.getContext('2d'); const decoded = [];
     for (const at of [0, 2, 4.9]) {
-      if (at) { video.currentTime = at; await new Promise(resolve => { video.onseeked = resolve; }); }
+      if (at) {
+        // seeked can precede presentation: wait for the decoded frame before sampling.
+        const presented = new Promise(resolve => video.requestVideoFrameCallback(resolve));
+        const seeked = new Promise(resolve => { video.onseeked = resolve; });
+        video.currentTime = at;
+        await seeked;
+        await presented;
+      }
       context.drawImage(video, 0, 0); decoded.push([...context.getImageData(320, 180, 1, 1).data]);
     }
     video.removeAttribute('src'); video.load(); URL.revokeObjectURL(url);
     return { count: records.length, duration: records[0].durationSeconds, base64: dataUrl.split(',')[1], decoded };
   });
-  for (const [index, second] of [28, 30, 32].entries()) {
+  for (const [index, second] of expectedSeconds.entries()) {
     assert.equal(saved.decoded[index][3], 255);
     for (let channel = 0; channel < 3; channel++) assert.ok(Math.abs(saved.decoded[index][channel] - color(second)[channel]) < 10, 'Chrome playback must preserve selected scene colors');
   }
@@ -166,7 +182,8 @@ withBrowser(async (page, errors) => {
     const probe = JSON.parse(execFileSync('ffprobe', ['-v', 'error', '-show_entries', 'stream=color_range,color_space,color_transfer,color_primaries', '-of', 'json', file], { encoding: 'utf8' }));
     assert.equal(probe.streams[0].color_range, 'pc');
     assert.equal(probe.streams[0].color_space, 'bt709');
-    for (const [at, second] of [[0, 28], [2, 30], [4.9, 32]]) {
+    for (const [index, at] of [0, 2, 4.9].entries()) {
+      const second = expectedSeconds[index];
       const pixels = execFileSync('ffmpeg', ['-v', 'error', '-i', file, '-ss', String(at), '-frames:v', '1', '-vf', 'scale=in_range=pc:out_range=pc:in_color_matrix=bt709,crop=2:2:320:180', '-pix_fmt', 'rgb24', '-f', 'rawvideo', 'pipe:1']);
       assert.equal(pixels.length, 12);
       const expected = color(second);

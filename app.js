@@ -29,6 +29,7 @@ let cameraStarting = false;
 let cameraInterruptedReason = '';
 let lastVideoTime = -1;
 let lastVideoProgressAt = 0;
+let firstCapturedAt = 0;
 let wakeLock = null;
 let savingInterrupted = false;
 let lastDrawnFrame = 0;
@@ -36,6 +37,8 @@ let lastFrameCutoff = 0;
 let delaySeconds = 20;
 let selectedEndOffset = 0;
 let selectedLengthSeconds = 15;
+let selectedStartIndex = 0;
+let selectedEndIndex = 0;
 let clipSelectionOpenedAt = 0;
 let selectedDeleteId = null;
 let toastTimer = null;
@@ -43,6 +46,16 @@ let installPrompt = null;
 let teacherKey = null;
 let teacherUnlocked = false;
 const repository = new ClipRepository(CLIP_DB);
+let classroomUI = null;
+let poseUI = null;
+let shotFeedback = null;
+let shotHistory = null;
+let pendingTransactions = 0;
+const repositoryTransaction = repository.transaction.bind(repository);
+repository.transaction = (...args) => {
+  pendingTransactions += 1;
+  return repositoryTransaction(...args).finally(() => { pendingTransactions -= 1; });
+};
 let vaultConfig = null;
 let vaultProblem = '';
 let appReady = false;
@@ -66,6 +79,12 @@ let studioState = 'idle';
 let activeSaveController = null;
 let savePhase = 'idle';
 let previewDecodeFailed = false;
+let updateRegistration = null;
+let offlineCheckGeneration = 0;
+let registrationGeneration = 0;
+let serviceWorkerListenerInstalled = false;
+let referenceUrl = null;
+let referenceGeneration = 0;
 
 function restingState() {
   return cameraStream ? ($('clipDialog').open ? 'selecting' : 'capturing') : (cameraInterruptedReason ? 'interrupted' : 'idle');
@@ -80,9 +99,11 @@ function setStudioState(state) {
 }
 
 function setSaving(value) {
+  if (value) poseUI?.suspend('장면을 저장하는 동안 전신 확인을 쉬어요.');
+  else if (cameraStream) poseUI?.cameraStarted();
   saving = value;
   setStudioState(value ? 'saving' : restingState());
-  for (const id of ['clipOffset', 'clipLength', 'studentName', 'studentNumber', 'saveClipButton']) $(id).disabled = value;
+  for (const id of ['clipOffset', 'clipLength', 'clipStartFrame', 'clipEndFrame', 'studentName', 'studentNumber', 'reflectionGood', 'reflectionRetry', 'saveClipButton']) $(id).disabled = value;
   $('clipDialog').querySelector('.close-button').disabled = value;
   $('cancelSaveButton').hidden = !value;
   $('cancelSaveButton').disabled = false;
@@ -90,6 +111,71 @@ function setSaving(value) {
 }
 
 const settings = readSettings();
+const DEFAULT_SHOT_SETTINGS = Object.freeze({ enabled: false, side: 'right', sensitivity: 'normal' });
+const copyShotSettings = ({ enabled, side, sensitivity }) => ({ enabled, side, sensitivity });
+let shotSettings = validShotSettings(settings.shot) ? copyShotSettings(settings.shot) : { ...DEFAULT_SHOT_SETTINGS };
+let shotSettingsIssue = settings.shot !== undefined && !validShotSettings(settings.shot) ? '저장된 농구 설정을 읽을 수 없어 기본값과 사용 안 함으로 시작해요.' : '';
+
+function validShotSettings(value) {
+  return Boolean(value && typeof value.enabled === 'boolean' && ['right', 'left'].includes(value.side) && ['low', 'normal', 'high'].includes(value.sensitivity));
+}
+
+function syncShotControls(message = '') {
+  $('teacherShotEnabled').checked = shotSettings.enabled;
+  $('teacherShotSide').value = shotSettings.side;
+  $('teacherShotSensitivity').value = shotSettings.sensitivity;
+  $('shotSettingsStatus').textContent = message;
+}
+
+function currentShotContext() {
+  const binding = classroomUI?.binding();
+  return binding ? JSON.stringify([binding.classId, binding.studentId, binding.lessonId, binding.deviceId]) : '';
+}
+
+function createShotFeedback() {
+  return new ShotFeedback({ currentContext: currentShotContext, active: () => Boolean(poseUI?.sport === 'basketball' && shotSettings.enabled && poseUI?.running && poseUI?.enabled && cameraStream && captureLoop && !saving && !$('teacherDialog').open && !$('clipDialog').open) });
+}
+
+function resetFeedbackOptions() {
+  for (const id of ['shotVisualEnabled', 'shotSoundEnabled', 'shotCaptureEnabled']) $(id).checked = false;
+  shotFeedback?.setOptions({ visual: false, sound: false, capture: false });
+  poseUI?.setCaptureEnabled(false);
+}
+
+function renderShotState(snapshot = {}, eventFrame = null) {
+  if (snapshot.reason) shotHistory?.observeReset();
+  if (snapshot.event && poseUI?.sport === 'basketball' && snapshot.type !== 'volleyball-overhead-cue' && snapshot.ruleVersion !== 'volleyball-overhead-cue-v1') shotHistory?.record(snapshot);
+  const state = ['ready', 'shoot'].includes(snapshot.state) ? snapshot.state : 'waiting';
+  $('shotPanel').dataset.state = state;
+  $('shotAngle').textContent = Number.isFinite(snapshot.angle) ? `${Math.round(snapshot.angle)}°` : '—';
+  $('shotStatus').textContent = !shotSettings.enabled ? '교사 설정에서 켠 뒤 전신 확인을 사용해 주세요.'
+    : state === 'ready' ? 'READY · 팔을 구부려 준비했어요. 선택한 팔을 위로 펴 주세요.'
+    : state === 'shoot' ? 'SHOOT · 팔 펴기 동작을 감지했어요. 팔을 내린 뒤 다시 준비해 주세요.'
+    : '전신이 안정적으로 보이면 선택한 팔을 구부려 준비해 주세요. 확인이 끊기면 처음부터 다시 준비해요.';
+  try { if (shotFeedback) shotFeedback.consume({ ...snapshot, side: snapshot.side || shotSettings.side }, eventFrame); else eventFrame?.bitmap?.close(); }
+  catch { try { eventFrame?.bitmap?.close(); } catch {} }
+}
+
+function saveShotSettings() {
+  if (!teacherUnlocked || !teacherKey || !$('teacherDialog').open || document.hidden) return false;
+  const next = { enabled: $('teacherShotEnabled').checked, side: $('teacherShotSide').value, sensitivity: $('teacherShotSensitivity').value };
+  // A settings edit cannot continue a movement that began under older values.
+  poseUI?.setShotSettings(shotSettings);
+  if (!validShotSettings(next)) {
+    syncShotControls('설정 값이 올바르지 않아 이전 설정을 유지해요. 팔과 민감도를 다시 선택해 주세요.');
+    return false;
+  }
+  if (!saveSettings({ delaySeconds, shot: next })) {
+    syncShotControls('농구 설정을 저장하지 못해 이전 설정을 유지해요. 저장 공간을 확인하고 다시 시도해 주세요.');
+    return false;
+  }
+  shotSettings = next;
+  shotSettingsIssue = '';
+  settings.shot = { ...next };
+  poseUI?.setShotSettings(shotSettings);
+  syncShotControls('농구 설정을 저장했어요. 카메라와 전신 확인을 켜서 사용해 주세요.');
+  return true;
+}
 
 function readSettings() {
   try {
@@ -129,8 +215,8 @@ function formatDate(timestamp) {
 }
 
 function setDelay(seconds, { persist = true } = {}) {
-  const next = Math.min(60, Math.max(1, Number(seconds) || 20));
-  if (persist && !saveSettings({ delaySeconds: next })) {
+  const next = Math.min(300, Math.max(1, Number(seconds) || 20));
+  if (persist && !saveSettings({ delaySeconds: next, shot: shotSettings })) {
     $('teacherMessage').textContent = '설정을 저장하지 못해 이전 지연 시간을 유지해요. 브라우저 저장 공간을 확인해 주세요.';
     $('teacherDelay').value = String(delaySeconds);
     return;
@@ -216,7 +302,7 @@ async function captureTick(generation) {
     captureContext.drawImage(cameraVideo, 0, 0, FRAME_WIDTH, FRAME_HEIGHT);
     const blob = await new Promise(resolve => captureCanvas.toBlob(resolve, 'image/jpeg', 0.52));
     if (!captureLoop || generation !== captureGeneration || !blob) return;
-    frameBuffer.add({ time: now, blob });
+    if (frameBuffer.add({ time: now, blob }) && !firstCapturedAt) firstCapturedAt = now;
   } catch {
     if (generation === captureGeneration) interruptCamera('카메라 영상을 읽지 못했어요. 촬영을 다시 시작해 주세요.');
   } finally {
@@ -227,11 +313,15 @@ async function captureTick(generation) {
 async function drawDelayedFrame(now = captureNow()) {
   if (!cameraStream || drawBusy || !frameHistory.length) return;
   const targetTime = now - delaySeconds * 1000;
-  if (frameHistory[0].time > targetTime) {
+  const shortfall = frameHistory[0].time - targetTime;
+  // Allow one capture interval of sampling jitter, only after the configured
+  // interval has actually elapsed. Larger memory shortages remain visible.
+  const jitterReady = shortfall > 0 && shortfall <= 150 && firstCapturedAt && now - firstCapturedAt >= delaySeconds * 1000 && frameHistory.at(-1).time - frameHistory[0].time >= delaySeconds * 1000 - 150;
+  if (shortfall > 0 && !jitterReady) {
     $('previewWrap').classList.remove('has-video');
     $('previewEmpty').removeAttribute('aria-hidden');
-    $('previewEmpty').querySelector('strong').textContent = `지연 영상 준비 중 · ${Math.ceil((frameHistory[0].time - targetTime) / 1000)}초`;
-    $('previewEmpty').querySelector('span:last-child').textContent = '설정한 시간만큼 영상이 모이면 자동으로 재생돼요';
+    $('previewEmpty').querySelector('strong').textContent = frameBuffer.capacityLimited ? '지연 영상의 보관 공간이 부족해요' : `지연 영상 준비 중 · ${Math.ceil(shortfall / 1000)}초`;
+    $('previewEmpty').querySelector('span:last-child').textContent = frameBuffer.capacityLimited ? '현재 보관 범위에 맞춰 지연 시간을 줄여 주세요.' : '설정한 시간만큼 영상이 모이면 자동으로 재생돼요';
     lastDrawnFrame = 0;
     return;
   }
@@ -239,7 +329,7 @@ async function drawDelayedFrame(now = captureNow()) {
   if (!frame || frame.time === lastDrawnFrame) return;
   drawBusy = true;
   const generation = captureGeneration;
-  const success = await drawFrameToCanvas(frame, previewCanvas, previewContext, () => generation === captureGeneration && Boolean(cameraStream));
+  const success = await drawFrameToCanvas(frame, previewCanvas, previewContext, () => generation === captureGeneration && Boolean(cameraStream) && !$('clipDialog').open);
   if (success) {
     lastDrawnFrame = frame.time;
     $('previewWrap').classList.add('has-video');
@@ -306,6 +396,7 @@ async function startCamera() {
     lastFrameCutoff = 0;
     lastVideoTime = -1;
     lastVideoProgressAt = captureNow();
+    firstCapturedAt = 0;
     captureBusy = false;
     captureLoop = true;
     for (const track of stream.getVideoTracks()) {
@@ -315,6 +406,7 @@ async function startCamera() {
     }
     captureTick(generation);
     requestScreenLock(generation);
+    poseUI?.cameraStarted();
     $('cameraStatus').textContent = '화면이 5분 순환 버퍼에 임시 저장돼요';
     $('liveIndicator').classList.add('is-live');
     $('recordingToast').hidden = false;
@@ -335,6 +427,8 @@ async function startCamera() {
 }
 
 function stopCamera({ preserveSession = false } = {}) {
+  shotHistory?.stop();
+  poseUI?.suspend('촬영이 멈춰 전신 확인도 멈췄어요. 촬영을 다시 시작해 주세요.');
   if (saving) { savingInterrupted = true; cancelActiveSave('interrupted'); }
   ++captureGeneration;
   cameraStarting = false;
@@ -356,6 +450,7 @@ function stopCamera({ preserveSession = false } = {}) {
   $('cameraStatus').textContent = cameraInterruptedReason || '카메라 대기 중';
   $('cameraButton').querySelector('span:nth-child(2)').textContent = '촬영 다시 시작';
   if (!preserveSession) {
+    classroomUI?.closeAll();
     teacherKey = null;
     selectionSnapshot = [];
     cameraInterruptedReason = '';
@@ -374,8 +469,10 @@ function interruptCamera(reason) {
 }
 
 function getSelection() {
-  const end = (clipSelectionOpenedAt || captureNow()) - selectedEndOffset * 1000;
-  return Timeline.select(selectionSnapshot, end, selectedLengthSeconds);
+  const start = selectionSnapshot[selectedStartIndex]?.time;
+  const end = selectionSnapshot[selectedEndIndex]?.time;
+  const duration = Math.round((end - start) * 1000) / 1000000;
+  return Timeline.select(selectionSnapshot, end, duration);
 }
 
 function getSelectionFrames() { return getSelection().frames; }
@@ -396,7 +493,7 @@ async function previewSelection() {
   const valid = () => previewClipLoop && token === previewClipToken && $('clipDialog').open && !saving;
   const draw = async () => {
     if (!valid()) return;
-    const offset = (performance.now() - startedAt) % (selectedLengthSeconds * 1000);
+    const offset = (performance.now() - startedAt) % (selection.end - selection.start);
     const frame = Timeline.frameAt(selection.frames, selection.start + offset);
     const drawn = await drawFrameToCanvas(frame, clipCanvas, clipContext, valid);
     if (!valid()) return;
@@ -412,22 +509,52 @@ async function previewSelection() {
   draw();
 }
 
-function updateClipRangeLabels() {
+async function previewSelectionFrame(index) {
   if (saving) return;
-  selectedLengthSeconds = Number($('clipLength').value || 15);
-  const availableSeconds = Math.floor((clipSelectionOpenedAt - (selectionSnapshot[0]?.time ?? clipSelectionOpenedAt)) / 1000);
-  const maxOffset = Math.max(0, Math.min(300, availableSeconds - selectedLengthSeconds));
-  $('clipOffset').max = String(maxOffset);
-  if (Number($('clipOffset').value) > maxOffset) $('clipOffset').value = String(maxOffset);
-  selectedEndOffset = Number($('clipOffset').value || 0);
-  $('clipOffsetValue').textContent = selectedEndOffset === 0 ? '선택 창을 연 시점' : `선택 창을 연 시점에서 ${selectedEndOffset}초 전`;
-  $('clipLengthValue').textContent = `${selectedLengthSeconds}초`;
+  previewClipLoop = false;
+  const token = ++previewClipToken;
+  const frame = selectionSnapshot[index];
+  const valid = () => token === previewClipToken && $('clipDialog').open && !saving;
+  if (!frame) return;
+  $('clipPreviewEmpty').hidden = true;
+  const drawn = await drawFrameToCanvas(frame, clipCanvas, clipContext, valid);
+  if (!valid()) return;
+  previewDecodeFailed = !drawn;
+  if (!drawn) { $('saveClipButton').disabled = true; $('clipPreviewEmpty').textContent = '이 장면을 읽지 못했어요. 다른 프레임을 골라 주세요.'; $('clipPreviewEmpty').hidden = false; }
+}
+
+function updateClipRangeLabels({ fine = false, previewIndex = null } = {}) {
+  if (saving) return;
+  if (!fine) {
+    selectedLengthSeconds = Number($('clipLength').value || 15);
+    const availableSeconds = Math.floor((clipSelectionOpenedAt - (selectionSnapshot[0]?.time ?? clipSelectionOpenedAt)) / 1000);
+    const maxOffset = Math.max(0, Math.min(300, availableSeconds - selectedLengthSeconds));
+    $('clipOffset').max = String(maxOffset);
+    if (Number($('clipOffset').value) > maxOffset) $('clipOffset').value = String(maxOffset);
+    selectedEndOffset = Number($('clipOffset').value || 0);
+    const endFrame = Timeline.frameAt(selectionSnapshot, clipSelectionOpenedAt - selectedEndOffset * 1000);
+    selectedEndIndex = Math.max(0, selectionSnapshot.indexOf(endFrame));
+    const startFrame = Timeline.frameAt(selectionSnapshot, endFrame.time - selectedLengthSeconds * 1000);
+    selectedStartIndex = Math.max(0, selectionSnapshot.indexOf(startFrame));
+    while (selectedStartIndex < selectedEndIndex && endFrame.time - selectionSnapshot[selectedStartIndex].time > 30000) selectedStartIndex++;
+  } else {
+    selectedStartIndex = Number($('clipStartFrame').value);
+    selectedEndIndex = Number($('clipEndFrame').value);
+  }
+  $('clipStartFrame').value = String(selectedStartIndex);
+  $('clipEndFrame').value = String(selectedEndIndex);
+  $('clipOffsetValue').textContent = selectedEndOffset === 0 ? '화면에 보이던 장면' : `화면에 보이던 장면에서 ${selectedEndOffset}초 전`;
   const selection = getSelection();
+  selectedLengthSeconds = Math.round((selection.end - selection.start) * 1000) / 1000000;
+  $('clipLengthValue').textContent = `${selectedLengthSeconds.toFixed(2)}초`;
+  $('clipStartFrameValue').textContent = `${selectedStartIndex + 1} / ${selectionSnapshot.length}`;
+  $('clipEndFrameValue').textContent = `${selectedEndIndex + 1} / ${selectionSnapshot.length}`;
   const clock = value => new Intl.DateTimeFormat('ko-KR', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false }).format(value);
-  $('clipSelectionTime').textContent = selection.valid ? `${clock(selection.start)} ~ ${clock(selection.end)} · ${selectedLengthSeconds}초 구간 고정` : selection.reason;
+  $('clipSelectionTime').textContent = selection.valid ? `${clock(selection.start)} ~ ${clock(selection.end)} · ${selectedLengthSeconds.toFixed(2)}초 구간 고정` : selection.reason;
   $('saveClipButton').disabled = !selection.valid;
   $('clipError').textContent = '';
-  previewSelection();
+  if (previewIndex === null) previewSelection();
+  else previewSelectionFrame(previewIndex);
 }
 
 function cancelActiveSave(reason = 'user') {
@@ -444,19 +571,24 @@ function openClipDialog() {
     return;
   }
   if (!cameraStream) return showToast('먼저 카메라를 시작해 주세요.');
-  if (frameBuffer.duration < 5000) return showToast('최소 5초의 영상이 모이면 장면을 고를 수 있어요.');
+  if (frameBuffer.duration < 5000 || !lastDrawnFrame) return showToast('지연 영상이 화면에 나타나면 장면을 고를 수 있어요.');
+  if (!frameHistory.some(frame => frame.time === lastDrawnFrame)) return showToast('화면의 장면이 버퍼에서 사라졌어요. 영상이 갱신되면 다시 선택해 주세요.');
   const available = Math.floor((captureNow() - (frameHistory[0]?.time ?? captureNow())) / 1000);
   $('clipOffset').max = String(Math.max(0, Math.min(300, available - 15)));
   $('clipOffset').value = '0';
   $('clipLength').value = '15';
-  clipSelectionOpenedAt = frameHistory.at(-1)?.time || captureNow();
+  clipSelectionOpenedAt = lastDrawnFrame;
   selectionSnapshot = frameBuffer.snapshot();
+  for (const id of ['clipStartFrame', 'clipEndFrame']) $(id).max = String(selectionSnapshot.length - 1);
   setStudioState('selecting');
-  $('studentName').value = '';
-  $('studentNumber').value = '';
+  const binding = classroomUI?.binding();
+  $('studentName').value = binding?.student.name || '';
+  $('studentNumber').value = binding?.student.number || '';
+  $('reflectionGood').value = ''; $('reflectionRetry').value = '';
   $('saveProgress').textContent = '';
   $('clipError').textContent = '';
   $('cancelSaveButton').hidden = true;
+  poseUI?.suspend('장면을 고르는 동안 전신 확인을 쉬어요.');
   $('clipDialog').showModal();
   updateClipRangeLabels();
   $('studentName').focus({ preventScroll: true });
@@ -475,11 +607,15 @@ async function decryptMetadata(record, key = teacherKey) {
   const bytes = await LocalVault.decrypt(record.metadataCiphertext, record.metadataIv, key);
   const value = JSON.parse(new TextDecoder().decode(bytes));
   if (!value || typeof value.studentName !== 'string' || !value.studentName.trim() || value.studentName.length > 24 || typeof value.studentNumber !== 'string' || !/^\d{1,4}$/.test(value.studentNumber)) throw new Error('학생 정보를 읽을 수 없어요.');
+  for (const field of ['reflectionGood', 'reflectionRetry']) {
+    if (value[field] === undefined) value[field] = '';
+    if (typeof value[field] !== 'string' || value[field].length > 300) throw new Error('성찰 정보를 읽을 수 없어요.');
+  }
   return value;
 }
 
 async function exportSelection(frames, durationSeconds, signal) {
-  const start = clipSelectionOpenedAt - selectedEndOffset * 1000 - durationSeconds * 1000;
+  const start = getSelection().start;
   return ClipExporter.export({ frames, start, durationSeconds, signal,
     onProgress: progress => { $('saveProgress').textContent = `클립을 만드는 중이에요 · ${progress}%`; },
   });
@@ -520,7 +656,8 @@ async function saveSelectedClip() {
     $('saveProgress').textContent = '클립을 안전하게 보관하고 있어요…';
     const encrypted = await encryptBlob(output.blob, saveKey);
     controller.signal.throwIfAborted();
-    const metadata = await encryptMetadata({ studentName: name, studentNumber: number }, saveKey);
+    const metadata = await encryptMetadata({ ...classroomUI?.metadata(), studentName: name, studentNumber: number,
+      reflectionGood: $('reflectionGood').value.trim().slice(0, 300), reflectionRetry: $('reflectionRetry').value.trim().slice(0, 300) }, saveKey);
     controller.signal.throwIfAborted();
     const createdAt = Date.now();
     const record = {
@@ -535,6 +672,7 @@ async function saveSelectedClip() {
     $('saveProgress').textContent = '저장을 마무리하고 있어요…';
     await repository.put(record, saveRevision, { signal: controller.signal });
     committed = true;
+    classroomUI?.saved().catch(() => {});
   } catch (error) {
     $('saveProgress').textContent = controller.signal.aborted ? controller.signal.reason.message :
       friendlyFailure(error, '저장하지 못했어요. 기기 상태를 확인하고 다시 시도해 주세요.');
@@ -548,7 +686,7 @@ async function saveSelectedClip() {
       updateClipCount();
       showToast(`${name} 학생의 클립을 저장했어요. 7일 뒤 자동 삭제돼요.`);
     } else if ($('clipDialog').open) {
-      updateClipRangeLabels();
+      updateClipRangeLabels({ fine: true });
     }
     setStudioState(restingState());
   }
@@ -584,6 +722,8 @@ function clearPinInputs() { for (const id of ['newPin', 'confirmPin', 'unlockPin
 function showTeacherDialog() {
   if (!appReady || saving) return;
   if (!window.isSecureContext || !crypto.subtle) { showCameraNotice('PIN 기능을 사용하려면 HTTPS 주소를 최신 Chrome에서 열어 주세요.'); return; }
+  shotHistory?.pause();
+  poseUI?.suspend('교사 설정을 여는 동안 전신 확인과 슛 동작 확인을 쉬어요.');
   teacherGeneration++;
   pinController?.abort(); pinController = null;
   pinBusy = false;
@@ -650,14 +790,17 @@ function revealTeacherContent() {
   $('teacherSetupPanel').hidden = true; $('teacherUnlockPanel').hidden = true;
   $('teacherContentPanel').hidden = false; $('teacherMessage').textContent = '';
   $('teacherDelay').value = String(delaySeconds); $('teacherDelayValue').textContent = String(delaySeconds);
+  syncShotControls(shotSettingsIssue);
   showTeacherTab('settings'); updateClipCount(); refreshStorageInfo();
+  classroomUI?.teacherOpen().then(() => shotHistory?.open());
 }
 
 function showTeacherTab(panel) {
   if (!teacherUnlocked) return;
   document.querySelectorAll('.teacher-tab').forEach(tab => tab.classList.toggle('is-active', tab.dataset.panel === panel));
-  $('settingsPanel').hidden = panel !== 'settings'; $('libraryPanel').hidden = panel !== 'library';
-  $('teacherContentTitle').textContent = panel === 'settings' ? '수업 설정' : '저장한 클립';
+  $('settingsPanel').hidden = panel !== 'settings'; $('libraryPanel').hidden = panel !== 'library'; $('classroomPanel').hidden = panel !== 'classroom';
+  $('teacherContentTitle').textContent = panel === 'settings' ? '수업 설정' : panel === 'classroom' ? '학급 · 제출' : '저장한 클립';
+  if (panel === 'classroom' && !$('classroomTeacherRoot').children.length) classroomUI?.teacherOpen();
   if (panel === 'library') loadLibrary();
   else { clearLibraryPreviewUrls(); refreshStorageInfo(); }
 }
@@ -699,6 +842,11 @@ async function loadLibrary() {
       const duration = Number.isFinite(clip.durationSeconds) ? `${clip.durationSeconds.toFixed(1)}초` : '길이 미확인';
       detail.textContent = metadata ? `${validDate ? formatDate(clip.createdAt) : '날짜 미확인'} · ${duration} · ${remainingText(clip.expiresAt)}` : '클립 정보가 손상됐어요. 이 항목만 삭제할 수 있어요.';
       meta.append(title, detail);
+      if (metadata?.reflectionGood || metadata?.reflectionRetry) {
+        const reflection = document.createElement('p'); reflection.className = 'clip-reflection';
+        reflection.textContent = [metadata.reflectionGood && `잘된 점: ${metadata.reflectionGood}`, metadata.reflectionRetry && `다시 시도할 점: ${metadata.reflectionRetry}`].filter(Boolean).join(' · ');
+        meta.append(reflection);
+      }
       const del = document.createElement('button'); del.type = 'button'; del.className = 'library-delete'; del.textContent = '×'; del.setAttribute('aria-label', '이 클립 삭제');
       del.addEventListener('click', () => askDeleteClip(clip.id));
       play.addEventListener('click', () => playLibraryClip(clip.id, row, detail, token, key));
@@ -730,6 +878,24 @@ async function playLibraryClip(id, row, detail, token, key) {
     video.src = url; video.controls = true; video.playsInline = true; video.muted = true; video.preload = 'metadata';
     video.onerror = () => { if (valid()) { clearLibraryMedia(); detail.textContent = '영상을 재생할 수 없어요. 이 클립만 삭제할 수 있어요.'; } };
     row.append(video);
+    const controls = document.createElement('div'); controls.className = 'playback-controls';
+    const speedLabel = document.createElement('label'); speedLabel.textContent = '재생 속도 ';
+    const speed = document.createElement('select'); speed.setAttribute('aria-label', '재생 속도');
+    for (const value of [0.5, 0.75, 1, 1.25, 1.5, 2]) { const option = document.createElement('option'); option.value = String(value); option.textContent = `${value}배`; option.selected = value === 1; speed.append(option); }
+    speed.addEventListener('change', () => { video.playbackRate = Number(speed.value); });
+    speedLabel.append(speed);
+    const loopLabel = document.createElement('label'); const loop = document.createElement('input'); loop.type = 'checkbox';
+    loop.addEventListener('change', () => { video.loop = loop.checked; });
+    loopLabel.append(loop, document.createTextNode(' 반복 재생'));
+    const download = document.createElement('button'); download.type = 'button'; download.className = 'clip-download'; download.textContent = '영상 파일 내보내기';
+    download.addEventListener('click', async () => {
+      if (valid() && expiry(record) <= Date.now()) { await refreshRetention(); return; }
+      if (!valid() || !confirm('내보낸 영상 파일은 암호화되지 않습니다. 기기와 공유 위치를 확인해 주세요. 파일로 저장할까요?')) return;
+      if (!valid()) return;
+      if (expiry(record) <= Date.now()) { await refreshRetention(); return; }
+      const link = document.createElement('a'); link.href = url; link.download = 'pe-loop-clip.webm'; link.click();
+    });
+    controls.append(speedLabel, loopLabel, download); row.append(controls);
   } catch { if (valid()) detail.textContent = '영상을 읽을 수 없어요. 다른 클립은 계속 확인할 수 있어요.'; }
 }
 
@@ -743,6 +909,7 @@ async function deleteClip() {
   const id = selectedDeleteId; const token = teacherGeneration;
   deleting = true; $('confirmDeleteButton').disabled = true; $('cancelDeleteButton').disabled = true;
   try {
+    await classroomUI?.removed(id);
     await repository.delete(id, vaultConfig?.revision);
     if (token !== teacherGeneration || !teacherUnlocked) return;
     selectedDeleteId = null; $('deleteDialog').close(); await loadLibrary(); refreshStorageInfo();
@@ -752,6 +919,7 @@ async function deleteClip() {
 
 function clearLibraryMedia() {
   mediaGeneration++;
+  document.querySelectorAll('.playback-controls').forEach(controls => controls.remove());
   document.querySelectorAll('.library-video').forEach(video => { video.pause(); video.removeAttribute('src'); video.load(); video.remove(); });
   libraryObjectUrls.forEach(url => URL.revokeObjectURL(url)); libraryObjectUrls = [];
 }
@@ -762,13 +930,18 @@ function clearLibraryPreviewUrls() {
 }
 
 function closeTeacherAccess() {
+  shotHistory?.close();
   teacherGeneration++; pinController?.abort(); pinController = null;
+  classroomUI?.teacherClose();
   teacherUnlocked = false; pinBusy = false; clearPinInputs(); clearLibraryPreviewUrls();
   selectedDeleteId = null; if ($('deleteDialog').open) $('deleteDialog').close();
   $('teacherMessage').textContent = '';
+  if (cameraStream) poseUI?.cameraStarted();
 }
 
 function lockTeacherDialog() {
+  shotHistory?.stop();
+  classroomUI?.closeAll();
   closeTeacherAccess(); teacherKey = null; $('teacherDialog').close();
 }
 
@@ -812,18 +985,29 @@ async function resetLocalData() {
   if (!/^\d{6}$/.test(pin) || pin !== $('resetConfirmPin').value) { $('resetMessage').textContent = '새 PIN을 두 번 동일하게 입력해 주세요.'; return; }
   resetting = true; $('confirmResetButton').disabled = true; $('cancelResetButton').disabled = true;
   $('resetMessage').textContent = '새 PIN을 준비하고 있어요…';
+  await poseUI?.reset();
+  classroomUI?.closeAll();
   stopCamera(); clearLibraryPreviewUrls();
   try {
     const candidate = await LocalVault.create(pin);
     await repository.reset(candidate.config);
     vaultConfig = candidate.config; vaultProblem = ''; teacherKey = candidate.key;
-    saveSettings({ delaySeconds });
+    shotSettings = { ...DEFAULT_SHOT_SETTINGS }; shotSettingsIssue = ''; settings.shot = { ...shotSettings };
+    resetFeedbackOptions();
+    poseUI?.setShotSettings(shotSettings); syncShotControls();
+    poseUI?.setMovement({ sport: 'basketball' });
+    $('teacherMovementSport').value = 'basketball';
+    $('teacherVolleyballEnabled').checked = false;
+    $('teacherVolleyballSide').value = 'right';
+    $('teacherShotHistoryEnabled').disabled = false;
+    $('shotPanel').hidden = false; $('volleyballPanel').hidden = true;
+    saveSettings({ delaySeconds, shot: shotSettings });
     for (const field of ['pinSalt', 'pinCheckIv', 'pinCheck', 'pinKdfIterations']) delete settings[field];
     $('resetDialog').close(); await updateClipCount();
     try { vaultChannel?.postMessage({ revision: vaultConfig.revision }); } catch {}
     try { localStorage.setItem('pe-loop-vault-revision', vaultConfig.revision); } catch {}
-    showToast('모든 클립을 삭제하고 새 PIN을 설정했어요.');
-  } catch { $('resetMessage').textContent = '초기화를 완료하지 못했어요. 저장소의 클립과 PIN은 함께 유지돼요. 다시 시도해 주세요.'; }
+    showToast('이 기기의 모든 자료를 삭제하고 새 PIN을 설정했어요.');
+  } catch { $('resetMessage').textContent = '초기화를 완료하지 못했어요. 저장소의 자료와 PIN은 함께 유지돼요. 다시 시도해 주세요.'; }
   finally { resetting = false; $('cancelResetButton').disabled = false; updateResetReady(); }
 }
 
@@ -831,16 +1015,163 @@ async function syncVaultRevision() {
   try {
     const current = await repository.config();
     if (vaultConfig?.revision === current?.revision) return;
+    classroomUI?.closeAll();
     closeTeacherAccess(); if ($('teacherDialog').open) $('teacherDialog').close();
     stopCamera(); vaultConfig = current; vaultProblem = current ? '' : 'PIN 설정을 다시 확인해 주세요.';
     showCameraNotice('다른 탭에서 PIN 설정이 바뀌었어요. 새 PIN으로 다시 열어 주세요.');
   } catch { /* A guarded write still rejects stale revisions. */ }
 }
 
-function registerServiceWorker() {
-  if ('serviceWorker' in navigator && window.isSecureContext) {
-    navigator.serviceWorker.register('./sw.js').catch(() => showToast('오프라인 저장을 설정하지 못했어요.'));
+function updateIsBusy() {
+  return !appReady || cameraStarting || Boolean(cameraStream) || saving || pinBusy || deleting || resetting ||
+    pendingTransactions > 0 || Boolean(classroomUI?.busy) || Boolean(poseUI?.busy) || Boolean(document.querySelector('dialog[open]'));
+}
+
+function setOfflineStatus(state, message) {
+  $('offlineNotice').dataset.state = state;
+  $('offlineMessage').textContent = message;
+}
+
+async function checkOfflineShell({ retry = false } = {}) {
+  const generation = ++offlineCheckGeneration;
+  setOfflineStatus('checking', '오프라인 준비 상태를 확인하고 있어요.');
+  if (!updateRegistration) {
+    setOfflineStatus('error', '오프라인 준비를 확인하지 못했어요. 인터넷 연결을 확인하고 다시 시도해 주세요.');
+    if (retry) registerServiceWorker();
+    return;
   }
+  if (retry) {
+    try { await updateRegistration.update(); } catch { /* Check the installed cache below. */ }
+  }
+  if (generation !== offlineCheckGeneration) return;
+  const worker = navigator.serviceWorker.controller || updateRegistration.active;
+  if (!worker) {
+    if (generation === offlineCheckGeneration) setOfflineStatus('error', '오프라인 준비가 끝나지 않았어요. 인터넷 연결을 확인하고 다시 시도해 주세요.');
+    return;
+  }
+  const ready = await new Promise(resolve => {
+    const channel = new MessageChannel();
+    const timer = setTimeout(() => { channel.port1.close(); resolve(false); }, 2000);
+    channel.port1.onmessage = event => {
+      clearTimeout(timer); channel.port1.close(); resolve(event.data?.ready === true);
+    };
+    try { worker.postMessage({ type: 'CHECK_SHELL' }, [channel.port2]); }
+    catch { clearTimeout(timer); channel.port1.close(); channel.port2.close(); resolve(false); }
+  });
+  if (generation !== offlineCheckGeneration) return;
+  setOfflineStatus(ready ? 'ready' : 'error', ready
+    ? '오프라인 실행에 필요한 파일이 준비됐어요.'
+    : '오프라인 파일을 확인하지 못했어요. 인터넷 연결을 확인해 다시 확인해 주세요. 계속되면 새 버전이 준비된 뒤 모든 앱 창을 닫고 다시 열어 주세요.');
+}
+
+function showWaitingUpdate() {
+  if (!updateRegistration?.waiting || !navigator.serviceWorker.controller) return;
+  $('updateNotice').hidden = false;
+  $('updateMessage').textContent = '새 버전이 준비됐어요. 수업을 마친 뒤 적용해 주세요.';
+}
+
+function applyWaitingUpdate() {
+  if (!updateRegistration?.waiting) return;
+  if (updateIsBusy()) {
+    $('updateMessage').textContent = '촬영과 저장을 마치고 열린 창을 닫은 뒤 적용해 주세요.';
+    return;
+  }
+  $('updateMessage').textContent = '업데이트하려면 PE Loop의 모든 탭과 설치된 앱 창을 닫고 다시 열어 주세요.';
+}
+
+function registerServiceWorker() {
+  const generation = ++registrationGeneration;
+  ++offlineCheckGeneration;
+  if (!('serviceWorker' in navigator) || !window.isSecureContext) {
+    setOfflineStatus('error', '이 환경에서는 오프라인 준비를 사용할 수 없어요. HTTPS 주소에서 다시 열어 주세요.');
+    return;
+  }
+  if (!serviceWorkerListenerInstalled) {
+    serviceWorkerListenerInstalled = true;
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+      // Initial installation and changes initiated elsewhere never reload this page.
+      checkOfflineShell();
+    });
+  }
+  navigator.serviceWorker.register('./sw.js').then(registration => {
+    if (generation !== registrationGeneration) return;
+    updateRegistration = registration;
+    showWaitingUpdate();
+    checkOfflineShell();
+    registration.addEventListener('updatefound', () => {
+      if (generation !== registrationGeneration) return;
+      const worker = registration.installing;
+      worker?.addEventListener('statechange', () => {
+        if (generation !== registrationGeneration) return;
+        if (worker.state === 'installed') showWaitingUpdate();
+        if (worker.state === 'activated' || worker.state === 'redundant') checkOfflineShell();
+      });
+    });
+    registration.installing?.addEventListener('statechange', event => {
+      if (generation !== registrationGeneration) return;
+      if (event.target.state === 'activated' || event.target.state === 'redundant') checkOfflineShell();
+    });
+  }).catch(() => {
+    if (generation === registrationGeneration) setOfflineStatus('error', '오프라인 준비를 확인하지 못했어요. 인터넷 연결을 확인하고 다시 시도해 주세요.');
+  });
+}
+
+function updateReferenceAppearance() {
+  const wrap = $('previewWrap');
+  wrap.classList.toggle('reference-side', Boolean(referenceUrl) && $('referenceMode').value === 'side');
+  wrap.style.setProperty('--reference-opacity', $('referenceOpacity').value);
+  wrap.style.setProperty('--reference-scale', $('referenceScale').value);
+  wrap.style.setProperty('--reference-x', `${$('referenceX').value}%`);
+  wrap.style.setProperty('--reference-y', `${$('referenceY').value}%`);
+}
+
+function clearReferenceVideo() {
+  const video = $('referenceVideo');
+  ++referenceGeneration;
+  video.pause(); video.removeAttribute('src'); video.load(); video.hidden = true;
+  video.replaceWith(video.cloneNode(false));
+  if (referenceUrl) URL.revokeObjectURL(referenceUrl);
+  referenceUrl = null; $('referenceFile').value = '';
+  updateReferenceAppearance();
+  $('referenceTime').disabled = true; $('referenceTime').value = '0';
+  $('referencePlay').disabled = true; $('referencePlay').textContent = '시범 영상 재생';
+  $('referenceClear').disabled = true; $('referenceStatus').textContent = '기기에 있는 영상만 불러와요.';
+}
+
+function setupReferenceVideo() {
+  for (const id of ['referenceMode', 'referenceOpacity', 'referenceScale', 'referenceX', 'referenceY']) $(id).addEventListener('input', updateReferenceAppearance);
+  $('referenceFile').addEventListener('change', () => {
+    const file = $('referenceFile').files[0];
+    if (!file) return;
+    clearReferenceVideo();
+    if (!file.type.startsWith('video/')) { $('referenceStatus').textContent = '영상 파일을 선택해 주세요.'; return; }
+    const video = $('referenceVideo');
+    const generation = referenceGeneration;
+    referenceUrl = URL.createObjectURL(file); video.src = referenceUrl; video.hidden = false;
+    updateReferenceAppearance();
+    $('referenceClear').disabled = false; $('referenceStatus').textContent = '시범 영상을 읽고 있어요…';
+    const valid = () => generation === referenceGeneration && video === $('referenceVideo') && Boolean(referenceUrl);
+    video.addEventListener('loadedmetadata', () => {
+      if (!valid() || !Number.isFinite(video.duration)) return;
+      $('referenceTime').max = String(video.duration); $('referenceTime').disabled = false;
+      $('referencePlay').disabled = false; $('referenceStatus').textContent = '기기의 시범 영상을 비교하고 있어요.';
+    });
+    video.addEventListener('error', () => { if (valid()) { clearReferenceVideo(); $('referenceStatus').textContent = '이 영상을 열 수 없어요. 다른 영상 파일을 선택해 주세요.'; } });
+    video.addEventListener('timeupdate', () => { if (valid()) $('referenceTime').value = String(video.currentTime); });
+    video.addEventListener('ended', () => { if (valid()) $('referencePlay').textContent = '시범 영상 재생'; });
+  });
+  $('referenceTime').addEventListener('input', () => { if (referenceUrl) $('referenceVideo').currentTime = Number($('referenceTime').value); });
+  $('referencePlay').addEventListener('click', async () => {
+    const video = $('referenceVideo');
+    const generation = referenceGeneration;
+    const valid = () => generation === referenceGeneration && video === $('referenceVideo') && Boolean(referenceUrl);
+    if (video.paused) {
+      try { await video.play(); if (valid() && !document.hidden && !video.paused) $('referencePlay').textContent = '시범 영상 일시정지'; }
+      catch (error) { if (valid() && !document.hidden && error?.name !== 'AbortError') $('referenceStatus').textContent = '시범 영상을 재생하지 못했어요.'; }
+    } else { video.pause(); $('referencePlay').textContent = '시범 영상 재생'; }
+  });
+  $('referenceClear').addEventListener('click', clearReferenceVideo);
+  updateReferenceAppearance();
 }
 
 function setupInstallPrompt() {
@@ -865,10 +1196,22 @@ function setupInstallPrompt() {
 }
 
 function wireEvents() {
+  for (const id of ['shotVisualEnabled', 'shotSoundEnabled', 'shotCaptureEnabled']) $(id).addEventListener('change', () => {
+    shotFeedback.setOptions({ visual: $('shotVisualEnabled').checked, sound: $('shotSoundEnabled').checked, capture: $('shotCaptureEnabled').checked });
+    poseUI.resetShot('feedback-settings');
+    poseUI.setCaptureEnabled($('shotCaptureEnabled').checked);
+    if ($('shotSoundEnabled').checked) shotFeedback.unlockAudio();
+  });
+  $('shotCaptureClear').addEventListener('click', () => shotFeedback.clear());
+  $('updateButton').addEventListener('click', applyWaitingUpdate);
+  $('offlineRetryButton').addEventListener('click', () => checkOfflineShell({ retry: true }));
   $('cameraButton').addEventListener('click', () => cameraStream ? stopCamera() : startCamera());
   $('openClipButton').addEventListener('click', openClipDialog);
   $('clipOffset').addEventListener('input', updateClipRangeLabels);
   $('clipLength').addEventListener('input', updateClipRangeLabels);
+  $('clipStartFrame').addEventListener('input', () => updateClipRangeLabels({ fine: true, previewIndex: Number($('clipStartFrame').value) }));
+  $('clipEndFrame').addEventListener('input', () => updateClipRangeLabels({ fine: true, previewIndex: Number($('clipEndFrame').value) }));
+  $('clipPreviewPlay').addEventListener('click', previewSelection);
   $('saveClipButton').addEventListener('click', saveSelectedClip);
   $('cancelSaveButton').addEventListener('click', () => cancelActiveSave('user'));
   $('teacherButton').addEventListener('click', showTeacherDialog);
@@ -878,6 +1221,34 @@ function wireEvents() {
   $('confirmPin').addEventListener('keydown', (event) => { if (event.key === 'Enter') createTeacherPin(); });
   $('unlockPin').addEventListener('keydown', (event) => { if (event.key === 'Enter') unlockTeacher(); });
   $('teacherDelay').addEventListener('input', (event) => setDelay(event.target.value));
+  $('applyMovement').addEventListener('click', () => {
+    if (!teacherUnlocked || !teacherKey || !$('teacherDialog').open || document.hidden) return;
+    const sport = $('teacherMovementSport').value, side = $('teacherVolleyballSide').value;
+    if (!['basketball', 'volleyball'].includes(sport) || !['left', 'right'].includes(side)) return;
+    resetFeedbackOptions();
+    shotHistory?.setEnabled(false);
+    poseUI.setMovement({ sport, side, enabled: $('teacherVolleyballEnabled').checked });
+    $('shotPanel').hidden = sport !== 'basketball';
+    $('volleyballPanel').hidden = sport !== 'volleyball';
+    $('teacherShotHistoryEnabled').disabled = sport !== 'basketball';
+    $('movementSettingsStatus').textContent = '이번 실행에 적용했어요. 준비 상태·추가 피드백·이력 기록을 껐어요. 전신 확인을 켜고 처음부터 준비해 주세요.';
+  });
+  $('saveShotSettings').addEventListener('click', saveShotSettings);
+  for (const id of ['teacherShotEnabled', 'teacherShotSide', 'teacherShotSensitivity']) $(id).addEventListener('change', () => {
+    if (!teacherUnlocked || !$('teacherDialog').open) return;
+    poseUI?.setShotSettings(shotSettings);
+    $('shotSettingsStatus').textContent = '변경한 설정은 「농구 설정 저장」을 눌러 적용해 주세요.';
+  });
+  window.addEventListener('storage', event => {
+    if (event.key !== SETTINGS_KEY && event.key !== null) return;
+    const incoming = readSettings().shot;
+    shotSettings = validShotSettings(incoming) ? copyShotSettings(incoming) : { ...DEFAULT_SHOT_SETTINGS };
+    shotSettingsIssue = incoming !== undefined && !validShotSettings(incoming) ? '저장된 농구 설정을 읽을 수 없어 기본값과 사용 안 함으로 시작해요.' : '';
+    settings.shot = { ...shotSettings };
+    poseUI?.setShotSettings(shotSettings);
+    syncShotControls('다른 화면의 설정 변경을 반영했어요. 동작을 처음부터 다시 준비해 주세요.');
+  });
+  for (const id of ['classroomTeacherRoot', 'studentClassroomRoot']) $(id).addEventListener('change', () => poseUI?.setShotSettings(shotSettings));
   $('teacherLockButton').addEventListener('click', lockTeacherDialog);
   document.querySelectorAll('.teacher-tab').forEach((tab) => tab.addEventListener('click', () => showTeacherTab(tab.dataset.panel)));
   $('cancelDeleteButton').addEventListener('click', () => { selectedDeleteId = null; $('deleteDialog').close(); });
@@ -886,7 +1257,7 @@ function wireEvents() {
   $('clipDialog').addEventListener('cancel', event => { if (saving) event.preventDefault(); });
   $('clipDialog').addEventListener('close', () => {
     previewClipLoop = false; previewClipToken += 1; selectionSnapshot = [];
-    if (!saving) setStudioState(restingState());
+    if (!saving) { setStudioState(restingState()); poseUI?.cameraStarted(); }
   });
   window.addEventListener('beforeunload', event => { if (saving) { event.preventDefault(); event.returnValue = ''; } });
   $('teacherDialog').addEventListener('close', closeTeacherAccess);
@@ -903,10 +1274,13 @@ function wireEvents() {
   vaultChannel?.addEventListener('message', () => syncVaultRevision());
   window.addEventListener('storage', event => { if (event.key === 'pe-loop-vault-revision') syncVaultRevision(); });
   document.addEventListener('visibilitychange', () => {
-    if (document.hidden) { if ($('teacherDialog').open) { closeTeacherAccess(); $('teacherDialog').close(); } cancelActiveSave('interrupted'); interruptCamera('앱이 화면에서 벗어나 촬영을 멈췄어요. 돌아온 뒤 다시 시작해 주세요.'); }
+    if (document.hidden) { $('referenceVideo').pause(); $('referencePlay').textContent = '시범 영상 재생'; if ($('teacherDialog').open) { closeTeacherAccess(); $('teacherDialog').close(); } cancelActiveSave('interrupted'); interruptCamera('앱이 화면에서 벗어나 촬영을 멈췄어요. 돌아온 뒤 다시 시작해 주세요.'); }
     else { syncVaultRevision(); refreshRetention(); }
   });
-  window.addEventListener('pagehide', () => stopCamera());
+  window.addEventListener('pagehide', () => { clearReferenceVideo(); stopCamera(); resetFeedbackOptions(); shotFeedback?.dispose(); });
+  window.addEventListener('pageshow', event => {
+    if (event.persisted && shotFeedback?.disposed) { shotFeedback = createShotFeedback(); resetFeedbackOptions(); }
+  });
 }
 
 function runLoops() {
@@ -918,9 +1292,23 @@ function runLoops() {
 }
 
 async function init() {
+  shotFeedback = createShotFeedback();
+  poseUI = new PoseUI({ video: cameraVideo, cameraActive: () => Boolean(cameraStream && captureLoop), paused: () => saving || Boolean($('clipDialog').open) || Boolean($('teacherDialog').open) || document.hidden, onShotState: renderShotState,
+    onCueState: snapshot => {
+      $('volleyballStatus').textContent = !poseUI?.cueSettings.enabled ? '교사 설정에서 이번 실행의 동작 확인을 켜 주세요.'
+        : snapshot.event || snapshot.state === 'swing' ? '머리 위 팔 스윙 유사 동작을 확인했어요. 팔을 내린 뒤 다시 준비해 주세요.'
+        : snapshot.state === 'ready' ? '준비 자세를 확인했어요. 머리 위에서 팔을 옆·아래 방향으로 펴 주세요.'
+        : '전신이 보이게 서서 선택한 팔을 머리 위로 구부려 준비해 주세요.';
+    },
+    shotContext: currentShotContext });
+  poseUI.setShotSettings(shotSettings);
+  syncShotControls(shotSettingsIssue);
+  classroomUI = new ClassroomUI({ repository, access: () => ({ key: teacherKey, revision: vaultConfig?.revision, unlocked: teacherUnlocked }), decryptMetadata, decryptClip });
+  shotHistory = new ShotHistoryUI({ classroom: classroomUI, repository, access: () => ({ key: teacherKey, revision: vaultConfig?.revision, unlocked: teacherUnlocked }), context: currentShotContext,
+    active: () => Boolean(poseUI?.sport === 'basketball' && shotSettings.enabled && poseUI?.enabled && poseUI?.running && cameraStream && captureLoop && !saving && !document.hidden && !$('teacherDialog').open && !$('clipDialog').open), decryptMetadata });
   setDelay(settings.delaySeconds || 20, { persist: false });
   $('cameraButton').disabled = true; $('teacherButton').disabled = true;
-  wireEvents(); setupInstallPrompt(); registerServiceWorker(); runLoops();
+  wireEvents(); setupInstallPrompt(); setupReferenceVideo(); registerServiceWorker(); runLoops();
   try {
     vaultConfig = await repository.config();
     if (!vaultConfig && LocalVault.validConfig(settings)) {
@@ -930,7 +1318,7 @@ async function init() {
     if (vaultConfig) {
       if (!LocalVault.validConfig(vaultConfig) || typeof vaultConfig.revision !== 'string' || !vaultConfig.revision) vaultProblem = 'PIN 설정이 손상됐어요. 초기화 안내를 확인해 주세요.';
       for (const field of ['pinSalt', 'pinCheckIv', 'pinCheck', 'pinKdfIterations']) delete settings[field];
-      saveSettings({ delaySeconds });
+      saveSettings({ delaySeconds, shot: shotSettings });
     } else if (await repository.count()) vaultProblem = '기존 클립의 PIN 설정을 찾을 수 없어요. 초기화 안내를 확인해 주세요.';
     await refreshRetention();
   } catch (error) { vaultProblem = friendlyFailure(error, '로컬 저장소를 열지 못했어요. 다른 탭과 저장 공간을 확인해 주세요.'); showCameraNotice(vaultProblem); }

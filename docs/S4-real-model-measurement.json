@@ -1,0 +1,428 @@
+{
+  "run": {
+    "command": "node tests/browser-pose-real.cjs",
+    "result": "PASS",
+    "environment": "Linux 6.18.57 x86_64; Debian Chromium 155.0.8059.79; headless; fake camera; CPU/WASM; short development measurement",
+    "hostname": "c721c867aa76",
+    "environmentProbe": "root-current-published-environment-369e8c5a-2026-11-06",
+    "modelSha256": "59929e1d1ee95287735ddd833b19cf4ac46d29bc7afddbbf6753c459690d574a",
+    "sampleSha256": "8da0e95f027a4fe298e3554b5728e08961014b651f1160a070f7c58670dbeda9",
+    "sdkVersion": "0.10.21"
+  },
+  "online": {
+    "count": 33,
+    "actual": {
+      "usable": true,
+      "reason": null,
+      "message": "전신 관절을 확인했어요."
+    },
+    "imageCases": {
+      "blank": [
+        {
+          "count": 0,
+          "gate": {
+            "usable": false,
+            "reason": "missing",
+            "message": "전신 관절 정보를 충분히 찾지 못했어요. 화면 안에 한 명이 보이도록 해 주세요."
+          }
+        },
+        {
+          "count": 0,
+          "gate": {
+            "usable": false,
+            "reason": "missing",
+            "message": "전신 관절 정보를 충분히 찾지 못했어요. 화면 안에 한 명이 보이도록 해 주세요."
+          }
+        },
+        {
+          "count": 0,
+          "gate": {
+            "usable": false,
+            "reason": "missing",
+            "message": "전신 관절 정보를 충분히 찾지 못했어요. 화면 안에 한 명이 보이도록 해 주세요."
+          }
+        }
+      ],
+      "cropped": [
+        {
+          "count": 33,
+          "gate": {
+            "usable": false,
+            "reason": "out-of-frame",
+            "message": "몸의 일부가 화면 밖에 있어요. 전신이 화면 안에 들어오도록 조정해 주세요."
+          }
+        },
+        {
+          "count": 33,
+          "gate": {
+            "usable": false,
+            "reason": "out-of-frame",
+            "message": "몸의 일부가 화면 밖에 있어요. 전신이 화면 안에 들어오도록 조정해 주세요."
+          }
+        },
+        {
+          "count": 33,
+          "gate": {
+            "usable": false,
+            "reason": "out-of-frame",
+            "message": "몸의 일부가 화면 밖에 있어요. 전신이 화면 안에 들어오도록 조정해 주세요."
+          }
+        }
+      ]
+    },
+    "transitions": [
+      {
+        "state": "recovering",
+        "reason": null
+      },
+      {
+        "state": "recovering",
+        "reason": null
+      },
+      {
+        "state": "present",
+        "reason": null
+      },
+      {
+        "state": "unavailable",
+        "reason": "confidence"
+      },
+      {
+        "state": "recovering",
+        "reason": null
+      },
+      {
+        "state": "recovering",
+        "reason": null
+      },
+      {
+        "state": "present",
+        "reason": null
+      },
+      {
+        "state": "unavailable",
+        "reason": "out-of-frame"
+      }
+    ],
+    "low": {
+      "usable": false,
+      "reason": "confidence",
+      "message": "관절이 가려졌거나 확신이 낮아요. 카메라와 몸 사이를 비우고 다시 서 주세요."
+    },
+    "outside": {
+      "usable": false,
+      "reason": "out-of-frame",
+      "message": "몸의 일부가 화면 밖에 있어요. 전신이 화면 안에 들어오도록 조정해 주세요."
+    },
+    "timings": [
+      361.39999999990687,
+      90.39999999990687,
+      85.39999999990687,
+      85.30000000004657,
+      82.19999999995343
+    ],
+    "gates": [
+      {
+        "gate": {
+          "usable": true,
+          "reason": null,
+          "message": "전신 관절을 확인했어요."
+        },
+        "minVisibility": 0.7459716200828552,
+        "minPresence": null
+      },
+      {
+        "gate": {
+          "usable": true,
+          "reason": null,
+          "message": "전신 관절을 확인했어요."
+        },
+        "minVisibility": 0.7226992845535278,
+        "minPresence": null
+      },
+      {
+        "gate": {
+          "usable": true,
+          "reason": null,
+          "message": "전신 관절을 확인했어요."
+        },
+        "minVisibility": 0.7167801260948181,
+        "minPresence": null
+      },
+      {
+        "gate": {
+          "usable": true,
+          "reason": null,
+          "message": "전신 관절을 확인했어요."
+        },
+        "minVisibility": 0.7197616696357727,
+        "minPresence": null
+      },
+      {
+        "gate": {
+          "usable": true,
+          "reason": null,
+          "message": "전신 관절을 확인했어요."
+        },
+        "minVisibility": 0.7120571732521057,
+        "minPresence": null
+      }
+    ]
+  },
+  "concurrency": {
+    "baseline": {
+      "elapsedMs": 4003.3000000000466,
+      "frames": 36,
+      "delayMs": 1073
+    },
+    "concurrent": {
+      "elapsedMs": 4000.1999999999534,
+      "frames": 36,
+      "delayMs": 1091.5,
+      "results": 11,
+      "inferenceMs": [
+        263.60000000009313,
+        121.30000000004657,
+        126.39999999990687,
+        108.79999999981374,
+        122.19999999995343,
+        104.9000000001397,
+        101.79999999981374,
+        110,
+        127.5,
+        107.5999999998603,
+        101.5999999998603,
+        131.30000000004657,
+        122.19999999995343,
+        124
+      ],
+      "copiesMs": [
+        1.8000000000465661,
+        2.300000000046566,
+        2.9000000001396984,
+        3.2999999998137355,
+        3.0999999998603016,
+        1.6000000000931323,
+        5.7999999998137355,
+        2.300000000046566,
+        2.9000000001396984,
+        3.8999999999068677,
+        3,
+        3.5,
+        3,
+        4,
+        2.3999999999068677
+      ]
+    }
+  },
+  "clip": {
+    "selection": {
+      "opened": 1793915056125.4001,
+      "chosen": 1793915056125.4001,
+      "running": false,
+      "worker": false
+    },
+    "clip": {
+      "bytes": 133833,
+      "mime": "video/webm",
+      "width": 640,
+      "height": 360,
+      "duration": 5.049,
+      "encoding": {
+        "running": false,
+        "worker": false,
+        "start": 1793915051075.8,
+        "frames": 47
+      },
+      "mae": [
+        0.2298162615740741,
+        0.3486082175925926,
+        0.13628761574074075
+      ],
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "vp8",
+            "codec_type": "video",
+            "width": 640,
+            "height": 360
+          }
+        ],
+        "format": {
+          "duration": "5.049000"
+        }
+      }
+    }
+  },
+  "offline": {
+    "count": 33,
+    "actual": {
+      "usable": true,
+      "reason": null,
+      "message": "전신 관절을 확인했어요."
+    },
+    "imageCases": {
+      "blank": [
+        {
+          "count": 0,
+          "gate": {
+            "usable": false,
+            "reason": "missing",
+            "message": "전신 관절 정보를 충분히 찾지 못했어요. 화면 안에 한 명이 보이도록 해 주세요."
+          }
+        },
+        {
+          "count": 0,
+          "gate": {
+            "usable": false,
+            "reason": "missing",
+            "message": "전신 관절 정보를 충분히 찾지 못했어요. 화면 안에 한 명이 보이도록 해 주세요."
+          }
+        },
+        {
+          "count": 0,
+          "gate": {
+            "usable": false,
+            "reason": "missing",
+            "message": "전신 관절 정보를 충분히 찾지 못했어요. 화면 안에 한 명이 보이도록 해 주세요."
+          }
+        }
+      ],
+      "cropped": [
+        {
+          "count": 33,
+          "gate": {
+            "usable": false,
+            "reason": "out-of-frame",
+            "message": "몸의 일부가 화면 밖에 있어요. 전신이 화면 안에 들어오도록 조정해 주세요."
+          }
+        },
+        {
+          "count": 33,
+          "gate": {
+            "usable": false,
+            "reason": "out-of-frame",
+            "message": "몸의 일부가 화면 밖에 있어요. 전신이 화면 안에 들어오도록 조정해 주세요."
+          }
+        },
+        {
+          "count": 33,
+          "gate": {
+            "usable": false,
+            "reason": "out-of-frame",
+            "message": "몸의 일부가 화면 밖에 있어요. 전신이 화면 안에 들어오도록 조정해 주세요."
+          }
+        }
+      ]
+    },
+    "transitions": [
+      {
+        "state": "recovering",
+        "reason": null
+      },
+      {
+        "state": "recovering",
+        "reason": null
+      },
+      {
+        "state": "present",
+        "reason": null
+      },
+      {
+        "state": "unavailable",
+        "reason": "confidence"
+      },
+      {
+        "state": "recovering",
+        "reason": null
+      },
+      {
+        "state": "recovering",
+        "reason": null
+      },
+      {
+        "state": "present",
+        "reason": null
+      },
+      {
+        "state": "unavailable",
+        "reason": "out-of-frame"
+      }
+    ],
+    "low": {
+      "usable": false,
+      "reason": "confidence",
+      "message": "관절이 가려졌거나 확신이 낮아요. 카메라와 몸 사이를 비우고 다시 서 주세요."
+    },
+    "outside": {
+      "usable": false,
+      "reason": "out-of-frame",
+      "message": "몸의 일부가 화면 밖에 있어요. 전신이 화면 안에 들어오도록 조정해 주세요."
+    },
+    "timings": [
+      398.10000000009313,
+      95.30000000004657,
+      94.9000000001397,
+      97.5,
+      89.80000000004657
+    ],
+    "gates": [
+      {
+        "gate": {
+          "usable": true,
+          "reason": null,
+          "message": "전신 관절을 확인했어요."
+        },
+        "minVisibility": 0.7459716200828552,
+        "minPresence": null
+      },
+      {
+        "gate": {
+          "usable": true,
+          "reason": null,
+          "message": "전신 관절을 확인했어요."
+        },
+        "minVisibility": 0.7226992845535278,
+        "minPresence": null
+      },
+      {
+        "gate": {
+          "usable": true,
+          "reason": null,
+          "message": "전신 관절을 확인했어요."
+        },
+        "minVisibility": 0.7167801260948181,
+        "minPresence": null
+      },
+      {
+        "gate": {
+          "usable": true,
+          "reason": null,
+          "message": "전신 관절을 확인했어요."
+        },
+        "minVisibility": 0.7197616696357727,
+        "minPresence": null
+      },
+      {
+        "gate": {
+          "usable": true,
+          "reason": null,
+          "message": "전신 관절을 확인했어요."
+        },
+        "minVisibility": 0.7120571732521057,
+        "minPresence": null
+      }
+    ]
+  },
+  "notes": [
+    "Five separate real inferences on the fixture are logged; presence field was absent (null). First timing includes cold frame; remaining timings are warm within that worker.",
+    "UI stabilization transitions repeat the final real result with fresh timestamps; low confidence and out-of-frame transition inputs are synthetic modifications. Blank and cropped image cases are separate real inference inputs.",
+    "Baseline and concurrent measurements are each approximately four seconds in one camera session. Regression checks require concurrent frame rate >=70% baseline and observed one-second delay between 500 and 1500 ms; these are development limits, not Android performance guarantees.",
+    "Selection and encoding suspend the worker; resumption and camera interruption/restart require new results. Decoded clip RGB MAE at 0, 2, 4.8 seconds compares selected source frames after presentation. ffprobe verified one VP8 video stream, no audio stream and container duration; packet count was not measured.",
+    "Browser context setOffline(true), controlled service-worker reload, cache prepare and valid model worker inference all succeeded. Request observation detected no nonlocal or non-GET/HEAD requests during the observed online session; it is not a general network audit.",
+    "No real Android device, classroom use, long-duration camera run, broader accuracy or image licensing validation was performed.",
+    "Total browser/worker memory, process resource use and device temperature were not measured; this short run establishes only the stated capture/inference/delay/encoding behavior."
+  ]
+}

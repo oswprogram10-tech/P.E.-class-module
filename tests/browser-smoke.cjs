@@ -24,13 +24,14 @@ withBrowser(async (page, errors) => {
   const outputDir = fs.mkdtempSync(path.join(os.tmpdir(), 'pe-loop-clips-'));
   try {
     for (const duration of [5, 15, 30]) {
-      await page.waitForFunction(seconds => frameBuffer.duration >= seconds * 1000 + 300, duration, { timeout: 45000 });
+      await page.waitForFunction(seconds => lastDrawnFrame && lastDrawnFrame - frameHistory[0].time >= seconds * 1000 + 300, duration, { timeout: 45000 });
       await page.locator('#openClipButton').click();
       await page.locator('#clipLength').fill(String(duration));
       await page.locator('#clipLength').dispatchEvent('input');
       await page.locator('#studentName').fill('가상학생');
       await page.locator('#studentNumber').fill('1');
       const selectedEnd = await page.evaluate(() => getSelectionFrames().at(-1).time);
+      const selectedDuration = await page.evaluate(() => Math.floor((getSelection().end - getSelection().start) * 1000) / 1000000);
       await page.waitForTimeout(200);
       assert.equal(await page.evaluate(() => getSelectionFrames().at(-1).time), selectedEnd);
       await page.locator('#saveClipButton').click();
@@ -50,14 +51,15 @@ withBrowser(async (page, errors) => {
       });
       assert.ok(result.size > 1000);
       assert.ok(Math.abs(result.measuredDuration - duration) < 0.4);
+      assert.ok(Math.abs(result.measuredDuration - selectedDuration) < 0.002);
       assert.equal(result.state, 'capturing');
       const file = path.join(outputDir, `${duration}.webm`);
       fs.writeFileSync(file, Buffer.from(result.base64, 'base64'));
       const probe = JSON.parse(execFileSync('ffprobe', ['-v', 'error', '-show_packets', '-show_streams', '-of', 'json', file]));
       assert.ok(probe.streams.every(stream => stream.codec_type === 'video'), 'clip must have no audio');
       const packetEnd = Math.max(...probe.packets.map(packet => Number(packet.pts_time) + Number(packet.duration_time || 0)));
-      assert.ok(packetEnd <= duration + 0.000001, `clip exceeds selected duration: ${packetEnd}`);
-      assert.ok(Math.abs(packetEnd - duration) < 0.15, `encoded duration ${packetEnd}, expected ${duration}`);
+      assert.ok(packetEnd <= 30.000001, `clip exceeds 30 seconds: ${packetEnd}`);
+      assert.ok(Math.abs(packetEnd - result.measuredDuration) < 0.101, `encoded duration ${packetEnd}, selected ${result.measuredDuration}`);
       console.log(JSON.stringify({ selectedSeconds: duration, encodedSeconds: packetEnd, measuredSeconds: result.measuredDuration, bytes: result.size, passed: true }));
     }
     assert.deepEqual(errors, []);

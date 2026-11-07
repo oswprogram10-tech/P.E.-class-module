@@ -1,0 +1,308 @@
+{
+  "schemaVersion": 1,
+  "kind": "synthetic-defined-rule-evaluation",
+  "limitations": [
+    "Coordinates are constructed from rule unit-test geometry, not captured people or model outputs.",
+    "Camera directions are scenario labels only; no real projection or direction robustness is validated.",
+    "Reference windows are declared fixture truth; non-shot arm raise intentionally has no target event despite identical geometry.",
+    "No sports accuracy, shot success, technique, Android, thermal or 40-minute claims."
+  ],
+  "protocol": {
+    "unit": "event per isolated clip",
+    "matching": "One-to-one within inclusive reference windows (earliest ending available window first, maximizing match count); duplicate/unmatched detections FP; unmatched windows FN",
+    "referenceMeaning": "Constructed target SHOOT interval, including hold completion; not physical ball release",
+    "zeroDenominator": null,
+    "aggregation": "micro sums; no true-negative accuracy",
+    "settings": {
+      "sensitivity": "normal"
+    },
+    "fixtureSha256": "aba62c8c3448dc0d5a7b68c1b477d51a03af4b257dc5d2699efb2511180e5a37"
+  },
+  "sourceSha256": "d12ddf76dc2096546b26b2bf2a08db3864dda38a2b56d631eef354300b361d13",
+  "environment": {
+    "hostname": "eb97ffefba06",
+    "node": "v24.22.1",
+    "platform": "linux",
+    "arch": "x64",
+    "kernel": "6.18.57"
+  },
+  "evaluation": {
+    "exposure": {
+      "observedDurationMs": 5900,
+      "negativeClipDurationMs": 1300,
+      "note": "Last minus first fixture input timestamp per clip; sparse synthetic observations, not continuous video or negative duration within positive clips"
+    },
+    "overall": {
+      "tp": 3,
+      "fp": 1,
+      "fn": 2,
+      "precision": 0.75,
+      "recall": 0.6
+    },
+    "byDirection": {
+      "front-label": {
+        "tp": 2,
+        "fp": 1,
+        "fn": 0,
+        "precision": 0.6666666666666666,
+        "recall": 1
+      },
+      "oblique-label": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 1,
+        "precision": 1,
+        "recall": 0.5
+      },
+      "side-label": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "precision": null,
+        "recall": 0
+      }
+    },
+    "byCondition": {
+      "clear": {
+        "tp": 2,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "idle": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 0,
+        "precision": null,
+        "recall": null
+      },
+      "non-shot-arm-raise": {
+        "tp": 0,
+        "fp": 1,
+        "fn": 0,
+        "precision": 0,
+        "recall": null
+      },
+      "occluded": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "precision": null,
+        "recall": 0
+      },
+      "scaled-translated": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1,
+        "recall": 1
+      },
+      "tracking-gap": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "precision": null,
+        "recall": 0
+      }
+    },
+    "cases": [
+      {
+        "id": "right-clear",
+        "direction": "front-label",
+        "condition": "clear",
+        "observedDurationMs": 700,
+        "events": [
+          800
+        ],
+        "references": [
+          {
+            "start": 500,
+            "end": 800
+          }
+        ],
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1,
+        "recall": 1,
+        "matches": [
+          {
+            "timestamp": 800,
+            "referenceIndex": 0
+          }
+        ],
+        "falsePositives": [],
+        "falseNegatives": []
+      },
+      {
+        "id": "left-clear",
+        "direction": "oblique-label",
+        "condition": "clear",
+        "observedDurationMs": 700,
+        "events": [
+          800
+        ],
+        "references": [
+          {
+            "start": 500,
+            "end": 800
+          }
+        ],
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1,
+        "recall": 1,
+        "matches": [
+          {
+            "timestamp": 800,
+            "referenceIndex": 0
+          }
+        ],
+        "falsePositives": [],
+        "falseNegatives": []
+      },
+      {
+        "id": "scaled",
+        "direction": "front-label",
+        "condition": "scaled-translated",
+        "observedDurationMs": 700,
+        "events": [
+          800
+        ],
+        "references": [
+          {
+            "start": 500,
+            "end": 800
+          }
+        ],
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1,
+        "recall": 1,
+        "matches": [
+          {
+            "timestamp": 800,
+            "referenceIndex": 0
+          }
+        ],
+        "falsePositives": [],
+        "falseNegatives": []
+      },
+      {
+        "id": "occlusion",
+        "direction": "side-label",
+        "condition": "occluded",
+        "observedDurationMs": 700,
+        "events": [],
+        "references": [
+          {
+            "start": 500,
+            "end": 800
+          }
+        ],
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "precision": null,
+        "recall": 0,
+        "matches": [],
+        "falsePositives": [],
+        "falseNegatives": [
+          0
+        ]
+      },
+      {
+        "id": "gap",
+        "direction": "oblique-label",
+        "condition": "tracking-gap",
+        "observedDurationMs": 1800,
+        "events": [],
+        "references": [
+          {
+            "start": 1600,
+            "end": 1900
+          }
+        ],
+        "tp": 0,
+        "fp": 0,
+        "fn": 1,
+        "precision": null,
+        "recall": 0,
+        "matches": [],
+        "falsePositives": [],
+        "falseNegatives": [
+          0
+        ]
+      },
+      {
+        "id": "non-shot-raise",
+        "direction": "front-label",
+        "condition": "non-shot-arm-raise",
+        "observedDurationMs": 700,
+        "events": [
+          800
+        ],
+        "references": [],
+        "tp": 0,
+        "fp": 1,
+        "fn": 0,
+        "precision": 0,
+        "recall": null,
+        "matches": [],
+        "falsePositives": [
+          800
+        ],
+        "falseNegatives": []
+      },
+      {
+        "id": "idle",
+        "direction": "side-label",
+        "condition": "idle",
+        "observedDurationMs": 600,
+        "events": [],
+        "references": [],
+        "tp": 0,
+        "fp": 0,
+        "fn": 0,
+        "precision": null,
+        "recall": null,
+        "matches": [],
+        "falsePositives": [],
+        "falseNegatives": []
+      }
+    ]
+  },
+  "resource": {
+    "scope": "Node rule-only landmark processing; excludes model, camera, browser, GPU, energy and temperature",
+    "repetitions": 1000,
+    "updates": 27000,
+    "elapsedMs": 42.30597699999999,
+    "cpuUserMs": 58.106,
+    "cpuSystemMs": 0.654,
+    "beforeBytes": {
+      "rss": 40181760,
+      "heapTotal": 8704000,
+      "heapUsed": 6286776,
+      "external": 2099115,
+      "arrayBuffers": 143667
+    },
+    "afterBytes": {
+      "rss": 42659840,
+      "heapTotal": 10801152,
+      "heapUsed": 5789912,
+      "external": 2099171,
+      "arrayBuffers": 143683
+    },
+    "processLifetimeMaxRss": {
+      "value": 43732,
+      "unit": "KiB",
+      "scope": "Node process lifetime high-water mark, includes setup and warmup; not benchmark-only peak"
+    },
+    "rssDeltaBytes": 2478080,
+    "heapUsedDeltaBytes": -496864,
+    "notes": "Process snapshots are not peak memory; GC/JIT and shared-host load affect measurements. No timing pass threshold."
+  }
+}

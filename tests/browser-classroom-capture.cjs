@@ -1,0 +1,94 @@
+const { withBrowser } = require('./browser-helper.cjs');
+const assert = require('node:assert/strict');
+const { createHub } = require('../server/classroom-hub');
+(async () => {
+const hub = createHub({ teacherSecret: 'capture-test-secret-12345' });
+await new Promise((resolve, reject) => { hub.server.once('error', reject); hub.server.listen(0, '127.0.0.1', resolve); });
+const hubUrl = `http://127.0.0.1:${hub.server.address().port}`;
+try {
+await withBrowser(async (teacherPage, errors, baseUrl) => {
+  let page = teacherPage;
+  await page.waitForFunction(() => !teacherUnlocked);
+  console.log('capture phase: bind');
+  await page.evaluate(async () => {
+    await classroomUI.write(s => {
+      const c = ClassroomModel.add(s, 'classes', { name: '실제 촬영 검증반' });
+      const student = ClassroomModel.add(s, 'students', { classId: c.id, name: '촬영학생', number: '8' });
+      const lesson = ClassroomModel.add(s, 'lessons', { classId: c.id, name: '슛', unit: '협응', sport: '농구' });
+      const device = ClassroomModel.add(s, 'devices', { classId: c.id, name: '가상 카메라' });
+      s.binding = { classId: c.id, studentId: student.id, lessonId: lesson.id, deviceId: device.id, mode: 'student' };
+    });
+  });
+  const contextIds = await teacherPage.evaluate(() => classroomUI.state.binding);
+  const teacherAuth = await (await fetch(hubUrl + '/teacher', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ secret: 'capture-test-secret-12345', classId: contextIds.classId }) })).json();
+  const participation = await (await fetch(hubUrl + '/capabilities', { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + teacherAuth.token }, body: JSON.stringify({ studentId: contextIds.studentId, lessonId: contextIds.lessonId, deviceId: contextIds.deviceId, mode: 'student' }) })).json();
+  const studentContext = await teacherPage.context().browser().newContext({ viewport: { width: 1280, height: 900 } });
+  page = await studentContext.newPage(); page.on('pageerror', error => errors.push(error.message));
+  await page.goto(baseUrl + '#join=' + btoa(JSON.stringify({ hubUrl, capability: participation.capability })));
+  await page.waitForFunction(() => appReady);
+  assert.equal(new URL(page.url()).hash, '', 'participation fragment must be removed from browser history');
+  await page.locator('#teacherButton').click(); await page.locator('#newPin').fill('654321'); await page.locator('#confirmPin').fill('654321'); await page.locator('#createPinButton').click(); await page.locator('#teacherContentPanel').waitFor({ state: 'visible' }); await page.locator('#teacherDialog .close-button').click(); await page.waitForFunction(() => !teacherUnlocked);
+  await page.locator('#joinStudentHub').click(); await page.waitForFunction(() => !!classroomUI.connection);
+  await page.locator('#localStudentName').fill('촬영학생'); await page.locator('#localStudentNumber').fill('8'); await page.locator('#saveStudentProfile').click(); await page.waitForFunction(() => classroomUI.binding()?.student.number === '8');
+  assert.equal(await page.evaluate(() => classroomUI.state.students.length), 1, 'fresh station must receive only its assigned student, never the roster');
+  await page.evaluate(() => setDelay(1));
+  console.log('capture phase: camera');
+  await page.locator('#cameraButton').click();
+  await page.waitForFunction(() => lastDrawnFrame && lastDrawnFrame - frameHistory[0].time > 5500, null, { timeout: 20000 });
+  await page.locator('#openClipButton').click();
+  assert.equal(await page.locator('#studentName').inputValue(), '촬영학생');
+  assert.equal(await page.locator('#studentNumber').inputValue(), '8');
+  await page.locator('#clipLength').fill('5'); await page.locator('#clipLength').dispatchEvent('input');
+  await page.locator('#reflectionGood').fill('발을 벌려 균형 유지'); await page.locator('#reflectionRetry').fill('팔꿈치 높이기');
+  await page.locator('#saveClipButton').click();
+  await page.waitForFunction(() => !$('clipDialog').open, null, { timeout: 30000 });
+  await page.waitForFunction(() => document.querySelectorAll('#representativeClip option').length === 2);
+  console.log('capture phase: decrypt real WebM');
+  const result = await page.evaluate(async () => {
+    const record = (await repository.all())[0], meta = await decryptMetadata(record);
+    const blob = await decryptClip(record); const url = URL.createObjectURL(blob), video = document.createElement('video'); video.muted = true; video.src = url;
+    await new Promise((resolve, reject) => { const timer = setTimeout(() => reject(new Error('WebM metadata timeout')), 5000); video.onloadedmetadata = () => { clearTimeout(timer); resolve(); }; video.onerror = () => { clearTimeout(timer); reject(new Error('WebM decode failed')); }; });
+    const duration = record.durationSeconds; const hasAudio = video.audioTracks?.length || 0; video.removeAttribute('src'); video.load(); URL.revokeObjectURL(url);
+    return { record: { id: record.id, raw: JSON.stringify(record), size: blob.size }, meta, binding: classroomUI.state.binding, duration, hasAudio };
+  });
+  assert.equal(result.meta.classId, result.binding.classId); assert.equal(result.meta.studentId, result.binding.studentId); assert.equal(result.meta.lessonId, result.binding.lessonId); assert.equal(result.meta.deviceId, result.binding.deviceId); assert.ok(result.meta.reflectionId);
+  assert.equal(result.meta.reflectionGood, '발을 벌려 균형 유지'); assert.equal(result.meta.reflectionRetry, '팔꿈치 높이기');
+  assert.equal(result.record.raw.includes('촬영학생'), false); assert.equal(result.record.raw.includes('균형'), false); assert.ok(result.record.size > 1000); assert.equal(result.hasAudio, 0); assert.ok(result.duration >= 5 && result.duration <= 5.2);
+  console.log('capture phase: explicit submission');
+  await page.context().setOffline(true);
+  await page.locator('#representativeClip').selectOption(result.record.id); await page.locator('#submitRepresentative').click();
+  await page.waitForFunction(() => classroomUI.state.submissions.length === 1);
+  await page.waitForFunction(() => classroomUI.state.outbox.find(op => op.kind === 'submit')?.status === 'failed', null, { timeout: 15000 });
+  const queued = await page.evaluate(async () => { const item = classroomUI.state.outbox.find(op => op.kind === 'submit'); const blob = await decryptClip((await repository.all())[0]); const copy = await (await fetch(item.payload.clipData)).blob(); return { status: item.status, bytes: Array.from(new Uint8Array(await blob.arrayBuffer())), copy: Array.from(new Uint8Array(await copy.arrayBuffer())), reflection: item.payload.reflection, count: classroomUI.state.submissions.length }; });
+  assert.equal(queued.status, 'failed', 'offline send must preserve its retryable payload after failure'); assert.deepEqual(queued.copy, queued.bytes); assert.equal(queued.reflection.good, result.meta.reflectionGood); assert.equal(queued.count, 1);
+  assert.equal(await page.evaluate(() => classroomUI.state.submissions[0].reflectionId), result.meta.reflectionId);
+  console.log('capture phase: real HTTP submit and teacher playback');
+  await page.context().setOffline(false);
+  await page.locator('#syncClassroomButton').click();
+  await page.waitForFunction(() => classroomUI.state.submissions[0]?.status === 'sent');
+  const auth = teacherAuth;
+  const remoteResponse = await fetch(hubUrl + '/state', { headers: { Authorization: 'Bearer ' + auth.token } }); const remote = await remoteResponse.json();
+  const submitted = remote.items.find(item => item.kind === 'submit');
+  assert.deepEqual(Array.from(Buffer.from(submitted.clipData.split(',')[1], 'base64')), queued.bytes);
+  assert.equal(submitted.reflection.good, result.meta.reflectionGood);
+  await page.evaluate(() => stopCamera());
+  page = teacherPage; await page.bringToFront();
+  await page.locator('#teacherButton').click(); await page.locator('#unlockPin').fill('123456'); await page.locator('#unlockButton').click(); await page.locator('[data-panel="classroom"]').click();
+  await page.locator('#teacherHubUrl').fill(hubUrl); await page.locator('#hubSecret').fill('capture-test-secret-12345'); await page.locator('#connectTeacherHub').click(); await page.waitForFunction(() => !!classroomUI.teacherClient);
+  await page.locator('#refreshTeacherHub').click(); await page.locator('#hubTeacherItems video').waitFor();
+  const played = await page.locator('#hubTeacherItems video').evaluate(async video => {
+    video.muted = true; const frame = new Promise((resolve, reject) => { const timer = setTimeout(() => reject(new Error('teacher playback frame timeout')), 5000); video.requestVideoFrameCallback(() => { clearTimeout(timer); resolve(); }); });
+    await video.play(); await frame; video.pause(); return { width: video.videoWidth, height: video.videoHeight, state: video.readyState };
+  });
+  assert.equal(played.width, 640); assert.equal(played.height, 360); assert.ok(played.state >= 2);
+  const heldVideo = await page.locator('#hubTeacherItems video').elementHandle();
+  await heldVideo.evaluate(video => video.play());
+  await page.locator('#teacherDialog .close-button').click();
+  await page.waitForFunction(() => !teacherUnlocked);
+  assert.deepEqual(await heldVideo.evaluate(video => ({ paused: video.paused, source: video.getAttribute('src') })), { paused: true, source: null }, 'teacher close must pause and detach the old selected video before removing DOM');
+  await studentContext.close();
+  assert.deepEqual(errors, []);
+  console.log('PASS actual virtual-camera save preserves stable context/reflection IDs, encrypted metadata, valid silent WebM and explicit offline selected-byte submission');
+});
+} finally { hub.server.closeAllConnections(); await new Promise(resolve => hub.server.close(resolve)); }
+})().catch(error => { console.error(error); process.exitCode = 1; });

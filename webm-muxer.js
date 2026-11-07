@@ -25,6 +25,14 @@
     do { result.unshift(Number(number & 255n)); number >>= 8n; } while (number);
     return new Uint8Array(result);
   }
+  function signed(value) {
+    let length = 1;
+    while (value < -(2 ** (length * 8 - 1)) || value >= 2 ** (length * 8 - 1)) length++;
+    let number = BigInt.asUintN(length * 8, BigInt(value));
+    const bytes = new Uint8Array(length);
+    for (let index = length - 1; index >= 0; index--) { bytes[index] = Number(number & 255n); number >>= 8n; }
+    return bytes;
+  }
   const element = (tag, data) => concat([id(tag), size(data.length), data]);
   const uint = (tag, value) => element(tag, integer(value));
   const text = (tag, value) => element(tag, new TextEncoder().encode(value));
@@ -38,13 +46,17 @@
   function mux({ chunks, width, height, durationMs, frameDurationMs = 100, colorSpace = null }) {
     if (!(durationMs > 0 && durationMs <= 30000) || !chunks.length) throw new Error('Invalid clip duration');
     const ordered = [...chunks].sort((a, b) => a.timestamp - b.timestamp);
-    if (durationMs % frameDurationMs || ordered.length !== durationMs / frameDurationMs) throw new Error('Incomplete encoded video');
+    if (!Number.isInteger(durationMs) || ordered.length !== Math.ceil(durationMs / frameDurationMs)) throw new Error('Incomplete encoded video');
     if (ordered[0].timestamp !== 0 || !ordered[0].key) throw new Error('Video must start with a key frame');
     const blocks = ordered.map((chunk, index) => {
       const time = chunk.timestamp / 1000;
-      if (!Number.isInteger(time) || time !== index * frameDurationMs || time + frameDurationMs > durationMs) throw new Error('Invalid video timestamp');
+      if (!Number.isInteger(time) || time !== index * frameDurationMs || time >= durationMs) throw new Error('Invalid video timestamp');
       const header = new Uint8Array([0x81, 0, 0, chunk.key ? 0x80 : 0]);
       new DataView(header.buffer).setInt16(1, time);
+      if (time + frameDurationMs > durationMs) {
+        header[3] = 0;
+        return master('A0', [element('A1', concat([header, chunk.data])), uint('9B', durationMs - time), ...(!chunk.key ? [element('FB', signed(-frameDurationMs))] : [])]);
+      }
       return element('A3', concat([header, chunk.data]));
     });
     const ebml = master('1A45DFA3', [uint('4286', 1), uint('42F7', 1), uint('42F2', 4), uint('42F3', 8), text('4282', 'webm'), uint('4287', 4), uint('4285', 2)]);

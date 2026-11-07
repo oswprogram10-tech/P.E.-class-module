@@ -78,8 +78,42 @@
     }
     reset(config) {
       return this.transaction(['clips', 'meta'], 'readwrite', tx => {
-        tx.objectStore('clips').clear(); tx.objectStore('meta').delete('legacy-migration-pending'); tx.objectStore('meta').put(config, 'vault');
+        tx.objectStore('clips').clear(); tx.objectStore('meta').delete('legacy-migration-pending'); tx.objectStore('meta').delete('classroom'); tx.objectStore('meta').put(config, 'vault');
       });
+    }
+    classroomRead(revision) {
+      return this.transaction(['meta'], 'readonly', (tx, result) => {
+        const store = tx.objectStore('meta');
+        const check = store.get('vault');
+        check.onsuccess = () => {
+          if (!revision || check.result?.revision !== revision) { result.error = new Error('PIN 설정이 바뀌었어요. 다시 열어 주세요.'); tx.abort(); return; }
+          const request = store.get('classroom'); request.onsuccess = () => { result.value = request.result || null; };
+        };
+      });
+    }
+    classroomWrite(record, revision, expectedVersion, { signal, validate, clipId } = {}) {
+      return this.transaction(clipId ? ['clips', 'meta'] : ['meta'], 'readwrite', (tx, result) => {
+        const store = tx.objectStore('meta');
+        const check = store.get('vault');
+        check.onsuccess = () => {
+          if (!revision || check.result?.revision !== revision) { result.error = new Error('PIN 설정이 바뀌었어요. 다시 열어 주세요.'); tx.abort(); return; }
+          const current = store.get('classroom');
+          current.onsuccess = () => {
+            if ((current.result?.version || 0) !== expectedVersion) { result.error = new Error('다른 화면에서 기록을 바꿨어요. 다시 불러와 주세요.'); tx.abort(); return; }
+            const commit = () => {
+              try { signal?.throwIfAborted(); if (validate && validate() !== true) throw new Error('작업 상태가 바뀌어 기록하지 않았어요.'); store.put(record, 'classroom'); }
+              catch (error) { result.error = error; try { tx.abort(); } catch {} }
+            };
+            if (!clipId) { commit(); return; }
+            const clip = tx.objectStore('clips').get(clipId);
+            clip.onsuccess = () => {
+              const expiresAt = expiry(clip.result || {});
+              if (!Number.isFinite(expiresAt) || expiresAt <= Date.now()) { result.error = new Error('선택한 클립이 삭제되었거나 만료되었어요.'); tx.abort(); return; }
+              commit();
+            };
+          };
+        };
+      }, { signal });
     }
     guarded(mode, revision, action, options) {
       return this.transaction(['clips', 'meta'], mode, (tx, result) => {

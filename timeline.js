@@ -3,7 +3,7 @@
     select(frames, end, durationSeconds) {
       const start = end - durationSeconds * 1000;
       const invalid = reason => ({ start, end, frames: [], valid: false, reason });
-      if (!Number.isFinite(end) || !Number.isInteger(durationSeconds) || durationSeconds < 5 || durationSeconds > 30 || durationSeconds % 5) return invalid('저장 길이는 5~30초에서 선택해 주세요.');
+      if (!Number.isFinite(end) || !Number.isFinite(durationSeconds) || durationSeconds < 5 || durationSeconds > 30) return invalid('저장 길이는 5~30초에서 선택해 주세요.');
       if (!frames.length || frames[0].time > start + 150 || frames.at(-1).time < end - 150) return invalid('이 구간에는 영상이 충분하지 않아요. 더 짧은 길이나 다른 장면을 선택해 주세요.');
       const first = Timeline.frameAt(frames, start);
       const selected = frames.filter(frame => frame.time >= first.time && frame.time <= end);

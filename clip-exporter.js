@@ -4,7 +4,8 @@
   async function exportClip({ frames, start, durationSeconds, signal, onProgress = () => {} }) {
     checkAbort(signal);
     if (!root.VideoEncoder || !root.VideoFrame) throw new Error('이 Chrome에서는 클립 생성을 지원하지 않아요. Chrome을 업데이트해 주세요.');
-    if (!frames.length || !Number.isInteger(durationSeconds) || durationSeconds < 1 || durationSeconds > 30) throw new Error('유효한 저장 구간을 선택해 주세요.');
+    if (!frames.length || !Number.isFinite(durationSeconds) || durationSeconds < 1 || durationSeconds > 30) throw new Error('유효한 저장 구간을 선택해 주세요.');
+    const durationMs = Math.floor(durationSeconds * 1000);
     const config = { codec: 'vp8', width: 640, height: 360, bitrate: 650000, framerate: 10 };
     const supported = await VideoEncoder.isConfigSupported(config);
     checkAbort(signal);
@@ -28,7 +29,7 @@
     signal?.addEventListener('abort', abort, { once: true });
     try {
       encoder.configure(config);
-      const count = durationSeconds * config.framerate;
+      const count = Math.ceil(durationMs / 100);
       for (let index = 0; index < count; index++) {
         checkAbort(signal);
         if (encoderError) throw encoderError;
@@ -40,7 +41,7 @@
           checkAbort(signal);
           context.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
         } finally { bitmap?.close(); }
-        const frame = new VideoFrame(canvas, { timestamp, duration: 100000 });
+        const frame = new VideoFrame(canvas, { timestamp, duration: Math.min(100, durationMs - index * 100) * 1000 });
         try { encoder.encode(frame, { keyFrame: index % 10 === 0 }); }
         finally { frame.close(); }
         if (encoder.encodeQueueSize >= 4) await encoder.flush();
@@ -51,9 +52,9 @@
       await encoder.flush();
       checkAbort(signal);
       if (encoderError) throw encoderError;
-      const blob = WebMMuxer.mux({ chunks, width: canvas.width, height: canvas.height, durationMs: durationSeconds * 1000, colorSpace });
+      const blob = WebMMuxer.mux({ chunks, width: canvas.width, height: canvas.height, durationMs, colorSpace });
       checkAbort(signal);
-      return { blob, durationSeconds, colorSpace };
+      return { blob, durationSeconds: durationMs / 1000, colorSpace };
     } catch (error) {
       checkAbort(signal);
       throw error;

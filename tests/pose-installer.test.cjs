@@ -1,0 +1,55 @@
+const { test } = require('node:test');
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const path = require('node:path');
+const os = require('node:os');
+const crypto = require('node:crypto');
+const { execFileSync } = require('node:child_process');
+const { inspectArchive, installModel } = require('../scripts/fetch-pose-model.cjs');
+test('synthetic task validation, staged installation and mismatch rejection', t => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'pe-pose-test-')); t.after(() => fs.rmSync(dir, { recursive: true, force: true }));
+  const root = path.join(dir, 'app'); fs.mkdirSync(path.join(root, 'docs'), { recursive: true });
+  fs.copyFileSync(path.join(__dirname, '../docs/pose-assets.json'), path.join(root, 'docs/pose-assets.json'));
+  fs.copyFileSync(path.join(__dirname, '../pose-assets.js'), path.join(root, 'pose-assets.js'));
+  const manifestPath = path.join(root, 'docs/pose-assets.json');
+  const initialManifest = JSON.parse(fs.readFileSync(manifestPath)); initialManifest.model.sha256 = null;
+  initialManifest.model.license = 'synthetic reviewed-license evidence';
+  delete initialManifest.model.licenseEvidence;
+  fs.writeFileSync(manifestPath, JSON.stringify(initialManifest));
+  const assetPath = path.join(root, 'pose-assets.js');
+  fs.writeFileSync(assetPath, fs.readFileSync(assetPath, 'utf8').replace(/(name: 'model', url: '\.\/vendor\/pose\/pose_landmarker_lite\.task', sha256: )(null|'[a-f0-9]{64}')/, '$1null'));
+  fs.writeFileSync(path.join(root, 'sw.js'), "const CACHE_NAME = 'pe-loop-shell-v9';\n");
+  const fixture = path.join(dir, 'fixture'); fs.mkdirSync(fixture);
+  for (const name of ['pose_detector.tflite', 'pose_landmarks_detector.tflite']) { const bytes = crypto.randomBytes(2048); bytes.write('TFL3', 4, 'ascii'); fs.writeFileSync(path.join(fixture, name), bytes); }
+  const archive = path.join(dir, 'test.task'); execFileSync('zip', ['-q', archive, 'pose_detector.tflite', 'pose_landmarks_detector.tflite'], { cwd: fixture });
+  const hash = inspectArchive(archive); assert.match(hash, /^[a-f0-9]{64}$/);
+  const originalRename = fs.renameSync; let injected = false;
+  try {
+    fs.renameSync = (from, to) => { if (!injected && to === path.join(root, 'sw.js')) { injected = true; throw new Error('synthetic rename failure'); } return originalRename(from, to); };
+    assert.throws(() => installModel(root, archive), /synthetic rename failure/);
+  } finally { fs.renameSync = originalRename; }
+  assert.equal(fs.existsSync(path.join(root, 'vendor/pose/pose_landmarker_lite.task')), false);
+  assert.match(fs.readFileSync(path.join(root, 'pose-assets.js'), 'utf8'), /sha256: null/);
+  assert.match(fs.readFileSync(path.join(root, 'sw.js'), 'utf8'), /pe-loop-shell-v9/);
+  assert.equal(JSON.parse(fs.readFileSync(path.join(root, 'docs/pose-assets.json'))).model.sha256, null);
+  assert.equal(installModel(root, archive), hash);
+  assert.match(fs.readFileSync(path.join(root, 'sw.js'), 'utf8'), /pe-loop-shell-v10/);
+  assert.equal(installModel(root, archive), hash);
+  assert.match(fs.readFileSync(path.join(root, 'sw.js'), 'utf8'), /pe-loop-shell-v10/);
+  assert.equal(JSON.parse(fs.readFileSync(path.join(root, 'docs/pose-assets.json'))).model.sha256, hash);
+  assert.equal(JSON.parse(fs.readFileSync(manifestPath)).model.license, 'synthetic reviewed-license evidence');
+  assert.ok(fs.readFileSync(path.join(root, 'pose-assets.js'), 'utf8').includes(`sha256: '${hash}'`));
+  const tracked = [manifestPath, assetPath, path.join(root, 'sw.js'), path.join(root, 'vendor/pose/pose_landmarker_lite.task')];
+  const saved = tracked.map(file => fs.readFileSync(file));
+  const invalid = path.join(dir, 'bad.task'); fs.writeFileSync(invalid, crypto.randomBytes(2048));
+  assert.throws(() => installModel(root, invalid));
+  assert.equal(JSON.parse(fs.readFileSync(path.join(root, 'docs/pose-assets.json'))).model.sha256, hash);
+  const altered = crypto.randomBytes(2048); altered.write('TFL3', 4, 'ascii'); fs.writeFileSync(path.join(fixture, 'pose_detector.tflite'), altered);
+  const other = path.join(dir, 'other.task'); execFileSync('zip', ['-q', other, 'pose_detector.tflite', 'pose_landmarks_detector.tflite'], { cwd: fixture });
+  assert.throws(() => installModel(root, other), /differs/);
+  assert.equal(JSON.parse(fs.readFileSync(path.join(root, 'docs/pose-assets.json'))).model.sha256, hash);
+  fs.writeFileSync(path.join(fixture, 'pose_detector.tflite'), crypto.randomBytes(2048));
+  const badTflite = path.join(dir, 'bad-tflite.task'); execFileSync('zip', ['-q', badTflite, 'pose_detector.tflite', 'pose_landmarks_detector.tflite'], { cwd: fixture });
+  assert.throws(() => inspectArchive(badTflite), /TFLite identifier/);
+  tracked.forEach((file, index) => assert.deepEqual(fs.readFileSync(file), saved[index]));
+});

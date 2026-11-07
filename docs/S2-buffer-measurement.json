@@ -1,0 +1,184 @@
+{
+  "measured_on": "2026-11-05",
+  "environment": "Linux Chromium 155.0.8059.79, Playwright fake camera, 480x270 JPEG quality .52, real elapsed capture",
+  "limitations": [
+    "Not Android or a physical camera",
+    "Not a 40-minute test",
+    "JPEG byte cap excludes selected snapshots and browser/decoder memory",
+    "Low-complexity fake camera scene; arbitrary scene retention is not guaranteed"
+  ],
+  "baseline": {
+    "environment": "Linux Chromium fake camera; actual elapsed capture; S1 baseline before S2 changes",
+    "results": [
+      {
+        "elapsedSeconds": 60,
+        "sampleAt": "2026-11-05T10:56:45.382Z",
+        "frames": 555,
+        "bytes": 1659638,
+        "spanSeconds": 59.9532001953125,
+        "oldestAgeSeconds": 60.008,
+        "newestAgeSeconds": 0.0547998046875,
+        "averageBlobBytes": 2990.338738738739,
+        "averageGapMs": 108.21877291572653,
+        "maximumGapMs": 122.300048828125,
+        "capacityLimited": false,
+        "jsHeapBytes": 2684260
+      },
+      {
+        "elapsedSeconds": 120,
+        "sampleAt": "2026-11-05T10:57:45.381Z",
+        "frames": 1108,
+        "bytes": 3321532,
+        "spanSeconds": 119.98360009765625,
+        "oldestAgeSeconds": 120.00680004882813,
+        "newestAgeSeconds": 0.023199951171875,
+        "averageBlobBytes": 2997.7725631768953,
+        "averageGapMs": 108.38626928424232,
+        "maximumGapMs": 122.300048828125,
+        "capacityLimited": false,
+        "jsHeapBytes": 2847048
+      },
+      {
+        "elapsedSeconds": 180,
+        "sampleAt": "2026-11-05T10:58:45.394Z",
+        "frames": 1664,
+        "bytes": 4994842,
+        "spanSeconds": 179.94810009765624,
+        "oldestAgeSeconds": 180.02060009765626,
+        "newestAgeSeconds": 0.0725,
+        "averageBlobBytes": 3001.7079326923076,
+        "averageGapMs": 108.20691527219257,
+        "maximumGapMs": 134.199951171875,
+        "capacityLimited": false,
+        "jsHeapBytes": 3051564
+      },
+      {
+        "elapsedSeconds": 240,
+        "sampleAt": "2026-11-05T10:59:45.399Z",
+        "frames": 2219,
+        "bytes": 6663059,
+        "spanSeconds": 239.91230004882811,
+        "oldestAgeSeconds": 240.02460009765625,
+        "newestAgeSeconds": 0.112300048828125,
+        "averageBlobBytes": 3002.730509238396,
+        "averageGapMs": 108.16605051795678,
+        "maximumGapMs": 134.199951171875,
+        "capacityLimited": false,
+        "jsHeapBytes": 2941412
+      },
+      {
+        "elapsedSeconds": 300,
+        "sampleAt": "2026-11-05T11:00:45.393Z",
+        "frames": 2772,
+        "bytes": 8322660,
+        "spanSeconds": 299.9267001953125,
+        "oldestAgeSeconds": 300.0192001953125,
+        "newestAgeSeconds": 0.0925,
+        "averageBlobBytes": 3002.4025974025976,
+        "averageGapMs": 108.23771208780674,
+        "maximumGapMs": 134.199951171875,
+        "capacityLimited": false,
+        "jsHeapBytes": 2897709
+      },
+      {
+        "elapsedSeconds": 310,
+        "sampleAt": "2026-11-05T11:00:55.393Z",
+        "frames": 2772,
+        "bytes": 8323228,
+        "spanSeconds": 299.9874001464844,
+        "oldestAgeSeconds": 300.097,
+        "newestAgeSeconds": 0.109599853515625,
+        "averageBlobBytes": 3002.6075036075035,
+        "averageGapMs": 108.2596175194819,
+        "maximumGapMs": 134.199951171875,
+        "capacityLimited": false,
+        "jsHeapBytes": 2850713
+      }
+    ],
+    "errors": []
+  },
+  "s2_300_second_delay": {
+    "environment": "Linux Chromium fake camera; real 310-second elapsed capture",
+    "samples": [
+      {
+        "elapsedSeconds": 60,
+        "frames": 555,
+        "bytes": 1655211,
+        "spanSeconds": 59.95739990234375,
+        "oldestAgeSeconds": 60.01319995117188,
+        "averageGapMs": 108.2263536143389,
+        "maximumGapMs": 125.800048828125,
+        "capacityLimited": false,
+        "visible": false,
+        "displayedAgeSeconds": null,
+        "jsHeapBytes": 2756148
+      },
+      {
+        "elapsedSeconds": 120,
+        "frames": 1112,
+        "bytes": 3330936,
+        "spanSeconds": 119.95669995117187,
+        "oldestAgeSeconds": 120.01259985351562,
+        "averageGapMs": 107.97182713876856,
+        "maximumGapMs": 133.5,
+        "capacityLimited": false,
+        "visible": false,
+        "displayedAgeSeconds": null,
+        "jsHeapBytes": 2757104
+      },
+      {
+        "elapsedSeconds": 180,
+        "frames": 1662,
+        "bytes": 4990144,
+        "spanSeconds": 179.93569995117187,
+        "oldestAgeSeconds": 180.0137998046875,
+        "averageGapMs": 108.32974109041052,
+        "maximumGapMs": 174.400146484375,
+        "capacityLimited": false,
+        "visible": false,
+        "displayedAgeSeconds": null,
+        "jsHeapBytes": 3024676
+      },
+      {
+        "elapsedSeconds": 240,
+        "frames": 2213,
+        "bytes": 6648894,
+        "spanSeconds": 239.95119995117187,
+        "oldestAgeSeconds": 240.0045,
+        "averageGapMs": 108.47703433597282,
+        "maximumGapMs": 174.400146484375,
+        "capacityLimited": false,
+        "visible": false,
+        "displayedAgeSeconds": null,
+        "jsHeapBytes": 2950848
+      },
+      {
+        "elapsedSeconds": 300,
+        "frames": 2759,
+        "bytes": 8294547,
+        "spanSeconds": 299.865,
+        "oldestAgeSeconds": 300.06269995117185,
+        "averageGapMs": 108.72552574329224,
+        "maximumGapMs": 190.10009765625,
+        "capacityLimited": false,
+        "visible": false,
+        "displayedAgeSeconds": null,
+        "jsHeapBytes": 2870536
+      },
+      {
+        "elapsedSeconds": 310,
+        "frames": 2756,
+        "bytes": 8287877,
+        "spanSeconds": 299.95540014648435,
+        "oldestAgeSeconds": 299.96440014648437,
+        "averageGapMs": 108.87673326551158,
+        "maximumGapMs": 283,
+        "capacityLimited": false,
+        "visible": true,
+        "displayedAgeSeconds": 300.081,
+        "jsHeapBytes": 3059736
+      }
+    ],
+    "errors": []
+  }
+}

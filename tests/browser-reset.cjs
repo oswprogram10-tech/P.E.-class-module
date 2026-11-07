@@ -5,6 +5,19 @@ const assert = require('node:assert/strict');
 withBrowser(async (page, errors, baseUrl) => {
   await seedClip(page, { id: 'before-reset' });
   const oldRevision = await page.evaluate(() => vaultConfig.revision);
+  await page.evaluate(async () => {
+    const config = await repository.config(), key = await LocalVault.verify('123456', config);
+    const loaded = await classroomUI.store.load(key, config.revision);
+    const classroom = ClassroomModel.add(loaded.state, 'classes', { name: '가상 체육 학급' });
+    const student = ClassroomModel.add(loaded.state, 'students', { classId: classroom.id, name: '가상 학생' });
+    const today = new Date();
+    const measuredOn = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+    const schoolYear = ClassroomModel.schoolYearForDate(measuredOn);
+    const input = { classId: classroom.id, studentId: student.id, schoolYear, measuredOn, itemId: 'grip-strength', value: 12.3, unit: 'kg', missingReason: null, missingNote: '' };
+    const record = ClassroomModel.add(loaded.state, 'measurements', input);
+    ClassroomModel.updateMeasurement(loaded.state, record.id, { ...input, value: 13.4 });
+    await classroomUI.store.save(loaded.state, key, config.revision, loaded.version);
+  });
   const peer = await page.context().newPage();
   peer.on('pageerror', error => errors.push(error.message));
   await peer.goto(baseUrl); await peer.waitForFunction(() => appReady);
@@ -36,10 +49,13 @@ withBrowser(async (page, errors, baseUrl) => {
   assert.equal(await page.evaluate(async () => (await repository.config()).revision), oldRevision);
   const dataPreserved = await page.evaluate(async () => {
     const key = await LocalVault.verify('123456', await repository.config());
-    return (await decryptMetadata((await allClips())[0], key)).studentName === '가상학생';
+    const config = await repository.config(), loaded = await classroomUI.store.load(key, config.revision);
+    const clipPreserved = (await decryptMetadata((await allClips())[0], key)).studentName === '가상학생';
+    const record = loaded.state.measurements[0];
+    return clipPreserved && loaded.state.classes.length === 1 && record?.value === 13.4 && record.changeHistory?.length === 1 && record.changeHistory[0].before.value === 12.3;
   });
   assert.equal(dataPreserved, true);
-  console.log('Reset confirmation/cancel and atomic rollback preserve old data passed');
+  console.log('Reset confirmation/cancel and atomic rollback preserve clips, measurements and correction history passed');
 
   await page.evaluate(() => { repository.reset = window.originalReset; });
   await page.locator('#confirmResetButton').click();
@@ -59,6 +75,11 @@ withBrowser(async (page, errors, baseUrl) => {
   await page.locator('#unlockPin').fill('654321'); await page.locator('#unlockButton').click();
   await page.locator('#teacherContentPanel').waitFor({ state: 'visible' });
   assert.equal(await page.evaluate(async () => (await allClips()).length), 0);
+  const classroomAfterReset = await page.evaluate(async () => {
+    const loaded = await classroomUI.store.load(teacherKey, vaultConfig.revision);
+    return { classes: loaded.state.classes.length, measurements: loaded.state.measurements.length };
+  });
+  assert.deepEqual(classroomAfterReset, { classes: 0, measurements: 0 });
   assert.deepEqual(errors, []);
   await peer.close();
   console.log('Confirmed reset/new PIN, reload and cross-tab stale-key rejection passed');

@@ -34,6 +34,14 @@
         <div class="session-chip"><span class="session-icon">01</span><span><small>오늘의 스테이션</small><strong>자유 연습</strong></span></div>
       </section>
 
+      <section id="updateNotice" class="update-notice" aria-label="앱 업데이트" hidden>
+        <p id="updateMessage" role="status">새 버전이 준비됐어요. 수업을 마친 뒤 적용해 주세요.</p>
+        <button id="updateButton" type="button">업데이트 준비</button>
+      </section>
+      <section id="offlineNotice" class="offline-notice" aria-label="오프라인 준비 상태" data-state="checking">
+        <p id="offlineMessage" role="status">오프라인 준비 상태를 확인하고 있어요.</p>
+        <button id="offlineRetryButton" type="button">다시 확인</button>
+      </section>
       <p id="cameraNotice" class="camera-notice" role="status" hidden></p>
 
       <section class="studio-grid" aria-label="동작 셀프 리뷰">
@@ -44,6 +52,7 @@
           </div>
           <div class="preview-wrap" id="previewWrap">
             <canvas id="previewCanvas" width="640" height="360" aria-label="지연 재생 영상"></canvas>
+            <div class="reference-pane"><video id="referenceVideo" class="reference-video" playsinline muted aria-label="시범 영상" hidden></video></div>
             <div class="preview-empty" id="previewEmpty">
               <div class="empty-figure" aria-hidden="true"><span class="figure-head"></span><span class="figure-body"></span><span class="figure-arm left"></span><span class="figure-arm right"></span><span class="figure-leg left"></span><span class="figure-leg right"></span></div>
               <strong>여기에 움직임이 다시 보여요</strong>
@@ -71,6 +80,53 @@
         </aside>
       </section>
 
+      <section id="posePanel" class="pose-panel" aria-labelledby="poseTitle" data-state="unprepared">
+        <h2 id="poseTitle">전신 확인 <span>선택 기능</span></h2>
+        <p>머리부터 발끝까지 이 기기에서 확인해요. 교사가 기록을 켠 경우에만 최소 각도 요약을 PIN 암호화로 최대 7일 로컬 보관해요. 원시 관절 좌표와 분석 이미지는 영속 저장하지 않아요. 순간 이미지는 켰을 때 최신 1장만 메모리에 표시해요.</p>
+        <div class="pose-actions"><button id="posePrepare" class="secondary-button" type="button">전신 확인 준비</button><button id="poseCancel" class="secondary-button" type="button" hidden>준비 중단</button><button id="poseClear" class="text-button" type="button" hidden>준비 파일 지우기</button></div>
+        <div class="pose-options"><label><input id="poseEnabled" type="checkbox" disabled>전신 확인 사용</label><label><input id="poseSpeech" type="checkbox" disabled>음성 안내 사용</label></div>
+        <p id="poseStatus" role="status" aria-live="polite">전신 확인은 선택 기능이에요.</p><small id="poseSpeechNote"></small>
+        <div id="volleyballPanel" class="shot-panel" hidden>
+          <h3>배구 머리 위 팔 스윙 · 실험 기능</h3>
+          <p id="volleyballStatus" role="status">교사 설정에서 이번 실행의 동작 확인을 켜 주세요.</p>
+          <p>준비와 스윙 자세를 각각 250ms 이상 유지하는 느린 팔 동작 연습용이에요. 공 접촉·스파이크 성공·기술 정확성·성적을 판정하지 않아요. 이미지·효과음·농구 이력 기록은 사용하지 않아요.</p>
+        </div>
+        <div id="shotPanel" class="shot-panel" data-state="waiting" aria-labelledby="shotTitle">
+          <h3 id="shotTitle">농구 슛 동작 확인</h3>
+          <p id="shotStatus" role="status">교사 설정에서 켠 뒤 전신 확인을 사용해 주세요.</p>
+          <p>선택한 팔의 팔꿈치 각도: <output id="shotAngle">—</output></p>
+          <small>현재 카메라의 준비→팔 펴기 동작을 확인해요. 지연 영상과 시각이 다르며 골 성공·슛의 정확성·성적을 판정하지 않아요. 영상 방향에 따라 2D 각도는 달라져요.</small>
+          <div class="pose-options" aria-label="농구 추가 피드백">
+            <label><input id="shotVisualEnabled" type="checkbox">시각 강조</label>
+            <label><input id="shotSoundEnabled" type="checkbox">효과음</label>
+            <label><input id="shotCaptureEnabled" type="checkbox">임시 순간 이미지 (최신 1장)</label>
+          </div>
+          <p id="shotFeedbackStatus" role="status">추가 피드백은 기본 꺼짐이에요. 이 실행 중에만 켤 수 있어요.</p>
+          <p id="shotFeedbackNotice" class="shot-feedback-notice" role="status" hidden>팔 펴기 동작을 감지했어요.</p>
+          <p id="shotFeedbackTime"></p>
+          <p id="shotHistoryStatus" role="status">동작 기록은 기본 꺼짐이에요. 교사가 학생·수업을 지정한 뒤 켤 수 있어요.</p>
+          <figure id="shotCaptureFigure" class="shot-capture" hidden>
+            <img id="shotCaptureImage" alt="동작 감지에 사용한 입력 프레임의 임시 이미지" width="320">
+            <figcaption id="shotCaptureCaption"></figcaption>
+            <button id="shotCaptureClear" type="button" class="secondary-button">임시 이미지 지우기</button>
+          </figure>
+          <small>위 시각과 순간 이미지는 지연 재생 화면이 아닌 추론 입력 시점이에요. 설정·수업 변경이나 촬영·확인 중단 때 지워지며 파일로 저장하거나 자동 제출하지 않아요.</small>
+        </div>
+      </section>
+
+      <section class="reference-controls" aria-label="시범 영상 비교">
+        <h2>시범 영상과 비교</h2>
+        <label>기기의 시범 영상 <input id="referenceFile" type="file" accept="video/*" /></label>
+        <label>비교 방식 <select id="referenceMode"><option value="overlay">겹쳐 보기</option><option value="side">나란히 보기</option></select></label>
+        <label>투명도 <input id="referenceOpacity" type="range" min="0" max="1" step="0.05" value="0.5" /></label>
+        <label>크기 <input id="referenceScale" type="range" min="0.25" max="2" step="0.05" value="1" /></label>
+        <label>가로 위치 <input id="referenceX" type="range" min="-100" max="100" step="1" value="0" /></label>
+        <label>세로 위치 <input id="referenceY" type="range" min="-100" max="100" step="1" value="0" /></label>
+        <label>시범 영상 시점 <input id="referenceTime" type="range" min="0" max="0" step="0.01" value="0" disabled /></label>
+        <button id="referencePlay" type="button" disabled>시범 영상 재생</button><button id="referenceClear" type="button" disabled>시범 영상 지우기</button>
+        <p id="referenceStatus" role="status">기기에 있는 영상만 불러와요.</p>
+      </section>
+
       <section class="bottom-notes" aria-label="개인정보 안내">
         <div class="note-item"><span class="note-icon note-eye">◎</span><span><strong>영상은 온라인으로 전송되지 않아요</strong><small>카메라 영상은 태블릿 안에서만 처리돼요.</small></span></div>
         <div class="note-divider"></div>
@@ -89,11 +145,17 @@
       <form method="dialog" class="modal-close-row"><button class="close-button" aria-label="닫기">×</button></form>
       <div class="modal-heading"><p class="eyebrow"><span class="eyebrow-line"></span>하이라이트 저장</p><h2 id="clipTitle">마음에 드는 순간을 골라요.</h2><p>지난 5분 영상에서 최대 30초를 잘라 앱 안에 저장해요.</p></div>
       <div class="clip-preview"><canvas id="clipCanvas" width="640" height="360"></canvas><div id="clipPreviewEmpty">카메라가 준비되면 선택한 장면을 미리 볼 수 있어요</div></div>
+      <button id="clipPreviewPlay" type="button" class="secondary-button">선택 구간 반복 재생</button>
       <p id="clipSelectionTime" class="clip-selection-time" aria-live="polite"></p>
       <div class="range-control"><div class="range-heading"><label for="clipOffset">장면 끝나는 시점</label><strong id="clipOffsetValue">지금</strong></div><input id="clipOffset" type="range" min="0" max="0" value="0" step="1" /><div class="range-ends"><span>최근 장면</span><span>가장 오래된 영상</span></div></div>
       <div class="range-control length-control"><div class="range-heading"><label for="clipLength">저장할 길이</label><strong id="clipLengthValue">15초</strong></div><input id="clipLength" type="range" min="5" max="30" value="15" step="5" /><div class="range-ends"><span>5초</span><span>최대 30초</span></div></div>
+      <div class="frame-controls">
+        <div class="frame-control"><label for="clipStartFrame">시작 프레임</label><input id="clipStartFrame" type="range" min="0" max="0" value="0" step="1" /><output id="clipStartFrameValue"></output></div>
+        <div class="frame-control"><label for="clipEndFrame">끝 경계 프레임 (이 시점 직전까지)</label><input id="clipEndFrame" type="range" min="0" max="0" value="0" step="1" /><output id="clipEndFrameValue"></output><small>미리 보이는 끝 경계 프레임은 저장 범위에 포함되지 않아요.</small></div>
+      </div>
       <div class="student-fields"><label>학생 이름<input id="studentName" type="text" maxlength="24" autocomplete="off" placeholder="이름 입력" required /></label><label class="number-field">번호<input id="studentNumber" type="text" inputmode="numeric" maxlength="4" autocomplete="off" placeholder="번호" required /></label></div>
-      <p class="privacy-small"><span>🔒</span> 학생 영상 목록은 교사 PIN으로 잠겨 있어요.</p>
+      <div class="reflection-fields"><label>잘된 점<textarea id="reflectionGood" maxlength="300" rows="2" placeholder="선택 입력"></textarea></label><label>다시 시도할 점<textarea id="reflectionRetry" maxlength="300" rows="2" placeholder="선택 입력"></textarea></label></div>
+      <p class="privacy-small"><span>🔒</span> 학생 영상과 로컬 동작 이력은 교사 PIN으로 잠겨 있어요. 기록을 켠 경우 최소 각도 요약만 최대 7일 암호화 보관하며 원시 관절·분석 이미지는 저장하지 않아요.</p>
       <button class="primary-button modal-primary" id="saveClipButton" type="button" disabled><span class="save-icon">✦</span><span>이 장면 저장</span><span class="button-arrow">→</span></button>
       <p id="clipError" class="clip-error" role="alert"></p>
       <button id="cancelSaveButton" type="button" class="cancel-save-button" hidden>저장 취소</button>
@@ -117,15 +179,46 @@
       </div>
       <div class="teacher-panel teacher-content" id="teacherContentPanel" hidden>
         <div class="teacher-heading-row"><div><p class="eyebrow"><span class="eyebrow-line"></span>교사용 도구</p><h2 id="teacherContentTitle">수업 설정</h2></div><button class="text-button" id="teacherLockButton" type="button">잠그기</button></div>
-        <div class="teacher-tabs"><button class="teacher-tab is-active" data-panel="settings" type="button">수업 설정</button><button class="teacher-tab" data-panel="library" type="button">저장한 클립 <span id="clipCount">0</span></button></div>
+        <div class="teacher-tabs"><button class="teacher-tab" data-panel="classroom" type="button">학급 · 제출</button><button class="teacher-tab is-active" data-panel="settings" type="button">수업 설정</button><button class="teacher-tab" data-panel="library" type="button">저장한 클립 <span id="clipCount">0</span></button></div>
         <section class="teacher-subpanel" id="settingsPanel">
           <div class="setting-copy"><strong>지연 재생 시간</strong><span>학생이 움직인 뒤 미러에 다시 보여줄 시간</span></div>
-          <div class="delay-setting"><input id="teacherDelay" type="range" min="1" max="60" value="20" step="1" /><strong><span id="teacherDelayValue">20</span>초</strong></div>
-          <div class="setting-foot"><span>1초</span><span>최대 60초</span></div>
+          <div class="delay-setting"><input id="teacherDelay" type="range" min="1" max="300" value="20" step="1" /><strong><span id="teacherDelayValue">20</span>초</strong></div>
+          <div class="setting-foot"><span>1초</span><span>최대 300초 (기기 메모리에 따라 제한)</span></div>
           <div class="setting-summary"><span class="summary-icon">↻</span><span>임시 영상은 최근 5분까지 보관돼요. 저장한 클립은 7일 뒤 자동 삭제돼요.</span></div>
+          <fieldset class="shot-settings">
+            <legend>이번 실행의 종목</legend>
+            <label>동작 확인 종목<select id="teacherMovementSport"><option value="basketball">농구 (기본)</option><option value="volleyball">배구 팔 스윙 (실험)</option></select></label>
+            <label><input id="teacherVolleyballEnabled" type="checkbox">배구 팔 스윙 확인 사용</label>
+            <label>배구 스윙 팔<select id="teacherVolleyballSide"><option value="right">오른팔</option><option value="left">왼팔</option></select></label>
+            <button id="applyMovement" type="button" class="secondary-button">이번 실행에 적용</button>
+            <p id="movementSettingsStatus" role="status">종목 선택과 배구 사용은 저장하지 않으며 앱을 다시 열면 농구로 돌아와요. 종목 변경 시 준비 상태·추가 피드백·이력 기록을 꺼요.</p>
+            <p>포즈 모델: 공식 Pose Lite · 1명/33관절. 다른 모델 파일은 제공하지 않아요.</p>
+          </fieldset>
+          <fieldset class="shot-settings">
+            <legend>농구 슛 동작 확인</legend>
+            <label class="shot-enable"><input id="teacherShotEnabled" type="checkbox">농구 슛 동작 확인 사용</label>
+            <label>슛하는 팔 (촬영되는 사람 기준)<select id="teacherShotSide"><option value="right">오른팔</option><option value="left">왼팔</option></select></label>
+            <label>동작 감지 민감도<select id="teacherShotSensitivity"><option value="low">신중하게</option><option value="normal" selected>기본</option><option value="high">민감하게</option></select></label>
+            <p>민감할수록 작은 팔 펴기에도 반응해요. 전신이 보이게 서서 선택한 팔을 구부려 준비한 뒤 위로 펴 주세요. 자세의 정확성을 평가하는 설정은 아니에요.</p>
+            <button id="saveShotSettings" class="secondary-button" type="button">농구 설정 저장</button>
+            <p id="shotSettingsStatus" role="status"></p>
+            <label class="shot-enable"><input id="teacherShotHistoryEnabled" type="checkbox">지정 학생·수업의 최소 동작 요약을 이 기기에 기록</label>
+            <p>이 실행의 촬영 중에만 기록해요. 최대 7일·기기 전체 2,000건이며 골 성공·기술 정확성·성적을 뜻하지 않아요. 허브 전송은 제공하지 않아요.</p>
+          </fieldset>
+          <section id="shotHistoryPanel" class="shot-history-panel" aria-labelledby="shotHistoryTitle">
+            <h3 id="shotHistoryTitle">로컬 동작 이력</h3>
+            <p>조회 조건은 촬영 학생 지정을 바꾸지 않아요. 학급·학생·수업 지정은 「학급 · 제출」에서 해 주세요.</p>
+            <div class="classroom-grid"><label>조회 학급<select id="shotHistoryClass"></select></label><label>조회 학생<select id="shotHistoryStudent"></select></label><label>조회 수업<select id="shotHistoryLesson"></select></label></div>
+            <button id="shotHistoryRefresh" type="button" class="secondary-button">이력 다시 읽기</button>
+            <p id="teacherShotHistoryStatus" role="status"></p><div id="shotHistoryList"></div>
+            <p id="shotHistorySelected"></p><label>명시적으로 연결할 로컬 클립<select id="shotHistoryClip"></select></label>
+            <button id="shotHistoryLinkClip" type="button" class="secondary-button" disabled>선택한 클립만 연결</button>
+            <p>같은 학생·수업·기기의 유효한 클립만 연결해요. 연결 클립 삭제 시 해당 기록도 삭제돼요. 기록이나 클립을 허브로 보내지 않아요.</p>
+          </section>
           <p class="pin-warning">PIN을 잊으면 저장한 클립을 복구할 수 없어요. 7일 만료 시 앱 실행·목록 확인 때 삭제해요. 브라우저 데이터 삭제나 기기 초기화로 더 일찍 사라질 수 있어요.</p>
           <div class="storage-card"><strong>기기 저장 공간</strong><p id="storageInfo" role="status">확인 중…</p><p id="storagePersistence"></p><button id="storagePersistButton" type="button" class="secondary-button">자동 정리 방지 요청</button></div>
         </section>
+        <section id="classroomPanel" class="teacher-subpanel" hidden><div id="classroomTeacherRoot"></div></section>
         <section class="teacher-subpanel library-panel" id="libraryPanel" hidden><p id="libraryStatus" role="status"></p><button id="libraryRetryButton" class="secondary-button" type="button" hidden>목록 다시 읽기</button><div class="library-list" id="libraryList"></div><div class="empty-library" id="emptyLibrary"><span>▱</span><strong>저장한 클립이 아직 없어요</strong><small>학생이 장면을 저장하면 여기에서 확인할 수 있어요.</small></div></section>
       </div>
       <p class="teacher-message" id="teacherMessage" role="status"></p>
@@ -135,8 +228,8 @@
       <div class="confirm-content"><span class="delete-mark">×</span><h2 id="deleteTitle">이 클립을 삭제할까요?</h2><p>삭제한 영상은 다시 복구할 수 없어요.</p><p id="deleteMessage" role="alert"></p><div class="confirm-actions"><button class="secondary-button" id="cancelDeleteButton" type="button">취소</button><button class="danger-button" id="confirmDeleteButton" type="button">삭제하기</button></div></div>
     </dialog>
     <dialog id="resetDialog" class="modal reset-dialog" aria-labelledby="resetTitle">
-      <div class="reset-content"><h2 id="resetTitle">모든 클립을 삭제하고 새 PIN 설정</h2>
-        <p>이 태블릿의 모든 학생 영상과 이름·번호가 삭제됩니다. 기존 클립은 다시 복구할 수 없어요. 다른 기기의 데이터에는 영향을 주지 않습니다.</p>
+      <div class="reset-content"><h2 id="resetTitle">모든 로컬 자료를 삭제하고 새 PIN 설정</h2>
+        <p>이 태블릿의 학생 영상·학급·명단·제출 대기열·관찰·체력 측정값과 수정 이력이 삭제됩니다. 허브에 이미 전송된 자료는 허브에서 별도로 삭제해야 합니다. 삭제한 자료는 복구할 수 없어요. 다른 기기의 데이터에는 영향을 주지 않습니다.</p>
         <label class="pin-label">새 PIN<input id="resetNewPin" type="password" inputmode="numeric" maxlength="6" autocomplete="new-password" placeholder="숫자 6자리"></label>
         <label class="pin-label">새 PIN 확인<input id="resetConfirmPin" type="password" inputmode="numeric" maxlength="6" autocomplete="new-password" placeholder="한 번 더 입력"></label>
         <label class="pin-label">삭제하려면 ‘모두 삭제’를 입력해 주세요<input id="resetPhrase" type="text" autocomplete="off" placeholder="모두 삭제"></label>
@@ -144,6 +237,8 @@
         <div class="confirm-actions"><button id="cancelResetButton" type="button" class="secondary-button">취소</button><button id="confirmResetButton" type="button" class="danger-button" disabled>모두 삭제하고 새 PIN 설정</button></div>
       </div>
     </dialog>
+    <section id="studentWorkspace" class="classroom-workspace" hidden><div id="studentClassroomRoot"></div></section>
+    <p id="classroomStatus" class="classroom-status" role="status"></p>
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
     <script src="./frame-buffer.js" defer></script>
     <script src="./timeline.js" defer></script>
@@ -151,6 +246,30 @@
     <script src="./clip-exporter.js" defer></script>
     <script src="./local-vault.js" defer></script>
     <script src="./clip-repository.js" defer></script>
+    <script src="./classroom-model.js" defer></script>
+    <script src="./paps-criteria-data.js" defer></script>
+    <script src="./paps-criteria.js" defer></script>
+    <script src="./paps-reports.js" defer></script>
+    <script src="./teacher-evaluations.js" defer></script>
+    <script src="./exercise-routines.js" defer></script>
+    <script src="./qr-missions.js" defer></script>
+    <script src="./tactics-board.js" defer></script>
+    <script src="./wearable-bridge.js" defer></script>
+    <script src="./shot-history.js" defer></script>
+    <script src="./classroom-repository.js" defer></script>
+    <script src="./classroom-sync.js" defer></script>
+    <script src="./qrcode-generator.js" defer></script>
+    <script src="./classroom-tools-ui.js" defer></script>
+    <script src="./classroom-ui.js" defer></script>
+    <script src="./shot-history-ui.js" defer></script>
+    <script src="./pose-assets.js" defer></script>
+    <script src="./model-profiles.js" defer></script>
+    <script src="./pose-runtime.js" defer></script>
+    <script src="./pose-presence.js" defer></script>
+    <script src="./basketball-shot.js" defer></script>
+    <script src="./volleyball-cue.js" defer></script>
+    <script src="./shot-feedback.js" defer></script>
+    <script src="./pose-ui.js" defer></script>
     <script src="./app.js" defer></script>
   </body>
 </html>

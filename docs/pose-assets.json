@@ -1,0 +1,51 @@
+{
+  "sdk": {
+    "name": "@mediapipe/tasks-vision",
+    "version": "0.10.21",
+    "source": "https://registry.npmjs.org/@mediapipe/tasks-vision/-/tasks-vision-0.10.21.tgz",
+    "registryIntegrity": "sha512-TuhKH+credq4zLksGbYrnvJ1aLIWMc5r0UHwzxzql4BHECJwIAoBR61ZrqwGOW6ZmSBIzU1t4VtKj8hbxFaKeA==",
+    "license": "Apache-2.0",
+    "licenseFile": "vendor/pose/LICENSE",
+    "files": {
+      "vision_bundle.mjs": "40f4123dfcd75cfa58add046919cc6f52fde66f009ff582997c09ba54c6ba27c",
+      "vision_wasm_nosimd_internal.js": "927def7b465c51b86e4b3060f93646aca4e27121f4b8fc0483786e407ea9cf1f",
+      "vision_wasm_nosimd_internal.wasm": "3821ea9b1f7fb8c549ef2a064ef5c85750bf375c545a49fd6eea0df44a95f1f4"
+    }
+  },
+  "model": {
+    "name": "Pose Landmarker Lite float16 version 1",
+    "source": "https://storage.googleapis.com/mediapipe-models/pose_landmarker/pose_landmarker_lite/float16/1/pose_landmarker_lite.task",
+    "sha256": "59929e1d1ee95287735ddd833b19cf4ac46d29bc7afddbbf6753c459690d574a",
+    "status": "downloaded from official HTTPS source; local SHA-256 pinned",
+    "license": "Apache-2.0 according to the official BlazePose GHUM 3D model-family card; no separate per-artifact license file is included in this task archive",
+    "verification": "Official HTTPS with inherited proxy and CA trust; structure checks and a locally recorded SHA-256 pin. No provider signature or independently published model digest has been verified.",
+    "sizeBytes": 5777746,
+    "licenseEvidence": {
+      "source": "https://storage.googleapis.com/mediapipe-assets/Model%20Card%20BlazePose%20GHUM%203D.pdf",
+      "title": "Model Card BlazePose GHUM 3D",
+      "documentDate": "2021-04-16",
+      "checkedDate": "2026-11-06",
+      "sha256": "e982460cedece5ad9a46aa8f13523328e9ab95d7d5b2b8c99b33f13f6a79ca86",
+      "pages": "1-2",
+      "statement": "The official card describes Lite, Full and Heavy models and states LICENSED UNDER: Apache License, Version 2.0.",
+      "artifactRelationship": "The task contains pose_detector.tflite and pose_landmarks_detector.tflite; the latter embeds the identifier blazepose_ghum_39kp_lite_oss_2021_07_02.",
+      "limit": "The family card does not name or hash-index the exact float16/version-1 task archive. No separate license file, provider signature or independently published digest for these exact bytes was verified."
+    },
+    "usageLimits": [
+      "Single-person pose estimation; multiple people, a missing head, distances beyond about 4m, metric-accurate depth, surveillance and identity recognition are outside the model-card scope.",
+      "Sensitive to face position, scale and orientation; low light, noise, motion and face overlap can reduce quality and increase jitter.",
+      "The model card does not validate school-age learners, basketball technique accuracy, grading or safety-critical decisions."
+    ]
+  },
+  "testImage": {
+    "source": "https://github.com/google-ai-edge/mediapipe-samples/blob/90e4a0e8f162e20dcf1df7c688d30b9b1dbe3370/examples/pose_landmarker/ios/PoseLandmarkerTests/test_image.jpg",
+    "sha256": "8da0e95f027a4fe298e3554b5728e08961014b651f1160a070f7c58670dbeda9",
+    "repositoryLicense": "Apache-2.0 (repository root; image-specific attribution not provided)",
+    "purpose": "Developer test fixture only"
+  },
+  "install": {
+    "sdk": "node scripts/vendor-pose-assets.cjs /path/to/tasks-vision-0.10.21.tgz",
+    "model": "node scripts/fetch-pose-model.cjs",
+    "modelPrerequisite": "Official storage.googleapis.com access must be explicitly enabled; use the inherited proxy and TLS trust."
+  }
+}
