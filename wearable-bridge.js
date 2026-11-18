@@ -9,6 +9,18 @@
   const PAIRING_TTL_MS = 120000;
   const PLATFORMS = new Set(['galaxy-watch', 'apple-watch']);
   const DATA_TYPES = Object.freeze(['heartRate']);
+  // Manufacturer reference for the teacher. A retail model name does not authorize a live device.
+  const MODEL_REFERENCE = Object.freeze([
+    { platform: 'galaxy-watch', product: 'Galaxy Watch6 · Watch6 Classic', release: '2023-08-11', watch: 'Wear OS 4', phone: 'Android 10 이상' },
+    { platform: 'galaxy-watch', product: 'Galaxy Watch FE (Bluetooth)', release: '2024-06-24 (미국)', watch: 'Wear OS / One UI 5 Watch', phone: 'Android 10 이상' },
+    { platform: 'galaxy-watch', product: 'Galaxy Watch7 · Galaxy Watch Ultra', release: '2024-07-24', watch: 'Wear OS 5', phone: 'Android 11 이상' },
+    { platform: 'galaxy-watch', product: 'Galaxy Watch8 · Watch8 Classic', release: '2025-07-25', watch: 'Wear OS 6', phone: 'Android 12 이상' },
+    { platform: 'galaxy-watch', product: 'Galaxy Watch9 · Galaxy Watch Ultra2', release: '2026-08-07', watch: 'Wear OS 7', phone: 'Android 13 이상' },
+    { platform: 'apple-watch', product: 'Apple Watch Series 9 · Ultra 2', release: '2023-09-22', watch: 'watchOS 10 이상', phone: 'iOS 17 이상' },
+    { platform: 'apple-watch', product: 'Apple Watch Series 10', release: '2024-09-20', watch: 'watchOS 11 이상', phone: 'iOS 18 이상' },
+    { platform: 'apple-watch', product: 'Apple Watch Series 11 · SE 3 · Ultra 3', release: '2025-09-19', watch: 'watchOS 26 이상', phone: 'iOS 26 이상' },
+    { platform: 'apple-watch', product: 'Apple Watch Series 12 · Ultra 4', release: '2026-09-18', watch: 'watchOS 27 이상', phone: 'iOS 27 이상' },
+  ].map(Object.freeze));
   const validDate = value => typeof value === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(value) && Number.isFinite(Date.parse(`${value}T00:00:00Z`)) && new Date(`${value}T00:00:00Z`).toISOString().slice(0, 10) === value;
 
   function supportedBridge(bridge) {
@@ -226,7 +238,7 @@
     });
   }
 
-  const api = Object.freeze({ MIN_RELEASE_DATE, HEART_RATE_STALE_MS, PAIRING_PREFIX, PAIRING_TTL_MS, supportedBridge, isPrivateIpv4, validatePairingPayload, validatePairingResult, validateDevice, validateConsent, createNativeBridge, createController });
+  const api = Object.freeze({ MIN_RELEASE_DATE, MODEL_REFERENCE, HEART_RATE_STALE_MS, PAIRING_PREFIX, PAIRING_TTL_MS, supportedBridge, isPrivateIpv4, validatePairingPayload, validatePairingResult, validateDevice, validateConsent, createNativeBridge, createController });
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.WearableBridge = api;
 })(typeof globalThis !== 'undefined' ? globalThis : this);

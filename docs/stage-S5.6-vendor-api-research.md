@@ -2,6 +2,8 @@
 
 조사일: 2026-11-06. 공식 Apple, Google Android, Samsung 개발자 문서를 확인했다. 이 문서는 API 경로와 제약을 기록하며, 실기기 호환이나 동작 확인을 뜻하지 않는다.
 
+2026-11-07 후속 확인: Apple Developer API metadata에서 `HKWorkoutSession` watchOS 2.0, `HKLiveWorkoutBuilder` watchOS 5.0 도입을 확인했다. Android 공식 호환성 문서는 Health Services가 Wear OS 3 이상에 필수라고 설명하고, `ExerciseClient` 자료형 호환성은 선택 운동 유형에서 조회하도록 안내한다. Samsung 공식 v1.4.1 릴리스 노트(2025-08-20)는 Galaxy Watch4 시리즈 이상을 SDK 대상으로 표시한다. 이 API 표기는 4년 출시일 정책이나 실제 모델 지원 목록을 확정하지 않는다. 자세한 적격성 판정은 [S5.6 기기 표](S5.6-device-support-matrix.md)를 따른다.
+
 ## 사용자 결정으로 고정된 제품 조건
 
 - 조사 당시(2026-11-06) 대상은 출시일 기준 2022-11-06 이후 Apple Watch 및 Samsung Galaxy Watch였다. 현재 2026-11-07 기준 4년 하한은 2022-11-07이며, 앱 검사는 새 하한으로 갱신했다. API 문서는 이 기준일에 맞춘 완전한 판매 모델 목록을 제공하지 않으므로, 모델명·출시일 대조표는 별도 근거 확인이 필요하다.
@@ -14,7 +16,7 @@
 
 | 플랫폼 | 공식 문서가 설명하는 기능 | 현재 MVP에 권하는 경로 | 제약 |
 | --- | --- | --- | --- |
-| Apple Watch | HealthKit의 `HKWorkoutSession`은 워치 센서를 운동에 맞게 설정하고 고빈도 심박 표본을 제공한다. 연결된 `HKLiveWorkoutBuilder`가 활성 세션의 실시간 자료를 다룬다. `WatchConnectivity`는 페어링된 iOS 앱과 watchOS 앱 사이의 통신을 제공한다. | watchOS companion에서 HealthKit 운동 세션과 실시간 심박을 얻고, 페어링된 iOS companion으로 전달한다. PWA 브리지는 iOS의 신뢰된 WebView가 제공한다. | 워치에는 한 번에 workout session 하나만 활성화할 수 있다. 다른 운동 앱이 시작되면 우리 세션이 끝날 수 있다. HealthKit은 앱이 읽기 권한 허용/거부를 구분하지 못하게 한다. 표본이 없을 때는 권한 거부라고 단정하지 말고 “측정값 없음, 기록 비움”으로 처리해야 한다. |
+| Apple Watch | HealthKit의 `HKWorkoutSession`은 워치 센서를 운동에 맞게 설정하고 심박 표본을 제공한다. `HKLiveWorkoutBuilder`가 활성 세션 자료를 다루고 `WatchConnectivity`는 페어링 iPhone 앱과 통신한다. | watchOS companion에서 HealthKit 심박을 얻어 iPhone student companion에 보낸다. iPhone은 Android 교사 태블릿에 QR TLS pinning WebSocket으로 직접 연결하므로 교사 PWA용 iOS WebView 브리지는 필요 없다. | 워치에는 한 번에 workout session 하나만 활성화할 수 있다. 다른 운동 앱이 시작되면 우리 세션이 끝날 수 있다. HealthKit은 앱이 읽기 권한 허용/거부를 구분하지 못하게 한다. 표본이 없을 때는 권한 거부라고 단정하지 말고 “측정값 없음, 기록 비움”으로 처리해야 한다. |
 | Galaxy Watch | Wear OS Health Services는 Wear OS 3 이상 기기에 필수 구성요소다. `ExerciseClient`는 활성 운동 세션과 실시간 운동 지표에 맞는다. `MeasureClient`는 화면이 사용 중일 때의 짧은 신속 측정용이며 운동 추적에는 적합하지 않다고 Android 문서가 명시한다. 기기별 센서 지원을 실행 중 조회해야 한다. | 워치 companion에서 `ExerciseClient`로 수업 운동 세션을 열고 `HEART_RATE_BPM` 지원 여부를 먼저 확인한다. 심박 표본만 세션 메모리에서 사용한다. | 권한 이름과 요구사항은 Wear OS/API 버전에 따라 달라진다. 현재 Android 문서는 API 36 이상에서 health permission 계열을 사용하도록 안내한다. 운동이 화면 꺼짐/ambient 상태로 들어가면 자료가 묶여 전달될 수 있으므로 오래된 값은 표시하지 않아야 한다. |
 
 Samsung은 별도 `Samsung Health Sensor SDK`도 제공한다. 공식 릴리스 노트 v1.4.1(2025-08-20 기준)은 Wear OS 기반 Galaxy Watch4 시리즈 이상을 지원 대상으로 적었다. 따라서 2022-11-06 출시일 하한과 함께 쓸 경우 Watch4/Watch5를 자동 지원 대상으로 선언하지 않고, 정확한 출시일과 모델 식별자를 대조해야 한다. 우선 MVP에는 Wear OS 전반의 Health Services API를 쓰고, Samsung SDK는 Health Services로 해결되지 않는 기기별 요구가 확인될 때만 검토하는 편이 낫다.
@@ -29,7 +31,7 @@ Android Health Services는 필요한 심박 권한 요청과 권한 상태 처�
 
 1. Android 교사 태블릿에 네이티브 수신 앱을 만들고 PWA를 그 앱의 신뢰된 WebView로 연다. 현재 PWA 브리지는 같은 WebView에 네이티브 코드가 주입되는 형태만 정의하며, 일반 브라우저가 워치나 다른 휴대폰의 LAN 연결을 직접 받지는 않는다.
 2. Apple Watch와 Galaxy Watch의 모델 식별자·공식 출시일·최소 OS 목록을 별도 공식 제품 자료와 대조한다. 현재 코드의 출시일 검사는 네이티브 앱이 전달한 날짜 문자열을 확인할 뿐 실제 모델 데이터베이스를 검증하지 않는다.
-3. iOS/watchOS와 Android/Wear OS companion 프로젝트 및 WebView native bridge를 만든다. 현재 저장소에는 플랫폼 프로젝트·서명 구성·기기별 권한 요청 UI가 없다.
+3. iOS/watchOS와 Android/Wear OS companion 프로젝트 및 native bridge를 만든다. Android 프로젝트는 빌드됐다. `native/apple/`에 Swift package/XcodeGen 구성, iOS QR/TLS/Bonjour/WCSession 코드와 watchOS HealthKit 운동 세션 scaffold를 추가했지만 Xcode 빌드·서명은 미검증이다.
 4. 실제 기기 연결, 워치 재시작, 권한 철회, 타 앱 운동 세션 충돌, OS 절전/ambient 동작을 시험한다. 가상 브리지 검사는 이를 대체하지 않는다.
 
 현재 `server/classroom-hub.js`는 `127.0.0.1` 전용 개발 서버다. 제출·피드백 데이터를 RAM에 최대 7일 보관하고 로컬 origin만 허용한다. 이 동작은 교사 태블릿에서 학생 휴대폰들의 실시간 심박을 전달하는 릴레이 계약과 다르므로 그대로 LAN에 노출하지 않는다. 태블릿 네이티브 수신 앱은 활성 수업 세션의 최신 표본만 RAM에 두고 연결 종료/만료 시 즉시 폐기해야 하며, 오프라인 재전송 대기열·디스크·기존 outbox·서버 로그에는 남기지 않는다.

@@ -15,6 +15,12 @@ withBrowser(async (page, errors) => {
 
   const wearable = page.locator('.classroom-tool').filter({ hasText: '웨어러블 — 수업 중 심박수 시범 연동 준비' });
   await wearable.locator(':scope > summary').click();
+  assert.match(await wearable.textContent(), /2022-11-07/);
+  const modelReference = wearable.locator('#wearableModelReference');
+  await modelReference.locator('summary').click();
+  assert.match(await modelReference.textContent(), /Galaxy Watch9 · Galaxy Watch Ultra2.*Android 13/);
+  assert.match(await modelReference.textContent(), /Apple Watch Series 12 · Ultra 4.*iOS 27/);
+  assert.match(await modelReference.textContent(), /실기기 연결 확인 전/);
   const studentId = await page.evaluate(() => classroomUI.state.students[0].id);
   await page.selectOption('#wearableConsentStudent', studentId);
   const start = page.getByRole('button', { name: '수업 심박수 연결 QR 만들기' });

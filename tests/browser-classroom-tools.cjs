@@ -52,15 +52,25 @@ withBrowser(async (page, errors) => {
   await page.locator('#assessmentRows .classroom-item').getByRole('button', { name: '교사 승인' }).click();
   await page.waitForFunction(() => classroomUI.state.assessments[0].status === 'approved');
   await page.selectOption('#reportStudent', ids.student);
+  assert.equal(await page.locator('#reportByteReference').isHidden(), true);
   await page.locator(`#report-evaluation-${assessmentId}`).check();
+  assert.match(await page.locator('#reportByteReference').textContent(), /0 \/ 1,500바이트/);
+  const longDraft = '가'.repeat(500) + 'a';
+  await page.locator('#reportBody').fill(longDraft);
+  assert.match(await page.locator('#reportByteReference').textContent(), /1,501 \/ 1,500바이트 · 1바이트 초과/);
   await page.locator('#reportTitle').fill('수업 참여 문안');
-  await page.locator('#reportBody').fill('교사가 직접 작성한 수업 참여 관찰 문장입니다.');
   await page.locator('#createReportButton').click();
   await page.waitForFunction(() => classroomUI.state.reports.length === 1);
+  assert.equal(await page.evaluate(() => classroomUI.state.reports[0].body), longDraft);
+  const reportId = await page.evaluate(() => classroomUI.state.reports[0].id);
+  await page.locator(`#edit-report-${reportId}`).fill('한A\n글');
+  assert.match(await page.locator(`#edit-report-byte-${reportId}`).textContent(), /8 \/ 1,500바이트/);
+  await page.locator('#teacherReportRows .classroom-item').getByRole('button', { name: '문안 수정 저장' }).click();
+  await page.waitForFunction(() => classroomUI.state.reports[0].body === '한A\n글');
   await page.locator('#teacherReportRows .classroom-item').getByRole('button', { name: '문안 승인' }).click();
   await page.waitForFunction(() => classroomUI.state.reports[0].status === 'approved');
 
-  await page.locator('.classroom-tool').nth(3).locator('summary').click();
+  await page.locator('.classroom-tool').nth(3).locator(':scope > summary').click();
   await page.locator('#qrMissionTitle').fill('패스 스테이션');
   await page.locator('#qrActivityTitle').fill('정확한 패스 시도');
   await page.locator('#qrActivityInstructions').fill('표적을 보고 가슴 높이로 공을 전달하세요.');
@@ -130,7 +140,7 @@ withBrowser(async (page, errors) => {
   const encrypted = await page.evaluate(async () => repository.classroomRead(vaultConfig.revision));
   assert.equal(JSON.stringify(encrypted).includes('패스 관찰 자체 기준'), false);
   assert.equal(JSON.stringify(encrypted).includes('패스 스테이션'), false);
-  assert.equal(JSON.stringify(encrypted).includes('교사가 직접 작성한 수업 참여 문장'), false);
+  assert.equal(JSON.stringify(encrypted).includes('한A'), false);
   assert.equal(await page.evaluate(() => classroomUI.state.assessments[0].status), 'approved');
   assert.equal(await page.evaluate(() => classroomUI.state.reports[0].status), 'approved');
   assert.equal(await page.evaluate(() => JSON.parse(classroomUI.state.qrMissionStores[0].serialized).responses[0].body.studentId), undefined, 'QR responses stay anonymous');

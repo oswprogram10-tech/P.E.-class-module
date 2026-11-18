@@ -207,6 +207,7 @@ internal class WearableRelayManager(
             val acknowledgement = JSONObject()
                 .put("type", if (ticketMatches) "session-ready" else "session-resumed")
                 .put("sessionId", current.sessionId)
+                .put("serverTime", now)
             if (ticketMatches) acknowledgement.put("resumeToken", current.resumeToken)
             Triple(current, eventType, acknowledgement.toString())
         }

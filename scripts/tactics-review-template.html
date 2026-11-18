@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="referrer" content="no-referrer"><title>전술 예제 48개 · 교사 검토 초안</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f3f5f0;color:#20372d;font:15px/1.7 system-ui,sans-serif}header,main{max-width:1400px;margin:auto;padding:22px}h1{font-size:26px;margin:0}h2{font-size:22px}h3{font-size:17px}.notice,.card{padding:18px;background:white;border:1px solid #cfdbd0;border-radius:12px;margin:12px 0}.notice{background:#fff5d9}button,select,input,textarea{font:inherit;min-height:46px;max-width:100%;border:1px solid #adbbaf;border-radius:8px;padding:9px;background:white;color:inherit}button{cursor:pointer}button:disabled{opacity:.5;cursor:not-allowed}textarea{width:100%;min-height:85px;resize:vertical}input[type=checkbox]{min-height:22px;width:22px;flex-shrink:0}input[type=text]{width:100%}.toolbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center}.layout{display:grid;grid-template-columns:290px minmax(0,1fr);gap:22px}nav{max-height:80vh;overflow:auto}nav button{display:block;text-align:left;width:100%;margin:6px 0;font-size:13px}nav button[aria-current=true]{border:2px solid #30704c;background:#eaf3e4}label{display:block;margin:10px 0}label span{display:block;font-weight:600}label.check{display:flex;gap:10px;align-items:center}.muted{color:#54675a;font-size:13px}.tag{padding:3px 9px;background:#edf2e7;border-radius:6px;font-size:12px}.board{width:100%;max-height:430px;background:#f4f8ee;border:1px solid #a6bba3;border-radius:8px}#error{color:#a53720;white-space:pre-wrap}.columns{display:grid;grid-template-columns:1fr 1fr;gap:20px}a{color:#205b8d;overflow-wrap:anywhere}#counter{font-weight:700}#caseList small{display:block}.steps{white-space:pre-wrap}.answer{border-left:4px solid #478060}footer{padding:16px 0}.sr{position:absolute;left:-10000px}button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #5188ac;outline-offset:2px}@media(max-width:760px){header,main{padding:14px}.layout,.columns{grid-template-columns:1fr}nav{max-height:220px}h1{font-size:22px}}
+</style>
+</head>
+<body>
+<header>
+<h1>전술 예제 48개 · 교사 검토 초안</h1>
+<p class="notice">직접 만든 합성 전술판과 AI 작성 답변 초안입니다. 공식 자료의 예제·교사 정답·현장 검증 결과가 아닙니다. 학습 후보 36개와 평가 전용 12개를 나눴습니다. 검토를 마친 학습 후보만 학습 파일로 내보냅니다.</p>
+<p>이 화면은 인터넷 연결 없이 작동하며 입력·검토 기록을 외부로 전송하지 않습니다. 인터넷 출처 링크는 직접 누를 때만 열립니다. 검토 기록은 JSON으로 저장해 보관하세요.</p>
+<div class="toolbar"><button id="exportReviews">검토 기록 JSON 저장</button><label>검토 기록 불러오기<input id="importReviews" type="file" accept="application/json,.json"></label><button id="exportTraining">승인한 학습 후보 JSONL</button><button id="exportEvaluation">평가 전용 사례 JSON 저장</button></div>
+<p id="counter" role="status"></p><p id="error" role="alert"></p>
+<div class="toolbar"><label>종목 <select id="sportFilter"><option value="">전체</option><option value="basketball">농구</option><option value="volleyball">배구</option></select></label><label>목표 <select id="goalFilter"><option value="">전체</option><option value="spacing">간격</option><option value="passing">패스</option><option value="defense">수비</option></select></label><label>용도 <select id="splitFilter"><option value="">전체</option><option value="train-candidate">학습 후보</option><option value="evaluation-holdout">평가 전용</option></select></label></div>
+</header>
+<main class="layout"><nav id="caseList" aria-label="검토 사례 목록"></nav><article id="current"></article></main>
+<script id="packData" type="application/json">__PACK_DATA__</script>
+<script>
+'use strict';
+const pack=JSON.parse(document.getElementById('packData').textContent), $=id=>document.getElementById(id);
+const names={basketball:'농구',volleyball:'배구',spacing:'간격',passing:'패스',defense:'수비',pending:'검토 전',approved:'교사 승인',rejected:'수정 필요'};
+let selected=pack.cases[0].id;
+const records=new Map(pack.cases.map(row=>[row.id,{id:row.id,fingerprint:row.fingerprint,status:'pending',checks:pack.checklist.map(()=>false),reviewerAlias:'',reviewedAt:null,notes:'',advice:structuredClone(row.draftAdvice)}]));
+const el=(tag,text='',attrs={})=>Object.assign(document.createElement(tag),{textContent:text,...attrs});
+const message=text=>{$('error').textContent=text;};
+function validAdvice(value,row){
+ const allowed=new Set([row.goal,row.sport,'safety']);
+ const text=(v,max)=>typeof v==='string'&&v.trim()&&v.length<=max;
+ return value&&text(value.summary,1000)&&text(value.safetyNote,700)&&Array.isArray(value.referenceIds)&&value.referenceIds.length>0&&value.referenceIds.every(id=>allowed.has(id))&&Array.isArray(value.suggestions)&&value.suggestions.length>=1&&value.suggestions.length<=3&&value.suggestions.every(s=>s&&text(s.title,160)&&text(s.reason,700)&&Array.isArray(s.steps)&&s.steps.length>=1&&s.steps.length<=4&&s.steps.every(step=>text(step,400)));
+}
+function eligible(row,r){return r.status==='approved'&&r.fingerprint===row.fingerprint&&r.checks.length===pack.checklist.length&&r.checks.every(Boolean)&&r.reviewerAlias.trim()&&typeof r.reviewedAt==='string'&&Number.isFinite(Date.parse(r.reviewedAt))&&validAdvice(r.advice,row);}
+function counts(){const train=pack.cases.filter(row=>row.split==='train-candidate'&&eligible(row,records.get(row.id))).length,holdout=pack.cases.filter(row=>row.split==='evaluation-holdout'&&eligible(row,records.get(row.id))).length;$('counter').textContent=`전체 48개 · 학습 후보 승인 ${train}/36 · 평가 전용 승인 ${holdout}/12 · 승인 전 자동 학습 없음`;$('exportTraining').disabled=train===0;}
+function renderList(){
+ $('caseList').replaceChildren();
+ for(const row of pack.cases){if(($('sportFilter').value&&row.sport!==$('sportFilter').value)||($('goalFilter').value&&row.goal!==$('goalFilter').value)||($('splitFilter').value&&row.split!==$('splitFilter').value))continue;const r=records.get(row.id),b=el('button',`${row.id} · ${row.title}`,{type:'button'});b.setAttribute('aria-current',String(row.id===selected));b.append(el('small',`${names[row.sport]} / ${names[row.goal]} / ${row.split==='train-candidate'?'학습 후보':'평가 전용'} / ${names[r.status]}`));b.onclick=()=>{selected=row.id;render();};$('caseList').append(b);}counts();
+}
+function diagram(board){
+ const ns='http://www.w3.org/2000/svg',s=document.createElementNS(ns,'svg');s.setAttribute('viewBox',`-30 -30 ${board.width+60} ${board.height+60}`);s.setAttribute('class','board');s.setAttribute('role','img');s.setAttribute('aria-label','익명 전술판: 팀별 색상 토큰과 이동·패스 계획');
+ const shape=(tag,attrs,text)=>{const n=document.createElementNS(ns,tag);for(const[k,v]of Object.entries(attrs))n.setAttribute(k,String(v));if(text!==undefined)n.textContent=text;s.append(n);return n;};
+ shape('rect',{x:0,y:0,width:board.width,height:board.height,fill:'#f4f8ee',stroke:'#688a69','stroke-width':3});
+ // No center line, goal or net: the model input does not provide these semantics.
+ for(const a of board.arrows){const color=a.kind==='pass'?'#2864a7':'#98602d',dx=a.to.x-a.from.x,dy=a.to.y-a.from.y,angle=Math.atan2(dy,dx);shape('line',{x1:a.from.x,y1:a.from.y,x2:a.to.x,y2:a.to.y,stroke:color,'stroke-width':5,...(a.kind==='pass'?{'stroke-dasharray':'14 8'}:{})});if(dx||dy)shape('path',{d:`M ${a.to.x-17*Math.cos(angle-.5)} ${a.to.y-17*Math.sin(angle-.5)} L ${a.to.x} ${a.to.y} L ${a.to.x-17*Math.cos(angle+.5)} ${a.to.y-17*Math.sin(angle+.5)}`,fill:'none',stroke:color,'stroke-width':5});else shape('circle',{cx:a.from.x,cy:a.from.y,r:12,fill:'none',stroke:color,'stroke-width':4});}
+ for(const m of board.marks)shape('text',{x:m.x,y:m.y-24,'font-size':22,'text-anchor':'middle',fill:m.kind==='attack'?'#9f451f':'#224f8d'},m.kind==='attack'?'공격 표식':'수비 표식');
+ const palette=['#a95731','#3565a1','#397348'];
+ for(const [i,t]of board.tokens.entries()){const team=board.teams.findIndex(row=>row.id===t.teamId),n=shape('circle',{cx:t.x,cy:t.y,r:17,fill:palette[team%palette.length],stroke:'white','stroke-width':3});const title=document.createElementNS(ns,'title');title.textContent=`${t.id}, ${t.teamId}, (${t.x}, ${t.y})`;n.append(title);shape('text',{x:t.x+22,y:t.y+7,'font-size':18,fill:palette[team%palette.length]},`T${team+1}-${i+1}`);}return s;
+}
+function invalidate(row,r){r.status='pending';r.reviewedAt=null;r.checks=pack.checklist.map(()=>false);$('decision').value='pending';document.querySelectorAll('[data-review-check]').forEach(node=>node.checked=false);renderList();message('답변을 수정했어요. 여섯 항목을 다시 확인해 승인해 주세요.');}
+function editor(host,label,value,max,onchange,multiline=true){const l=el('label'),title=el('span',label),node=el(multiline?'textarea':'input','',{maxLength:max});if(!multiline)node.type='text';node.value=value;l.append(title,node);host.append(l);node.addEventListener('input',()=>onchange(node.value));return node;}
+function render(){
+ const row=pack.cases.find(row=>row.id===selected),r=records.get(row.id),host=$('current');host.replaceChildren();
+ host.append(el('h2',`${row.id} · ${row.title}`),el('p',`${names[row.sport]} / ${names[row.goal]} / ${row.split==='train-candidate'?'학습 후보':'평가 전용: 학습 내보내기에서 항상 제외'}`,{className:'tag'}),diagram(row.input.board),el('p','T1/T2/T3는 팀 구분입니다. 실선은 이동 계획, 점선은 패스 계획입니다. 겹친 토큰과 선은 아래 좌표 목록도 확인하세요. 공·골대·네트·방향·시간은 입력에 없습니다.',{className:'muted'}));
+ const coordinates=el('details');coordinates.append(el('summary','모델에 제공하는 좌표와 표식 보기'),el('pre',JSON.stringify(row.input,null,2),{style:'white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px'}));host.append(coordinates);
+ const refs=el('section','',{className:'card'});refs.append(el('h3','인터넷 참고자료 · 예제 정답의 인증 아님'));
+ for(const id of row.sourceIds){const source=pack.sources.find(s=>s.id===id),p=el('p'),a=el('a',source.title,{href:source.url,target:'_blank',rel:'noopener noreferrer'});p.append(a,el('small',` · ${source.locator}`,{className:'muted'}));refs.append(p);}refs.append(el('p','원문·그림을 복사해 학습하지 않습니다. 읽기 가능 여부와 모델 학습 사용권은 별개이며, 이 사례의 좌표·문장은 직접 만든 초안입니다.',{className:'muted'}));host.append(refs);
+ const focus=el('section','',{className:'card'});focus.append(el('h3','이 사례에서 특히 확인할 것'));for(const text of row.reviewCriteria)focus.append(el('p','• '+text));focus.append(el('p','판단 한계 초안: '+row.expectedUncertainty));host.append(focus);
+ const answer=el('section','',{className:'card answer'});answer.append(el('h3','교사가 수정할 답변 초안'));
+ const change=fn=>value=>{fn(value);invalidate(row,r);};
+ editor(answer,'배치 관찰',r.advice.summary,1000,change(v=>r.advice.summary=v));
+ r.advice.suggestions.forEach((s,i)=>{editor(answer,`제안 ${i+1} 제목`,s.title,160,change(v=>s.title=v),false);editor(answer,'이유와 판단 한계',s.reason,700,change(v=>s.reason=v));editor(answer,'진행 단계 (한 줄에 하나, 1~4개)',s.steps.join('\n'),1600,change(v=>s.steps=v.split(/\r?\n/).map(s=>s.trim()).filter(Boolean)));});
+ editor(answer,'안전 안내',r.advice.safetyNote,700,change(v=>r.advice.safetyNote=v));answer.append(el('p','앱의 참고자료 ID: '+r.advice.referenceIds.join(', ')+' · 참고자료 자체의 검토 상태는 계속 draft입니다.',{className:'muted'}));host.append(answer);
+ const review=el('section','',{className:'card'});review.append(el('h3','교사 검토 기록'));
+ pack.checklist.forEach((text,i)=>{const l=el('label',text,{className:'check'}),c=el('input','',{type:'checkbox',checked:r.checks[i]});c.dataset.reviewCheck=String(i);c.onchange=()=>{r.checks[i]=c.checked;if(!c.checked&&r.status==='approved'){r.status='pending';r.reviewedAt=null;$('decision').value='pending';}renderList();};l.prepend(c);review.append(l);});
+ editor(review,'검토자 역할·별칭 (학생/학교 이름 없이)',r.reviewerAlias,80,value=>{r.reviewerAlias=value;if(r.status==='approved'){r.status='pending';r.reviewedAt=null;$('decision').value='pending';}renderList();},false).id='reviewerAlias';
+ editor(review,'검토 메모 (학습 메시지에는 포함되지 않음)',r.notes,2000,value=>r.notes=value);
+ const decision=el('select','',{id:'decision'});for(const value of ['pending','approved','rejected'])decision.append(el('option',names[value],{value}));decision.value=r.status;
+ decision.onchange=()=>{message('');if(decision.value==='approved'&&(!r.checks.every(Boolean)||!r.reviewerAlias.trim()||!validAdvice(r.advice,row))){decision.value=r.status;message('여섯 검토 항목, 검토자 별칭, 답변 형식을 확인한 뒤 승인해 주세요.');return;}r.status=decision.value;r.reviewedAt=r.status==='approved'?new Date().toISOString():null;renderList();};const dl=el('label','검토 결과');dl.append(decision);review.append(dl);host.append(review);renderList();
+}
+function download(name,data,type){const url=URL.createObjectURL(new Blob([data],{type})),a=el('a','',{href:url,download:name});a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
+$('exportReviews').onclick=()=>download('tactics-review-decisions.json',JSON.stringify({schemaVersion:1,packId:pack.packId,exportedAt:new Date().toISOString(),records:[...records.values()]},null,2),'application/json');
+$('exportTraining').onclick=()=>{
+ const rows=pack.cases.filter(row=>row.split==='train-candidate'&&eligible(row,records.get(row.id))).map(row=>{const refs=pack.knowledge.filter(ref=>(ref.sport==='any'||ref.sport===row.sport)&&(ref.goal==='any'||ref.goal===row.goal)),r=records.get(row.id);return {messages:[{role:'system',content:pack.systemPrompt},{role:'user',content:JSON.stringify({...row.input,references:refs})},{role:'assistant',content:JSON.stringify(r.advice)}]};});
+ if(!rows.length){message('아직 승인한 학습 후보가 없어요.');return;}download('tactics-approved-train.jsonl',rows.map(row=>JSON.stringify(row)).join('\n')+'\n','application/x-ndjson');
+};
+$('exportEvaluation').onclick=()=>download('tactics-evaluation-holdout.json',JSON.stringify({notice:'평가 전용. 학습에 사용하지 마세요. expectedAdvice는 교사 승인 전에는 초안입니다.',cases:pack.cases.filter(row=>row.split==='evaluation-holdout').map(row=>({id:row.id,input:row.input,criteria:row.reviewCriteria,review:records.get(row.id)}))},null,2),'application/json');
+$('importReviews').onchange=async()=>{try{const file=$('importReviews').files[0];if(!file)return;if(file.size>2000000)throw new Error('검토 기록 파일이 너무 커요.');const saved=JSON.parse(await file.text());if(saved.packId!==pack.packId||saved.schemaVersion!==1||!Array.isArray(saved.records)||saved.records.length!==pack.cases.length)throw new Error('이 예제 묶음의 검토 기록이 아닙니다.');const staged=new Map();for(const r of saved.records){const row=pack.cases.find(row=>row.id===r.id);if(!row||staged.has(r.id)||r.fingerprint!==row.fingerprint||!['pending','approved','rejected'].includes(r.status)||!Array.isArray(r.checks)||r.checks.length!==pack.checklist.length||r.checks.some(v=>typeof v!=='boolean')||typeof r.reviewerAlias!=='string'||r.reviewerAlias.length>80||typeof r.notes!=='string'||r.notes.length>2000||!validAdvice(r.advice,row)||(r.status==='approved'&&!eligible(row,r)))throw new Error('검토 기록의 항목·답변을 확인해 주세요.');staged.set(r.id,structuredClone(r));}for(const[id,r]of staged)records.set(id,r);message('검토 기록을 불러왔어요.');render();}catch(error){message(error.message);}};
+for(const id of ['sportFilter','goalFilter','splitFilter'])$(id).onchange=renderList;
+window.tacticsReviewPack={pack,records,eligible};render();
+</script>
+</body>
+</html>

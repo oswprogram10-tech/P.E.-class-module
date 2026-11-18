@@ -1,0 +1,29 @@
+# Set PE_HUB_HOST to the public hostname and PE_WEB_ROOT to a static release directory.
+# Both hubs share PE_HUB_HOST's HTTPS origin and listen on loopback.
+{$PE_HUB_HOST} {
+	handle_path /classroom-api/* {
+		reverse_proxy 127.0.0.1:{$PE_HUB_PORT:8787} {
+			header_up X-Forwarded-Proto https
+		}
+	}
+	handle /tactics/v1/* {
+		@tacticsBoards path /tactics/v1/boards /tactics/v1/boards/*
+		route {
+			reverse_proxy @tacticsBoards 127.0.0.1:{$PE_TACTICS_PORT:8788} {
+				header_up X-Forwarded-Proto https
+			}
+			respond 404
+		}
+	}
+
+	handle {
+		root * {$PE_WEB_ROOT}
+		header {
+			Cross-Origin-Opener-Policy same-origin
+			Cross-Origin-Embedder-Policy require-corp
+			Cross-Origin-Resource-Policy same-origin
+		}
+		header /sw.js Cache-Control no-cache
+		file_server
+	}
+}

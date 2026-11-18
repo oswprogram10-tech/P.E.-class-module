@@ -5,12 +5,17 @@ const path = require('node:path');
 
 async function withBrowser(run, { setupTeacher = true, beforeApp = null } = {}) {
   const root = path.resolve(__dirname, '..');
-  const mime = { '.js': 'text/javascript', '.css': 'text/css', '.png': 'image/png', '.svg': 'image/svg+xml', '.webmanifest': 'application/manifest+json' };
+  const mime = { '.js': 'text/javascript', '.mjs': 'text/javascript', '.json': 'application/json', '.wasm': 'application/wasm', '.css': 'text/css', '.png': 'image/png', '.svg': 'image/svg+xml', '.webmanifest': 'application/manifest+json' };
   const server = http.createServer((req, res) => {
     const pathname = decodeURIComponent(new URL(req.url, 'http://localhost').pathname);
     const file = path.resolve(root, '.' + (pathname === '/' ? '/index.html' : pathname));
     if (!file.startsWith(root + path.sep)) { res.writeHead(403).end(); return; }
     try {
+      if (process.env.PE_TEST_ISOLATION === '1') {
+        res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
+        res.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
+        res.setHeader('Cross-Origin-Resource-Policy', 'same-origin');
+      }
       res.setHeader('Content-Type', mime[path.extname(file)] || 'text/html');
       res.end(fs.readFileSync(file));
     } catch { res.writeHead(404).end(); }
@@ -31,6 +36,7 @@ async function withBrowser(run, { setupTeacher = true, beforeApp = null } = {}) 
     if (beforeApp) await beforeApp(page, baseUrl);
     await page.goto(baseUrl);
     await page.waitForFunction(() => appReady);
+    if (process.env.PE_TEST_ISOLATION === '1') await page.waitForFunction(() => crossOriginIsolated);
     if (setupTeacher) {
     await page.locator('#teacherButton').click();
     await page.locator('#newPin').fill('123456');

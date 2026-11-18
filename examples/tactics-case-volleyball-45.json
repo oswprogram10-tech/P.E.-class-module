@@ -1,0 +1,122 @@
+{
+  "schemaVersion": 1,
+  "id": "volleyball_case_45",
+  "sport": "volleyball",
+  "rulesContext": {
+    "format": "실내 배구",
+    "edition": "2025 Volleyball Nations League",
+    "division": "남자 국가대표",
+    "notes": "USA Volleyball 경기 리포트 기준."
+  },
+  "match": {
+    "competition": "Volleyball Nations League",
+    "stage": "미국의 두 번째 경기",
+    "date": "2025-06-12",
+    "teams": [
+      "U.S. Men’s National Team",
+      "Iran"
+    ],
+    "result": "미국 3-2 승리; 세트 점수 19-25, 21-25, 25-21, 25-23, 17-15"
+  },
+  "scene": {
+    "level": "sequence",
+    "period": "5세트 결정 세트, 15-15 이후 마지막 두 점",
+    "timeSeconds": {
+      "start": null,
+      "end": null
+    },
+    "situation": "15-15 동점에서 미국이 Jordan Ewert의 공격 득점으로 앞선 뒤 Patrick Gasman의 서브 에이스로 세트를 17-15로 끝냈다.",
+    "scoreMarkers": [
+      {
+        "label": "마지막 두 점 직전",
+        "score": "15-15",
+        "sourceClaimIds": [
+          "claim-final-sequence"
+        ]
+      },
+      {
+        "label": "세트 종료",
+        "score": "17-15",
+        "sourceClaimIds": [
+          "claim-final-sequence"
+        ]
+      }
+    ],
+    "events": [
+      {
+        "order": 1,
+        "actor": "Jordan Ewert (U.S.)",
+        "action": "15-15에서 공격 득점을 올렸다.",
+        "response": null,
+        "result": "미국이 결정 세트에서 앞서 나갔다.",
+        "sourceClaimIds": [
+          "claim-final-sequence"
+        ]
+      },
+      {
+        "order": 2,
+        "actor": "Patrick Gasman (U.S.)",
+        "action": "이어서 서브 에이스를 기록했다.",
+        "response": null,
+        "result": "미국이 17-15로 결정 세트를 이기고 경기를 마쳤다.",
+        "sourceClaimIds": [
+          "claim-final-sequence"
+        ]
+      }
+    ],
+    "recordedOutcome": "미국은 첫 두 세트를 내준 뒤 3-2로 역전승했다."
+  },
+  "sourceClaims": [
+    {
+      "id": "claim-final-sequence",
+      "statement": "USA Volleyball은 결정 세트 15-15에서 Jordan Ewert가 킬로 앞선 점수를 만들고 Patrick Gasman이 에이스로 17-15 승리를 마무리했다고 기록한다.",
+      "sourceId": "usav-iran-2025-vnl",
+      "locator": "기사 첫 결과 문단 및 결정 세트 설명 문단",
+      "checkStatus": "verified",
+      "note": "기사의 경기 결과와 마지막 두 점 설명을 대조했다. 시간이나 랠리 세부 행동은 추가하지 않았다."
+    }
+  ],
+  "interpretation": {
+    "sourceAnalysis": null,
+    "analystObservation": "경기 리포트는 마지막 두 득점의 종류와 선수를 기록하지만, 각 득점 전 랠리의 전체 전개는 기술하지 않는다.",
+    "limitations": [
+      "정확한 영상 타임스탬프와 공의 이전 접촉 순서는 출처에서 확인되지 않음.",
+      "한 경기의 두 득점으로 특정 작전의 일반적인 효과를 주장할 수 없음."
+    ],
+    "studentQuestions": [
+      "두 득점 전의 상황까지 비교하려면 어떤 영상 장면과 경기 정보를 추가로 확인해야 할까?"
+    ]
+  },
+  "searchTags": [
+    "배구",
+    "결정 세트",
+    "접전",
+    "마지막 두 점",
+    "서브 에이스"
+  ],
+  "sources": [
+    {
+      "id": "usav-iran-2025-vnl",
+      "title": "U.S. Men Storm Back From Two Sets Down to Defeat Iran at 2025 VNL",
+      "publisher": "USA Volleyball",
+      "url": "https://usavolleyball.org/story/u-s-men-storm-back-from-two-sets-down-to-defeat-iran-at-2025-vnl/",
+      "publishedAt": "2025-06-12",
+      "accessedAt": "2026-11-13",
+      "kind": "match-report",
+      "language": "en",
+      "locator": "기사 첫 결과 문단 및 결정 세트 설명 문단",
+      "reuse": {
+        "status": "not-checked",
+        "scope": [],
+        "note": "공개 열람만 확인. 재배포, 사진·영상 이용, 모델 학습 허가는 확인하지 않았다."
+      }
+    }
+  ],
+  "review": {
+    "factStatus": "verified",
+    "evidenceStatus": "partial",
+    "educatorStatus": "pending",
+    "expertStatus": "pending",
+    "reviews": []
+  }
+}

@@ -43,6 +43,17 @@
         <button id="offlineRetryButton" type="button">다시 확인</button>
       </section>
       <p id="cameraNotice" class="camera-notice" role="status" hidden></p>
+      <section id="deviceCheckNotice" class="device-check-notice" aria-label="교사 첫 사용 설정 안내">
+        <p id="deviceCheckSummary">수업 전에 교사가 기기·학교 환경을 점검해 주세요.</p>
+        <button id="deviceCheckOpen" type="button">교사 첫 사용 설정</button>
+      </section>
+
+      <section class="classroom-item" aria-label="모둠 경기 사례 찾기">
+        <details id="studentTacticsPanel">
+          <summary>모둠이 함께 실제 경기 사례 찾기</summary>
+          <div id="studentTacticsRoot"></div>
+        </details>
+      </section>
 
       <section class="studio-grid" aria-label="동작 셀프 리뷰">
         <div class="video-card">
@@ -179,8 +190,64 @@
       </div>
       <div class="teacher-panel teacher-content" id="teacherContentPanel" hidden>
         <div class="teacher-heading-row"><div><p class="eyebrow"><span class="eyebrow-line"></span>교사용 도구</p><h2 id="teacherContentTitle">수업 설정</h2></div><button class="text-button" id="teacherLockButton" type="button">잠그기</button></div>
-        <div class="teacher-tabs"><button class="teacher-tab" data-panel="classroom" type="button">학급 · 제출</button><button class="teacher-tab is-active" data-panel="settings" type="button">수업 설정</button><button class="teacher-tab" data-panel="library" type="button">저장한 클립 <span id="clipCount">0</span></button></div>
+        <div class="teacher-tabs"><button class="teacher-tab" data-panel="classroom" type="button">학급 · 제출</button><button class="teacher-tab is-active" data-panel="settings" type="button">수업 설정</button><button class="teacher-tab" data-panel="library" type="button">저장한 클립 <span id="clipCount">0</span></button><button class="teacher-tab" data-panel="device-check" type="button">첫 사용 설정</button></div>
+        <section id="deviceCheckPanel" class="teacher-subpanel device-check-panel" hidden aria-labelledby="teacherContentTitle">
+          <div class="teacher-setup-guide">
+            <h3>수업 기본 설정</h3>
+            <div class="teacher-setup-links">
+              <button type="button" data-teacher-setup-target="teacherDelay" data-teacher-setup-panel="settings">지연 재생 시간</button>
+              <button type="button" data-teacher-setup-target="newClassName">학급 만들기</button>
+              <button type="button" data-teacher-setup-target="deviceCheckTitle" data-teacher-setup-panel="device-check">기기·현장 점검</button>
+            </div>
+            <h3>교사 기기에 정보 저장 · 학교 서버 운영</h3>
+            <p>학생 명단, 교사 관찰, 원본 클립은 교사 기기에 암호화해 보관해요. 학교 서버는 선택한 제출 자료와 수업 피드백을 동기화하고 익명 전술판 배치를 공유해요.</p>
+            <div class="teacher-setup-links">
+              <button type="button" data-teacher-setup-target="teacherHubUrl">학급 제출 서버</button>
+              <button type="button" data-teacher-setup-target="tacticsConnectedTools">전술판 기기 간 공유</button>
+            </div>
+            <h3>이 기기에서 쓰는 수업 도구</h3>
+            <p>학급을 만들거나 선택한 뒤 사용할 기능을 여세요.</p>
+            <div class="teacher-setup-links">
+              <button type="button" data-teacher-setup-target="papsProgramSelectionPanel">PAPS 검사 종목</button>
+              <button type="button" data-teacher-setup-target="rubricTitle">루브릭·성취기준·세특</button>
+              <button type="button" data-teacher-setup-target="qrMissionTitle">QR·GPS 미션</button>
+            </div>
+            <details id="teacherUnimplementedFeatures">
+              <summary>첫 출시에서 미구현인 기능</summary>
+              <p>PAPS 공식 BMI 점수·종합점수·종합등급·백분위와 나이스 연동은 미구현이에요. 아래 항목은 시범 화면을 열 수 있어요.</p>
+              <div class="teacher-setup-links">
+                <button type="button" data-teacher-setup-target="wearableModelReference">웨어러블 정식 연동 · 미구현</button>
+                <button type="button" data-teacher-setup-target="teacherMovementSport" data-teacher-setup-panel="settings">동작 분석 실사용 버전 · 미구현</button>
+                <button type="button" data-teacher-setup-target="routineGoal">검토·사용권 확인 운동 콘텐츠 · 미구현</button>
+                <button type="button" data-teacher-setup-target="tacticsDevicePanel">AI 전술 제안 정식 지원 · 미구현</button>
+              </div>
+            </details>
+            <details>
+              <summary>학교 서버와 설치 준비</summary>
+              <p>학교 운영자에게 HTTPS 주소와 연결 정보를 받아 학급 제출 서버를 연결하고 전술판 공유를 시험하세요. 설치는 첫 화면의 「홈 화면에 추가」 또는 브라우저 설치 메뉴에서 할 수 있어요.</p>
+            </details>
+          </div>
+          <h3 id="deviceCheckTitle">처음 사용하는 기기·학교 환경 점검</h3>
+          <p>실제 수업 장소에 기기를 거치하고 교사 시연이나 테스트 자료로 확인해 주세요. 점검 중에도 클립 저장·재생을 시험할 수 있어요. 화면 잠금·다른 앱 전환·새로고침·촬영 중단이 생기면 연속 40분 점검은 처음부터 다시 시작해요.</p>
+          <p>기기 온도는 앱에서 자동 측정할 수 없어요. 약 10분마다 상태를 관찰하고 아래에 기록해 주세요. 너무 뜨겁거나 온도 경고·심한 화면 멈춤이 있으면 즉시 중단해 주세요.</p>
+          <label>기기 모델명<input id="deviceCheckModel" type="text" maxlength="80" placeholder="예: Galaxy Tab A9+" autocomplete="off"></label>
+          <label class="device-check-consent"><input id="deviceCheckTestOnly" type="checkbox">학생 대신 교사 시연이나 테스트 자료로 점검합니다.</label>
+          <label>시작 전 / 현재 발열 상태<select id="deviceCheckHeat"><option value="">직접 관찰 후 선택</option><option value="normal">평소와 비슷함</option><option value="warm">따뜻하지만 사용에 지장 없음</option><option value="hot">너무 뜨겁거나 온도 경고·성능 저하가 있음</option></select></label>
+          <div class="device-check-actions"><button id="deviceCheckStart" type="button">40분 점검 시작</button><button id="deviceCheckStop" type="button" disabled>점검 중단</button><button id="deviceCheckHeatRecord" type="button" disabled>현재 발열 상태 기록</button></div>
+          <progress id="deviceCheckProgress" max="2400000" value="0" aria-label="연속 촬영 점검 진행"></progress>
+          <output id="deviceCheckElapsed" aria-live="off">0:00 / 40:00</output>
+          <p id="deviceCheckStatus" role="status"></p>
+          <p id="deviceCheckMetrics"></p>
+          <ul id="deviceCheckHeatHistory" aria-label="교사 발열 관찰 기록"></ul>
+          <h4>학교 사용 환경 직접 확인</h4>
+          <p>학교 환경 항목은 40분 촬영 후에 확인해도 돼요. 오프라인 재실행·앱 전환 시험은 연속 촬영 시험과 별도로 진행해 주세요.</p>
+          <div id="deviceCheckChecklist"></div>
+          <div class="device-check-actions"><button id="deviceCheckSave" type="button">교사 확인 결과 저장</button><button id="deviceCheckLater" type="button">나중에 점검</button></div>
+          <p id="deviceCheckError" role="alert"></p>
+          <p>40분 연속 촬영, 종료 후 발열 기록, 학교 환경 전 항목 확인이 있어야 완료로 표시해요. 미확인·문제 있음은 그대로 남겨요. 기기·브라우저·사용 장소가 바뀌면 재점검해 주세요.</p>
+        </section>
         <section class="teacher-subpanel" id="settingsPanel">
+          <button id="teacherSetupGuideButton" type="button" class="secondary-button">첫 사용 설정 열기</button>
           <div class="setting-copy"><strong>지연 재생 시간</strong><span>학생이 움직인 뒤 미러에 다시 보여줄 시간</span></div>
           <div class="delay-setting"><input id="teacherDelay" type="range" min="1" max="300" value="20" step="1" /><strong><span id="teacherDelayValue">20</span>초</strong></div>
           <div class="setting-foot"><span>1초</span><span>최대 300초 (기기 메모리에 따라 제한)</span></div>
@@ -249,11 +316,23 @@
     <script src="./classroom-model.js" defer></script>
     <script src="./paps-criteria-data.js" defer></script>
     <script src="./paps-criteria.js" defer></script>
+    <script src="./paps-bmi-criteria-data.js" defer></script>
+    <script src="./paps-bmi-criteria.js" defer></script>
+    <script src="./paps-program-selection.js" defer></script>
     <script src="./paps-reports.js" defer></script>
+    <script src="./pe-curriculum.js" defer></script>
     <script src="./teacher-evaluations.js" defer></script>
     <script src="./exercise-routines.js" defer></script>
+    <script src="./gps-missions.js" defer></script>
     <script src="./qr-missions.js" defer></script>
     <script src="./tactics-board.js" defer></script>
+    <script src="./tactics-sharing.js" defer></script>
+    <script src="./tactics-search-local.js" defer></script>
+    <script src="./tactics-team-request.js" defer></script>
+    <script src="./tactics-local-prompt.js" defer></script>
+    <script src="./tactics-local-advisor.js" defer></script>
+    <script src="./tactics-student-ui.js" defer></script>
+    <script src="./tactics-tools-ui.js" defer></script>
     <script src="./wearable-bridge.js" defer></script>
     <script src="./shot-history.js" defer></script>
     <script src="./classroom-repository.js" defer></script>
@@ -270,6 +349,8 @@
     <script src="./volleyball-cue.js" defer></script>
     <script src="./shot-feedback.js" defer></script>
     <script src="./pose-ui.js" defer></script>
+    <script src="./device-check.js" defer></script>
+    <script src="./device-check-ui.js" defer></script>
     <script src="./app.js" defer></script>
   </body>
 </html>

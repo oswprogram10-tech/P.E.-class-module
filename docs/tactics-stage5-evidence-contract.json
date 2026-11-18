@@ -1,0 +1,6944 @@
+{
+  "date": "2026-11-16",
+  "command": "node scripts/evaluate-tactics-answer-contract.cjs",
+  "sourceHashesSha256": {
+    "docs/tactics-query-evaluation.csv": "08c7091b8880e332e6c26395f4e4d363ead461be1bd916ebbfed0ba6d126edf7",
+    "docs/tactics-pilot-status.json": "9c65525fbcb8c3aab3787362fe3bb1ad9a1e2afab2b8415db4f7701ee78cd9d0",
+    "docs/tactics-teeball-baseball-candidates.json": "c8e9282b53c4b3cae6044d4d3e302e0ad48c0ea771103c3d352ac705797fab73",
+    "docs/tactics-teeball-baseball-links.csv": "3953e79b1a33b5631fde2ef689edc241c922b4741f15c62397fa983ce270077b",
+    "docs/tactics-four-sport-gapfill-candidates.json": "1b417fb4a6b6a4dc85122d2cf89d4cf538ad80e63eb4980ed4f3a4c41cb785d6",
+    "docs/tactics-four-sport-gapfill-links.csv": "edfc1368a6e91ab4e9a9e377904db2c8c9d19c641217469fb05994a5d5ee0787",
+    "server/tactics-knowledge.json": "94c15852533c7bd1c8e3b73c474f81bb16e57d6d3c3941cde6a8db5ea492ecb6",
+    "tactics-search-local.js": "98ca4266c01714a2a3d73702934c0330ccba7ee0cb065edae3003b8586fef074",
+    "tactics-local-advisor.js": "9150702425f0383dec6397d627608b99fd317d50dde415ea498f8fa8a2ade187",
+    "tactics-local-prompt.js": "1cc1e8f07171a341f8e5cc3dd60b1f300210be8ced3af7130cb45dc90cce24ea",
+    "tactics-board.js": "f7a0ae4ac6168382e647b2b103a87a35857f1e55079ceb6b2ea1f95570835b6b",
+    "scripts/evaluate-tactics-answer-contract.cjs": "4c43ca0b4af94c8a4ead532bffc290def8fb961bd5214c2327773176dfd2bc9e"
+  },
+  "referenceListComparison": {
+    "basketball": {
+      "any": 56,
+      "preBudgetTop2": 38,
+      "belowTop2Only": 18
+    },
+    "volleyball": {
+      "any": 35,
+      "preBudgetTop2": 27,
+      "belowTop2Only": 8
+    },
+    "soccer": {
+      "any": 62,
+      "preBudgetTop2": 58,
+      "belowTop2Only": 4
+    },
+    "teeball": {
+      "any": 34,
+      "preBudgetTop2": 23,
+      "belowTop2Only": 11
+    },
+    "dodgeball": {
+      "any": 69,
+      "preBudgetTop2": 58,
+      "belowTop2Only": 11
+    }
+  },
+  "method": "Actual shared browser search, selection validation, and local source projection. Synthetic selections; no model inference.",
+  "questions": 450,
+  "candidates": 2019,
+  "totalReturns": 2019,
+  "uniqueReturnedCaseIdsCount": 136,
+  "empty": 124,
+  "projectionErrors": [],
+  "invalidSelectionCases": 7,
+  "results": [
+    {
+      "questionId": "BA-01-01",
+      "sport": "basketball",
+      "family": "possession_pressure",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-01-02",
+      "sport": "basketball",
+      "family": "possession_pressure",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-01-03",
+      "sport": "basketball",
+      "family": "possession_pressure",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-01-04",
+      "sport": "basketball",
+      "family": "possession_pressure",
+      "foundIds": [
+        "basketball_case_29",
+        "basketball_case_40",
+        "basketball_case_38",
+        "basketball_case_05",
+        "basketball_case_31"
+      ],
+      "preBudgetOfferedIds": [
+        "basketball_case_29",
+        "basketball_case_40"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-01-05",
+      "sport": "basketball",
+      "family": "possession_pressure",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-01-06",
+      "sport": "basketball",
+      "family": "possession_pressure",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-02-01",
+      "sport": "basketball",
+      "family": "ball_screen_attack",
+      "foundIds": [
+        "basketball_case_09",
+        "basketball_case_03",
+        "basketball_case_31",
+        "basketball_case_22",
+        "basketball_case_27",
+        "basketball_case_18",
+        "basketball_case_26",
+        "basketball_case_21"
+      ],
+      "preBudgetOfferedIds": [
+        "basketball_case_09",
+        "basketball_case_03"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-02-02",
+      "sport": "basketball",
+      "family": "ball_screen_attack",
+      "foundIds": [
+        "basketball_case_09",
+        "basketball_case_31",
+        "basketball_case_43",
+        "basketball_case_21",
+        "basketball_case_27",
+        "basketball_case_03",
+        "basketball_case_22",
+        "basketball_case_30"
+      ],
+      "preBudgetOfferedIds": [
+        "basketball_case_09",
+        "basketball_case_31"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-02-03",
+      "sport": "basketball",
+      "family": "ball_screen_attack",
+      "foundIds": [
+        "basketball_case_22",
+        "basketball_case_09",
+        "basketball_case_26",
+        "basketball_case_27",
+        "basketball_case_31",
+        "basketball_case_18",
+        "basketball_case_03",
+        "basketball_case_21"
+      ],
+      "preBudgetOfferedIds": [
+        "basketball_case_22",
+        "basketball_case_09"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-02-04",
+      "sport": "basketball",
+      "family": "ball_screen_attack",
+      "foundIds": [
+        "basketball_case_09",
+        "basketball_case_21",
+        "basketball_case_26",
+        "basketball_case_27",
+        "basketball_case_22",
+        "basketball_case_12",
+        "basketball_case_31",
+        "basketball_case_18"
+      ],
+      "preBudgetOfferedIds": [
+        "basketball_case_09",
+        "basketball_case_21"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-02-05",
+      "sport": "basketball",
+      "family": "ball_screen_attack",
+      "foundIds": [
+        "basketball_case_31",
+        "basketball_case_09",
+        "basketball_case_03",
+        "basketball_case_22",
+        "basketball_case_21",
+        "basketball_case_27",
+        "basketball_case_18",
+        "basketball_case_26"
+      ],
+      "preBudgetOfferedIds": [
+        "basketball_case_31",
+        "basketball_case_09"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-02-06",
+      "sport": "basketball",
+      "family": "ball_screen_attack",
+      "foundIds": [
+        "basketball_case_18",
+        "basketball_case_09",
+        "basketball_case_43",
+        "basketball_case_22",
+        "basketball_case_26",
+        "basketball_case_02",
+        "basketball_case_29",
+        "basketball_case_27"
+      ],
+      "preBudgetOfferedIds": [
+        "basketball_case_18",
+        "basketball_case_09"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-03-01",
+      "sport": "basketball",
+      "family": "ball_screen_defense",
+      "foundIds": [
+        "basketball_case_35",
+        "basketball_case_25",
+        "basketball_case_15",
+        "basketball_case_11",
+        "basketball_case_28",
+        "basketball_case_12",
+        "basketball_case_22",
+        "basketball_case_23"
+      ],
+      "preBudgetOfferedIds": [
+        "basketball_case_35",
+        "basketball_case_25"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-03-02",
+      "sport": "basketball",
+      "family": "ball_screen_defense",
+      "foundIds": [
+        "basketball_case_31",
+        "basketball_case_35",
+        "basketball_case_25",
+        "basketball_case_15",
+        "basketball_case_11",
+        "basketball_case_28",
+        "basketball_case_43",
+        "basketball_case_30"
+      ],
+      "preBudgetOfferedIds": [
+        "basketball_case_31",
+        "basketball_case_35"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-03-03",
+      "sport": "basketball",
+      "family": "ball_screen_defense",
+      "foundIds": [
+        "basketball_case_22",
+        "basketball_case_35",
+        "basketball_case_25",
+        "basketball_case_15",
+        "basketball_case_11",
+        "basketball_case_12",
+        "basketball_case_28",
+        "basketball_case_42"
+      ],
+      "preBudgetOfferedIds": [
+        "basketball_case_22",
+        "basketball_case_35"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-03-04",
+      "sport": "basketball",
+      "family": "ball_screen_defense",
+      "foundIds": [
+        "basketball_case_35",
+        "basketball_case_25",
+        "basketball_case_15",
+        "basketball_case_12",
+        "basketball_case_11",
+        "basketball_case_28",
+        "basketball_case_22",
+        "basketball_case_42"
+      ],
+      "preBudgetOfferedIds": [
+        "basketball_case_35",
+        "basketball_case_25"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-03-05",
+      "sport": "basketball",
+      "family": "ball_screen_defense",
+      "foundIds": [
+        "basketball_case_31",
+        "basketball_case_35",
+        "basketball_case_25",
+        "basketball_case_15",
+        "basketball_case_11",
+        "basketball_case_28",
+        "basketball_case_12",
+        "basketball_case_42"
+      ],
+      "preBudgetOfferedIds": [
+        "basketball_case_31",
+        "basketball_case_35"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-03-06",
+      "sport": "basketball",
+      "family": "ball_screen_defense",
+      "foundIds": [
+        "basketball_case_18",
+        "basketball_case_35",
+        "basketball_case_25",
+        "basketball_case_15",
+        "basketball_case_11",
+        "basketball_case_12",
+        "basketball_case_28",
+        "basketball_case_02"
+      ],
+      "preBudgetOfferedIds": [
+        "basketball_case_18",
+        "basketball_case_35"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-04-01",
+      "sport": "basketball",
+      "family": "zone_offense",
+      "foundIds": [
+        "basketball_case_31",
+        "basketball_case_10",
+        "basketball_case_17",
+        "BKG-01",
+        "basketball_case_18",
+        "basketball_case_02",
+        "basketball_case_09",
+        "basketball_case_06"
+      ],
+      "preBudgetOfferedIds": [
+        "basketball_case_31",
+        "basketball_case_10"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-04-02",
+      "sport": "basketball",
+      "family": "zone_offense",
+      "foundIds": [
+        "basketball_case_31",
+        "basketball_case_09",
+        "BKG-01",
+        "basketball_case_43",
+        "basketball_case_10",
+        "basketball_case_13",
+        "basketball_case_17",
+        "basketball_case_30"
+      ],
+      "preBudgetOfferedIds": [
+        "basketball_case_31",
+        "basketball_case_09"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-04-03",
+      "sport": "basketball",
+      "family": "zone_offense",
+      "foundIds": [
+        "basketball_case_31",
+        "basketball_case_10",
+        "basketball_case_17",
+        "basketball_case_18",
+        "basketball_case_02",
+        "basketball_case_09",
+        "BKG-01",
+        "basketball_case_06"
+      ],
+      "preBudgetOfferedIds": [
+        "basketball_case_31",
+        "basketball_case_10"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-04-04",
+      "sport": "basketball",
+      "family": "zone_offense",
+      "foundIds": [
+        "basketball_case_31",
+        "basketball_case_10",
+        "basketball_case_17",
+        "basketball_case_09",
+        "BKG-01",
+        "basketball_case_18",
+        "basketball_case_02",
+        "basketball_case_43"
+      ],
+      "preBudgetOfferedIds": [
+        "basketball_case_31",
+        "basketball_case_10"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-04-05",
+      "sport": "basketball",
+      "family": "zone_offense",
+      "foundIds": [
+        "basketball_case_31",
+        "basketball_case_10",
+        "basketball_case_13",
+        "basketball_case_17",
+        "basketball_case_18",
+        "basketball_case_02",
+        "basketball_case_09",
+        "BKG-01"
+      ],
+      "preBudgetOfferedIds": [
+        "basketball_case_31",
+        "basketball_case_10"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-04-06",
+      "sport": "basketball",
+      "family": "zone_offense",
+      "foundIds": [
+        "basketball_case_31",
+        "basketball_case_18",
+        "basketball_case_02",
+        "basketball_case_10",
+        "basketball_case_43",
+        "basketball_case_17",
+        "basketball_case_44",
+        "BKG-02"
+      ],
+      "preBudgetOfferedIds": [
+        "basketball_case_31",
+        "basketball_case_18"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-05-01",
+      "sport": "basketball",
+      "family": "off_ball_movement",
+      "foundIds": [
+        "basketball_case_30",
+        "basketball_case_21",
+        "basketball_case_43",
+        "basketball_case_38",
+        "basketball_case_41",
+        "basketball_case_37",
+        "basketball_case_23",
+        "basketball_case_40"
+      ],
+      "preBudgetOfferedIds": [
+        "basketball_case_30",
+        "basketball_case_21"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-05-02",
+      "sport": "basketball",
+      "family": "off_ball_movement",
+      "foundIds": [
+        "basketball_case_30",
+        "basketball_case_43",
+        "basketball_case_31",
+        "basketball_case_21",
+        "basketball_case_38",
+        "basketball_case_41",
+        "basketball_case_37",
+        "basketball_case_23"
+      ],
+      "preBudgetOfferedIds": [
+        "basketball_case_30",
+        "basketball_case_43"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-05-03",
+      "sport": "basketball",
+      "family": "off_ball_movement",
+      "foundIds": [
+        "basketball_case_22",
+        "basketball_case_30",
+        "basketball_case_21",
+        "basketball_case_43",
+        "basketball_case_38",
+        "basketball_case_37",
+        "basketball_case_41",
+        "basketball_case_12"
+      ],
+      "preBudgetOfferedIds": [
+        "basketball_case_22",
+        "basketball_case_30"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-05-04",
+      "sport": "basketball",
+      "family": "off_ball_movement",
+      "foundIds": [
+        "basketball_case_30",
+        "basketball_case_21",
+        "basketball_case_43",
+        "basketball_case_38",
+        "basketball_case_41",
+        "basketball_case_37",
+        "basketball_case_12",
+        "basketball_case_40"
+      ],
+      "preBudgetOfferedIds": [
+        "basketball_case_30",
+        "basketball_case_21"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-05-05",
+      "sport": "basketball",
+      "family": "off_ball_movement",
+      "foundIds": [
+        "basketball_case_30",
+        "basketball_case_31",
+        "basketball_case_21",
+        "basketball_case_43",
+        "basketball_case_38",
+        "basketball_case_41",
+        "basketball_case_37",
+        "basketball_case_12"
+      ],
+      "preBudgetOfferedIds": [
+        "basketball_case_30",
+        "basketball_case_31"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-05-06",
+      "sport": "basketball",
+      "family": "off_ball_movement",
+      "foundIds": [
+        "basketball_case_18",
+        "basketball_case_43",
+        "basketball_case_30",
+        "basketball_case_02",
+        "basketball_case_21",
+        "basketball_case_29",
+        "basketball_case_38",
+        "basketball_case_41"
+      ],
+      "preBudgetOfferedIds": [
+        "basketball_case_18",
+        "basketball_case_43"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-06-01",
+      "sport": "basketball",
+      "family": "help_defense_kickout",
+      "foundIds": [
+        "basketball_case_03",
+        "basketball_case_13",
+        "basketball_case_37",
+        "BKG-01",
+        "basketball_case_34",
+        "basketball_case_08",
+        "basketball_case_27",
+        "basketball_case_17"
+      ],
+      "preBudgetOfferedIds": [
+        "basketball_case_03",
+        "basketball_case_13"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-06-02",
+      "sport": "basketball",
+      "family": "help_defense_kickout",
+      "foundIds": [
+        "BKG-01",
+        "basketball_case_13",
+        "basketball_case_43",
+        "basketball_case_31",
+        "basketball_case_03",
+        "basketball_case_37",
+        "basketball_case_27",
+        "basketball_case_17"
+      ],
+      "preBudgetOfferedIds": [
+        "BKG-01",
+        "basketball_case_13"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-06-03",
+      "sport": "basketball",
+      "family": "help_defense_kickout",
+      "foundIds": [
+        "basketball_case_03",
+        "basketball_case_37",
+        "basketball_case_13",
+        "basketball_case_34",
+        "BKG-01",
+        "basketball_case_08",
+        "basketball_case_27",
+        "basketball_case_17"
+      ],
+      "preBudgetOfferedIds": [
+        "basketball_case_03",
+        "basketball_case_37"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-06-04",
+      "sport": "basketball",
+      "family": "help_defense_kickout",
+      "foundIds": [
+        "basketball_case_10",
+        "basketball_case_03",
+        "BKG-01",
+        "basketball_case_13",
+        "basketball_case_37",
+        "basketball_case_27",
+        "basketball_case_43",
+        "basketball_case_34"
+      ],
+      "preBudgetOfferedIds": [
+        "basketball_case_10",
+        "basketball_case_03"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-06-05",
+      "sport": "basketball",
+      "family": "help_defense_kickout",
+      "foundIds": [
+        "basketball_case_13",
+        "basketball_case_31",
+        "basketball_case_03",
+        "basketball_case_37",
+        "basketball_case_42",
+        "basketball_case_34",
+        "BKG-01",
+        "basketball_case_08"
+      ],
+      "preBudgetOfferedIds": [
+        "basketball_case_13",
+        "basketball_case_31"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-06-06",
+      "sport": "basketball",
+      "family": "help_defense_kickout",
+      "foundIds": [
+        "basketball_case_18",
+        "basketball_case_43",
+        "BKG-02",
+        "basketball_case_29",
+        "basketball_case_44",
+        "basketball_case_03",
+        "basketball_case_37",
+        "basketball_case_17"
+      ],
+      "preBudgetOfferedIds": [
+        "basketball_case_18",
+        "basketball_case_43"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-07-01",
+      "sport": "basketball",
+      "family": "rebound_second_chance",
+      "foundIds": [
+        "basketball_case_09",
+        "BKG-01",
+        "BKG-02",
+        "basketball_case_10",
+        "basketball_case_43",
+        "basketball_case_33",
+        "basketball_case_30",
+        "basketball_case_02"
+      ],
+      "preBudgetOfferedIds": [
+        "basketball_case_09",
+        "BKG-01"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-07-02",
+      "sport": "basketball",
+      "family": "rebound_second_chance",
+      "foundIds": [
+        "basketball_case_09",
+        "BKG-01",
+        "BKG-02",
+        "basketball_case_43",
+        "basketball_case_10",
+        "basketball_case_30",
+        "basketball_case_33",
+        "basketball_case_23"
+      ],
+      "preBudgetOfferedIds": [
+        "basketball_case_09",
+        "BKG-01"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-07-03",
+      "sport": "basketball",
+      "family": "rebound_second_chance",
+      "foundIds": [
+        "basketball_case_09",
+        "BKG-01",
+        "BKG-02",
+        "basketball_case_10",
+        "basketball_case_43",
+        "basketball_case_33",
+        "basketball_case_30",
+        "basketball_case_02"
+      ],
+      "preBudgetOfferedIds": [
+        "basketball_case_09",
+        "BKG-01"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-07-04",
+      "sport": "basketball",
+      "family": "rebound_second_chance",
+      "foundIds": [
+        "BKG-01",
+        "basketball_case_09",
+        "basketball_case_10",
+        "BKG-02",
+        "basketball_case_43",
+        "basketball_case_33",
+        "basketball_case_30",
+        "basketball_case_02"
+      ],
+      "preBudgetOfferedIds": [
+        "BKG-01",
+        "basketball_case_09"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-07-05",
+      "sport": "basketball",
+      "family": "rebound_second_chance",
+      "foundIds": [
+        "basketball_case_09",
+        "BKG-01",
+        "BKG-02",
+        "basketball_case_10",
+        "basketball_case_43",
+        "basketball_case_33",
+        "basketball_case_30",
+        "basketball_case_23"
+      ],
+      "preBudgetOfferedIds": [
+        "basketball_case_09",
+        "BKG-01"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-07-06",
+      "sport": "basketball",
+      "family": "rebound_second_chance",
+      "foundIds": [
+        "BKG-02",
+        "basketball_case_09",
+        "BKG-01",
+        "basketball_case_18",
+        "basketball_case_43",
+        "basketball_case_10",
+        "basketball_case_02",
+        "basketball_case_33"
+      ],
+      "preBudgetOfferedIds": [
+        "BKG-02",
+        "basketball_case_09"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-08-01",
+      "sport": "basketball",
+      "family": "fast_break_attack",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-08-02",
+      "sport": "basketball",
+      "family": "fast_break_attack",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-08-03",
+      "sport": "basketball",
+      "family": "fast_break_attack",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-08-04",
+      "sport": "basketball",
+      "family": "fast_break_attack",
+      "foundIds": [
+        "BKG-01"
+      ],
+      "preBudgetOfferedIds": [
+        "BKG-01"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-08-05",
+      "sport": "basketball",
+      "family": "fast_break_attack",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-08-06",
+      "sport": "basketball",
+      "family": "fast_break_attack",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-09-01",
+      "sport": "basketball",
+      "family": "transition_defense",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-09-02",
+      "sport": "basketball",
+      "family": "transition_defense",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-09-03",
+      "sport": "basketball",
+      "family": "transition_defense",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-09-04",
+      "sport": "basketball",
+      "family": "transition_defense",
+      "foundIds": [
+        "BKG-01"
+      ],
+      "preBudgetOfferedIds": [
+        "BKG-01"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-09-05",
+      "sport": "basketball",
+      "family": "transition_defense",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-09-06",
+      "sport": "basketball",
+      "family": "transition_defense",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-10-01",
+      "sport": "basketball",
+      "family": "post_paint_attack",
+      "foundIds": [
+        "basketball_case_30",
+        "basketball_case_35",
+        "basketball_case_18",
+        "basketball_case_43",
+        "basketball_case_09",
+        "basketball_case_34",
+        "basketball_case_23",
+        "basketball_case_06"
+      ],
+      "preBudgetOfferedIds": [
+        "basketball_case_30",
+        "basketball_case_35"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-10-02",
+      "sport": "basketball",
+      "family": "post_paint_attack",
+      "foundIds": [
+        "basketball_case_30",
+        "basketball_case_43",
+        "basketball_case_09",
+        "basketball_case_35",
+        "basketball_case_18",
+        "basketball_case_23",
+        "basketball_case_34",
+        "basketball_case_02"
+      ],
+      "preBudgetOfferedIds": [
+        "basketball_case_30",
+        "basketball_case_43"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-10-03",
+      "sport": "basketball",
+      "family": "post_paint_attack",
+      "foundIds": [
+        "basketball_case_30",
+        "basketball_case_35",
+        "basketball_case_18",
+        "basketball_case_43",
+        "basketball_case_34",
+        "basketball_case_09",
+        "basketball_case_06",
+        "basketball_case_02"
+      ],
+      "preBudgetOfferedIds": [
+        "basketball_case_30",
+        "basketball_case_35"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-10-04",
+      "sport": "basketball",
+      "family": "post_paint_attack",
+      "foundIds": [
+        "basketball_case_29",
+        "basketball_case_30",
+        "basketball_case_35",
+        "basketball_case_43",
+        "basketball_case_18",
+        "basketball_case_09",
+        "basketball_case_38",
+        "BKG-01"
+      ],
+      "preBudgetOfferedIds": [
+        "basketball_case_29",
+        "basketball_case_30"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-10-05",
+      "sport": "basketball",
+      "family": "post_paint_attack",
+      "foundIds": [
+        "basketball_case_30",
+        "basketball_case_35",
+        "basketball_case_18",
+        "basketball_case_43",
+        "basketball_case_09",
+        "basketball_case_34",
+        "basketball_case_23",
+        "basketball_case_06"
+      ],
+      "preBudgetOfferedIds": [
+        "basketball_case_30",
+        "basketball_case_35"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-10-06",
+      "sport": "basketball",
+      "family": "post_paint_attack",
+      "foundIds": [
+        "basketball_case_18",
+        "basketball_case_43",
+        "basketball_case_02",
+        "basketball_case_30",
+        "basketball_case_35",
+        "basketball_case_09",
+        "basketball_case_34",
+        "basketball_case_06"
+      ],
+      "preBudgetOfferedIds": [
+        "basketball_case_18",
+        "basketball_case_43"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-11-01",
+      "sport": "basketball",
+      "family": "late_clock_timeout",
+      "foundIds": [
+        "basketball_case_18",
+        "basketball_case_14",
+        "basketball_case_20"
+      ],
+      "preBudgetOfferedIds": [
+        "basketball_case_18",
+        "basketball_case_14"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-11-02",
+      "sport": "basketball",
+      "family": "late_clock_timeout",
+      "foundIds": [
+        "basketball_case_18",
+        "basketball_case_20",
+        "basketball_case_14"
+      ],
+      "preBudgetOfferedIds": [
+        "basketball_case_18",
+        "basketball_case_20"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-11-03",
+      "sport": "basketball",
+      "family": "late_clock_timeout",
+      "foundIds": [
+        "basketball_case_18",
+        "basketball_case_14",
+        "basketball_case_20"
+      ],
+      "preBudgetOfferedIds": [
+        "basketball_case_18",
+        "basketball_case_14"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-11-04",
+      "sport": "basketball",
+      "family": "late_clock_timeout",
+      "foundIds": [
+        "basketball_case_18",
+        "BKG-01",
+        "basketball_case_14",
+        "basketball_case_20"
+      ],
+      "preBudgetOfferedIds": [
+        "basketball_case_18",
+        "BKG-01"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-11-05",
+      "sport": "basketball",
+      "family": "late_clock_timeout",
+      "foundIds": [
+        "basketball_case_18",
+        "basketball_case_14",
+        "basketball_case_20"
+      ],
+      "preBudgetOfferedIds": [
+        "basketball_case_18",
+        "basketball_case_14"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-11-06",
+      "sport": "basketball",
+      "family": "late_clock_timeout",
+      "foundIds": [
+        "basketball_case_18",
+        "basketball_case_14",
+        "basketball_case_20"
+      ],
+      "preBudgetOfferedIds": [
+        "basketball_case_18",
+        "basketball_case_14"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-12-01",
+      "sport": "basketball",
+      "family": "perimeter_pressure",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-12-02",
+      "sport": "basketball",
+      "family": "perimeter_pressure",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-12-03",
+      "sport": "basketball",
+      "family": "perimeter_pressure",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-12-04",
+      "sport": "basketball",
+      "family": "perimeter_pressure",
+      "foundIds": [
+        "basketball_case_29",
+        "basketball_case_05",
+        "basketball_case_40",
+        "basketball_case_38",
+        "basketball_case_31"
+      ],
+      "preBudgetOfferedIds": [
+        "basketball_case_29",
+        "basketball_case_05"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-12-05",
+      "sport": "basketball",
+      "family": "perimeter_pressure",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-12-06",
+      "sport": "basketball",
+      "family": "perimeter_pressure",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-13-01",
+      "sport": "basketball",
+      "family": "mismatch_hunting",
+      "foundIds": [
+        "basketball_case_27",
+        "basketball_case_21",
+        "basketball_case_38",
+        "basketball_case_41",
+        "basketball_case_30",
+        "basketball_case_06",
+        "basketball_case_33",
+        "basketball_case_43"
+      ],
+      "preBudgetOfferedIds": [
+        "basketball_case_27",
+        "basketball_case_21"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-13-02",
+      "sport": "basketball",
+      "family": "mismatch_hunting",
+      "foundIds": [
+        "basketball_case_27",
+        "basketball_case_31",
+        "basketball_case_43",
+        "basketball_case_30",
+        "basketball_case_21",
+        "basketball_case_38",
+        "basketball_case_41",
+        "basketball_case_28"
+      ],
+      "preBudgetOfferedIds": [
+        "basketball_case_27",
+        "basketball_case_31"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-13-03",
+      "sport": "basketball",
+      "family": "mismatch_hunting",
+      "foundIds": [
+        "basketball_case_27",
+        "basketball_case_22",
+        "basketball_case_21",
+        "basketball_case_38",
+        "basketball_case_41",
+        "basketball_case_37",
+        "basketball_case_30",
+        "basketball_case_06"
+      ],
+      "preBudgetOfferedIds": [
+        "basketball_case_27",
+        "basketball_case_22"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-13-04",
+      "sport": "basketball",
+      "family": "mismatch_hunting",
+      "foundIds": [
+        "basketball_case_27",
+        "basketball_case_21",
+        "basketball_case_38",
+        "basketball_case_41",
+        "basketball_case_29",
+        "basketball_case_30",
+        "basketball_case_43",
+        "basketball_case_12"
+      ],
+      "preBudgetOfferedIds": [
+        "basketball_case_27",
+        "basketball_case_21"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-13-05",
+      "sport": "basketball",
+      "family": "mismatch_hunting",
+      "foundIds": [
+        "basketball_case_27",
+        "basketball_case_31",
+        "basketball_case_21",
+        "basketball_case_38",
+        "basketball_case_41",
+        "basketball_case_30",
+        "basketball_case_28",
+        "basketball_case_06"
+      ],
+      "preBudgetOfferedIds": [
+        "basketball_case_27",
+        "basketball_case_31"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-13-06",
+      "sport": "basketball",
+      "family": "mismatch_hunting",
+      "foundIds": [
+        "basketball_case_18",
+        "basketball_case_27",
+        "basketball_case_29",
+        "basketball_case_02",
+        "basketball_case_43",
+        "basketball_case_21",
+        "basketball_case_38",
+        "basketball_case_41"
+      ],
+      "preBudgetOfferedIds": [
+        "basketball_case_18",
+        "basketball_case_27"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-14-01",
+      "sport": "basketball",
+      "family": "defensive_switch_recovery",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-14-02",
+      "sport": "basketball",
+      "family": "defensive_switch_recovery",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-14-03",
+      "sport": "basketball",
+      "family": "defensive_switch_recovery",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-14-04",
+      "sport": "basketball",
+      "family": "defensive_switch_recovery",
+      "foundIds": [
+        "basketball_case_29",
+        "basketball_case_40",
+        "basketball_case_05",
+        "basketball_case_38",
+        "basketball_case_31"
+      ],
+      "preBudgetOfferedIds": [
+        "basketball_case_29",
+        "basketball_case_40"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-14-05",
+      "sport": "basketball",
+      "family": "defensive_switch_recovery",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-14-06",
+      "sport": "basketball",
+      "family": "defensive_switch_recovery",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-15-01",
+      "sport": "basketball",
+      "family": "team_communication",
+      "foundIds": [
+        "basketball_case_32",
+        "BKG-02",
+        "basketball_case_09",
+        "BKG-01",
+        "basketball_case_33",
+        "basketball_case_30",
+        "basketball_case_10"
+      ],
+      "preBudgetOfferedIds": [
+        "basketball_case_32",
+        "BKG-02"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-15-02",
+      "sport": "basketball",
+      "family": "team_communication",
+      "foundIds": [
+        "basketball_case_32",
+        "basketball_case_09",
+        "BKG-02",
+        "BKG-01",
+        "basketball_case_30",
+        "basketball_case_33",
+        "basketball_case_10"
+      ],
+      "preBudgetOfferedIds": [
+        "basketball_case_32",
+        "basketball_case_09"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-15-03",
+      "sport": "basketball",
+      "family": "team_communication",
+      "foundIds": [
+        "basketball_case_32",
+        "BKG-02",
+        "basketball_case_09",
+        "BKG-01",
+        "basketball_case_33",
+        "basketball_case_30",
+        "basketball_case_10"
+      ],
+      "preBudgetOfferedIds": [
+        "basketball_case_32",
+        "BKG-02"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-15-04",
+      "sport": "basketball",
+      "family": "team_communication",
+      "foundIds": [
+        "basketball_case_32",
+        "BKG-02",
+        "basketball_case_09",
+        "basketball_case_10",
+        "BKG-01",
+        "basketball_case_33",
+        "basketball_case_30",
+        "basketball_case_40"
+      ],
+      "preBudgetOfferedIds": [
+        "basketball_case_32",
+        "BKG-02"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-15-05",
+      "sport": "basketball",
+      "family": "team_communication",
+      "foundIds": [
+        "basketball_case_32",
+        "BKG-02",
+        "basketball_case_09",
+        "BKG-01",
+        "basketball_case_30",
+        "basketball_case_33",
+        "basketball_case_10"
+      ],
+      "preBudgetOfferedIds": [
+        "basketball_case_32",
+        "BKG-02"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "BA-15-06",
+      "sport": "basketball",
+      "family": "team_communication",
+      "foundIds": [
+        "basketball_case_32",
+        "BKG-02",
+        "basketball_case_09",
+        "BKG-01",
+        "basketball_case_33",
+        "basketball_case_30",
+        "basketball_case_10"
+      ],
+      "preBudgetOfferedIds": [
+        "basketball_case_32",
+        "BKG-02"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-01-01",
+      "sport": "volleyball",
+      "family": "serve_pressure",
+      "foundIds": [
+        "volleyball_case_15",
+        "volleyball_case_25",
+        "volleyball_case_36",
+        "volleyball_case_20",
+        "volleyball_case_02",
+        "volleyball_case_01",
+        "volleyball_case_17",
+        "volleyball_case_34"
+      ],
+      "preBudgetOfferedIds": [
+        "volleyball_case_15",
+        "volleyball_case_25"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-01-02",
+      "sport": "volleyball",
+      "family": "serve_pressure",
+      "foundIds": [
+        "volleyball_case_36",
+        "volleyball_case_25",
+        "volleyball_case_20",
+        "volleyball_case_02",
+        "volleyball_case_11",
+        "volleyball_case_01",
+        "volleyball_case_34",
+        "volleyball_case_09"
+      ],
+      "preBudgetOfferedIds": [
+        "volleyball_case_36",
+        "volleyball_case_25"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-01-03",
+      "sport": "volleyball",
+      "family": "serve_pressure",
+      "foundIds": [
+        "volleyball_case_36",
+        "volleyball_case_25",
+        "volleyball_case_20",
+        "volleyball_case_02",
+        "volleyball_case_01",
+        "volleyball_case_34",
+        "volleyball_case_09",
+        "volleyball_case_40"
+      ],
+      "preBudgetOfferedIds": [
+        "volleyball_case_36",
+        "volleyball_case_25"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-01-04",
+      "sport": "volleyball",
+      "family": "serve_pressure",
+      "foundIds": [
+        "volleyball_case_36",
+        "volleyball_case_25",
+        "volleyball_case_20",
+        "volleyball_case_01",
+        "volleyball_case_02",
+        "volleyball_case_37",
+        "volleyball_case_09",
+        "volleyball_case_34"
+      ],
+      "preBudgetOfferedIds": [
+        "volleyball_case_36",
+        "volleyball_case_25"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-01-05",
+      "sport": "volleyball",
+      "family": "serve_pressure",
+      "foundIds": [
+        "volleyball_case_36",
+        "volleyball_case_25",
+        "volleyball_case_20",
+        "volleyball_case_11",
+        "volleyball_case_02",
+        "volleyball_case_01",
+        "volleyball_case_34",
+        "volleyball_case_09"
+      ],
+      "preBudgetOfferedIds": [
+        "volleyball_case_36",
+        "volleyball_case_25"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-01-06",
+      "sport": "volleyball",
+      "family": "serve_pressure",
+      "foundIds": [
+        "volleyball_case_09",
+        "volleyball_case_02",
+        "volleyball_case_11",
+        "volleyball_case_36",
+        "volleyball_case_25",
+        "volleyball_case_15",
+        "volleyball_case_03",
+        "volleyball_case_30"
+      ],
+      "preBudgetOfferedIds": [
+        "volleyball_case_09",
+        "volleyball_case_02"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-02-01",
+      "sport": "volleyball",
+      "family": "serve_receive_seam",
+      "foundIds": [
+        "volleyball_case_15",
+        "volleyball_case_01",
+        "volleyball_case_07",
+        "volleyball_case_26",
+        "volleyball_case_02",
+        "volleyball_case_17",
+        "volleyball_case_25",
+        "volleyball_case_32"
+      ],
+      "preBudgetOfferedIds": [
+        "volleyball_case_15",
+        "volleyball_case_01"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-02-02",
+      "sport": "volleyball",
+      "family": "serve_receive_seam",
+      "foundIds": [
+        "volleyball_case_01",
+        "volleyball_case_07",
+        "volleyball_case_15",
+        "volleyball_case_26",
+        "volleyball_case_02",
+        "volleyball_case_11",
+        "volleyball_case_10",
+        "volleyball_case_17"
+      ],
+      "preBudgetOfferedIds": [
+        "volleyball_case_01",
+        "volleyball_case_07"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-02-03",
+      "sport": "volleyball",
+      "family": "serve_receive_seam",
+      "foundIds": [
+        "volleyball_case_01",
+        "volleyball_case_07",
+        "volleyball_case_26",
+        "volleyball_case_15",
+        "volleyball_case_02",
+        "volleyball_case_37",
+        "volleyball_case_17",
+        "volleyball_case_25"
+      ],
+      "preBudgetOfferedIds": [
+        "volleyball_case_01",
+        "volleyball_case_07"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-02-04",
+      "sport": "volleyball",
+      "family": "serve_receive_seam",
+      "foundIds": [
+        "volleyball_case_01",
+        "volleyball_case_07",
+        "volleyball_case_15",
+        "volleyball_case_26",
+        "volleyball_case_02",
+        "volleyball_case_37",
+        "volleyball_case_10",
+        "volleyball_case_17"
+      ],
+      "preBudgetOfferedIds": [
+        "volleyball_case_01",
+        "volleyball_case_07"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-02-05",
+      "sport": "volleyball",
+      "family": "serve_receive_seam",
+      "foundIds": [
+        "volleyball_case_01",
+        "volleyball_case_07",
+        "volleyball_case_15",
+        "volleyball_case_26",
+        "volleyball_case_02",
+        "volleyball_case_11",
+        "volleyball_case_36",
+        "volleyball_case_17"
+      ],
+      "preBudgetOfferedIds": [
+        "volleyball_case_01",
+        "volleyball_case_07"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-02-06",
+      "sport": "volleyball",
+      "family": "serve_receive_seam",
+      "foundIds": [
+        "volleyball_case_15",
+        "volleyball_case_02",
+        "volleyball_case_09",
+        "volleyball_case_01",
+        "volleyball_case_07",
+        "volleyball_case_03",
+        "volleyball_case_26",
+        "volleyball_case_30"
+      ],
+      "preBudgetOfferedIds": [
+        "volleyball_case_15",
+        "volleyball_case_02"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-03-01",
+      "sport": "volleyball",
+      "family": "out_of_system_set",
+      "foundIds": [
+        "volleyball_case_15",
+        "volleyball_case_02",
+        "volleyball_case_25",
+        "volleyball_case_01",
+        "volleyball_case_07",
+        "volleyball_case_26"
+      ],
+      "preBudgetOfferedIds": [
+        "volleyball_case_15",
+        "volleyball_case_02"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-03-02",
+      "sport": "volleyball",
+      "family": "out_of_system_set",
+      "foundIds": [
+        "volleyball_case_02",
+        "volleyball_case_01",
+        "volleyball_case_25",
+        "volleyball_case_07",
+        "volleyball_case_26",
+        "volleyball_case_15"
+      ],
+      "preBudgetOfferedIds": [
+        "volleyball_case_02",
+        "volleyball_case_01"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-03-03",
+      "sport": "volleyball",
+      "family": "out_of_system_set",
+      "foundIds": [
+        "volleyball_case_02",
+        "volleyball_case_01",
+        "volleyball_case_25",
+        "volleyball_case_26",
+        "volleyball_case_07",
+        "volleyball_case_15"
+      ],
+      "preBudgetOfferedIds": [
+        "volleyball_case_02",
+        "volleyball_case_01"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-03-04",
+      "sport": "volleyball",
+      "family": "out_of_system_set",
+      "foundIds": [
+        "volleyball_case_02",
+        "volleyball_case_01",
+        "volleyball_case_25",
+        "volleyball_case_07",
+        "volleyball_case_15",
+        "volleyball_case_26"
+      ],
+      "preBudgetOfferedIds": [
+        "volleyball_case_02",
+        "volleyball_case_01"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-03-05",
+      "sport": "volleyball",
+      "family": "out_of_system_set",
+      "foundIds": [
+        "volleyball_case_02",
+        "volleyball_case_01",
+        "volleyball_case_25",
+        "volleyball_case_07",
+        "volleyball_case_15",
+        "volleyball_case_26"
+      ],
+      "preBudgetOfferedIds": [
+        "volleyball_case_02",
+        "volleyball_case_01"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-03-06",
+      "sport": "volleyball",
+      "family": "out_of_system_set",
+      "foundIds": [
+        "volleyball_case_02",
+        "volleyball_case_15",
+        "volleyball_case_01",
+        "volleyball_case_25",
+        "volleyball_case_07",
+        "volleyball_case_26"
+      ],
+      "preBudgetOfferedIds": [
+        "volleyball_case_02",
+        "volleyball_case_15"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-04-01",
+      "sport": "volleyball",
+      "family": "attack_against_block",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-04-02",
+      "sport": "volleyball",
+      "family": "attack_against_block",
+      "foundIds": [
+        "volleyball_case_07"
+      ],
+      "preBudgetOfferedIds": [
+        "volleyball_case_07"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-04-03",
+      "sport": "volleyball",
+      "family": "attack_against_block",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-04-04",
+      "sport": "volleyball",
+      "family": "attack_against_block",
+      "foundIds": [
+        "volleyball_case_14",
+        "volleyball_case_07"
+      ],
+      "preBudgetOfferedIds": [
+        "volleyball_case_14",
+        "volleyball_case_07"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-04-05",
+      "sport": "volleyball",
+      "family": "attack_against_block",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-04-06",
+      "sport": "volleyball",
+      "family": "attack_against_block",
+      "foundIds": [
+        "volleyball_case_07"
+      ],
+      "preBudgetOfferedIds": [
+        "volleyball_case_07"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-05-01",
+      "sport": "volleyball",
+      "family": "block_coordination",
+      "foundIds": [
+        "volleyball_case_14"
+      ],
+      "preBudgetOfferedIds": [
+        "volleyball_case_14"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-05-02",
+      "sport": "volleyball",
+      "family": "block_coordination",
+      "foundIds": [
+        "volleyball_case_14"
+      ],
+      "preBudgetOfferedIds": [
+        "volleyball_case_14"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-05-03",
+      "sport": "volleyball",
+      "family": "block_coordination",
+      "foundIds": [
+        "volleyball_case_14"
+      ],
+      "preBudgetOfferedIds": [
+        "volleyball_case_14"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-05-04",
+      "sport": "volleyball",
+      "family": "block_coordination",
+      "foundIds": [
+        "volleyball_case_14"
+      ],
+      "preBudgetOfferedIds": [
+        "volleyball_case_14"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-05-05",
+      "sport": "volleyball",
+      "family": "block_coordination",
+      "foundIds": [
+        "volleyball_case_14"
+      ],
+      "preBudgetOfferedIds": [
+        "volleyball_case_14"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-05-06",
+      "sport": "volleyball",
+      "family": "block_coordination",
+      "foundIds": [
+        "volleyball_case_14"
+      ],
+      "preBudgetOfferedIds": [
+        "volleyball_case_14"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-06-01",
+      "sport": "volleyball",
+      "family": "backcourt_defense",
+      "foundIds": [
+        "volleyball_case_14",
+        "volleyball_case_15",
+        "volleyball_case_23",
+        "volleyball_case_09",
+        "volleyball_case_32",
+        "volleyball_case_01",
+        "volleyball_case_02",
+        "volleyball_case_10"
+      ],
+      "preBudgetOfferedIds": [
+        "volleyball_case_14",
+        "volleyball_case_15"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-06-02",
+      "sport": "volleyball",
+      "family": "backcourt_defense",
+      "foundIds": [
+        "volleyball_case_14",
+        "volleyball_case_23",
+        "volleyball_case_09",
+        "volleyball_case_02",
+        "volleyball_case_01",
+        "volleyball_case_32",
+        "volleyball_case_10",
+        "volleyball_case_29"
+      ],
+      "preBudgetOfferedIds": [
+        "volleyball_case_14",
+        "volleyball_case_23"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-06-03",
+      "sport": "volleyball",
+      "family": "backcourt_defense",
+      "foundIds": [
+        "volleyball_case_14",
+        "volleyball_case_23",
+        "volleyball_case_09",
+        "volleyball_case_01",
+        "volleyball_case_02",
+        "volleyball_case_32",
+        "volleyball_case_26",
+        "volleyball_case_10"
+      ],
+      "preBudgetOfferedIds": [
+        "volleyball_case_14",
+        "volleyball_case_23"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-06-04",
+      "sport": "volleyball",
+      "family": "backcourt_defense",
+      "foundIds": [
+        "volleyball_case_14",
+        "volleyball_case_23",
+        "volleyball_case_09",
+        "volleyball_case_01",
+        "volleyball_case_02",
+        "volleyball_case_32",
+        "volleyball_case_10",
+        "volleyball_case_29"
+      ],
+      "preBudgetOfferedIds": [
+        "volleyball_case_14",
+        "volleyball_case_23"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-06-05",
+      "sport": "volleyball",
+      "family": "backcourt_defense",
+      "foundIds": [
+        "volleyball_case_14",
+        "volleyball_case_23",
+        "volleyball_case_09",
+        "volleyball_case_01",
+        "volleyball_case_02",
+        "volleyball_case_32",
+        "volleyball_case_36",
+        "volleyball_case_10"
+      ],
+      "preBudgetOfferedIds": [
+        "volleyball_case_14",
+        "volleyball_case_23"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-06-06",
+      "sport": "volleyball",
+      "family": "backcourt_defense",
+      "foundIds": [
+        "volleyball_case_09",
+        "volleyball_case_14",
+        "volleyball_case_23",
+        "volleyball_case_15",
+        "volleyball_case_02",
+        "volleyball_case_01",
+        "volleyball_case_32",
+        "volleyball_case_26"
+      ],
+      "preBudgetOfferedIds": [
+        "volleyball_case_09",
+        "volleyball_case_14"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-07-01",
+      "sport": "volleyball",
+      "family": "attack_coverage",
+      "foundIds": [
+        "VBG-01",
+        "volleyball_case_25"
+      ],
+      "preBudgetOfferedIds": [
+        "VBG-01",
+        "volleyball_case_25"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-07-02",
+      "sport": "volleyball",
+      "family": "attack_coverage",
+      "foundIds": [
+        "VBG-01",
+        "volleyball_case_25"
+      ],
+      "preBudgetOfferedIds": [
+        "VBG-01",
+        "volleyball_case_25"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-07-03",
+      "sport": "volleyball",
+      "family": "attack_coverage",
+      "foundIds": [
+        "VBG-01"
+      ],
+      "preBudgetOfferedIds": [
+        "VBG-01"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-07-04",
+      "sport": "volleyball",
+      "family": "attack_coverage",
+      "foundIds": [
+        "VBG-01",
+        "volleyball_case_14",
+        "volleyball_case_25"
+      ],
+      "preBudgetOfferedIds": [
+        "VBG-01",
+        "volleyball_case_14"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-07-05",
+      "sport": "volleyball",
+      "family": "attack_coverage",
+      "foundIds": [
+        "VBG-01"
+      ],
+      "preBudgetOfferedIds": [
+        "VBG-01"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-07-06",
+      "sport": "volleyball",
+      "family": "attack_coverage",
+      "foundIds": [
+        "VBG-01",
+        "volleyball_case_25"
+      ],
+      "preBudgetOfferedIds": [
+        "VBG-01",
+        "volleyball_case_25"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-08-01",
+      "sport": "volleyball",
+      "family": "dig_to_counter",
+      "foundIds": [
+        "volleyball_case_15",
+        "volleyball_case_25",
+        "volleyball_case_17",
+        "volleyball_case_32",
+        "volleyball_case_24",
+        "volleyball_case_01",
+        "volleyball_case_02",
+        "volleyball_case_26"
+      ],
+      "preBudgetOfferedIds": [
+        "volleyball_case_15",
+        "volleyball_case_25"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-08-02",
+      "sport": "volleyball",
+      "family": "dig_to_counter",
+      "foundIds": [
+        "volleyball_case_25",
+        "volleyball_case_17",
+        "volleyball_case_02",
+        "volleyball_case_24",
+        "volleyball_case_32",
+        "volleyball_case_01",
+        "volleyball_case_26",
+        "volleyball_case_07"
+      ],
+      "preBudgetOfferedIds": [
+        "volleyball_case_25",
+        "volleyball_case_17"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-08-03",
+      "sport": "volleyball",
+      "family": "dig_to_counter",
+      "foundIds": [
+        "volleyball_case_25",
+        "volleyball_case_17",
+        "volleyball_case_24",
+        "volleyball_case_32",
+        "volleyball_case_01",
+        "volleyball_case_02",
+        "volleyball_case_26",
+        "volleyball_case_15"
+      ],
+      "preBudgetOfferedIds": [
+        "volleyball_case_25",
+        "volleyball_case_17"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-08-04",
+      "sport": "volleyball",
+      "family": "dig_to_counter",
+      "foundIds": [
+        "volleyball_case_25",
+        "volleyball_case_17",
+        "volleyball_case_14",
+        "volleyball_case_01",
+        "volleyball_case_24",
+        "volleyball_case_32",
+        "volleyball_case_02",
+        "volleyball_case_07"
+      ],
+      "preBudgetOfferedIds": [
+        "volleyball_case_25",
+        "volleyball_case_17"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-08-05",
+      "sport": "volleyball",
+      "family": "dig_to_counter",
+      "foundIds": [
+        "volleyball_case_25",
+        "volleyball_case_17",
+        "volleyball_case_24",
+        "volleyball_case_32",
+        "volleyball_case_01",
+        "volleyball_case_02",
+        "volleyball_case_15",
+        "volleyball_case_26"
+      ],
+      "preBudgetOfferedIds": [
+        "volleyball_case_25",
+        "volleyball_case_17"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-08-06",
+      "sport": "volleyball",
+      "family": "dig_to_counter",
+      "foundIds": [
+        "volleyball_case_02",
+        "volleyball_case_15",
+        "volleyball_case_25",
+        "volleyball_case_17",
+        "volleyball_case_24",
+        "volleyball_case_32",
+        "volleyball_case_01",
+        "volleyball_case_26"
+      ],
+      "preBudgetOfferedIds": [
+        "volleyball_case_02",
+        "volleyball_case_15"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-09-01",
+      "sport": "volleyball",
+      "family": "free_ball_transition",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-09-02",
+      "sport": "volleyball",
+      "family": "free_ball_transition",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-09-03",
+      "sport": "volleyball",
+      "family": "free_ball_transition",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-09-04",
+      "sport": "volleyball",
+      "family": "free_ball_transition",
+      "foundIds": [
+        "volleyball_case_14"
+      ],
+      "preBudgetOfferedIds": [
+        "volleyball_case_14"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-09-05",
+      "sport": "volleyball",
+      "family": "free_ball_transition",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-09-06",
+      "sport": "volleyball",
+      "family": "free_ball_transition",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-10-01",
+      "sport": "volleyball",
+      "family": "rotation_substitution",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-10-02",
+      "sport": "volleyball",
+      "family": "rotation_substitution",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-10-03",
+      "sport": "volleyball",
+      "family": "rotation_substitution",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-10-04",
+      "sport": "volleyball",
+      "family": "rotation_substitution",
+      "foundIds": [
+        "volleyball_case_14"
+      ],
+      "preBudgetOfferedIds": [
+        "volleyball_case_14"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-10-05",
+      "sport": "volleyball",
+      "family": "rotation_substitution",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-10-06",
+      "sport": "volleyball",
+      "family": "rotation_substitution",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-11-01",
+      "sport": "volleyball",
+      "family": "long_rally",
+      "foundIds": [
+        "volleyball_case_10",
+        "volleyball_case_09",
+        "volleyball_case_32",
+        "volleyball_case_23",
+        "volleyball_case_14",
+        "volleyball_case_36",
+        "volleyball_case_19"
+      ],
+      "preBudgetOfferedIds": [
+        "volleyball_case_10",
+        "volleyball_case_09"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-11-02",
+      "sport": "volleyball",
+      "family": "long_rally",
+      "foundIds": [
+        "volleyball_case_10",
+        "volleyball_case_09",
+        "volleyball_case_14",
+        "volleyball_case_23",
+        "volleyball_case_36",
+        "volleyball_case_32",
+        "volleyball_case_19"
+      ],
+      "preBudgetOfferedIds": [
+        "volleyball_case_10",
+        "volleyball_case_09"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-11-03",
+      "sport": "volleyball",
+      "family": "long_rally",
+      "foundIds": [
+        "volleyball_case_10",
+        "volleyball_case_09",
+        "volleyball_case_23",
+        "volleyball_case_14",
+        "volleyball_case_36",
+        "volleyball_case_32",
+        "volleyball_case_19"
+      ],
+      "preBudgetOfferedIds": [
+        "volleyball_case_10",
+        "volleyball_case_09"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-11-04",
+      "sport": "volleyball",
+      "family": "long_rally",
+      "foundIds": [
+        "volleyball_case_10",
+        "volleyball_case_09",
+        "volleyball_case_23",
+        "volleyball_case_14",
+        "volleyball_case_36",
+        "volleyball_case_32",
+        "volleyball_case_19"
+      ],
+      "preBudgetOfferedIds": [
+        "volleyball_case_10",
+        "volleyball_case_09"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-11-05",
+      "sport": "volleyball",
+      "family": "long_rally",
+      "foundIds": [
+        "volleyball_case_10",
+        "volleyball_case_09",
+        "volleyball_case_36",
+        "volleyball_case_23",
+        "volleyball_case_14",
+        "volleyball_case_32",
+        "volleyball_case_19"
+      ],
+      "preBudgetOfferedIds": [
+        "volleyball_case_10",
+        "volleyball_case_09"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-11-06",
+      "sport": "volleyball",
+      "family": "long_rally",
+      "foundIds": [
+        "volleyball_case_09",
+        "volleyball_case_10",
+        "volleyball_case_14",
+        "volleyball_case_23",
+        "volleyball_case_36",
+        "volleyball_case_32",
+        "volleyball_case_19"
+      ],
+      "preBudgetOfferedIds": [
+        "volleyball_case_09",
+        "volleyball_case_10"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-12-01",
+      "sport": "volleyball",
+      "family": "set_endgame",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-12-02",
+      "sport": "volleyball",
+      "family": "set_endgame",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-12-03",
+      "sport": "volleyball",
+      "family": "set_endgame",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-12-04",
+      "sport": "volleyball",
+      "family": "set_endgame",
+      "foundIds": [
+        "volleyball_case_29",
+        "volleyball_case_39",
+        "volleyball_case_38",
+        "volleyball_case_12",
+        "volleyball_case_13",
+        "volleyball_case_01",
+        "volleyball_case_22",
+        "volleyball_case_27"
+      ],
+      "preBudgetOfferedIds": [
+        "volleyball_case_29",
+        "volleyball_case_39"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-12-05",
+      "sport": "volleyball",
+      "family": "set_endgame",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-12-06",
+      "sport": "volleyball",
+      "family": "set_endgame",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-13-01",
+      "sport": "volleyball",
+      "family": "communication_roles",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-13-02",
+      "sport": "volleyball",
+      "family": "communication_roles",
+      "foundIds": [
+        "VBG-01"
+      ],
+      "preBudgetOfferedIds": [
+        "VBG-01"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-13-03",
+      "sport": "volleyball",
+      "family": "communication_roles",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-13-04",
+      "sport": "volleyball",
+      "family": "communication_roles",
+      "foundIds": [
+        "VBG-01"
+      ],
+      "preBudgetOfferedIds": [
+        "VBG-01"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-13-05",
+      "sport": "volleyball",
+      "family": "communication_roles",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-13-06",
+      "sport": "volleyball",
+      "family": "communication_roles",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-14-01",
+      "sport": "volleyball",
+      "family": "attack_tempo_distribution",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-14-02",
+      "sport": "volleyball",
+      "family": "attack_tempo_distribution",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-14-03",
+      "sport": "volleyball",
+      "family": "attack_tempo_distribution",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-14-04",
+      "sport": "volleyball",
+      "family": "attack_tempo_distribution",
+      "foundIds": [
+        "volleyball_case_14"
+      ],
+      "preBudgetOfferedIds": [
+        "volleyball_case_14"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-14-05",
+      "sport": "volleyball",
+      "family": "attack_tempo_distribution",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-14-06",
+      "sport": "volleyball",
+      "family": "attack_tempo_distribution",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-15-01",
+      "sport": "volleyball",
+      "family": "serve_receive_formation",
+      "foundIds": [
+        "volleyball_case_15",
+        "volleyball_case_07",
+        "volleyball_case_01",
+        "volleyball_case_26",
+        "volleyball_case_02",
+        "volleyball_case_25",
+        "volleyball_case_17",
+        "volleyball_case_13"
+      ],
+      "preBudgetOfferedIds": [
+        "volleyball_case_15",
+        "volleyball_case_07"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-15-02",
+      "sport": "volleyball",
+      "family": "serve_receive_formation",
+      "foundIds": [
+        "volleyball_case_07",
+        "volleyball_case_15",
+        "volleyball_case_01",
+        "volleyball_case_26",
+        "volleyball_case_02",
+        "volleyball_case_13",
+        "volleyball_case_25",
+        "volleyball_case_17"
+      ],
+      "preBudgetOfferedIds": [
+        "volleyball_case_07",
+        "volleyball_case_15"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-15-03",
+      "sport": "volleyball",
+      "family": "serve_receive_formation",
+      "foundIds": [
+        "volleyball_case_07",
+        "volleyball_case_26",
+        "volleyball_case_15",
+        "volleyball_case_01",
+        "volleyball_case_02",
+        "volleyball_case_25",
+        "volleyball_case_17",
+        "volleyball_case_13"
+      ],
+      "preBudgetOfferedIds": [
+        "volleyball_case_07",
+        "volleyball_case_26"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-15-04",
+      "sport": "volleyball",
+      "family": "serve_receive_formation",
+      "foundIds": [
+        "volleyball_case_01",
+        "volleyball_case_07",
+        "volleyball_case_15",
+        "volleyball_case_26",
+        "volleyball_case_02",
+        "volleyball_case_25",
+        "volleyball_case_17",
+        "volleyball_case_37"
+      ],
+      "preBudgetOfferedIds": [
+        "volleyball_case_01",
+        "volleyball_case_07"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-15-05",
+      "sport": "volleyball",
+      "family": "serve_receive_formation",
+      "foundIds": [
+        "volleyball_case_07",
+        "volleyball_case_15",
+        "volleyball_case_01",
+        "volleyball_case_26",
+        "volleyball_case_02",
+        "volleyball_case_13",
+        "volleyball_case_11",
+        "volleyball_case_25"
+      ],
+      "preBudgetOfferedIds": [
+        "volleyball_case_07",
+        "volleyball_case_15"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "VO-15-06",
+      "sport": "volleyball",
+      "family": "serve_receive_formation",
+      "foundIds": [
+        "volleyball_case_15",
+        "volleyball_case_02",
+        "volleyball_case_09",
+        "volleyball_case_30",
+        "volleyball_case_13",
+        "volleyball_case_45",
+        "volleyball_case_07",
+        "volleyball_case_01"
+      ],
+      "preBudgetOfferedIds": [
+        "volleyball_case_15",
+        "volleyball_case_02"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-01-01",
+      "sport": "soccer",
+      "family": "build_from_back",
+      "foundIds": [
+        "soccer_case_24",
+        "soccer_case_02",
+        "soccer_case_04",
+        "soccer_case_29",
+        "soccer_case_15",
+        "soccer_case_07",
+        "soccer_case_08"
+      ],
+      "preBudgetOfferedIds": [
+        "soccer_case_24",
+        "soccer_case_02"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-01-02",
+      "sport": "soccer",
+      "family": "build_from_back",
+      "foundIds": [
+        "soccer_case_24",
+        "soccer_case_15",
+        "soccer_case_02",
+        "soccer_case_04",
+        "soccer_case_29",
+        "soccer_case_07",
+        "soccer_case_08"
+      ],
+      "preBudgetOfferedIds": [
+        "soccer_case_24",
+        "soccer_case_15"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-01-03",
+      "sport": "soccer",
+      "family": "build_from_back",
+      "foundIds": [
+        "soccer_case_24",
+        "soccer_case_02",
+        "soccer_case_04",
+        "soccer_case_15",
+        "soccer_case_07",
+        "soccer_case_29",
+        "soccer_case_08"
+      ],
+      "preBudgetOfferedIds": [
+        "soccer_case_24",
+        "soccer_case_02"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-01-04",
+      "sport": "soccer",
+      "family": "build_from_back",
+      "foundIds": [
+        "soccer_case_24",
+        "soccer_case_01",
+        "soccer_case_22",
+        "soccer_case_02",
+        "soccer_case_16",
+        "soccer_case_06",
+        "soccer_case_04",
+        "soccer_case_15"
+      ],
+      "preBudgetOfferedIds": [
+        "soccer_case_24",
+        "soccer_case_01"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-01-05",
+      "sport": "soccer",
+      "family": "build_from_back",
+      "foundIds": [
+        "soccer_case_24",
+        "soccer_case_15",
+        "soccer_case_02",
+        "soccer_case_04",
+        "soccer_case_07",
+        "soccer_case_29",
+        "soccer_case_08"
+      ],
+      "preBudgetOfferedIds": [
+        "soccer_case_24",
+        "soccer_case_15"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-01-06",
+      "sport": "soccer",
+      "family": "build_from_back",
+      "foundIds": [
+        "soccer_case_24",
+        "soccer_case_02",
+        "soccer_case_04",
+        "soccer_case_15",
+        "soccer_case_07",
+        "soccer_case_08",
+        "soccer_case_29"
+      ],
+      "preBudgetOfferedIds": [
+        "soccer_case_24",
+        "soccer_case_02"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-02-01",
+      "sport": "soccer",
+      "family": "press_escape",
+      "foundIds": [
+        "soccer_case_12",
+        "soccer_case_01",
+        "soccer_case_23",
+        "soccer_case_15",
+        "soccer_case_10",
+        "soccer_case_02",
+        "soccer_case_20",
+        "soccer_case_06"
+      ],
+      "preBudgetOfferedIds": [
+        "soccer_case_12",
+        "soccer_case_01"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-02-02",
+      "sport": "soccer",
+      "family": "press_escape",
+      "foundIds": [
+        "soccer_case_10",
+        "soccer_case_01",
+        "soccer_case_15",
+        "soccer_case_12",
+        "soccer_case_23",
+        "soccer_case_02",
+        "soccer_case_20",
+        "soccer_case_30"
+      ],
+      "preBudgetOfferedIds": [
+        "soccer_case_10",
+        "soccer_case_01"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-02-03",
+      "sport": "soccer",
+      "family": "press_escape",
+      "foundIds": [
+        "soccer_case_10",
+        "soccer_case_12",
+        "soccer_case_01",
+        "soccer_case_23",
+        "soccer_case_15",
+        "soccer_case_02",
+        "soccer_case_20",
+        "soccer_case_21"
+      ],
+      "preBudgetOfferedIds": [
+        "soccer_case_10",
+        "soccer_case_12"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-02-04",
+      "sport": "soccer",
+      "family": "press_escape",
+      "foundIds": [
+        "soccer_case_12",
+        "soccer_case_01",
+        "soccer_case_11",
+        "soccer_case_10",
+        "soccer_case_23",
+        "soccer_case_15",
+        "soccer_case_02",
+        "soccer_case_20"
+      ],
+      "preBudgetOfferedIds": [
+        "soccer_case_12",
+        "soccer_case_01"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-02-05",
+      "sport": "soccer",
+      "family": "press_escape",
+      "foundIds": [
+        "soccer_case_01",
+        "soccer_case_15",
+        "soccer_case_12",
+        "soccer_case_23",
+        "soccer_case_10",
+        "soccer_case_02",
+        "soccer_case_20",
+        "soccer_case_30"
+      ],
+      "preBudgetOfferedIds": [
+        "soccer_case_01",
+        "soccer_case_15"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-02-06",
+      "sport": "soccer",
+      "family": "press_escape",
+      "foundIds": [
+        "soccer_case_12",
+        "soccer_case_01",
+        "soccer_case_23",
+        "soccer_case_10",
+        "soccer_case_15",
+        "soccer_case_02",
+        "soccer_case_20",
+        "soccer_case_21"
+      ],
+      "preBudgetOfferedIds": [
+        "soccer_case_12",
+        "soccer_case_01"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-03-01",
+      "sport": "soccer",
+      "family": "pressing_trigger",
+      "foundIds": [
+        "soccer_case_23",
+        "soccer_case_15",
+        "soccer_case_04",
+        "soccer_case_01",
+        "soccer_case_14",
+        "soccer_case_10",
+        "soccer_case_12",
+        "soccer_case_20"
+      ],
+      "preBudgetOfferedIds": [
+        "soccer_case_23",
+        "soccer_case_15"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-03-02",
+      "sport": "soccer",
+      "family": "pressing_trigger",
+      "foundIds": [
+        "soccer_case_23",
+        "soccer_case_10",
+        "soccer_case_15",
+        "soccer_case_01",
+        "soccer_case_12",
+        "soccer_case_20",
+        "soccer_case_04",
+        "soccer_case_17"
+      ],
+      "preBudgetOfferedIds": [
+        "soccer_case_23",
+        "soccer_case_10"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-03-03",
+      "sport": "soccer",
+      "family": "pressing_trigger",
+      "foundIds": [
+        "soccer_case_23",
+        "soccer_case_10",
+        "soccer_case_15",
+        "soccer_case_04",
+        "soccer_case_01",
+        "soccer_case_11",
+        "soccer_case_14",
+        "soccer_case_12"
+      ],
+      "preBudgetOfferedIds": [
+        "soccer_case_23",
+        "soccer_case_10"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-03-04",
+      "sport": "soccer",
+      "family": "pressing_trigger",
+      "foundIds": [
+        "soccer_case_23",
+        "soccer_case_11",
+        "soccer_case_22",
+        "soccer_case_01",
+        "soccer_case_16",
+        "soccer_case_15",
+        "soccer_case_10",
+        "soccer_case_20"
+      ],
+      "preBudgetOfferedIds": [
+        "soccer_case_23",
+        "soccer_case_11"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-03-05",
+      "sport": "soccer",
+      "family": "pressing_trigger",
+      "foundIds": [
+        "soccer_case_23",
+        "soccer_case_15",
+        "soccer_case_01",
+        "soccer_case_04",
+        "soccer_case_20",
+        "soccer_case_14",
+        "soccer_case_10",
+        "soccer_case_12"
+      ],
+      "preBudgetOfferedIds": [
+        "soccer_case_23",
+        "soccer_case_15"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-03-06",
+      "sport": "soccer",
+      "family": "pressing_trigger",
+      "foundIds": [
+        "soccer_case_23",
+        "soccer_case_12",
+        "soccer_case_04",
+        "soccer_case_15",
+        "soccer_case_01",
+        "soccer_case_10",
+        "soccer_case_20",
+        "soccer_case_11"
+      ],
+      "preBudgetOfferedIds": [
+        "soccer_case_23",
+        "soccer_case_12"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-04-01",
+      "sport": "soccer",
+      "family": "low_block_attack",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-04-02",
+      "sport": "soccer",
+      "family": "low_block_attack",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-04-03",
+      "sport": "soccer",
+      "family": "low_block_attack",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-04-04",
+      "sport": "soccer",
+      "family": "low_block_attack",
+      "foundIds": [
+        "soccer_case_30",
+        "soccer_case_22",
+        "soccer_case_02",
+        "soccer_case_16",
+        "soccer_case_01",
+        "soccer_case_08",
+        "soccer_case_06",
+        "soccer_case_23"
+      ],
+      "preBudgetOfferedIds": [
+        "soccer_case_30",
+        "soccer_case_22"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-04-05",
+      "sport": "soccer",
+      "family": "low_block_attack",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-04-06",
+      "sport": "soccer",
+      "family": "low_block_attack",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-05-01",
+      "sport": "soccer",
+      "family": "wide_switch",
+      "foundIds": [
+        "soccer_case_03",
+        "soccer_case_05",
+        "soccer_case_08",
+        "soccer_case_30",
+        "soccer_case_29",
+        "soccer_case_12",
+        "soccer_case_28",
+        "soccer_case_21"
+      ],
+      "preBudgetOfferedIds": [
+        "soccer_case_03",
+        "soccer_case_05"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-05-02",
+      "sport": "soccer",
+      "family": "wide_switch",
+      "foundIds": [
+        "soccer_case_03",
+        "soccer_case_30",
+        "soccer_case_10",
+        "soccer_case_12",
+        "soccer_case_05",
+        "soccer_case_08",
+        "soccer_case_21",
+        "soccer_case_29"
+      ],
+      "preBudgetOfferedIds": [
+        "soccer_case_03",
+        "soccer_case_30"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-05-03",
+      "sport": "soccer",
+      "family": "wide_switch",
+      "foundIds": [
+        "soccer_case_03",
+        "soccer_case_10",
+        "soccer_case_05",
+        "soccer_case_08",
+        "soccer_case_30",
+        "soccer_case_24",
+        "soccer_case_12",
+        "soccer_case_28"
+      ],
+      "preBudgetOfferedIds": [
+        "soccer_case_03",
+        "soccer_case_10"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-05-04",
+      "sport": "soccer",
+      "family": "wide_switch",
+      "foundIds": [
+        "soccer_case_03",
+        "soccer_case_24",
+        "soccer_case_12",
+        "soccer_case_16",
+        "soccer_case_22",
+        "soccer_case_05",
+        "soccer_case_21",
+        "soccer_case_08"
+      ],
+      "preBudgetOfferedIds": [
+        "soccer_case_03",
+        "soccer_case_24"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-05-05",
+      "sport": "soccer",
+      "family": "wide_switch",
+      "foundIds": [
+        "soccer_case_03",
+        "soccer_case_30",
+        "soccer_case_05",
+        "soccer_case_08",
+        "soccer_case_12",
+        "soccer_case_28",
+        "soccer_case_21",
+        "soccer_case_29"
+      ],
+      "preBudgetOfferedIds": [
+        "soccer_case_03",
+        "soccer_case_30"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-05-06",
+      "sport": "soccer",
+      "family": "wide_switch",
+      "foundIds": [
+        "soccer_case_03",
+        "soccer_case_12",
+        "soccer_case_19",
+        "soccer_case_05",
+        "soccer_case_08",
+        "soccer_case_30",
+        "soccer_case_24",
+        "soccer_case_28"
+      ],
+      "preBudgetOfferedIds": [
+        "soccer_case_03",
+        "soccer_case_12"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-06-01",
+      "sport": "soccer",
+      "family": "overlap_underlap",
+      "foundIds": [
+        "soccer_case_06",
+        "soccer_case_24",
+        "soccer_case_18"
+      ],
+      "preBudgetOfferedIds": [
+        "soccer_case_06",
+        "soccer_case_24"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-06-02",
+      "sport": "soccer",
+      "family": "overlap_underlap",
+      "foundIds": [
+        "soccer_case_06",
+        "soccer_case_24",
+        "soccer_case_18"
+      ],
+      "preBudgetOfferedIds": [
+        "soccer_case_06",
+        "soccer_case_24"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-06-03",
+      "sport": "soccer",
+      "family": "overlap_underlap",
+      "foundIds": [
+        "soccer_case_06",
+        "soccer_case_24",
+        "soccer_case_18"
+      ],
+      "preBudgetOfferedIds": [
+        "soccer_case_06",
+        "soccer_case_24"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-06-04",
+      "sport": "soccer",
+      "family": "overlap_underlap",
+      "foundIds": [
+        "soccer_case_24",
+        "soccer_case_06",
+        "soccer_case_18"
+      ],
+      "preBudgetOfferedIds": [
+        "soccer_case_24",
+        "soccer_case_06"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-06-05",
+      "sport": "soccer",
+      "family": "overlap_underlap",
+      "foundIds": [
+        "soccer_case_06",
+        "soccer_case_24",
+        "soccer_case_18"
+      ],
+      "preBudgetOfferedIds": [
+        "soccer_case_06",
+        "soccer_case_24"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-06-06",
+      "sport": "soccer",
+      "family": "overlap_underlap",
+      "foundIds": [
+        "soccer_case_06",
+        "soccer_case_24",
+        "soccer_case_18"
+      ],
+      "preBudgetOfferedIds": [
+        "soccer_case_06",
+        "soccer_case_24"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-07-01",
+      "sport": "soccer",
+      "family": "between_lines",
+      "foundIds": [
+        "soccer_case_05",
+        "soccer_case_06"
+      ],
+      "preBudgetOfferedIds": [
+        "soccer_case_05",
+        "soccer_case_06"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-07-02",
+      "sport": "soccer",
+      "family": "between_lines",
+      "foundIds": [
+        "soccer_case_05",
+        "soccer_case_06"
+      ],
+      "preBudgetOfferedIds": [
+        "soccer_case_05",
+        "soccer_case_06"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-07-03",
+      "sport": "soccer",
+      "family": "between_lines",
+      "foundIds": [
+        "soccer_case_05",
+        "soccer_case_06"
+      ],
+      "preBudgetOfferedIds": [
+        "soccer_case_05",
+        "soccer_case_06"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-07-04",
+      "sport": "soccer",
+      "family": "between_lines",
+      "foundIds": [
+        "soccer_case_30",
+        "soccer_case_05",
+        "soccer_case_16",
+        "soccer_case_02",
+        "soccer_case_01",
+        "soccer_case_06",
+        "soccer_case_23",
+        "soccer_case_22"
+      ],
+      "preBudgetOfferedIds": [
+        "soccer_case_30",
+        "soccer_case_05"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-07-05",
+      "sport": "soccer",
+      "family": "between_lines",
+      "foundIds": [
+        "soccer_case_05",
+        "soccer_case_06"
+      ],
+      "preBudgetOfferedIds": [
+        "soccer_case_05",
+        "soccer_case_06"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-07-06",
+      "sport": "soccer",
+      "family": "between_lines",
+      "foundIds": [
+        "soccer_case_05",
+        "soccer_case_06"
+      ],
+      "preBudgetOfferedIds": [
+        "soccer_case_05",
+        "soccer_case_06"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-08-01",
+      "sport": "soccer",
+      "family": "counterattack",
+      "foundIds": [
+        "soccer_case_23",
+        "soccer_case_05",
+        "soccer_case_12"
+      ],
+      "preBudgetOfferedIds": [
+        "soccer_case_23",
+        "soccer_case_05"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-08-02",
+      "sport": "soccer",
+      "family": "counterattack",
+      "foundIds": [
+        "soccer_case_12",
+        "soccer_case_23",
+        "soccer_case_05"
+      ],
+      "preBudgetOfferedIds": [
+        "soccer_case_12",
+        "soccer_case_23"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-08-03",
+      "sport": "soccer",
+      "family": "counterattack",
+      "foundIds": [
+        "soccer_case_23",
+        "soccer_case_05",
+        "soccer_case_12"
+      ],
+      "preBudgetOfferedIds": [
+        "soccer_case_23",
+        "soccer_case_05"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-08-04",
+      "sport": "soccer",
+      "family": "counterattack",
+      "foundIds": [
+        "soccer_case_12",
+        "soccer_case_23",
+        "soccer_case_05"
+      ],
+      "preBudgetOfferedIds": [
+        "soccer_case_12",
+        "soccer_case_23"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-08-05",
+      "sport": "soccer",
+      "family": "counterattack",
+      "foundIds": [
+        "soccer_case_23",
+        "soccer_case_05",
+        "soccer_case_12"
+      ],
+      "preBudgetOfferedIds": [
+        "soccer_case_23",
+        "soccer_case_05"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-08-06",
+      "sport": "soccer",
+      "family": "counterattack",
+      "foundIds": [
+        "soccer_case_12",
+        "soccer_case_23",
+        "soccer_case_05"
+      ],
+      "preBudgetOfferedIds": [
+        "soccer_case_12",
+        "soccer_case_23"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-09-01",
+      "sport": "soccer",
+      "family": "counterpress",
+      "foundIds": [
+        "soccer_case_10",
+        "soccer_case_12",
+        "soccer_case_29",
+        "soccer_case_16",
+        "soccer_case_21",
+        "soccer_case_05",
+        "soccer_case_19",
+        "soccer_case_30"
+      ],
+      "preBudgetOfferedIds": [
+        "soccer_case_10",
+        "soccer_case_12"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-09-02",
+      "sport": "soccer",
+      "family": "counterpress",
+      "foundIds": [
+        "soccer_case_10",
+        "soccer_case_30",
+        "soccer_case_12",
+        "soccer_case_29",
+        "soccer_case_16",
+        "soccer_case_21",
+        "soccer_case_05",
+        "soccer_case_19"
+      ],
+      "preBudgetOfferedIds": [
+        "soccer_case_10",
+        "soccer_case_30"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-09-03",
+      "sport": "soccer",
+      "family": "counterpress",
+      "foundIds": [
+        "soccer_case_10",
+        "soccer_case_12",
+        "soccer_case_29",
+        "soccer_case_24",
+        "soccer_case_16",
+        "soccer_case_21",
+        "soccer_case_05",
+        "soccer_case_19"
+      ],
+      "preBudgetOfferedIds": [
+        "soccer_case_10",
+        "soccer_case_12"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-09-04",
+      "sport": "soccer",
+      "family": "counterpress",
+      "foundIds": [
+        "soccer_case_10",
+        "soccer_case_24",
+        "soccer_case_12",
+        "soccer_case_16",
+        "soccer_case_21",
+        "soccer_case_29",
+        "soccer_case_05",
+        "soccer_case_19"
+      ],
+      "preBudgetOfferedIds": [
+        "soccer_case_10",
+        "soccer_case_24"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-09-05",
+      "sport": "soccer",
+      "family": "counterpress",
+      "foundIds": [
+        "soccer_case_10",
+        "soccer_case_30",
+        "soccer_case_12",
+        "soccer_case_29",
+        "soccer_case_16",
+        "soccer_case_21",
+        "soccer_case_05",
+        "soccer_case_19"
+      ],
+      "preBudgetOfferedIds": [
+        "soccer_case_10",
+        "soccer_case_30"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-09-06",
+      "sport": "soccer",
+      "family": "counterpress",
+      "foundIds": [
+        "soccer_case_10",
+        "soccer_case_12",
+        "soccer_case_19",
+        "soccer_case_29",
+        "soccer_case_04",
+        "soccer_case_24",
+        "soccer_case_16",
+        "soccer_case_21"
+      ],
+      "preBudgetOfferedIds": [
+        "soccer_case_10",
+        "soccer_case_12"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-10-01",
+      "sport": "soccer",
+      "family": "defensive_compactness",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-10-02",
+      "sport": "soccer",
+      "family": "defensive_compactness",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-10-03",
+      "sport": "soccer",
+      "family": "defensive_compactness",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-10-04",
+      "sport": "soccer",
+      "family": "defensive_compactness",
+      "foundIds": [
+        "soccer_case_22",
+        "soccer_case_08",
+        "soccer_case_30",
+        "soccer_case_15",
+        "soccer_case_06",
+        "soccer_case_02",
+        "soccer_case_16",
+        "soccer_case_01"
+      ],
+      "preBudgetOfferedIds": [
+        "soccer_case_22",
+        "soccer_case_08"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-10-05",
+      "sport": "soccer",
+      "family": "defensive_compactness",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-10-06",
+      "sport": "soccer",
+      "family": "defensive_compactness",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-11-01",
+      "sport": "soccer",
+      "family": "line_depth_offside",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-11-02",
+      "sport": "soccer",
+      "family": "line_depth_offside",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-11-03",
+      "sport": "soccer",
+      "family": "line_depth_offside",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-11-04",
+      "sport": "soccer",
+      "family": "line_depth_offside",
+      "foundIds": [
+        "soccer_case_22",
+        "soccer_case_06",
+        "soccer_case_16",
+        "soccer_case_01",
+        "soccer_case_23",
+        "soccer_case_08",
+        "soccer_case_02",
+        "soccer_case_30"
+      ],
+      "preBudgetOfferedIds": [
+        "soccer_case_22",
+        "soccer_case_06"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-11-05",
+      "sport": "soccer",
+      "family": "line_depth_offside",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-11-06",
+      "sport": "soccer",
+      "family": "line_depth_offside",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-12-01",
+      "sport": "soccer",
+      "family": "third_man_runs",
+      "foundIds": [
+        "soccer_case_11",
+        "soccer_case_13",
+        "soccer_case_08",
+        "soccer_case_18",
+        "soccer_case_07"
+      ],
+      "preBudgetOfferedIds": [
+        "soccer_case_11",
+        "soccer_case_13"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-12-02",
+      "sport": "soccer",
+      "family": "third_man_runs",
+      "foundIds": [
+        "soccer_case_13",
+        "soccer_case_11",
+        "soccer_case_08",
+        "soccer_case_07",
+        "soccer_case_18"
+      ],
+      "preBudgetOfferedIds": [
+        "soccer_case_13",
+        "soccer_case_11"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-12-03",
+      "sport": "soccer",
+      "family": "third_man_runs",
+      "foundIds": [
+        "soccer_case_11",
+        "soccer_case_13",
+        "soccer_case_08",
+        "soccer_case_18",
+        "soccer_case_07"
+      ],
+      "preBudgetOfferedIds": [
+        "soccer_case_11",
+        "soccer_case_13"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-12-04",
+      "sport": "soccer",
+      "family": "third_man_runs",
+      "foundIds": [
+        "soccer_case_11",
+        "soccer_case_13",
+        "soccer_case_08",
+        "soccer_case_07",
+        "soccer_case_18"
+      ],
+      "preBudgetOfferedIds": [
+        "soccer_case_11",
+        "soccer_case_13"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-12-05",
+      "sport": "soccer",
+      "family": "third_man_runs",
+      "foundIds": [
+        "soccer_case_11",
+        "soccer_case_13",
+        "soccer_case_08",
+        "soccer_case_18",
+        "soccer_case_07"
+      ],
+      "preBudgetOfferedIds": [
+        "soccer_case_11",
+        "soccer_case_13"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-12-06",
+      "sport": "soccer",
+      "family": "third_man_runs",
+      "foundIds": [
+        "soccer_case_11",
+        "soccer_case_13",
+        "soccer_case_08",
+        "soccer_case_07",
+        "soccer_case_18"
+      ],
+      "preBudgetOfferedIds": [
+        "soccer_case_11",
+        "soccer_case_13"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-13-01",
+      "sport": "soccer",
+      "family": "goalkeeper_distribution",
+      "foundIds": [
+        "soccer_case_20",
+        "soccer_case_09",
+        "soccer_case_29",
+        "soccer_case_01",
+        "soccer_case_23",
+        "soccer_case_21",
+        "soccer_case_02",
+        "soccer_case_10"
+      ],
+      "preBudgetOfferedIds": [
+        "soccer_case_20",
+        "soccer_case_09"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-13-02",
+      "sport": "soccer",
+      "family": "goalkeeper_distribution",
+      "foundIds": [
+        "soccer_case_20",
+        "soccer_case_01",
+        "soccer_case_09",
+        "soccer_case_10",
+        "soccer_case_15",
+        "soccer_case_13",
+        "soccer_case_21",
+        "soccer_case_29"
+      ],
+      "preBudgetOfferedIds": [
+        "soccer_case_20",
+        "soccer_case_01"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-13-03",
+      "sport": "soccer",
+      "family": "goalkeeper_distribution",
+      "foundIds": [
+        "soccer_case_20",
+        "soccer_case_09",
+        "soccer_case_10",
+        "soccer_case_01",
+        "soccer_case_23",
+        "soccer_case_21",
+        "soccer_case_29",
+        "soccer_case_02"
+      ],
+      "preBudgetOfferedIds": [
+        "soccer_case_20",
+        "soccer_case_09"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-13-04",
+      "sport": "soccer",
+      "family": "goalkeeper_distribution",
+      "foundIds": [
+        "soccer_case_20",
+        "soccer_case_09",
+        "soccer_case_11",
+        "soccer_case_01",
+        "soccer_case_21",
+        "soccer_case_23",
+        "soccer_case_22",
+        "soccer_case_29"
+      ],
+      "preBudgetOfferedIds": [
+        "soccer_case_20",
+        "soccer_case_09"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-13-05",
+      "sport": "soccer",
+      "family": "goalkeeper_distribution",
+      "foundIds": [
+        "soccer_case_20",
+        "soccer_case_01",
+        "soccer_case_09",
+        "soccer_case_15",
+        "soccer_case_23",
+        "soccer_case_21",
+        "soccer_case_29",
+        "soccer_case_02"
+      ],
+      "preBudgetOfferedIds": [
+        "soccer_case_20",
+        "soccer_case_01"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-13-06",
+      "sport": "soccer",
+      "family": "goalkeeper_distribution",
+      "foundIds": [
+        "soccer_case_20",
+        "soccer_case_09",
+        "soccer_case_12",
+        "soccer_case_01",
+        "soccer_case_23",
+        "soccer_case_21",
+        "soccer_case_29",
+        "soccer_case_02"
+      ],
+      "preBudgetOfferedIds": [
+        "soccer_case_20",
+        "soccer_case_09"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-14-01",
+      "sport": "soccer",
+      "family": "second_ball",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-14-02",
+      "sport": "soccer",
+      "family": "second_ball",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-14-03",
+      "sport": "soccer",
+      "family": "second_ball",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-14-04",
+      "sport": "soccer",
+      "family": "second_ball",
+      "foundIds": [
+        "soccer_case_11",
+        "soccer_case_01",
+        "soccer_case_10",
+        "soccer_case_21",
+        "soccer_case_09",
+        "soccer_case_12",
+        "soccer_case_14",
+        "soccer_case_23"
+      ],
+      "preBudgetOfferedIds": [
+        "soccer_case_11",
+        "soccer_case_01"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-14-05",
+      "sport": "soccer",
+      "family": "second_ball",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-14-06",
+      "sport": "soccer",
+      "family": "second_ball",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-15-01",
+      "sport": "soccer",
+      "family": "set_piece",
+      "foundIds": [
+        "SCG-03",
+        "SCG-01",
+        "soccer_case_23",
+        "soccer_case_17",
+        "soccer_case_14",
+        "SCG-02",
+        "soccer_case_29",
+        "soccer_case_03"
+      ],
+      "preBudgetOfferedIds": [
+        "SCG-03",
+        "SCG-01"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-15-02",
+      "sport": "soccer",
+      "family": "set_piece",
+      "foundIds": [
+        "SCG-03",
+        "SCG-01",
+        "soccer_case_23",
+        "soccer_case_13",
+        "soccer_case_10",
+        "soccer_case_17",
+        "SCG-02",
+        "soccer_case_03"
+      ],
+      "preBudgetOfferedIds": [
+        "SCG-03",
+        "SCG-01"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-15-03",
+      "sport": "soccer",
+      "family": "set_piece",
+      "foundIds": [
+        "SCG-03",
+        "SCG-01",
+        "soccer_case_23",
+        "soccer_case_10",
+        "soccer_case_17",
+        "soccer_case_14",
+        "SCG-02",
+        "soccer_case_03"
+      ],
+      "preBudgetOfferedIds": [
+        "SCG-03",
+        "SCG-01"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-15-04",
+      "sport": "soccer",
+      "family": "set_piece",
+      "foundIds": [
+        "SCG-03",
+        "SCG-01",
+        "soccer_case_23",
+        "soccer_case_17",
+        "soccer_case_14",
+        "soccer_case_30",
+        "soccer_case_10",
+        "soccer_case_03"
+      ],
+      "preBudgetOfferedIds": [
+        "SCG-03",
+        "SCG-01"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-15-05",
+      "sport": "soccer",
+      "family": "set_piece",
+      "foundIds": [
+        "SCG-03",
+        "SCG-01",
+        "soccer_case_23",
+        "soccer_case_17",
+        "soccer_case_14",
+        "SCG-02",
+        "soccer_case_03",
+        "soccer_case_29"
+      ],
+      "preBudgetOfferedIds": [
+        "SCG-03",
+        "SCG-01"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "SO-15-06",
+      "sport": "soccer",
+      "family": "set_piece",
+      "foundIds": [
+        "SCG-03",
+        "SCG-01",
+        "soccer_case_23",
+        "soccer_case_17",
+        "soccer_case_14",
+        "SCG-02",
+        "soccer_case_03",
+        "soccer_case_10"
+      ],
+      "preBudgetOfferedIds": [
+        "SCG-03",
+        "SCG-01"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-01-01",
+      "sport": "teeball",
+      "family": "outfield_depth",
+      "foundIds": [
+        "teeball_case_03",
+        "TBX-10",
+        "TBX-15",
+        "teeball_case_04",
+        "TBX-13",
+        "TBX-03",
+        "TBX-14"
+      ],
+      "preBudgetOfferedIds": [
+        "teeball_case_03",
+        "TBX-10"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-01-02",
+      "sport": "teeball",
+      "family": "outfield_depth",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-01-03",
+      "sport": "teeball",
+      "family": "outfield_depth",
+      "foundIds": [
+        "TBX-14",
+        "teeball_case_03",
+        "TBX-15",
+        "TBX-08",
+        "TBX-03",
+        "TBX-13",
+        "teeball_case_01",
+        "teeball_case_07"
+      ],
+      "preBudgetOfferedIds": [
+        "TBX-14",
+        "teeball_case_03"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-01-04",
+      "sport": "teeball",
+      "family": "outfield_depth",
+      "foundIds": [
+        "TBX-03",
+        "TBX-15",
+        "teeball_case_03",
+        "TBX-14",
+        "teeball_case_01",
+        "TBX-05",
+        "TBX-10",
+        "teeball_case_04"
+      ],
+      "preBudgetOfferedIds": [
+        "TBX-03",
+        "TBX-15"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-01-05",
+      "sport": "teeball",
+      "family": "outfield_depth",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-01-06",
+      "sport": "teeball",
+      "family": "outfield_depth",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-02-01",
+      "sport": "teeball",
+      "family": "fly_ball_tagup",
+      "foundIds": [
+        "teeball_case_01",
+        "TBX-15",
+        "TBX-05",
+        "TBX-07",
+        "TBX-14",
+        "teeball_case_03",
+        "TBX-18",
+        "teeball_case_05"
+      ],
+      "preBudgetOfferedIds": [
+        "teeball_case_01",
+        "TBX-15"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-02-02",
+      "sport": "teeball",
+      "family": "fly_ball_tagup",
+      "foundIds": [
+        "teeball_case_01",
+        "teeball_case_05",
+        "teeball_case_07",
+        "teeball_case_04",
+        "teeball_case_03",
+        "teeball_case_08"
+      ],
+      "preBudgetOfferedIds": [
+        "teeball_case_01",
+        "teeball_case_05"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-02-03",
+      "sport": "teeball",
+      "family": "fly_ball_tagup",
+      "foundIds": [
+        "teeball_case_01",
+        "teeball_case_04",
+        "teeball_case_05",
+        "teeball_case_07",
+        "teeball_case_03",
+        "teeball_case_08"
+      ],
+      "preBudgetOfferedIds": [
+        "teeball_case_01",
+        "teeball_case_04"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-02-04",
+      "sport": "teeball",
+      "family": "fly_ball_tagup",
+      "foundIds": [
+        "teeball_case_01",
+        "teeball_case_03",
+        "teeball_case_04",
+        "teeball_case_07",
+        "teeball_case_08",
+        "teeball_case_05"
+      ],
+      "preBudgetOfferedIds": [
+        "teeball_case_01",
+        "teeball_case_03"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-02-05",
+      "sport": "teeball",
+      "family": "fly_ball_tagup",
+      "foundIds": [
+        "teeball_case_01",
+        "TBX-15",
+        "teeball_case_02",
+        "TBX-13",
+        "TBX-09",
+        "TBX-01",
+        "TBX-05",
+        "TBX-14"
+      ],
+      "preBudgetOfferedIds": [
+        "teeball_case_01",
+        "TBX-15"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-02-06",
+      "sport": "teeball",
+      "family": "fly_ball_tagup",
+      "foundIds": [
+        "teeball_case_01",
+        "teeball_case_08",
+        "teeball_case_07"
+      ],
+      "preBudgetOfferedIds": [
+        "teeball_case_01",
+        "teeball_case_08"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-03-01",
+      "sport": "teeball",
+      "family": "line_drive",
+      "foundIds": [
+        "teeball_case_03",
+        "teeball_case_07",
+        "TBX-15",
+        "TBX-05",
+        "teeball_case_01",
+        "TBX-13",
+        "TBX-14",
+        "TBX-03"
+      ],
+      "preBudgetOfferedIds": [
+        "teeball_case_03",
+        "teeball_case_07"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-03-02",
+      "sport": "teeball",
+      "family": "line_drive",
+      "foundIds": [
+        "TBX-15",
+        "TBX-14",
+        "TBX-05",
+        "TBX-03",
+        "teeball_case_04",
+        "teeball_case_03",
+        "TBX-08",
+        "TBX-13"
+      ],
+      "preBudgetOfferedIds": [
+        "TBX-15",
+        "TBX-14"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-03-03",
+      "sport": "teeball",
+      "family": "line_drive",
+      "foundIds": [
+        "teeball_case_07",
+        "teeball_case_01",
+        "teeball_case_08",
+        "teeball_case_04",
+        "TBX-13",
+        "TBX-15",
+        "TBX-14",
+        "teeball_case_05"
+      ],
+      "preBudgetOfferedIds": [
+        "teeball_case_07",
+        "teeball_case_01"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-03-04",
+      "sport": "teeball",
+      "family": "line_drive",
+      "foundIds": [
+        "TBX-14",
+        "TBX-11",
+        "teeball_case_03",
+        "teeball_case_04",
+        "TBX-03",
+        "teeball_case_01",
+        "TBX-10",
+        "TBX-09"
+      ],
+      "preBudgetOfferedIds": [
+        "TBX-14",
+        "TBX-11"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-03-05",
+      "sport": "teeball",
+      "family": "line_drive",
+      "foundIds": [
+        "TBX-05",
+        "TBX-15",
+        "TBX-14",
+        "teeball_case_03",
+        "TBX-03",
+        "TBX-13",
+        "TBX-10",
+        "TBX-09"
+      ],
+      "preBudgetOfferedIds": [
+        "TBX-05",
+        "TBX-15"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-03-06",
+      "sport": "teeball",
+      "family": "line_drive",
+      "foundIds": [
+        "TBX-14",
+        "teeball_case_07",
+        "TBX-15",
+        "teeball_case_03",
+        "TBX-03",
+        "TBX-13",
+        "teeball_case_05",
+        "teeball_case_08"
+      ],
+      "preBudgetOfferedIds": [
+        "TBX-14",
+        "teeball_case_07"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-04-01",
+      "sport": "teeball",
+      "family": "consecutive_hits",
+      "foundIds": [
+        "teeball_case_05",
+        "teeball_case_07",
+        "teeball_case_01",
+        "teeball_case_04",
+        "TBX-15",
+        "teeball_case_03",
+        "TBX-10"
+      ],
+      "preBudgetOfferedIds": [
+        "teeball_case_05",
+        "teeball_case_07"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-04-02",
+      "sport": "teeball",
+      "family": "consecutive_hits",
+      "foundIds": [
+        "teeball_case_01",
+        "teeball_case_05",
+        "teeball_case_03",
+        "teeball_case_04",
+        "teeball_case_07",
+        "teeball_case_08"
+      ],
+      "preBudgetOfferedIds": [
+        "teeball_case_01",
+        "teeball_case_05"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-04-03",
+      "sport": "teeball",
+      "family": "consecutive_hits",
+      "foundIds": [
+        "teeball_case_01",
+        "teeball_case_05",
+        "teeball_case_04",
+        "teeball_case_08",
+        "teeball_case_07"
+      ],
+      "preBudgetOfferedIds": [
+        "teeball_case_01",
+        "teeball_case_05"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-04-04",
+      "sport": "teeball",
+      "family": "consecutive_hits",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-04-05",
+      "sport": "teeball",
+      "family": "consecutive_hits",
+      "foundIds": [
+        "TBX-12",
+        "TBX-19",
+        "TBX-14"
+      ],
+      "preBudgetOfferedIds": [
+        "TBX-12",
+        "TBX-19"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-04-06",
+      "sport": "teeball",
+      "family": "consecutive_hits",
+      "foundIds": [
+        "teeball_case_05",
+        "teeball_case_01",
+        "teeball_case_04",
+        "teeball_case_07",
+        "teeball_case_03",
+        "teeball_case_08"
+      ],
+      "preBudgetOfferedIds": [
+        "teeball_case_05",
+        "teeball_case_01"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-05-01",
+      "sport": "teeball",
+      "family": "late_inning_comeback",
+      "foundIds": [
+        "teeball_case_05",
+        "teeball_case_07",
+        "teeball_case_01",
+        "teeball_case_08",
+        "teeball_case_04",
+        "TBX-15",
+        "teeball_case_03",
+        "TBX-03"
+      ],
+      "preBudgetOfferedIds": [
+        "teeball_case_05",
+        "teeball_case_07"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-05-02",
+      "sport": "teeball",
+      "family": "late_inning_comeback",
+      "foundIds": [
+        "teeball_case_07",
+        "teeball_case_05",
+        "teeball_case_08",
+        "TBX-15",
+        "teeball_case_03",
+        "teeball_case_04",
+        "teeball_case_01",
+        "TBX-10"
+      ],
+      "preBudgetOfferedIds": [
+        "teeball_case_07",
+        "teeball_case_05"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-05-03",
+      "sport": "teeball",
+      "family": "late_inning_comeback",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-05-04",
+      "sport": "teeball",
+      "family": "late_inning_comeback",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-05-05",
+      "sport": "teeball",
+      "family": "late_inning_comeback",
+      "foundIds": [
+        "teeball_case_07",
+        "teeball_case_05",
+        "TBX-13",
+        "teeball_case_08",
+        "TBX-05",
+        "TBX-15",
+        "teeball_case_04"
+      ],
+      "preBudgetOfferedIds": [
+        "teeball_case_07",
+        "teeball_case_05"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-05-06",
+      "sport": "teeball",
+      "family": "late_inning_comeback",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-06-01",
+      "sport": "teeball",
+      "family": "defensive_innings",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-06-02",
+      "sport": "teeball",
+      "family": "defensive_innings",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-06-03",
+      "sport": "teeball",
+      "family": "defensive_innings",
+      "foundIds": [
+        "teeball_case_05",
+        "TBX-06",
+        "teeball_case_04",
+        "teeball_case_07",
+        "teeball_case_01",
+        "teeball_case_03",
+        "TBX-15",
+        "TBX-10"
+      ],
+      "preBudgetOfferedIds": [
+        "teeball_case_05",
+        "TBX-06"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-06-04",
+      "sport": "teeball",
+      "family": "defensive_innings",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-06-05",
+      "sport": "teeball",
+      "family": "defensive_innings",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-06-06",
+      "sport": "teeball",
+      "family": "defensive_innings",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-07-01",
+      "sport": "teeball",
+      "family": "runner_advance",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-07-02",
+      "sport": "teeball",
+      "family": "runner_advance",
+      "foundIds": [
+        "TBX-08",
+        "teeball_case_01",
+        "teeball_case_07",
+        "TBX-13",
+        "TBX-15"
+      ],
+      "preBudgetOfferedIds": [
+        "TBX-08",
+        "teeball_case_01"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-07-03",
+      "sport": "teeball",
+      "family": "runner_advance",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-07-04",
+      "sport": "teeball",
+      "family": "runner_advance",
+      "foundIds": [
+        "teeball_case_01",
+        "teeball_case_03",
+        "teeball_case_07",
+        "teeball_case_04",
+        "teeball_case_08",
+        "teeball_case_05"
+      ],
+      "preBudgetOfferedIds": [
+        "teeball_case_01",
+        "teeball_case_03"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-07-05",
+      "sport": "teeball",
+      "family": "runner_advance",
+      "foundIds": [
+        "teeball_case_01",
+        "TBX-03",
+        "teeball_case_03",
+        "TBX-15",
+        "TBX-18",
+        "TBX-19",
+        "TBX-14",
+        "teeball_case_04"
+      ],
+      "preBudgetOfferedIds": [
+        "teeball_case_01",
+        "TBX-03"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-07-06",
+      "sport": "teeball",
+      "family": "runner_advance",
+      "foundIds": [
+        "TBX-12",
+        "TBX-11",
+        "TBX-02",
+        "TBX-01"
+      ],
+      "preBudgetOfferedIds": [
+        "TBX-12",
+        "TBX-11"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-08-01",
+      "sport": "teeball",
+      "family": "force_out_choice",
+      "foundIds": [
+        "TBX-18",
+        "teeball_case_01",
+        "TBX-08",
+        "TBX-11",
+        "TBX-03",
+        "TBX-12",
+        "TBX-01",
+        "TBX-02"
+      ],
+      "preBudgetOfferedIds": [
+        "TBX-18",
+        "teeball_case_01"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-08-02",
+      "sport": "teeball",
+      "family": "force_out_choice",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-08-03",
+      "sport": "teeball",
+      "family": "force_out_choice",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-08-04",
+      "sport": "teeball",
+      "family": "force_out_choice",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-08-05",
+      "sport": "teeball",
+      "family": "force_out_choice",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-08-06",
+      "sport": "teeball",
+      "family": "force_out_choice",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-09-01",
+      "sport": "teeball",
+      "family": "short_groundball",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-09-02",
+      "sport": "teeball",
+      "family": "short_groundball",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-09-03",
+      "sport": "teeball",
+      "family": "short_groundball",
+      "foundIds": [
+        "TBX-14",
+        "TBX-13",
+        "TBX-05",
+        "TBX-08",
+        "TBX-15",
+        "teeball_case_04",
+        "teeball_case_03",
+        "teeball_case_07"
+      ],
+      "preBudgetOfferedIds": [
+        "TBX-14",
+        "TBX-13"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-09-04",
+      "sport": "teeball",
+      "family": "short_groundball",
+      "foundIds": [
+        "TBX-09",
+        "TBX-08",
+        "TBX-14",
+        "TBX-12",
+        "TBX-15",
+        "TBX-01",
+        "teeball_case_03",
+        "TBX-03"
+      ],
+      "preBudgetOfferedIds": [
+        "TBX-09",
+        "TBX-08"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-09-05",
+      "sport": "teeball",
+      "family": "short_groundball",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-09-06",
+      "sport": "teeball",
+      "family": "short_groundball",
+      "foundIds": [
+        "teeball_case_03"
+      ],
+      "preBudgetOfferedIds": [
+        "teeball_case_03"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-10-01",
+      "sport": "teeball",
+      "family": "relay_throw",
+      "foundIds": [
+        "TBX-12",
+        "TBX-04",
+        "TBX-02",
+        "TBX-03",
+        "TBX-01",
+        "TBX-08"
+      ],
+      "preBudgetOfferedIds": [
+        "TBX-12",
+        "TBX-04"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-10-02",
+      "sport": "teeball",
+      "family": "relay_throw",
+      "foundIds": [
+        "TBX-03",
+        "TBX-11",
+        "TBX-12",
+        "TBX-01",
+        "TBX-18",
+        "TBX-02",
+        "TBX-19",
+        "TBX-04"
+      ],
+      "preBudgetOfferedIds": [
+        "TBX-03",
+        "TBX-11"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-10-03",
+      "sport": "teeball",
+      "family": "relay_throw",
+      "foundIds": [
+        "TBX-12",
+        "TBX-04",
+        "TBX-01",
+        "TBX-11",
+        "TBX-02",
+        "TBX-18",
+        "TBX-03"
+      ],
+      "preBudgetOfferedIds": [
+        "TBX-12",
+        "TBX-04"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-10-04",
+      "sport": "teeball",
+      "family": "relay_throw",
+      "foundIds": [
+        "TBX-04",
+        "TBX-12",
+        "TBX-11",
+        "TBX-02",
+        "TBX-01",
+        "TBX-03",
+        "TBX-18",
+        "TBX-15"
+      ],
+      "preBudgetOfferedIds": [
+        "TBX-04",
+        "TBX-12"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-10-05",
+      "sport": "teeball",
+      "family": "relay_throw",
+      "foundIds": [
+        "TBX-11",
+        "TBX-03",
+        "TBX-10",
+        "TBX-13",
+        "TBX-12",
+        "TBX-01",
+        "teeball_case_03",
+        "TBX-15"
+      ],
+      "preBudgetOfferedIds": [
+        "TBX-11",
+        "TBX-03"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-10-06",
+      "sport": "teeball",
+      "family": "relay_throw",
+      "foundIds": [
+        "TBX-03",
+        "TBX-12",
+        "TBX-19",
+        "TBX-11",
+        "TBX-18",
+        "TBX-04",
+        "TBX-01",
+        "TBX-02"
+      ],
+      "preBudgetOfferedIds": [
+        "TBX-03",
+        "TBX-12"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-11-01",
+      "sport": "teeball",
+      "family": "infield_alignment",
+      "foundIds": [
+        "TBX-11",
+        "TBX-14",
+        "TBX-03",
+        "teeball_case_03",
+        "TBX-13",
+        "TBX-09",
+        "TBX-10",
+        "TBX-08"
+      ],
+      "preBudgetOfferedIds": [
+        "TBX-11",
+        "TBX-14"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-11-02",
+      "sport": "teeball",
+      "family": "infield_alignment",
+      "foundIds": [
+        "TBX-10",
+        "TBX-14",
+        "teeball_case_03",
+        "TBX-13",
+        "TBX-15",
+        "TBX-03",
+        "teeball_case_04",
+        "teeball_case_01"
+      ],
+      "preBudgetOfferedIds": [
+        "TBX-10",
+        "TBX-14"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-11-03",
+      "sport": "teeball",
+      "family": "infield_alignment",
+      "foundIds": [
+        "TBX-14",
+        "TBX-09",
+        "TBX-08",
+        "TBX-03",
+        "TBX-10",
+        "TBX-13",
+        "teeball_case_03",
+        "TBX-05"
+      ],
+      "preBudgetOfferedIds": [
+        "TBX-14",
+        "TBX-09"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-11-04",
+      "sport": "teeball",
+      "family": "infield_alignment",
+      "foundIds": [
+        "TBX-03",
+        "TBX-15",
+        "teeball_case_03",
+        "TBX-14",
+        "TBX-05",
+        "teeball_case_07",
+        "TBX-13",
+        "teeball_case_05"
+      ],
+      "preBudgetOfferedIds": [
+        "TBX-03",
+        "TBX-15"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-11-05",
+      "sport": "teeball",
+      "family": "infield_alignment",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-11-06",
+      "sport": "teeball",
+      "family": "infield_alignment",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-12-01",
+      "sport": "teeball",
+      "family": "throwing_decision",
+      "foundIds": [
+        "teeball_case_01",
+        "TBX-03",
+        "TBX-04",
+        "TBX-12",
+        "TBX-19",
+        "TBX-18",
+        "TBX-08",
+        "TBX-11"
+      ],
+      "preBudgetOfferedIds": [
+        "teeball_case_01",
+        "TBX-03"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-12-02",
+      "sport": "teeball",
+      "family": "throwing_decision",
+      "foundIds": [
+        "TBX-12",
+        "teeball_case_01",
+        "TBX-04",
+        "TBX-08",
+        "TBX-01",
+        "TBX-18",
+        "TBX-03",
+        "TBX-02"
+      ],
+      "preBudgetOfferedIds": [
+        "TBX-12",
+        "teeball_case_01"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-12-03",
+      "sport": "teeball",
+      "family": "throwing_decision",
+      "foundIds": [
+        "TBX-04",
+        "TBX-12",
+        "TBX-03",
+        "TBX-11",
+        "TBX-01",
+        "TBX-02",
+        "teeball_case_01",
+        "TBX-08"
+      ],
+      "preBudgetOfferedIds": [
+        "TBX-04",
+        "TBX-12"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-12-04",
+      "sport": "teeball",
+      "family": "throwing_decision",
+      "foundIds": [
+        "TBX-11",
+        "teeball_case_01",
+        "TBX-08",
+        "TBX-03",
+        "TBX-12",
+        "TBX-01",
+        "TBX-18",
+        "TBX-02"
+      ],
+      "preBudgetOfferedIds": [
+        "TBX-11",
+        "teeball_case_01"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-12-05",
+      "sport": "teeball",
+      "family": "throwing_decision",
+      "foundIds": [
+        "TBX-12",
+        "teeball_case_01",
+        "TBX-04",
+        "TBX-03",
+        "TBX-11",
+        "TBX-01",
+        "TBX-02",
+        "TBX-18"
+      ],
+      "preBudgetOfferedIds": [
+        "TBX-12",
+        "teeball_case_01"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-12-06",
+      "sport": "teeball",
+      "family": "throwing_decision",
+      "foundIds": [
+        "teeball_case_01",
+        "TBX-15",
+        "teeball_case_03",
+        "TBX-05",
+        "teeball_case_04",
+        "teeball_case_05",
+        "teeball_case_07",
+        "teeball_case_08"
+      ],
+      "preBudgetOfferedIds": [
+        "teeball_case_01",
+        "TBX-15"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-13-01",
+      "sport": "teeball",
+      "family": "overthrow_backup",
+      "foundIds": [
+        "TBX-01",
+        "TBX-12",
+        "TBX-08",
+        "TBX-18",
+        "TBX-11",
+        "TBX-02",
+        "teeball_case_01",
+        "TBX-03"
+      ],
+      "preBudgetOfferedIds": [
+        "TBX-01",
+        "TBX-12"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-13-02",
+      "sport": "teeball",
+      "family": "overthrow_backup",
+      "foundIds": [
+        "TBX-03",
+        "TBX-01",
+        "TBX-12",
+        "TBX-09",
+        "TBX-04",
+        "TBX-19",
+        "TBX-18",
+        "TBX-08"
+      ],
+      "preBudgetOfferedIds": [
+        "TBX-03",
+        "TBX-01"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-13-03",
+      "sport": "teeball",
+      "family": "overthrow_backup",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-13-04",
+      "sport": "teeball",
+      "family": "overthrow_backup",
+      "foundIds": [
+        "TBX-04",
+        "TBX-03",
+        "TBX-12",
+        "TBX-11",
+        "TBX-19",
+        "TBX-18",
+        "TBX-01",
+        "TBX-02"
+      ],
+      "preBudgetOfferedIds": [
+        "TBX-04",
+        "TBX-03"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-13-05",
+      "sport": "teeball",
+      "family": "overthrow_backup",
+      "foundIds": [
+        "TBX-12",
+        "TBX-01",
+        "TBX-09",
+        "teeball_case_02",
+        "TBX-14"
+      ],
+      "preBudgetOfferedIds": [
+        "TBX-12",
+        "TBX-01"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-13-06",
+      "sport": "teeball",
+      "family": "overthrow_backup",
+      "foundIds": [
+        "TBX-11",
+        "TBX-04",
+        "TBX-12",
+        "TBX-14",
+        "TBX-03",
+        "teeball_case_01",
+        "TBX-18",
+        "TBX-01"
+      ],
+      "preBudgetOfferedIds": [
+        "TBX-11",
+        "TBX-04"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-14-01",
+      "sport": "teeball",
+      "family": "communication",
+      "foundIds": [
+        "TBX-05",
+        "TBX-07",
+        "TBX-06",
+        "TBX-15",
+        "TBX-14",
+        "teeball_case_01",
+        "TBX-04",
+        "TBX-13"
+      ],
+      "preBudgetOfferedIds": [
+        "TBX-05",
+        "TBX-07"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-14-02",
+      "sport": "teeball",
+      "family": "communication",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-14-03",
+      "sport": "teeball",
+      "family": "communication",
+      "foundIds": [
+        "TBX-01",
+        "TBX-12",
+        "TBX-04",
+        "TBX-06",
+        "TBX-19"
+      ],
+      "preBudgetOfferedIds": [
+        "TBX-01",
+        "TBX-12"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-14-04",
+      "sport": "teeball",
+      "family": "communication",
+      "foundIds": [
+        "TBX-12",
+        "TBX-04",
+        "TBX-18",
+        "TBX-11",
+        "TBX-01",
+        "TBX-02",
+        "teeball_case_01",
+        "TBX-03"
+      ],
+      "preBudgetOfferedIds": [
+        "TBX-12",
+        "TBX-04"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-14-05",
+      "sport": "teeball",
+      "family": "communication",
+      "foundIds": [
+        "TBX-18",
+        "TBX-12",
+        "TBX-04",
+        "TBX-01",
+        "TBX-11",
+        "TBX-02",
+        "TBX-03"
+      ],
+      "preBudgetOfferedIds": [
+        "TBX-18",
+        "TBX-12"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-14-06",
+      "sport": "teeball",
+      "family": "communication",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-15-01",
+      "sport": "teeball",
+      "family": "rule_context",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-15-02",
+      "sport": "teeball",
+      "family": "rule_context",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-15-03",
+      "sport": "teeball",
+      "family": "rule_context",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-15-04",
+      "sport": "teeball",
+      "family": "rule_context",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-15-05",
+      "sport": "teeball",
+      "family": "rule_context",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "TE-15-06",
+      "sport": "teeball",
+      "family": "rule_context",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-01-01",
+      "sport": "dodgeball",
+      "family": "opening_throw",
+      "foundIds": [
+        "dodgeball_case_01",
+        "dodgeball_case_04",
+        "dodgeball_case_02",
+        "dodgeball_case_09",
+        "dodgeball_case_05"
+      ],
+      "preBudgetOfferedIds": [
+        "dodgeball_case_01",
+        "dodgeball_case_04"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-01-02",
+      "sport": "dodgeball",
+      "family": "opening_throw",
+      "foundIds": [
+        "dodgeball_case_01",
+        "dodgeball_case_02",
+        "DDG-01",
+        "dodgeball_case_04",
+        "dodgeball_case_10",
+        "DDG-03",
+        "dodgeball_case_03",
+        "dodgeball_case_06"
+      ],
+      "preBudgetOfferedIds": [
+        "dodgeball_case_01",
+        "dodgeball_case_02"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-01-03",
+      "sport": "dodgeball",
+      "family": "opening_throw",
+      "foundIds": [
+        "dodgeball_case_01",
+        "dodgeball_case_04",
+        "dodgeball_case_02",
+        "DDG-01",
+        "dodgeball_case_09"
+      ],
+      "preBudgetOfferedIds": [
+        "dodgeball_case_01",
+        "dodgeball_case_04"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-01-04",
+      "sport": "dodgeball",
+      "family": "opening_throw",
+      "foundIds": [
+        "dodgeball_case_01",
+        "DDG-01",
+        "dodgeball_case_02",
+        "dodgeball_case_09",
+        "dodgeball_case_04",
+        "DDG-03",
+        "dodgeball_case_03",
+        "dodgeball_case_06"
+      ],
+      "preBudgetOfferedIds": [
+        "dodgeball_case_01",
+        "DDG-01"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-01-05",
+      "sport": "dodgeball",
+      "family": "opening_throw",
+      "foundIds": [
+        "dodgeball_case_01",
+        "dodgeball_case_04",
+        "dodgeball_case_02",
+        "dodgeball_case_06"
+      ],
+      "preBudgetOfferedIds": [
+        "dodgeball_case_01",
+        "dodgeball_case_04"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-01-06",
+      "sport": "dodgeball",
+      "family": "opening_throw",
+      "foundIds": [
+        "dodgeball_case_02",
+        "dodgeball_case_01",
+        "dodgeball_case_04",
+        "DDG-01",
+        "dodgeball_case_09",
+        "dodgeball_case_05",
+        "DDG-03",
+        "dodgeball_case_03"
+      ],
+      "preBudgetOfferedIds": [
+        "dodgeball_case_02",
+        "dodgeball_case_01"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-02-01",
+      "sport": "dodgeball",
+      "family": "counterthrow_catch",
+      "foundIds": [
+        "dodgeball_case_04",
+        "dodgeball_case_03",
+        "dodgeball_case_02",
+        "dodgeball_case_09",
+        "DDG-03",
+        "dodgeball_case_01",
+        "dodgeball_case_05",
+        "DDG-01"
+      ],
+      "preBudgetOfferedIds": [
+        "dodgeball_case_04",
+        "dodgeball_case_03"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-02-02",
+      "sport": "dodgeball",
+      "family": "counterthrow_catch",
+      "foundIds": [
+        "dodgeball_case_02",
+        "dodgeball_case_03",
+        "dodgeball_case_04",
+        "DDG-01",
+        "DDG-03",
+        "dodgeball_case_01",
+        "dodgeball_case_09",
+        "dodgeball_case_10"
+      ],
+      "preBudgetOfferedIds": [
+        "dodgeball_case_02",
+        "dodgeball_case_03"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-02-03",
+      "sport": "dodgeball",
+      "family": "counterthrow_catch",
+      "foundIds": [
+        "dodgeball_case_03",
+        "dodgeball_case_02",
+        "dodgeball_case_04",
+        "DDG-03",
+        "dodgeball_case_01",
+        "dodgeball_case_09",
+        "DDG-01",
+        "dodgeball_case_06"
+      ],
+      "preBudgetOfferedIds": [
+        "dodgeball_case_03",
+        "dodgeball_case_02"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-02-04",
+      "sport": "dodgeball",
+      "family": "counterthrow_catch",
+      "foundIds": [
+        "dodgeball_case_03",
+        "dodgeball_case_02",
+        "dodgeball_case_04",
+        "DDG-01",
+        "dodgeball_case_01",
+        "dodgeball_case_09",
+        "DDG-03",
+        "dodgeball_case_06"
+      ],
+      "preBudgetOfferedIds": [
+        "dodgeball_case_03",
+        "dodgeball_case_02"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-02-05",
+      "sport": "dodgeball",
+      "family": "counterthrow_catch",
+      "foundIds": [
+        "dodgeball_case_03",
+        "dodgeball_case_04",
+        "dodgeball_case_02",
+        "dodgeball_case_01",
+        "DDG-03",
+        "dodgeball_case_09",
+        "dodgeball_case_06",
+        "DDG-01"
+      ],
+      "preBudgetOfferedIds": [
+        "dodgeball_case_03",
+        "dodgeball_case_04"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-02-06",
+      "sport": "dodgeball",
+      "family": "counterthrow_catch",
+      "foundIds": [
+        "dodgeball_case_02",
+        "dodgeball_case_03",
+        "dodgeball_case_04",
+        "DDG-03",
+        "dodgeball_case_01",
+        "dodgeball_case_09",
+        "DDG-01",
+        "dodgeball_case_05"
+      ],
+      "preBudgetOfferedIds": [
+        "dodgeball_case_02",
+        "dodgeball_case_03"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-03-01",
+      "sport": "dodgeball",
+      "family": "team_throw",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-03-02",
+      "sport": "dodgeball",
+      "family": "team_throw",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-03-03",
+      "sport": "dodgeball",
+      "family": "team_throw",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-03-04",
+      "sport": "dodgeball",
+      "family": "team_throw",
+      "foundIds": [
+        "dodgeball_case_01",
+        "dodgeball_case_09",
+        "DDG-01",
+        "dodgeball_case_02",
+        "dodgeball_case_06",
+        "dodgeball_case_05",
+        "dodgeball_case_03",
+        "DDG-03"
+      ],
+      "preBudgetOfferedIds": [
+        "dodgeball_case_01",
+        "dodgeball_case_09"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-03-05",
+      "sport": "dodgeball",
+      "family": "team_throw",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-03-06",
+      "sport": "dodgeball",
+      "family": "team_throw",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-04-01",
+      "sport": "dodgeball",
+      "family": "ball_control",
+      "foundIds": [
+        "dodgeball_case_04",
+        "dodgeball_case_01",
+        "dodgeball_case_02",
+        "dodgeball_case_09",
+        "dodgeball_case_05",
+        "dodgeball_case_06",
+        "dodgeball_case_03"
+      ],
+      "preBudgetOfferedIds": [
+        "dodgeball_case_04",
+        "dodgeball_case_01"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-04-02",
+      "sport": "dodgeball",
+      "family": "ball_control",
+      "foundIds": [
+        "dodgeball_case_02",
+        "DDG-01",
+        "dodgeball_case_01",
+        "dodgeball_case_04",
+        "dodgeball_case_10",
+        "dodgeball_case_05",
+        "dodgeball_case_09",
+        "dodgeball_case_06"
+      ],
+      "preBudgetOfferedIds": [
+        "dodgeball_case_02",
+        "DDG-01"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-04-03",
+      "sport": "dodgeball",
+      "family": "ball_control",
+      "foundIds": [
+        "dodgeball_case_01",
+        "dodgeball_case_04",
+        "dodgeball_case_02",
+        "DDG-01",
+        "dodgeball_case_09",
+        "dodgeball_case_05",
+        "dodgeball_case_06",
+        "dodgeball_case_03"
+      ],
+      "preBudgetOfferedIds": [
+        "dodgeball_case_01",
+        "dodgeball_case_04"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-04-04",
+      "sport": "dodgeball",
+      "family": "ball_control",
+      "foundIds": [
+        "dodgeball_case_01",
+        "DDG-01",
+        "dodgeball_case_04",
+        "dodgeball_case_09",
+        "dodgeball_case_02",
+        "dodgeball_case_05",
+        "dodgeball_case_06",
+        "dodgeball_case_03"
+      ],
+      "preBudgetOfferedIds": [
+        "dodgeball_case_01",
+        "DDG-01"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-04-05",
+      "sport": "dodgeball",
+      "family": "ball_control",
+      "foundIds": [
+        "dodgeball_case_01",
+        "dodgeball_case_04",
+        "dodgeball_case_02",
+        "dodgeball_case_06",
+        "dodgeball_case_05",
+        "dodgeball_case_09",
+        "dodgeball_case_03"
+      ],
+      "preBudgetOfferedIds": [
+        "dodgeball_case_01",
+        "dodgeball_case_04"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-04-06",
+      "sport": "dodgeball",
+      "family": "ball_control",
+      "foundIds": [
+        "dodgeball_case_02",
+        "dodgeball_case_01",
+        "dodgeball_case_04",
+        "DDG-01",
+        "dodgeball_case_05",
+        "dodgeball_case_09",
+        "dodgeball_case_06",
+        "dodgeball_case_03"
+      ],
+      "preBudgetOfferedIds": [
+        "dodgeball_case_02",
+        "dodgeball_case_01"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-05-01",
+      "sport": "dodgeball",
+      "family": "numbers_advantage",
+      "foundIds": [
+        "dodgeball_case_03"
+      ],
+      "preBudgetOfferedIds": [
+        "dodgeball_case_03"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-05-02",
+      "sport": "dodgeball",
+      "family": "numbers_advantage",
+      "foundIds": [
+        "dodgeball_case_03"
+      ],
+      "preBudgetOfferedIds": [
+        "dodgeball_case_03"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-05-03",
+      "sport": "dodgeball",
+      "family": "numbers_advantage",
+      "foundIds": [
+        "dodgeball_case_03"
+      ],
+      "preBudgetOfferedIds": [
+        "dodgeball_case_03"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-05-04",
+      "sport": "dodgeball",
+      "family": "numbers_advantage",
+      "foundIds": [
+        "dodgeball_case_03"
+      ],
+      "preBudgetOfferedIds": [
+        "dodgeball_case_03"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-05-05",
+      "sport": "dodgeball",
+      "family": "numbers_advantage",
+      "foundIds": [
+        "dodgeball_case_03"
+      ],
+      "preBudgetOfferedIds": [
+        "dodgeball_case_03"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-05-06",
+      "sport": "dodgeball",
+      "family": "numbers_advantage",
+      "foundIds": [
+        "dodgeball_case_03"
+      ],
+      "preBudgetOfferedIds": [
+        "dodgeball_case_03"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-06-01",
+      "sport": "dodgeball",
+      "family": "numbers_disadvantage",
+      "foundIds": [
+        "dodgeball_case_08",
+        "dodgeball_case_05",
+        "dodgeball_case_03"
+      ],
+      "preBudgetOfferedIds": [
+        "dodgeball_case_08",
+        "dodgeball_case_05"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-06-02",
+      "sport": "dodgeball",
+      "family": "numbers_disadvantage",
+      "foundIds": [
+        "dodgeball_case_08",
+        "dodgeball_case_03",
+        "dodgeball_case_05",
+        "DDG-02"
+      ],
+      "preBudgetOfferedIds": [
+        "dodgeball_case_08",
+        "dodgeball_case_03"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-06-03",
+      "sport": "dodgeball",
+      "family": "numbers_disadvantage",
+      "foundIds": [
+        "dodgeball_case_08",
+        "dodgeball_case_03",
+        "dodgeball_case_05"
+      ],
+      "preBudgetOfferedIds": [
+        "dodgeball_case_08",
+        "dodgeball_case_03"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-06-04",
+      "sport": "dodgeball",
+      "family": "numbers_disadvantage",
+      "foundIds": [
+        "dodgeball_case_08",
+        "dodgeball_case_03",
+        "dodgeball_case_05",
+        "DDG-02"
+      ],
+      "preBudgetOfferedIds": [
+        "dodgeball_case_08",
+        "dodgeball_case_03"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-06-05",
+      "sport": "dodgeball",
+      "family": "numbers_disadvantage",
+      "foundIds": [
+        "dodgeball_case_08",
+        "dodgeball_case_03",
+        "dodgeball_case_05"
+      ],
+      "preBudgetOfferedIds": [
+        "dodgeball_case_08",
+        "dodgeball_case_03"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-06-06",
+      "sport": "dodgeball",
+      "family": "numbers_disadvantage",
+      "foundIds": [
+        "dodgeball_case_08",
+        "dodgeball_case_05",
+        "dodgeball_case_03",
+        "DDG-02"
+      ],
+      "preBudgetOfferedIds": [
+        "dodgeball_case_08",
+        "dodgeball_case_05"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-07-01",
+      "sport": "dodgeball",
+      "family": "catch_and_out",
+      "foundIds": [
+        "dodgeball_case_09",
+        "dodgeball_case_04",
+        "dodgeball_case_05",
+        "DDG-03",
+        "dodgeball_case_02",
+        "dodgeball_case_01",
+        "dodgeball_case_03",
+        "dodgeball_case_10"
+      ],
+      "preBudgetOfferedIds": [
+        "dodgeball_case_09",
+        "dodgeball_case_04"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-07-02",
+      "sport": "dodgeball",
+      "family": "catch_and_out",
+      "foundIds": [
+        "dodgeball_case_02",
+        "DDG-01",
+        "dodgeball_case_09",
+        "dodgeball_case_04",
+        "DDG-03",
+        "dodgeball_case_01",
+        "dodgeball_case_05",
+        "dodgeball_case_03"
+      ],
+      "preBudgetOfferedIds": [
+        "dodgeball_case_02",
+        "DDG-01"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-07-03",
+      "sport": "dodgeball",
+      "family": "catch_and_out",
+      "foundIds": [
+        "dodgeball_case_09",
+        "dodgeball_case_04",
+        "DDG-03",
+        "dodgeball_case_01",
+        "dodgeball_case_02",
+        "dodgeball_case_05",
+        "DDG-01",
+        "dodgeball_case_03"
+      ],
+      "preBudgetOfferedIds": [
+        "dodgeball_case_09",
+        "dodgeball_case_04"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-07-04",
+      "sport": "dodgeball",
+      "family": "catch_and_out",
+      "foundIds": [
+        "dodgeball_case_09",
+        "DDG-01",
+        "dodgeball_case_01",
+        "dodgeball_case_04",
+        "DDG-03",
+        "dodgeball_case_02",
+        "dodgeball_case_05",
+        "dodgeball_case_03"
+      ],
+      "preBudgetOfferedIds": [
+        "dodgeball_case_09",
+        "DDG-01"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-07-05",
+      "sport": "dodgeball",
+      "family": "catch_and_out",
+      "foundIds": [
+        "dodgeball_case_01",
+        "dodgeball_case_09",
+        "dodgeball_case_04",
+        "DDG-03",
+        "dodgeball_case_02",
+        "dodgeball_case_05",
+        "dodgeball_case_06",
+        "dodgeball_case_03"
+      ],
+      "preBudgetOfferedIds": [
+        "dodgeball_case_01",
+        "dodgeball_case_09"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-07-06",
+      "sport": "dodgeball",
+      "family": "catch_and_out",
+      "foundIds": [
+        "dodgeball_case_02",
+        "dodgeball_case_09",
+        "dodgeball_case_04",
+        "DDG-03",
+        "dodgeball_case_01",
+        "dodgeball_case_05",
+        "DDG-01",
+        "dodgeball_case_03"
+      ],
+      "preBudgetOfferedIds": [
+        "dodgeball_case_02",
+        "dodgeball_case_09"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-08-01",
+      "sport": "dodgeball",
+      "family": "target_selection",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-08-02",
+      "sport": "dodgeball",
+      "family": "target_selection",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-08-03",
+      "sport": "dodgeball",
+      "family": "target_selection",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-08-04",
+      "sport": "dodgeball",
+      "family": "target_selection",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-08-05",
+      "sport": "dodgeball",
+      "family": "target_selection",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-08-06",
+      "sport": "dodgeball",
+      "family": "target_selection",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-09-01",
+      "sport": "dodgeball",
+      "family": "timeout_reset",
+      "foundIds": [
+        "dodgeball_case_03"
+      ],
+      "preBudgetOfferedIds": [
+        "dodgeball_case_03"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-09-02",
+      "sport": "dodgeball",
+      "family": "timeout_reset",
+      "foundIds": [
+        "dodgeball_case_03"
+      ],
+      "preBudgetOfferedIds": [
+        "dodgeball_case_03"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-09-03",
+      "sport": "dodgeball",
+      "family": "timeout_reset",
+      "foundIds": [
+        "dodgeball_case_03"
+      ],
+      "preBudgetOfferedIds": [
+        "dodgeball_case_03"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-09-04",
+      "sport": "dodgeball",
+      "family": "timeout_reset",
+      "foundIds": [
+        "dodgeball_case_03"
+      ],
+      "preBudgetOfferedIds": [
+        "dodgeball_case_03"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-09-05",
+      "sport": "dodgeball",
+      "family": "timeout_reset",
+      "foundIds": [
+        "dodgeball_case_03"
+      ],
+      "preBudgetOfferedIds": [
+        "dodgeball_case_03"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-09-06",
+      "sport": "dodgeball",
+      "family": "timeout_reset",
+      "foundIds": [
+        "dodgeball_case_03"
+      ],
+      "preBudgetOfferedIds": [
+        "dodgeball_case_03"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-10-01",
+      "sport": "dodgeball",
+      "family": "late_game_clock",
+      "foundIds": [
+        "dodgeball_case_08"
+      ],
+      "preBudgetOfferedIds": [
+        "dodgeball_case_08"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-10-02",
+      "sport": "dodgeball",
+      "family": "late_game_clock",
+      "foundIds": [
+        "dodgeball_case_08",
+        "dodgeball_case_07"
+      ],
+      "preBudgetOfferedIds": [
+        "dodgeball_case_08",
+        "dodgeball_case_07"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-10-03",
+      "sport": "dodgeball",
+      "family": "late_game_clock",
+      "foundIds": [
+        "dodgeball_case_08",
+        "dodgeball_case_07"
+      ],
+      "preBudgetOfferedIds": [
+        "dodgeball_case_08",
+        "dodgeball_case_07"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-10-04",
+      "sport": "dodgeball",
+      "family": "late_game_clock",
+      "foundIds": [
+        "dodgeball_case_08",
+        "dodgeball_case_07"
+      ],
+      "preBudgetOfferedIds": [
+        "dodgeball_case_08",
+        "dodgeball_case_07"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-10-05",
+      "sport": "dodgeball",
+      "family": "late_game_clock",
+      "foundIds": [
+        "dodgeball_case_08",
+        "dodgeball_case_07"
+      ],
+      "preBudgetOfferedIds": [
+        "dodgeball_case_08",
+        "dodgeball_case_07"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-10-06",
+      "sport": "dodgeball",
+      "family": "late_game_clock",
+      "foundIds": [
+        "dodgeball_case_08",
+        "dodgeball_case_07"
+      ],
+      "preBudgetOfferedIds": [
+        "dodgeball_case_08",
+        "dodgeball_case_07"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-11-01",
+      "sport": "dodgeball",
+      "family": "overtime_roles",
+      "foundIds": [
+        "dodgeball_case_09",
+        "dodgeball_case_07",
+        "dodgeball_case_03"
+      ],
+      "preBudgetOfferedIds": [
+        "dodgeball_case_09",
+        "dodgeball_case_07"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-11-02",
+      "sport": "dodgeball",
+      "family": "overtime_roles",
+      "foundIds": [
+        "dodgeball_case_07",
+        "dodgeball_case_09",
+        "dodgeball_case_03"
+      ],
+      "preBudgetOfferedIds": [
+        "dodgeball_case_07",
+        "dodgeball_case_09"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-11-03",
+      "sport": "dodgeball",
+      "family": "overtime_roles",
+      "foundIds": [
+        "dodgeball_case_07",
+        "dodgeball_case_09",
+        "dodgeball_case_03"
+      ],
+      "preBudgetOfferedIds": [
+        "dodgeball_case_07",
+        "dodgeball_case_09"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-11-04",
+      "sport": "dodgeball",
+      "family": "overtime_roles",
+      "foundIds": [
+        "dodgeball_case_09",
+        "dodgeball_case_07",
+        "dodgeball_case_03"
+      ],
+      "preBudgetOfferedIds": [
+        "dodgeball_case_09",
+        "dodgeball_case_07"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-11-05",
+      "sport": "dodgeball",
+      "family": "overtime_roles",
+      "foundIds": [
+        "dodgeball_case_07",
+        "dodgeball_case_09",
+        "dodgeball_case_03"
+      ],
+      "preBudgetOfferedIds": [
+        "dodgeball_case_07",
+        "dodgeball_case_09"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-11-06",
+      "sport": "dodgeball",
+      "family": "overtime_roles",
+      "foundIds": [
+        "dodgeball_case_07",
+        "dodgeball_case_09",
+        "dodgeball_case_03"
+      ],
+      "preBudgetOfferedIds": [
+        "dodgeball_case_07",
+        "dodgeball_case_09"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-12-01",
+      "sport": "dodgeball",
+      "family": "dodging_spacing",
+      "foundIds": [
+        "dodgeball_case_04",
+        "dodgeball_case_09",
+        "DDG-03",
+        "dodgeball_case_02",
+        "dodgeball_case_05",
+        "dodgeball_case_01",
+        "dodgeball_case_03",
+        "dodgeball_case_10"
+      ],
+      "preBudgetOfferedIds": [
+        "dodgeball_case_04",
+        "dodgeball_case_09"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-12-02",
+      "sport": "dodgeball",
+      "family": "dodging_spacing",
+      "foundIds": [
+        "dodgeball_case_02",
+        "DDG-01",
+        "dodgeball_case_04",
+        "DDG-03",
+        "dodgeball_case_09",
+        "dodgeball_case_01",
+        "dodgeball_case_10",
+        "dodgeball_case_03"
+      ],
+      "preBudgetOfferedIds": [
+        "dodgeball_case_02",
+        "DDG-01"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-12-03",
+      "sport": "dodgeball",
+      "family": "dodging_spacing",
+      "foundIds": [
+        "dodgeball_case_04",
+        "DDG-03",
+        "dodgeball_case_09",
+        "dodgeball_case_02",
+        "DDG-01",
+        "dodgeball_case_01",
+        "dodgeball_case_07",
+        "dodgeball_case_03"
+      ],
+      "preBudgetOfferedIds": [
+        "dodgeball_case_04",
+        "DDG-03"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-12-04",
+      "sport": "dodgeball",
+      "family": "dodging_spacing",
+      "foundIds": [
+        "DDG-01",
+        "dodgeball_case_09",
+        "dodgeball_case_01",
+        "dodgeball_case_04",
+        "DDG-03",
+        "dodgeball_case_02",
+        "dodgeball_case_07",
+        "dodgeball_case_03"
+      ],
+      "preBudgetOfferedIds": [
+        "DDG-01",
+        "dodgeball_case_09"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-12-05",
+      "sport": "dodgeball",
+      "family": "dodging_spacing",
+      "foundIds": [
+        "dodgeball_case_01",
+        "dodgeball_case_04",
+        "DDG-03",
+        "dodgeball_case_02",
+        "dodgeball_case_09",
+        "dodgeball_case_06",
+        "dodgeball_case_07",
+        "dodgeball_case_03"
+      ],
+      "preBudgetOfferedIds": [
+        "dodgeball_case_01",
+        "dodgeball_case_04"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-12-06",
+      "sport": "dodgeball",
+      "family": "dodging_spacing",
+      "foundIds": [
+        "dodgeball_case_02",
+        "dodgeball_case_04",
+        "DDG-03",
+        "dodgeball_case_09",
+        "DDG-01",
+        "dodgeball_case_01",
+        "dodgeball_case_05",
+        "dodgeball_case_07"
+      ],
+      "preBudgetOfferedIds": [
+        "dodgeball_case_02",
+        "dodgeball_case_04"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-13-01",
+      "sport": "dodgeball",
+      "family": "court_position",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-13-02",
+      "sport": "dodgeball",
+      "family": "court_position",
+      "foundIds": [
+        "DDG-03"
+      ],
+      "preBudgetOfferedIds": [
+        "DDG-03"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-13-03",
+      "sport": "dodgeball",
+      "family": "court_position",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-13-04",
+      "sport": "dodgeball",
+      "family": "court_position",
+      "foundIds": [
+        "DDG-03"
+      ],
+      "preBudgetOfferedIds": [
+        "DDG-03"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-13-05",
+      "sport": "dodgeball",
+      "family": "court_position",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-13-06",
+      "sport": "dodgeball",
+      "family": "court_position",
+      "foundIds": [
+        "DDG-03"
+      ],
+      "preBudgetOfferedIds": [
+        "DDG-03"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-14-01",
+      "sport": "dodgeball",
+      "family": "throw_recovery",
+      "foundIds": [
+        "dodgeball_case_04",
+        "dodgeball_case_03",
+        "dodgeball_case_02",
+        "dodgeball_case_10",
+        "dodgeball_case_09",
+        "dodgeball_case_05",
+        "dodgeball_case_01"
+      ],
+      "preBudgetOfferedIds": [
+        "dodgeball_case_04",
+        "dodgeball_case_03"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-14-02",
+      "sport": "dodgeball",
+      "family": "throw_recovery",
+      "foundIds": [
+        "dodgeball_case_02",
+        "DDG-01",
+        "dodgeball_case_03",
+        "dodgeball_case_04",
+        "dodgeball_case_10",
+        "dodgeball_case_01",
+        "DDG-03",
+        "dodgeball_case_06"
+      ],
+      "preBudgetOfferedIds": [
+        "dodgeball_case_02",
+        "DDG-01"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-14-03",
+      "sport": "dodgeball",
+      "family": "throw_recovery",
+      "foundIds": [
+        "dodgeball_case_03",
+        "dodgeball_case_04",
+        "dodgeball_case_10",
+        "dodgeball_case_02",
+        "DDG-01",
+        "dodgeball_case_01",
+        "dodgeball_case_09"
+      ],
+      "preBudgetOfferedIds": [
+        "dodgeball_case_03",
+        "dodgeball_case_04"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-14-04",
+      "sport": "dodgeball",
+      "family": "throw_recovery",
+      "foundIds": [
+        "DDG-01",
+        "dodgeball_case_01",
+        "dodgeball_case_03",
+        "dodgeball_case_09",
+        "dodgeball_case_04",
+        "dodgeball_case_02",
+        "dodgeball_case_10",
+        "DDG-03"
+      ],
+      "preBudgetOfferedIds": [
+        "DDG-01",
+        "dodgeball_case_01"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-14-05",
+      "sport": "dodgeball",
+      "family": "throw_recovery",
+      "foundIds": [
+        "dodgeball_case_01",
+        "dodgeball_case_04",
+        "dodgeball_case_03",
+        "dodgeball_case_10",
+        "dodgeball_case_02",
+        "dodgeball_case_06"
+      ],
+      "preBudgetOfferedIds": [
+        "dodgeball_case_01",
+        "dodgeball_case_04"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-14-06",
+      "sport": "dodgeball",
+      "family": "throw_recovery",
+      "foundIds": [
+        "dodgeball_case_02",
+        "dodgeball_case_03",
+        "dodgeball_case_04",
+        "dodgeball_case_10",
+        "DDG-01",
+        "dodgeball_case_01",
+        "dodgeball_case_09",
+        "dodgeball_case_05"
+      ],
+      "preBudgetOfferedIds": [
+        "dodgeball_case_02",
+        "dodgeball_case_03"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-15-01",
+      "sport": "dodgeball",
+      "family": "line_rule",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-15-02",
+      "sport": "dodgeball",
+      "family": "line_rule",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-15-03",
+      "sport": "dodgeball",
+      "family": "line_rule",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-15-04",
+      "sport": "dodgeball",
+      "family": "line_rule",
+      "foundIds": [
+        "DDG-01",
+        "DDG-03",
+        "dodgeball_case_10",
+        "dodgeball_case_06",
+        "dodgeball_case_01",
+        "dodgeball_case_09",
+        "dodgeball_case_03",
+        "dodgeball_case_02"
+      ],
+      "preBudgetOfferedIds": [
+        "DDG-01",
+        "DDG-03"
+      ],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-15-05",
+      "sport": "dodgeball",
+      "family": "line_rule",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    },
+    {
+      "questionId": "DO-15-06",
+      "sport": "dodgeball",
+      "family": "line_rule",
+      "foundIds": [],
+      "preBudgetOfferedIds": [],
+      "projectionErrors": []
+    }
+  ]
+}

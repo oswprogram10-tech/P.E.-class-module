@@ -1,0 +1,255 @@
+{
+  "version": 1,
+  "reviewedAt": "2026-11-15",
+  "purpose": "공통 기술 후보 공백 질문 일부의 원문 기반 부분 연결 조사; 기존 TBX-01~13과 구별되는 새 장면 포함",
+  "cases": [
+    {
+      "id": "TLG-01",
+      "title": "얕은 우익수 뒤로 넘어간 반대 방향 타구",
+      "matchLabel": "Phillies–Mets",
+      "matchDate": null,
+      "period": "6회",
+      "sourceSport": "baseball",
+      "publisher": "MLB.com / Philadelphia Phillies",
+      "sourceUrl": "https://www.mlb.com/phillies/news/carlos-santana-nola-strong-in-phillies-loss-c270848420",
+      "publishedDate": "2018-04-04",
+      "sourceClaim": "Phillies 우익수 Williams는 얕게 섰고, Rosario의 반대 방향 뜬공은 머리 위로 넘어가 3루타가 됐다.",
+      "evidenceLocator": "본문 158–167행: 159행 수비 위치·타구, 161–167행 얕은 위치 선택의 이유와 결과.",
+      "matchDateStatus": "게시일은 2018-04-04. 본문은 수요일 Mets 경기라고 서술하지만 경기일은 별도 확인하지 않아 null.",
+      "videoReviewStatus": "not-viewed",
+      "sharedElements": "앞 타구를 막으려는 얕은 외야 위치와 뒤 공간의 타구 결과",
+      "teeballScope": "외야 깊이·정상 타격 타구 궤적만 비교; 티볼 수비 인원·구장 크기·공의 특성은 다를 수 있음.",
+      "questionLinks": [
+        {
+          "questionId": "TE-01-03",
+          "proposedRelevance": "partial",
+          "supported": "외야수가 약한 타구가 앞에 떨어지는 것을 막기 위해 얕게 배치된 사실과 그 뒤로 넘어간 타구 결과가 기록됨.",
+          "missing": "두 방향 공간을 별도 수비수가 나눠 지킨 사실은 없음."
+        },
+        {
+          "questionId": "TE-01-06",
+          "proposedRelevance": "partial",
+          "supported": "얕은 외야 위치가 약한 타구를 예상했고 실제로 더 깊은 타구가 머리 위로 넘어간 사례.",
+          "missing": "같은 타자가 짧은 타구와 긴 타구를 교대로 친 사례는 아님."
+        },
+        {
+          "questionId": "TE-03-02",
+          "proposedRelevance": "partial",
+          "supported": "높게 뜬 반대 방향 타구가 수비 위치를 넘은 결과를 설명함.",
+          "missing": "같은 경기의 낮은 타구 결과와 짝지어 비교하지 않음."
+        },
+        {
+          "questionId": "TE-03-03",
+          "proposedRelevance": "partial",
+          "supported": "외야 정렬이 반대 방향 타구 공간에 대응하지 못한 실제 장면.",
+          "missing": "내야 한쪽 몰림이나 반대쪽 내야 공간 타격은 다루지 않음."
+        },
+        {
+          "questionId": "TE-03-06",
+          "proposedRelevance": "partial",
+          "supported": "수비는 약한 접촉을 예상해 앞 공간을 지켰고 실제 타구는 깊은 쪽으로 넘어감.",
+          "missing": "약한 타구가 아니라 강한 반대 방향 뜬공으로 기록됨."
+        }
+      ]
+    },
+    {
+      "id": "TLG-02",
+      "title": "얕은 우익수의 머리 위로 갈 뻔한 깊은 타구 포구",
+      "matchLabel": "Twins–Red Sox",
+      "matchDate": null,
+      "period": "8회 말",
+      "sourceSport": "baseball",
+      "publisher": "MLB.com / Minnesota Twins",
+      "sourceUrl": "https://www.mlb.com/twins/news/twins-sweep-red-sox-at-fenway-park",
+      "publishedDate": "2026-05-24",
+      "sourceClaim": "얕게 선 Twins 우익수 Martin은 Rafaela의 깊은 타구를 달려가 잡았다.",
+      "evidenceLocator": "본문 161행 경기 요약, 164–170행 8회 타구·얕은 위치·포구 설명.",
+      "matchDateStatus": "게시일 2026-05-24. 본문은 일요일 Fenway 경기로 표기; 별도 일정 대조 전이라 matchDate는 null.",
+      "videoReviewStatus": "not-viewed",
+      "sharedElements": "얕은 외야 위치와 머리 위 공간을 향한 깊은 타구 처리",
+      "teeballScope": "깊이 배치와 타구 추적만 제한 비교; Fenway의 외야 크기, 우천, 야구공은 티볼 조건과 다름.",
+      "questionLinks": [
+        {
+          "questionId": "TE-01-03",
+          "proposedRelevance": "partial",
+          "supported": "얕게 배치된 외야수의 머리 위를 넘을 뻔한 깊은 타구를 달려가 포구함.",
+          "missing": "앞 공간·뒤 공간을 다른 수비수들이 나눠 맡는 배치는 없음."
+        },
+        {
+          "questionId": "TE-01-06",
+          "proposedRelevance": "partial",
+          "supported": "얕은 위치에서 깊은 타구가 머리 위를 향한 위험을 보여줌.",
+          "missing": "같은 타자의 짧고 긴 타구 반복과 대응 조정은 기사에 없음."
+        },
+        {
+          "questionId": "TE-03-02",
+          "proposedRelevance": "partial",
+          "supported": "깊은 뜬 타구가 잡힌 결과를 보여줌.",
+          "missing": "비교할 낮은 타구의 결과가 본문에 없음."
+        },
+        {
+          "questionId": "TE-03-06",
+          "proposedRelevance": "partial",
+          "supported": "얕은 외야 위치에서 깊은 타구를 놓칠 뻔한 사례.",
+          "missing": "수비가 약한 타구를 예상했다는 전략 설명은 없음."
+        }
+      ]
+    },
+    {
+      "id": "TLG-03",
+      "title": "4인 외야 배치와 중간 내야수의 이동",
+      "matchLabel": "Tigers–Rangers",
+      "matchDate": null,
+      "period": "시리즈 중 Gallo 타석",
+      "sourceSport": "baseball",
+      "publisher": "MLB.com / Detroit Tigers",
+      "sourceUrl": "https://www.mlb.com/news/tigers-use-extreme-shift-vs-joey-gallo",
+      "publishedDate": "2021-07-22",
+      "sourceClaim": "Tigers는 Gallo 상대로 우익수 쪽에 내야수를 더 배치하고 좌측 공간을 비워 두었다.",
+      "evidenceLocator": "본문 108–123행: 109–119행 선수별 재배치·좌측 빈 공간, 122–123행 배치 목적; 실제 결과는 131행.",
+      "matchDateStatus": "게시일 2021-07-22. 본문은 수요일 타석 등 시리즈 상황을 설명하지만 특정 경기 날짜를 독립 확인하지 않아 null.",
+      "videoReviewStatus": "not-viewed",
+      "sharedElements": "수비수들이 한 방향으로 옮겨지며 다른 방향 공간이 넓어지는 배치",
+      "teeballScope": "수비 배치와 빈 공간만 비교; 4인 외야는 티볼 수비 인원과 다르며 야구 정렬을 복사할 수 없음.",
+      "questionLinks": [
+        {
+          "questionId": "TE-03-03",
+          "proposedRelevance": "partial",
+          "supported": "극단적 배치로 좌측 공간이 비었고, 기사 후반에 Gallo의 타구가 shift를 뚫고 중간으로 갔다고 기록됨.",
+          "missing": "그 타구가 비어 있던 좌측 공간을 향했다고는 확인되지 않음; up-the-middle 결과와 반대 방향 빈 공간을 구별해야 함."
+        },
+        {
+          "questionId": "TE-11-01",
+          "proposedRelevance": "partial",
+          "supported": "한쪽으로 크게 이동한 수비 배치와 열린 반대 공간을 본문에서 구체적으로 설명함.",
+          "missing": "타구 방향을 보고 간격을 조정한 장면이라기보다 타자 특성에 따른 사전 정렬임."
+        },
+        {
+          "questionId": "TE-11-05",
+          "proposedRelevance": "partial",
+          "supported": "일반 내야 위치를 벗어나 외야수를 추가하는 배치가 어떻게 빈 공간을 바꾸는지 설명함.",
+          "missing": "티볼보다 야구 수비수가 적은 상황이므로 티볼 수비 인원에 어떻게 배분할지는 원문 밖."
+        },
+        {
+          "questionId": "TE-03-06",
+          "proposedRelevance": "partial",
+          "supported": "타자 경향을 토대로 한 극단 배치 뒤 실제 땅볼이 정렬을 통과한 결과를 언급함.",
+          "missing": "약한 타구를 예상해 전진한 위치가 아니라 장타 방향을 막는 배치임."
+        }
+      ]
+    },
+    {
+      "id": "TLG-04",
+      "title": "내야 중앙 땅볼에 함께 접근한 2루수와 유격수",
+      "matchLabel": "Brewers–Pirates",
+      "matchDate": null,
+      "period": "8회",
+      "sourceSport": "baseball",
+      "publisher": "MLB.com / Milwaukee Brewers",
+      "sourceUrl": "https://www.mlb.com/amp/news/orlando-arcia-leaves-game-keston-hiura-collide.html",
+      "publishedDate": "2019-07-07",
+      "sourceClaim": "Brewers 2루수 Hiura와 유격수 Arcia가 Moran의 중앙 땅볼에 함께 접근해 충돌했다.",
+      "evidenceLocator": "본문 12–13행 경기 사건, 25–31행 출발 위치·타구·양 선수의 설명.",
+      "matchDateStatus": "게시일 2019-07-07. 본문은 Saturday 경기라고만 설명하고 경기일을 별도 확인하지 않아 null.",
+      "videoReviewStatus": "not-viewed",
+      "sharedElements": "내야수 두 명이 같은 약한 중앙 땅볼에 접근한 사실과 콜을 서로 듣지 못한 상황",
+      "teeballScope": "타구 접근과 담당 혼선만 비교; 선수 부상과 야구 주루·아웃 결과는 적용 대상 아님.",
+      "questionLinks": [
+        {
+          "questionId": "TE-09-05",
+          "proposedRelevance": "partial",
+          "supported": "두 내야수가 같은 ground ball에 접근했고, 관중 소음 속 서로의 콜을 듣기 어려웠다고 선수 설명이 기록됨.",
+          "missing": "공이 수비수 사이로 빠져나간 것이 아니라 두 선수가 충돌했고, 먼저 접근할 담당자를 사전에 정했다는 근거는 없음."
+        }
+      ]
+    },
+    {
+      "id": "TLG-05",
+      "title": "외야수 포구 실패 뒤 중계 대상 콜 전달",
+      "matchLabel": "Brewers–Dodgers, NLCS Game 1",
+      "matchDate": null,
+      "period": "4회",
+      "sourceSport": "baseball",
+      "publisher": "MLB.com / Milwaukee Brewers",
+      "sourceUrl": "https://www.mlb.com/amp/news/near-home-run-in-nlcs-game-1-causes-chaos-on-basepaths.html",
+      "publishedDate": "2025-10-14",
+      "sourceClaim": "외야수 Frelick의 포구 실패 뒤 Turang이 중계수 Ortiz에게 송구 대상을 알려줬다.",
+      "evidenceLocator": "본문 17–18행 경기·이닝, 29–35행 포구 실패·공 회수, 38–40행 Turang의 송구 대상 전달.",
+      "matchDateStatus": "게시일 2025-10-14. 본문은 월요일 NLCS 1차전으로만 경기 시점을 표시; 경기일은 별도 확인하지 않아 null.",
+      "videoReviewStatus": "not-viewed; 원문 영상 재생하지 않음",
+      "sharedElements": "공 회수 뒤 중계수가 받을 대상과 다음 연결을 다른 수비수가 소리로 전달함",
+      "teeballScope": "중계 커뮤니케이션 역할만 비교; 태그업·포스·아웃 판정은 제외.",
+      "questionLinks": [
+        {
+          "questionId": "TE-14-05",
+          "proposedRelevance": "partial",
+          "supported": "중계수가 기다리는 동안 2루수가 어디로 던질지 소리 내어 알려줬다고 본문이 기록함.",
+          "missing": "여러 중계자가 동시에 공을 요구하거나 외야수가 갈등해 망설였다는 조건은 없음."
+        },
+        {
+          "questionId": "TE-13-04",
+          "proposedRelevance": "partial",
+          "supported": "외야수는 포구를 놓친 뒤 벽에서 튄 공을 다시 잡아 중계로 보냈음.",
+          "missing": "중계 송구가 중간에 빠진 것이 아니며 외야수가 뒤에서 백업을 계속한 상황도 아님."
+        },
+        {
+          "questionId": "TE-13-05",
+          "proposedRelevance": "partial",
+          "supported": "포구 실패 후 공을 회수한 외야수와 중계 위치의 연결이 기록됨.",
+          "missing": "공을 놓친 선수가 혼자 멀리 쫓아간 것도, 다른 수비수가 별도 연결 위치로 이동한 것도 아님."
+        }
+      ]
+    },
+    {
+      "id": "TLG-06",
+      "title": "악송구 뒤 포수 실패와 뒤쪽 지원 공백",
+      "matchLabel": "Dodgers–Rays, 2020 World Series Game 4",
+      "matchDate": null,
+      "period": "9회 말",
+      "sourceSport": "baseball",
+      "publisher": "MLB.com / Tampa Bay Rays",
+      "sourceUrl": "https://www.mlb.com/news/world-series-game-4-2020-recap",
+      "publishedDate": "2020-10-25",
+      "sourceClaim": "Muncy의 빗나간 송구를 포수가 놓쳤고, 투수 Jansen은 뒤에서 백업하지 않았다.",
+      "evidenceLocator": "본문 104–109행 경기일 기사; 168–175행 마지막 플레이의 악송구·포구 실패·백업 부재.",
+      "matchDateStatus": "게시일 2020-10-25. 본문은 토요일 World Series Game 4로 특정하나 경기일은 별도 확인하지 않아 null.",
+      "videoReviewStatus": "not-viewed",
+      "sharedElements": "악송구와 수신 실패 뒤 추가 백업이 필요한 공간 및 미배치의 결과",
+      "teeballScope": "송구 백업 위치·공 회수 책임만 비교; 득점·주루 결과와 포수/투수 전담 포지션 복사는 제외.",
+      "questionLinks": [
+        {
+          "questionId": "TE-13-04",
+          "proposedRelevance": "partial",
+          "supported": "중계/릴레이가 포함된 빗나간 송구를 포수가 놓쳤고 뒤쪽 백업이 없었다고 기사에서 설명함.",
+          "missing": "중간 중계 송구 자체가 아니라 마지막 수신 송구이며 백업 지속 동작은 없음."
+        },
+        {
+          "questionId": "TE-13-05",
+          "proposedRelevance": "partial",
+          "supported": "포수가 공을 놓친 뒤 투수의 백업이 없었던 사례로 연결 역할 필요성을 보여줌.",
+          "missing": "다른 수비수가 연결 위치로 이동하지 않았고 공 회수 후 다음 연결이 이뤄지지 않음."
+        },
+        {
+          "questionId": "TE-13-06",
+          "proposedRelevance": "partial",
+          "supported": "수신자·송구자·뒤쪽 백업자의 서로 다른 책임이 한 장면에 드러남.",
+          "missing": "타구·송구 방향에 맞춰 양쪽 백업을 분담한 예시는 아님."
+        }
+      ]
+    }
+  ],
+  "heldQuestions": [
+    {
+      "questionId": "TE-14-06",
+      "status": "hold",
+      "reason": "요청은 영상에서 관찰되는 움직임만 서술하라는 것이나 이번 조사에서는 영상 재생·관찰을 하지 않았다. 기사 서술만으로 영상 관찰 결과를 대신하지 않음."
+    }
+  ],
+  "reviewStatus": {
+    "educator": "pending",
+    "expert": "pending",
+    "runtimeEligible": false,
+    "rights": "unverified",
+    "videoReview": "not-viewed"
+  }
+}

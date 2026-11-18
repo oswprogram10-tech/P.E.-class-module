@@ -1,0 +1,60 @@
+{
+  "version": 1,
+  "recordedDate": "2026-11-15",
+  "approvalType": "user-pilot-acceptance",
+  "pilotMaterialReviewStatus": "accepted",
+  "authorization": "일단 시범이니까 검토는 진행한 걸로 하자.",
+  "scope": "현재 조사자료와 질문–사례 연결을 시범 구현에 사용할 수 있는 것으로 수용한다.",
+  "reviewRecordMeaning": "사용자의 시범 수용 결정이며 별도의 종목 전문가가 검토했다는 기록은 아니다. 기존 사실·규칙·출처 이용 조건의 확인 필드는 각각의 실제 상태를 유지한다.",
+  "evaluationQuestionFile": "tactics-query-evaluation.csv",
+  "evaluationQuestionCount": 450,
+  "acceptedResearchBundles": [
+    {
+      "caseFile": "tactics-teeball-baseball-candidates.json",
+      "linkFile": "tactics-teeball-baseball-links.csv",
+      "caseIds": [
+        "TBX-01",
+        "TBX-02",
+        "TBX-03",
+        "TBX-04",
+        "TBX-05",
+        "TBX-06",
+        "TBX-07",
+        "TBX-08",
+        "TBX-09",
+        "TBX-10",
+        "TBX-11",
+        "TBX-12",
+        "TBX-13",
+        "TBX-14",
+        "TBX-15",
+        "TBX-16",
+        "TBX-17",
+        "TBX-18",
+        "TBX-19"
+      ],
+      "caseCount": 19,
+      "linkCount": 50
+    },
+    {
+      "caseFile": "tactics-four-sport-gapfill-candidates.json",
+      "linkFile": "tactics-four-sport-gapfill-links.csv",
+      "caseIds": [
+        "BKG-01",
+        "BKG-02",
+        "VBG-01",
+        "VBG-02",
+        "SCG-01",
+        "SCG-02",
+        "SCG-03",
+        "DDG-01",
+        "DDG-02",
+        "DDG-03"
+      ],
+      "caseCount": 10,
+      "linkCount": 72
+    }
+  ],
+  "implementationStatus": "stage-5-retrieval-evaluation-complete-human-and-model-evaluation-pending",
+  "nextStep": "검색 공백과 종목·규칙 관련성의 사람 검토, 모델 선택 품질·실제 Android 평가 및 오프라인 시범 준비"
+}

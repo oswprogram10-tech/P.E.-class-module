@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">PE Loop 학생 연결</string>
+    <string name="notification_channel">수업 심박 연결</string>
+    <string name="student_title">수업 중 심박 측정 연결</string>
+    <string name="student_intro">교사가 제시한 연결 QR을 스캔합니다. 측정값은 현재 연결된 수업에만 전달되고 휴대폰에 저장되지 않습니다.</string>
+    <string name="scan_teacher_qr">교사 연결 QR 스캔</string>
+    <string name="end_class_connection">수업 연결 종료</string>
+</resources>

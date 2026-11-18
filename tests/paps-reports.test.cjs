@@ -43,8 +43,56 @@ test('로컬 PAPS CSV는 선택한 학생 기록만 포함하고 수식과 줄�
   assert.match(csv, /로컬 임시자료/);
   assert.match(csv, /NEIS 양식 아님/);
   assert.match(csv, /12\.3/);
+  assert.match(csv, /항목점수\(20점\)/);
+  assert.match(csv, /MOE-354-2025-03-10-annex5/);
   assert.doesNotMatch(csv, new RegExp(other.id));
   assert.throws(() => reports.createStudentCsv(f.state.measurements, { classId: f.cls.id, studentId: f.first.id, selectedIds: [record.id, other.id] }), /학생·학급 범위/);
   const dangerous = reports.createStudentCsv([{ ...record, itemId: '=cmd', value: 12.3 }], { classId: f.cls.id, studentId: f.first.id, selectedIds: [record.id] });
   assert.match(dangerous, /'=cmd/);
+});
+
+test('거리 종목의 선택 측정 범위와 규정 거리를 선택 학생 CSV에 보존한다', () => {
+  const f = fixture();
+  const record = M.add(f.state, 'measurements', {
+    classId: f.cls.id, studentId: f.first.id, schoolYear: 2026, measuredOn: '2026-11-06',
+    itemId: 'run-walk-1000m', value: 480, unit: '초', missingReason: null, missingNote: '',
+    assessmentGradeGroupId: 'elementary-5', assessmentTargetGroupId: 'female',
+    criteriaGradeGroupId: 'elementary-5', criteriaTargetGroupId: 'female', criteriaSourceVersion: 'MOE-354-2025-03-10-annex4',
+  });
+  const csv = reports.createStudentCsv(f.state.measurements, { classId: f.cls.id, studentId: f.first.id, selectedIds: [record.id], generatedAt: '2026-11-06' });
+  assert.match(csv, /측정거리\(m\)/);
+  assert.match(csv, /run-walk-1000m/);
+  assert.match(csv, /elementary-5/);
+  assert.match(csv, /female/);
+  assert.match(csv, /1000/);
+  assert.match(csv, /480/);
+});
+
+test('BMI 추이·학급 구간 분포·CSV는 계산 원자료와 별표 4 구분을 유지한다', () => {
+  const f = fixture();
+  const addBmi = (student, weightKg, gradeGroupId = 'high-2', targetGroupId = 'male') => M.add(f.state, 'measurements', {
+    classId: f.cls.id, studentId: student.id, schoolYear: 2026, measuredOn: '2026-11-06',
+    itemId: 'body-mass-index', value: 0, unit: 'kg/m²', heightCm: 200, weightKg,
+    missingReason: null, missingNote: '', assessmentGradeGroupId: gradeGroupId, assessmentTargetGroupId: targetGroupId,
+    criteriaGradeGroupId: gradeGroupId, criteriaTargetGroupId: targetGroupId, criteriaSourceVersion: 'MOE-354-2025-03-10-annex4-bmi',
+    studentConsentConfirmed: true, guardianConsentConfirmed: true,
+  });
+  const combined = addBmi(f.first, 108);
+  const severe = addBmi(f.second, 120);
+  const trend = reports.buildTrend(f.state.measurements, { classId: f.cls.id, studentId: f.first.id, itemId: 'body-mass-index', gradeGroupId: 'high-2', targetGroupId: 'male' });
+  assert.deepEqual([trend[0].value, trend[0].heightCm, trend[0].weightKg, trend[0].categoryLabel], [27.0, 200, 108, '과체중·경도 비만 (통합 구간)']);
+  const distribution = reports.classDistribution(f.state.measurements, { classId: f.cls.id, schoolYear: 2026, itemId: 'body-mass-index', gradeGroupId: 'high-2', targetGroupId: 'male', criteriaSourceVersion: 'MOE-354-2025-03-10-annex4-bmi' });
+  assert.equal(distribution.kind, 'bmi');
+  assert.equal(distribution.counts['overweight-mild-obesity'], 1);
+  assert.equal(distribution.counts['severe-obesity'], 1);
+  const csv = reports.createStudentCsv(f.state.measurements, { classId: f.cls.id, studentId: f.first.id, selectedIds: [combined.id], generatedAt: '2026-11-06' });
+  assert.match(csv, /키\(cm\)/);
+  assert.match(csv, /몸무게\(kg\)/);
+  assert.match(csv, /BMI 구분/);
+  assert.match(csv, /미제공/);
+  assert.match(csv, /200/);
+  assert.match(csv, /108/);
+  assert.match(csv, /27/);
+  assert.match(csv, /과체중·경도 비만/);
+  assert.doesNotMatch(csv, new RegExp(severe.id));
 });

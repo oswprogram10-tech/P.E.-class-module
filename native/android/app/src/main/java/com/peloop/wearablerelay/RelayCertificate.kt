@@ -32,7 +32,7 @@ internal object RelayCertificate {
         }
         val fingerprint = MessageDigest.getInstance("SHA-256")
             .digest(certificate.publicKey.encoded)
-            .joinToString("") { byte -> "%02x".format(byte) }
+            .joinToString("") { byte -> (byte.toInt() and 0xff).toString(16).padStart(2, '0') }
         return RelayTlsIdentity(context, fingerprint)
     }
 

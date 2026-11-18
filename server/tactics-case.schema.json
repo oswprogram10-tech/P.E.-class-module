@@ -1,0 +1,185 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://peloop.local/schemas/tactics-case-v1.json",
+  "title": "P.E. Loop real-game case card",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "id",
+    "sport",
+    "rulesContext",
+    "match",
+    "scene",
+    "sourceClaims",
+    "interpretation",
+    "searchTags",
+    "sources",
+    "review"
+  ],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "id": { "type": "string", "pattern": "^[a-z0-9_-]{1,60}$" },
+    "sport": { "enum": ["basketball", "volleyball", "soccer", "teeball", "dodgeball"] },
+    "rulesContext": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["format", "edition", "division", "notes"],
+      "properties": {
+        "format": { "type": ["string", "null"], "maxLength": 160 },
+        "edition": { "type": ["string", "null"], "maxLength": 80 },
+        "division": { "type": ["string", "null"], "maxLength": 100 },
+        "notes": { "type": "string", "maxLength": 1000 }
+      }
+    },
+    "match": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["competition", "stage", "date", "teams", "result"],
+      "properties": {
+        "competition": { "type": ["string", "null"], "maxLength": 180 },
+        "stage": { "type": ["string", "null"], "maxLength": 180 },
+        "date": { "type": ["string", "null"], "format": "date" },
+        "teams": {
+          "type": "array",
+          "maxItems": 4,
+          "items": { "type": "string", "minLength": 1, "maxLength": 120 }
+        },
+        "result": { "type": ["string", "null"], "maxLength": 300 }
+      }
+    },
+    "scene": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["level", "period", "timeSeconds", "situation", "scoreMarkers", "events", "recordedOutcome"],
+      "properties": {
+        "level": { "enum": ["point", "possession", "rally", "sequence", "phase", "match-flow", "aggregate"] },
+        "period": { "type": ["string", "null"], "maxLength": 100 },
+        "timeSeconds": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["start", "end"],
+          "properties": {
+            "start": { "type": ["integer", "null"], "minimum": 0 },
+            "end": { "type": ["integer", "null"], "minimum": 0 }
+          }
+        },
+        "situation": { "type": "string", "maxLength": 1200 },
+        "scoreMarkers": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["label", "score", "sourceClaimIds"],
+            "properties": {
+              "label": { "type": "string", "maxLength": 100 },
+              "score": { "type": "string", "maxLength": 80 },
+              "sourceClaimIds": { "type": "array", "items": { "type": "string" }, "uniqueItems": true }
+            }
+          }
+        },
+        "events": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["order", "actor", "action", "response", "result", "sourceClaimIds"],
+            "properties": {
+              "order": { "type": "integer", "minimum": 1 },
+              "actor": { "type": ["string", "null"], "maxLength": 120 },
+              "action": { "type": "string", "maxLength": 400 },
+              "response": { "type": ["string", "null"], "maxLength": 400 },
+              "result": { "type": ["string", "null"], "maxLength": 400 },
+              "sourceClaimIds": { "type": "array", "items": { "type": "string" }, "uniqueItems": true }
+            }
+          }
+        },
+        "recordedOutcome": { "type": ["string", "null"], "maxLength": 500 }
+      }
+    },
+    "sourceClaims": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "statement", "sourceId", "locator", "checkStatus", "note"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z0-9_-]{1,80}$" },
+          "statement": { "type": "string", "minLength": 1, "maxLength": 1000 },
+          "sourceId": { "type": "string", "minLength": 1, "maxLength": 80 },
+          "locator": { "type": ["string", "null"], "maxLength": 300 },
+          "checkStatus": { "enum": ["pending", "partially-verified", "verified", "rejected"] },
+          "note": { "type": "string", "maxLength": 600 }
+        }
+      }
+    },
+    "interpretation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sourceAnalysis", "analystObservation", "limitations", "studentQuestions"],
+      "properties": {
+        "sourceAnalysis": { "type": ["string", "null"], "maxLength": 1200 },
+        "analystObservation": { "type": ["string", "null"], "maxLength": 1200 },
+        "limitations": { "type": "array", "items": { "type": "string", "maxLength": 500 } },
+        "studentQuestions": { "type": "array", "items": { "type": "string", "maxLength": 500 } }
+      }
+    },
+    "searchTags": { "type": "array", "uniqueItems": true, "items": { "type": "string", "minLength": 1, "maxLength": 80 } },
+    "sources": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "title", "publisher", "url", "publishedAt", "accessedAt", "kind", "language", "locator", "reuse"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z0-9_-]{1,80}$" },
+          "title": { "type": "string", "minLength": 1, "maxLength": 240 },
+          "publisher": { "type": ["string", "null"], "maxLength": 160 },
+          "url": { "type": "string", "format": "uri", "pattern": "^https://" },
+          "publishedAt": { "type": ["string", "null"], "format": "date" },
+          "accessedAt": { "type": "string", "format": "date" },
+          "kind": { "enum": ["official-video", "official-play-by-play", "match-report", "broadcast-analysis", "research", "team-account", "other"] },
+          "language": { "type": ["string", "null"], "maxLength": 20 },
+          "locator": { "type": ["string", "null"], "maxLength": 400 },
+          "reuse": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["status", "scope", "note"],
+            "properties": {
+              "status": { "enum": ["not-checked", "pending-permission", "limited-use-cleared", "excluded"] },
+              "scope": { "type": "array", "uniqueItems": true, "items": { "enum": ["link", "short-summary", "quotation", "image", "video", "redistribution", "model-training"] } },
+              "note": { "type": "string", "maxLength": 800 }
+            }
+          }
+        }
+      }
+    },
+    "review": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["factStatus", "evidenceStatus", "educatorStatus", "expertStatus", "reviews"],
+      "properties": {
+        "factStatus": { "enum": ["not-started", "partial", "verified", "conflicted", "rejected"] },
+        "evidenceStatus": { "enum": ["missing", "partial", "complete"] },
+        "educatorStatus": { "enum": ["pending", "approved", "changes-needed", "rejected"] },
+        "expertStatus": { "enum": ["pending", "approved", "changes-needed", "rejected", "not-required"] },
+        "reviews": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["role", "outcome", "reviewerAlias", "reviewedAt", "note"],
+            "properties": {
+              "role": { "enum": ["teacher", "coach", "analyst", "rights-reviewer"] },
+              "outcome": { "enum": ["approved", "changes-needed", "rejected"] },
+              "reviewerAlias": { "type": ["string", "null"], "maxLength": 80 },
+              "reviewedAt": { "type": ["string", "null"], "format": "date" },
+              "note": { "type": "string", "maxLength": 800 }
+            }
+          }
+        }
+      }
+    }
+  }
+}

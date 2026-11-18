@@ -1662,3 +1662,29 @@ select:focus-visible, textarea:focus-visible { outline: 3px solid rgba(165,233,6
 .shot-history-panel select { width: 100%; min-width: 0; }
 .shot-history-row { margin: 12px 0; padding: 10px; border: 1px solid #d3ddcb; border-radius: 8px; }
 .shot-history-row button { margin: 6px 8px 0 0; }
+.device-check-notice { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin: 16px 0; padding: 16px; border: 1px solid #c5d4b9; border-radius: 12px; background: #f4f8ed; }
+.device-check-notice[hidden], .device-check-panel[hidden] { display: none; }
+.device-check-notice p { flex: 1 1 230px; margin: 0; font-size: 14px; line-height: 1.7; }
+.device-check-notice button, .device-check-panel button { min-height: 48px; padding: 10px 14px; border: 1px solid #91a781; border-radius: 9px; background: white; color: #284b32; font-size: 14px; }
+.device-check-panel { min-width: 0; }
+.teacher-setup-guide { margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid #d7e1d8; }
+.teacher-setup-guide h3 { margin: 0 0 8px; }
+.teacher-setup-guide p { margin: 0 0 10px; }
+.teacher-setup-links { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+.teacher-setup-guide summary { min-height: 48px; align-content: center; color: #284b32; cursor: pointer; }
+#teacherSetupGuideButton { margin-bottom: 16px; }
+.device-check-panel p, .device-check-panel li { font-size: 14px; line-height: 1.7; overflow-wrap: anywhere; }
+.device-check-panel label { display: grid; gap: 8px; margin: 14px 0; font-size: 14px; line-height: 1.6; }
+.device-check-panel input, .device-check-panel select { width: 100%; min-width: 0; min-height: 48px; padding: 10px; border: 1px solid #bac8be; border-radius: 8px; background: white; font-size: 16px; }
+.device-check-panel .device-check-consent { display: flex; align-items: center; }
+.device-check-consent input { width: 24px; min-height: 24px; flex-shrink: 0; }
+.device-check-actions { display: flex; flex-wrap: wrap; gap: 10px; margin: 16px 0; }
+.device-check-panel progress { width: 100%; height: 18px; accent-color: #32724b; }
+#deviceCheckError { color: #973e26; }
+.tactics-share-qr { display: block; width: 240px; max-width: 100%; }
+#tacticsConnectedTools textarea { width: 100%; min-height: 100px; overflow-wrap: anywhere; }
+#tacticsConnectedTools ol { padding-left: 24px; font-size: 14px; line-height: 1.7; }
+
+/* Two source cards stay readable side by side and stack on narrow screens. */
+.student-tactics-compare-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+@media (max-width: 700px) { .student-tactics-compare-grid { grid-template-columns: 1fr; } }

@@ -1,0 +1,91 @@
+﻿question_id,question_revision,scenario_family,previous_family,comparison_type,rules_to_check,rule_check_status,research_scope,review_status
+TE-01-01,teeball-v2,outfield_depth,outfield_depth,shared-skill,수비 인원·경기장 크기·공의 특성을 확인하고 비교 범위를 외야 깊이와 타구 처리로 한정,scope-check-required,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-01-02,teeball-v2,outfield_depth,outfield_depth,shared-skill,수비 인원·경기장 크기·공의 특성을 확인하고 비교 범위를 외야 깊이와 타구 처리로 한정,scope-check-required,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-01-03,teeball-v2,outfield_depth,outfield_depth,shared-skill,수비 인원·경기장 크기·공의 특성을 확인하고 비교 범위를 외야 깊이와 타구 처리로 한정,scope-check-required,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-01-04,teeball-v2,outfield_depth,outfield_depth,shared-skill,수비 인원·경기장 크기·공의 특성을 확인하고 비교 범위를 외야 깊이와 타구 처리로 한정,scope-check-required,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-01-05,teeball-v2,outfield_depth,outfield_depth,shared-skill,수비 인원·경기장 크기·공의 특성을 확인하고 비교 범위를 외야 깊이와 타구 처리로 한정,scope-check-required,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-01-06,teeball-v2,outfield_depth,outfield_depth,shared-skill,수비 인원·경기장 크기·공의 특성을 확인하고 비교 범위를 외야 깊이와 타구 처리로 한정,scope-check-required,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-02-01,teeball-v2,fly_ball_tagup,fly_ball_tagup,conditional,해당 티볼 형식의 뜬공 포구·귀루·재출발 시점·태그업·아웃 판정·플레이 중단 규칙,not-checked,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-02-02,teeball-v2,fly_ball_tagup,fly_ball_tagup,conditional,해당 티볼 형식의 뜬공 포구·귀루·재출발 시점·태그업·아웃 판정·플레이 중단 규칙,not-checked,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-02-03,teeball-v2,fly_ball_tagup,fly_ball_tagup,conditional,해당 티볼 형식의 뜬공 포구·귀루·재출발 시점·태그업·아웃 판정·플레이 중단 규칙,not-checked,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-02-04,teeball-v2,fly_ball_tagup,fly_ball_tagup,conditional,해당 티볼 형식의 뜬공 포구·귀루·재출발 시점·태그업·아웃 판정·플레이 중단 규칙,not-checked,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-02-05,teeball-v2,fly_ball_tagup,fly_ball_tagup,conditional,해당 티볼 형식의 뜬공 포구·귀루·재출발 시점·태그업·아웃 판정·플레이 중단 규칙,not-checked,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-02-06,teeball-v2,fly_ball_tagup,fly_ball_tagup,conditional,해당 티볼 형식의 뜬공 포구·귀루·재출발 시점·태그업·아웃 판정·플레이 중단 규칙,not-checked,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-03-01,teeball-v2,line_drive,line_drive,shared-skill,정지한 공 타격과 실제 경기 타격의 차이를 표시하고 번트가 아닌 정상 타격의 타구·공간만 비교,scope-check-required,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-03-02,teeball-v2,line_drive,line_drive,shared-skill,정지한 공 타격과 실제 경기 타격의 차이를 표시하고 번트가 아닌 정상 타격의 타구·공간만 비교,scope-check-required,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-03-03,teeball-v2,line_drive,line_drive,shared-skill,정지한 공 타격과 실제 경기 타격의 차이를 표시하고 번트가 아닌 정상 타격의 타구·공간만 비교,scope-check-required,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-03-04,teeball-v2,line_drive,line_drive,shared-skill,정지한 공 타격과 실제 경기 타격의 차이를 표시하고 번트가 아닌 정상 타격의 타구·공간만 비교,scope-check-required,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-03-05,teeball-v2,line_drive,line_drive,shared-skill,정지한 공 타격과 실제 경기 타격의 차이를 표시하고 번트가 아닌 정상 타격의 타구·공간만 비교,scope-check-required,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-03-06,teeball-v2,line_drive,line_drive,shared-skill,정지한 공 타격과 실제 경기 타격의 차이를 표시하고 번트가 아닌 정상 타격의 타구·공간만 비교,scope-check-required,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-04-01,teeball-v2,consecutive_hits,consecutive_hits,conditional,주자 잔류·득점·공수 교대·이닝 종료 방식이 요청 경기와 호환되는지 확인,not-checked,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-04-02,teeball-v2,consecutive_hits,consecutive_hits,conditional,주자 잔류·득점·공수 교대·이닝 종료 방식이 요청 경기와 호환되는지 확인,not-checked,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-04-03,teeball-v2,consecutive_hits,consecutive_hits,conditional,주자 잔류·득점·공수 교대·이닝 종료 방식이 요청 경기와 호환되는지 확인,not-checked,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-04-04,teeball-v2,consecutive_hits,consecutive_hits,conditional,주자 잔류·득점·공수 교대·이닝 종료 방식이 요청 경기와 호환되는지 확인,not-checked,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-04-05,teeball-v2,consecutive_hits,consecutive_hits,conditional,주자 잔류·득점·공수 교대·이닝 종료 방식이 요청 경기와 호환되는지 확인,not-checked,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-04-06,teeball-v2,consecutive_hits,consecutive_hits,conditional,주자 잔류·득점·공수 교대·이닝 종료 방식이 요청 경기와 호환되는지 확인,not-checked,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-05-01,teeball-v2,late_inning_comeback,late_inning_comeback,conditional,점수·남은 이닝·시간 제한·공수 교대·끝내기 성립 조건을 확인,not-checked,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-05-02,teeball-v2,late_inning_comeback,late_inning_comeback,conditional,점수·남은 이닝·시간 제한·공수 교대·끝내기 성립 조건을 확인,not-checked,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-05-03,teeball-v2,late_inning_comeback,late_inning_comeback,conditional,점수·남은 이닝·시간 제한·공수 교대·끝내기 성립 조건을 확인,not-checked,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-05-04,teeball-v2,late_inning_comeback,late_inning_comeback,conditional,점수·남은 이닝·시간 제한·공수 교대·끝내기 성립 조건을 확인,not-checked,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-05-05,teeball-v2,late_inning_comeback,late_inning_comeback,conditional,점수·남은 이닝·시간 제한·공수 교대·끝내기 성립 조건을 확인,not-checked,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-05-06,teeball-v2,late_inning_comeback,late_inning_comeback,conditional,점수·남은 이닝·시간 제한·공수 교대·끝내기 성립 조건을 확인,not-checked,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-06-01,teeball-v2,defensive_innings,defensive_innings,conditional,이닝·공수 교대·득점 방식 확인; 실점 변화와 실제 수비 조정의 근거를 구별,not-checked,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-06-02,teeball-v2,defensive_innings,defensive_innings,conditional,이닝·공수 교대·득점 방식 확인; 실점 변화와 실제 수비 조정의 근거를 구별,not-checked,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-06-03,teeball-v2,defensive_innings,defensive_innings,conditional,이닝·공수 교대·득점 방식 확인; 실점 변화와 실제 수비 조정의 근거를 구별,not-checked,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-06-04,teeball-v2,defensive_innings,defensive_innings,conditional,이닝·공수 교대·득점 방식 확인; 실점 변화와 실제 수비 조정의 근거를 구별,not-checked,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-06-05,teeball-v2,defensive_innings,defensive_innings,conditional,이닝·공수 교대·득점 방식 확인; 실점 변화와 실제 수비 조정의 근거를 구별,not-checked,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-06-06,teeball-v2,defensive_innings,defensive_innings,conditional,이닝·공수 교대·득점 방식 확인; 실점 변화와 실제 수비 조정의 근거를 구별,not-checked,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-07-01,teeball-v2,runner_advance,runner_advance,conditional,타격 후 출발·진루·귀루·플레이 중단·홈 득점 규칙 확인,not-checked,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-07-02,teeball-v2,runner_advance,runner_advance,conditional,타격 후 출발·진루·귀루·플레이 중단·홈 득점 규칙 확인,not-checked,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-07-03,teeball-v2,runner_advance,runner_advance,conditional,타격 후 출발·진루·귀루·플레이 중단·홈 득점 규칙 확인,not-checked,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-07-04,teeball-v2,runner_advance,runner_advance,conditional,타격 후 출발·진루·귀루·플레이 중단·홈 득점 규칙 확인,not-checked,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-07-05,teeball-v2,runner_advance,runner_advance,conditional,타격 후 출발·진루·귀루·플레이 중단·홈 득점 규칙 확인,not-checked,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-07-06,teeball-v2,runner_advance,runner_advance,conditional,타격 후 출발·진루·귀루·플레이 중단·홈 득점 규칙 확인,not-checked,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-08-01,teeball-v2,force_out_choice,force_out_choice,conditional,포스 성립·해제·베이스 터치·주자 태그·아웃 순서·득점 인정 규칙 확인,not-checked,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-08-02,teeball-v2,force_out_choice,force_out_choice,conditional,포스 성립·해제·베이스 터치·주자 태그·아웃 순서·득점 인정 규칙 확인,not-checked,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-08-03,teeball-v2,force_out_choice,force_out_choice,conditional,포스 성립·해제·베이스 터치·주자 태그·아웃 순서·득점 인정 규칙 확인,not-checked,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-08-04,teeball-v2,force_out_choice,force_out_choice,conditional,포스 성립·해제·베이스 터치·주자 태그·아웃 순서·득점 인정 규칙 확인,not-checked,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-08-05,teeball-v2,force_out_choice,force_out_choice,conditional,포스 성립·해제·베이스 터치·주자 태그·아웃 순서·득점 인정 규칙 확인,not-checked,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-08-06,teeball-v2,force_out_choice,force_out_choice,conditional,포스 성립·해제·베이스 터치·주자 태그·아웃 순서·득점 인정 규칙 확인,not-checked,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-09-01,teeball-v2,short_groundball,bunt_short_hit,shared-skill,번트가 아닌 정상 타격 뒤 짧은 땅볼; 투수 역할 대신 실제 티볼 수비 위치·인원 확인,scope-check-required,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-09-02,teeball-v2,short_groundball,bunt_short_hit,shared-skill,번트가 아닌 정상 타격 뒤 짧은 땅볼; 투수 역할 대신 실제 티볼 수비 위치·인원 확인,scope-check-required,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-09-03,teeball-v2,short_groundball,bunt_short_hit,shared-skill,번트가 아닌 정상 타격 뒤 짧은 땅볼; 투수 역할 대신 실제 티볼 수비 위치·인원 확인,scope-check-required,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-09-04,teeball-v2,short_groundball,bunt_short_hit,shared-skill,번트가 아닌 정상 타격 뒤 짧은 땅볼; 투수 역할 대신 실제 티볼 수비 위치·인원 확인,scope-check-required,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-09-05,teeball-v2,short_groundball,bunt_short_hit,shared-skill,번트가 아닌 정상 타격 뒤 짧은 땅볼; 투수 역할 대신 실제 티볼 수비 위치·인원 확인,scope-check-required,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-09-06,teeball-v2,short_groundball,bunt_short_hit,shared-skill,번트가 아닌 정상 타격 뒤 짧은 땅볼; 투수 역할 대신 실제 티볼 수비 위치·인원 확인,scope-check-required,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-10-01,teeball-v2,relay_throw,base_steal,shared-skill,타격 후 살아 있는 공의 중계·연결만 비교; 수비 인원·거리·공의 특성 확인,scope-check-required,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-10-02,teeball-v2,relay_throw,base_steal,shared-skill,타격 후 살아 있는 공의 중계·연결만 비교; 수비 인원·거리·공의 특성 확인,scope-check-required,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-10-03,teeball-v2,relay_throw,base_steal,shared-skill,타격 후 살아 있는 공의 중계·연결만 비교; 수비 인원·거리·공의 특성 확인,scope-check-required,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-10-04,teeball-v2,relay_throw,base_steal,shared-skill,타격 후 살아 있는 공의 중계·연결만 비교; 수비 인원·거리·공의 특성 확인,scope-check-required,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-10-05,teeball-v2,relay_throw,base_steal,shared-skill,타격 후 살아 있는 공의 중계·연결만 비교; 수비 인원·거리·공의 특성 확인,scope-check-required,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-10-06,teeball-v2,relay_throw,base_steal,shared-skill,타격 후 살아 있는 공의 중계·연결만 비교; 수비 인원·거리·공의 특성 확인,scope-check-required,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-11-01,teeball-v2,infield_alignment,infield_alignment,shared-skill,수비 인원·허용 위치·경기장 크기 확인; 배치와 타구 접근 범위만 비교,scope-check-required,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-11-02,teeball-v2,infield_alignment,infield_alignment,shared-skill,수비 인원·허용 위치·경기장 크기 확인; 배치와 타구 접근 범위만 비교,scope-check-required,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-11-03,teeball-v2,infield_alignment,infield_alignment,shared-skill,수비 인원·허용 위치·경기장 크기 확인; 배치와 타구 접근 범위만 비교,scope-check-required,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-11-04,teeball-v2,infield_alignment,infield_alignment,shared-skill,수비 인원·허용 위치·경기장 크기 확인; 배치와 타구 접근 범위만 비교,scope-check-required,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-11-05,teeball-v2,infield_alignment,infield_alignment,shared-skill,수비 인원·허용 위치·경기장 크기 확인; 배치와 타구 접근 범위만 비교,scope-check-required,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-11-06,teeball-v2,infield_alignment,infield_alignment,shared-skill,수비 인원·허용 위치·경기장 크기 확인; 배치와 타구 접근 범위만 비교,scope-check-required,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-12-01,teeball-v2,throwing_decision,throwing_decision,conditional,주자 위치·포스/태그 아웃·득점·진루 정지 규칙과 실제 송구 목적지 확인,not-checked,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-12-02,teeball-v2,throwing_decision,throwing_decision,conditional,주자 위치·포스/태그 아웃·득점·진루 정지 규칙과 실제 송구 목적지 확인,not-checked,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-12-03,teeball-v2,throwing_decision,throwing_decision,conditional,주자 위치·포스/태그 아웃·득점·진루 정지 규칙과 실제 송구 목적지 확인,not-checked,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-12-04,teeball-v2,throwing_decision,throwing_decision,conditional,주자 위치·포스/태그 아웃·득점·진루 정지 규칙과 실제 송구 목적지 확인,not-checked,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-12-05,teeball-v2,throwing_decision,throwing_decision,conditional,주자 위치·포스/태그 아웃·득점·진루 정지 규칙과 실제 송구 목적지 확인,not-checked,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-12-06,teeball-v2,throwing_decision,throwing_decision,conditional,주자 위치·포스/태그 아웃·득점·진루 정지 규칙과 실제 송구 목적지 확인,not-checked,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-13-01,teeball-v2,overthrow_backup,overthrow_backup,shared-skill,백업 위치·공 회수·다음 연결만 비교; 추가 진루나 아웃 효과는 규칙 확인 없이는 판단하지 않음,scope-check-required,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-13-02,teeball-v2,overthrow_backup,overthrow_backup,shared-skill,백업 위치·공 회수·다음 연결만 비교; 추가 진루나 아웃 효과는 규칙 확인 없이는 판단하지 않음,scope-check-required,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-13-03,teeball-v2,overthrow_backup,overthrow_backup,shared-skill,백업 위치·공 회수·다음 연결만 비교; 추가 진루나 아웃 효과는 규칙 확인 없이는 판단하지 않음,scope-check-required,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-13-04,teeball-v2,overthrow_backup,overthrow_backup,shared-skill,백업 위치·공 회수·다음 연결만 비교; 추가 진루나 아웃 효과는 규칙 확인 없이는 판단하지 않음,scope-check-required,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-13-05,teeball-v2,overthrow_backup,overthrow_backup,shared-skill,백업 위치·공 회수·다음 연결만 비교; 추가 진루나 아웃 효과는 규칙 확인 없이는 판단하지 않음,scope-check-required,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-13-06,teeball-v2,overthrow_backup,overthrow_backup,shared-skill,백업 위치·공 회수·다음 연결만 비교; 추가 진루나 아웃 효과는 규칙 확인 없이는 판단하지 않음,scope-check-required,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-14-01,teeball-v2,communication,communication,shared-skill,콜과 움직임이 실제 출처·영상에서 확인되는지 확인; 보이지 않는 발화를 추정하지 않음,scope-check-required,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-14-02,teeball-v2,communication,communication,shared-skill,콜과 움직임이 실제 출처·영상에서 확인되는지 확인; 보이지 않는 발화를 추정하지 않음,scope-check-required,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-14-03,teeball-v2,communication,communication,shared-skill,콜과 움직임이 실제 출처·영상에서 확인되는지 확인; 보이지 않는 발화를 추정하지 않음,scope-check-required,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-14-04,teeball-v2,communication,communication,shared-skill,콜과 움직임이 실제 출처·영상에서 확인되는지 확인; 보이지 않는 발화를 추정하지 않음,scope-check-required,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-14-05,teeball-v2,communication,communication,shared-skill,콜과 움직임이 실제 출처·영상에서 확인되는지 확인; 보이지 않는 발화를 추정하지 않음,scope-check-required,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-14-06,teeball-v2,communication,communication,shared-skill,콜과 움직임이 실제 출처·영상에서 확인되는지 확인; 보이지 않는 발화를 추정하지 않음,scope-check-required,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-15-01,teeball-v2,rule_context,rule_context,conditional,요청한 티볼 형식의 규칙 출처·판본을 먼저 확인하고 동일 조건 장면 또는 비교 한계를 기록,not-checked,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-15-02,teeball-v2,rule_context,rule_context,conditional,요청한 티볼 형식의 규칙 출처·판본을 먼저 확인하고 동일 조건 장면 또는 비교 한계를 기록,not-checked,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-15-03,teeball-v2,rule_context,rule_context,conditional,요청한 티볼 형식의 규칙 출처·판본을 먼저 확인하고 동일 조건 장면 또는 비교 한계를 기록,not-checked,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-15-04,teeball-v2,rule_context,rule_context,conditional,요청한 티볼 형식의 규칙 출처·판본을 먼저 확인하고 동일 조건 장면 또는 비교 한계를 기록,not-checked,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-15-05,teeball-v2,rule_context,rule_context,conditional,요청한 티볼 형식의 규칙 출처·판본을 먼저 확인하고 동일 조건 장면 또는 비교 한계를 기록,not-checked,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review
+TE-15-06,teeball-v2,rule_context,rule_context,conditional,요청한 티볼 형식의 규칙 출처·판본을 먼저 확인하고 동일 조건 장면 또는 비교 한계를 기록,not-checked,실제 티볼 우선; 야구는 공통 기술 또는 규칙 대조를 마친 비교 자료,needs_human_relevance_review

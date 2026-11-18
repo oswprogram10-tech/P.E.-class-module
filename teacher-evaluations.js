@@ -1,9 +1,9 @@
 (function (root, factory) {
   'use strict';
-  const api = factory();
+  const api = factory(root);
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.TeacherEvaluations = api;
-})(globalThis, function () {
+})(globalThis, function (root) {
   'use strict';
   const DIMENSIONS = Object.freeze(['knowledge', 'skill', 'attitude']);
   const TYPES = new Set(['notes', 'reflections', 'submissions']);
@@ -44,7 +44,15 @@
       return { type: ref.type, id: item.id };
     });
   }
-  function createEvaluation(state, { classId, studentId, rubricId, ratings, comment = '', evidenceIds = [], now = Date.now(), idFactory = id } = {}) {
+  function curriculumSnapshot(selection, schoolYear, existing) {
+    if (selection == null) return undefined;
+    if (typeof selection !== 'object' || Array.isArray(selection) || typeof selection.grade !== 'string' || typeof selection.code !== 'string') fail('교육과정 성취기준을 확인해 주세요.');
+    if (existing && selection.grade === existing.grade && selection.code === existing.code) return clone(existing);
+    const catalog = typeof module !== 'undefined' && module.exports ? require('./pe-curriculum.js') : root.PeCurriculum;
+    if (!catalog || typeof catalog.snapshot !== 'function') fail('교육과정 자료를 불러올 수 없습니다.');
+    return clone(catalog.snapshot({ schoolYear, grade: selection.grade, code: selection.code }));
+  }
+  function createEvaluation(state, { classId, studentId, rubricId, ratings, comment = '', evidenceIds = [], curriculum = null, now = Date.now(), idFactory = id } = {}) {
     if (!state.classes?.some(row => row.id === classId)) fail('학급을 찾을 수 없습니다.');
     const student = byId(state, 'students', studentId, classId);
     const rubric = byId(state, 'rubrics', rubricId, classId);
@@ -63,10 +71,16 @@
       evidence: validateEvidence(state, { classId, studentId, evidenceIds }), status: 'draft', approvedAt: null,
       createdAt: now, modifiedAt: now, retentionExpiresAt: Date.UTC(rubric.schoolYear + 3, 2, 1), version: 1, history: [],
     };
+    const selectedCurriculum = curriculumSnapshot(curriculum, rubric.schoolYear);
+    if (selectedCurriculum !== undefined) record.curriculumSnapshot = selectedCurriculum;
     (state.assessments ||= []).push(record);
     return record;
   }
-  function snapshot(item) { return { ratings: clone(item.ratings), comment: item.comment, evidence: clone(item.evidence), status: item.status, approvedAt: item.approvedAt }; }
+  function snapshot(item) {
+    const result = { ratings: clone(item.ratings), comment: item.comment, evidence: clone(item.evidence), status: item.status, approvedAt: item.approvedAt };
+    if (item.curriculumSnapshot != null) result.curriculumSnapshot = clone(item.curriculumSnapshot);
+    return result;
+  }
   function updateEvaluation(state, assessmentId, patch, now = Date.now()) {
     const item = state.assessments?.find(row => row.id === assessmentId);
     if (!item) fail('평가 초안을 찾을 수 없습니다.');
@@ -82,9 +96,14 @@
       cleanRatings[dimension] = value;
     }
     if (Object.keys(ratings || {}).some(key => !DIMENSIONS.includes(key))) fail('지원하지 않는 평가 기준입니다.');
+    const selectedCurriculum = patch.curriculum === undefined ? item.curriculumSnapshot : curriculumSnapshot(patch.curriculum, item.schoolYear, item.curriculumSnapshot);
     const next = { ratings: cleanRatings, comment: String(comment || '').trim().slice(0, 1000), evidence };
-    if (JSON.stringify({ ratings: before.ratings, comment: before.comment, evidence: before.evidence }) === JSON.stringify(next)) fail('변경된 평가 내용이 없습니다.');
+    if (selectedCurriculum != null) next.curriculumSnapshot = selectedCurriculum;
+    const previous = { ratings: before.ratings, comment: before.comment, evidence: before.evidence };
+    if (before.curriculumSnapshot != null) previous.curriculumSnapshot = before.curriculumSnapshot;
+    if (JSON.stringify(previous) === JSON.stringify(next)) fail('변경된 평가 내용이 없습니다.');
     item.history.push({ changedAt: now, actor: 'teacher', action: 'edit', before });
+    if (selectedCurriculum == null) delete item.curriculumSnapshot;
     Object.assign(item, next, { status: 'draft', approvedAt: null, modifiedAt: now, version: item.version + 1 });
     for (const report of state.reports || []) if (report.assessmentIds?.includes(item.id) && report.status === 'approved') {
       report.history.push({ changedAt: now, actor: 'teacher', action: 'source-assessment-revised', before: { body: report.body, assessmentIds: [...report.assessmentIds], status: report.status, approvedAt: report.approvedAt } });
@@ -101,6 +120,9 @@
     item.history.push({ changedAt: now, actor: 'teacher', action: 'approve', before });
     item.status = 'approved'; item.approvedAt = now; item.modifiedAt = now; item.version += 1;
     return item;
+  }
+  function reportBodyUtf8Bytes(body) {
+    return new TextEncoder().encode(String(body || '').trim().replace(/\r\n?/g, '\n')).length;
   }
   function createReport(state, { classId, studentId, assessmentIds, title, body = '', now = Date.now(), idFactory = id } = {}) {
     byId(state, 'students', studentId, classId);
@@ -143,5 +165,5 @@
     for (const report of reports) lines.push(['교사 승인 로컬 초안', generatedAt, studentId, studentName, report.schoolYear, report.title, report.body, report.assessmentIds.join('|'), '임시 CSV · NEIS 양식/업로드 호환 검증 안 됨']);
     return '\ufeff' + lines.map(line => line.map(csvCell).join(',')).join('\r\n');
   }
-  return Object.freeze({ DIMENSIONS, createRubric, updateRubric, createEvaluation, updateEvaluation, approveEvaluation, createReport, updateReport, approveReport, approvedReportCsv });
+  return Object.freeze({ DIMENSIONS, createRubric, updateRubric, createEvaluation, updateEvaluation, approveEvaluation, reportBodyUtf8Bytes, createReport, updateReport, approveReport, approvedReportCsv });
 });

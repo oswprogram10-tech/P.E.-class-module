@@ -1,0 +1,7 @@
+<resources>
+    <style name="StudentTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:fontFamily">sans</item>
+        <item name="android:colorAccent">#1967D2</item>
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
+</resources>

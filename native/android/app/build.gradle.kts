@@ -29,16 +29,18 @@ val pwaFiles = listOf(
     "index.html", "styles.css", "app.js", "pose-assets.js", "model-profiles.js", "volleyball-cue.js",
     "pose-runtime.js", "pose-presence.js", "basketball-shot.js", "shot-feedback.js", "shot-history.js",
     "shot-history-ui.js", "pose-ui.js", "pose-worker.js", "classroom-model.js", "paps-criteria-data.js",
-    "paps-criteria.js", "paps-reports.js", "teacher-evaluations.js", "exercise-routines.js", "qr-missions.js",
+    "paps-criteria.js", "paps-reports.js", "pe-curriculum.js", "teacher-evaluations.js", "exercise-routines.js", "qr-missions.js",
     "tactics-board.js", "wearable-bridge.js", "classroom-tools-ui.js", "classroom-repository.js",
     "classroom-sync.js", "classroom-ui.js", "qrcode-generator.js", "local-vault.js", "clip-repository.js",
     "webm-muxer.js", "clip-exporter.js", "timeline.js", "frame-buffer.js", "manifest.webmanifest", "sw.js",
-    "icon.svg", "icon-192.png", "icon-512.png", "qrcode-generator.LICENSE"
+    "icon.svg", "icon-192.png", "icon-512.png", "qrcode-generator.LICENSE",
+    "device-check.js", "device-check-ui.js", "paps-bmi-criteria-data.js", "paps-bmi-criteria.js", "paps-program-selection.js",
+    "gps-missions.js", "tactics-sharing.js", "tactics-search-local.js", "tactics-team-request.js", "tactics-local-prompt.js", "tactics-local-advisor.js", "tactics-student-ui.js", "tactics-tools-ui.js"
 )
 
 val pwaRoot = rootProject.file("../..")
 val generatedPwaAssets = layout.buildDirectory.dir("generated/pwaAssets")
-val copyPwaAssets = tasks.register<Copy>("copyPwaAssets") {
+val copyPwaAssets = tasks.register<Sync>("copyPwaAssets") {
     from(pwaRoot) {
         pwaFiles.forEach { include(it) }
         include("vendor/**")

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>CFBundleDisplayName</key><string>PELoop 심박</string>
+  <key>CFBundleName</key><string>PELoopStudentWatchExtension</string>
+  <key>CFBundlePackageType</key><string>XPC!</string>
+  <key>WKAppBundleIdentifier</key><string>org.oswprogram10.peloop.studentcompanion.watchkitapp</string>
+  <key>NSHealthShareUsageDescription</key><string>수업 중 실시간 심박수를 확인해 학생이 동의한 수업 화면에 전달합니다. 건강 기록은 저장하지 않습니다.</string>
+  <key>NSHealthUpdateUsageDescription</key><string>HealthKit 운동 세션을 시작하고 종료하기 위해 사용합니다. 수업 운동 기록은 저장하지 않습니다.</string>
+  <key>WKBackgroundModes</key><array><string>workout-processing</string></array>
+  <key>NSExtension</key>
+    <dict>
+      <key>NSExtensionPointIdentifier</key><string>com.apple.watchkit</string>
+      <key>NSExtensionAttributes</key>
+        <dict><key>WKAppBundleIdentifier</key><string>org.oswprogram10.peloop.studentcompanion.watchkitapp</string></dict>
+    </dict>
+</dict>
+</plist>

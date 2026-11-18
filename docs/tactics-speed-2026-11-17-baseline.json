@@ -1,0 +1,1151 @@
+{
+  "scope": "Independent Wllama engine, exact saved app prompt and grammar; excludes app preparation and installation",
+  "sample": {
+    "question_id": "multiple",
+    "kind": "multiple",
+    "sport": "teeball",
+    "question": "티볼 주자가 달리다 송구를 보고 되돌아가는 경기 사례를 비교해 주세요."
+  },
+  "config": {
+    "n_ctx": 1024,
+    "n_batch": 128,
+    "n_ubatch": 64,
+    "n_threads": 2,
+    "max_tokens": 96,
+    "temperature": 0.2,
+    "seed": 42
+  },
+  "cpu": "200000 100000",
+  "affinity": "0-1",
+  "startedAt": "2026-11-17T12:24:19.221Z",
+  "sourceSha256": "b66d61996835418ca65e2e3941cff5990dbe6380da8978b09876a00c7b38a54f",
+  "input": {
+    "prompt": "<|im_start|>system\nSelect up to two relevant IDs. Return only JSON referenceIds. Profiles are limited evidence, not full cases; partial and unconfirmed do not mean exact matches. B is material-level evidence. Fields: id, source sport, target sport, relevance, unmatched, differing, rule status, grade, evidence. Evidence is complete observed text or one [supported, missing, rule scope]. Other source context, scopes and limits are omitted; do not infer their absence.<|im_end|>\n<|im_start|>user\n{\"request\":\"티볼 주자가 달리다 송구를 보고 되돌아가는 경기 사례를 비교해 주세요.\",\"sport\":\"teeball\",\"totalCandidates\":8,\"shownCandidates\":3,\"references\":[[\"teeball_case_01\",\"teeball\",\"teeball\",\"partial\",[\"movement\",\"direction\"],[],\"not-compared\",\"A\",\"2016년 간토 친선대회 아오바 미도리히가시-조후 리틀전에서 3루 주자가 있는 상황에 우익수 뜬공이 나왔다. 아오바 미도리히가시의 우익수는 태그업을 시도한 주자를 정확한 송구로 아웃시켰다. 팀 감독은 이 플레이가 경기 흐름을 바꿨다고 회고했다.\"],[\"TBX-18\",\"baseball\",\"teeball\",\"partial\",[\"movement\",\"direction\",\"running\"],[],\"unconfirmed\",\"A\",[\"뒤 동료가 중계자의 송구 대상을 정해 전달\",\"여러 콜의 충돌이나 외야수의 망설임은 기록에 없음\",\"타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외\"]],[\"TBX-03\",\"baseball\",\"teeball\",\"partial\",[\"movement\",\"direction\",\"running\"],[],\"unconfirmed\",\"A\",[\"타구 위치와 송구 연결\",\"옆으로 구른 타구에 따른 중계자 위치 변경은 불명\",\"타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외\"]]]}<|im_end|>\n<|im_start|>assistant\n",
+    "grammar": "root ::= \"{\\\"referenceIds\\\":\" selection \"}\"\nselection ::= \"[]\" | \"[\\\"teeball_case_01\\\"]\" | \"[\\\"TBX-18\\\"]\" | \"[\\\"TBX-03\\\"]\" | \"[\\\"teeball_case_01\\\",\\\"TBX-18\\\"]\" | \"[\\\"teeball_case_01\\\",\\\"TBX-03\\\"]\" | \"[\\\"TBX-18\\\",\\\"teeball_case_01\\\"]\" | \"[\\\"TBX-18\\\",\\\"TBX-03\\\"]\" | \"[\\\"TBX-03\\\",\\\"teeball_case_01\\\"]\" | \"[\\\"TBX-03\\\",\\\"TBX-18\\\"]\"",
+    "prepared": [
+      {
+        "id": "teeball_case_01",
+        "sport": "teeball",
+        "goal": "any",
+        "title": "3루 주자 플라이 아웃 뒤 우익수 송구로 태그업 저지",
+        "observed": "2016년 간토 친선대회 아오바 미도리히가시-조후 리틀전에서 3루 주자가 있는 상황에 우익수 뜬공이 나왔다. 아오바 미도리히가시의 우익수는 태그업을 시도한 주자를 정확한 송구로 아웃시켰다. 팀 감독은 이 플레이가 경기 흐름을 바꿨다고 회고했다.",
+        "context": "3루 주자와 외야 플라이 뒤 송구를 다룬 팀 사례다. 보도에는 송구 목적지, 거리, 아웃 판정의 세부 순서가 없다. 주자 속도·수비 숙련도와 해당 대회 규칙을 확인해야 하며, 한 번의 성공을 일반적인 선택으로 보지 않는다.",
+        "tacticTags": [
+          "티볼",
+          "외야 송구",
+          "태그업 수비"
+        ],
+        "sourceTitle": "ティーボール 青葉緑東が関東初優勝 出場７回目で悲願達成 | 青葉区 | タウンニュース",
+        "sourceUrl": "https://www.townnews.co.jp/0101/2016/06/09/335314.html",
+        "reviewStatus": "draft",
+        "candidateGrade": "A",
+        "factStatus": "verified",
+        "relevance": "partial",
+        "relevanceExplanation": "기록된 행동 중 일부만 요청과 겹칩니다.",
+        "matchedConditions": [
+          "throw",
+          "running"
+        ],
+        "differingConditions": [],
+        "unmatchedConditions": [
+          "movement",
+          "direction"
+        ],
+        "ruleStatus": "not-compared",
+        "ruleExplanation": "학교 규칙과의 일치는 확인하지 않았습니다."
+      },
+      {
+        "id": "TBX-18",
+        "sport": "baseball",
+        "sourceSport": "baseball",
+        "targetSport": "teeball",
+        "comparisonType": "shared-skill",
+        "title": "동료가 중계자의 송구 대상을 알려줌",
+        "observed": "Turang이 송구 대상을 알려주자 Ortiz가 중계 송구를 이어갔다.",
+        "context": "Brewers–Dodgers, NLCS Game 1 · 4회 · 여러 중계자의 콜이 충돌해 외야수가 망설인 조건은 아님; 태그업·포스 아웃·득점 판단은 비교하지 않음",
+        "sourceTitle": "MLB.com",
+        "sourceUrl": "https://www.mlb.com/amp/news/near-home-run-in-nlcs-game-1-causes-chaos-on-basepaths.html",
+        "evidenceLocator": "본문 33–35행; Turang의 대상 전달·Ortiz의 수신 회고",
+        "claimCheckStatus": "article-checked",
+        "factStatus": "article-checked",
+        "candidateGrade": "A",
+        "reviewStatus": "draft",
+        "aiUseBlocked": false,
+        "pilotMaterialReviewStatus": "accepted",
+        "videoReviewStatus": "not-viewed",
+        "matchDateStatus": "not-separately-verified; 기사 게시일과 경기일은 별도",
+        "educatorReviewStatus": "pending",
+        "expertReviewStatus": "pending",
+        "reuseStatus": "not-checked",
+        "limitations": [
+          "여러 중계자의 콜이 충돌해 외야수가 망설인 조건은 아님; 태그업·포스 아웃·득점 판단은 비교하지 않음"
+        ],
+        "scopes": [
+          {
+            "questionId": "TE-14-05",
+            "purpose": "scene-comparison",
+            "supported": "뒤 동료가 중계자의 송구 대상을 정해 전달",
+            "missing": "여러 콜의 충돌이나 외야수의 망설임은 기록에 없음",
+            "ruleScope": "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외",
+            "relevance": "partial",
+            "matchedConditions": [
+              "throw"
+            ],
+            "differingConditions": []
+          }
+        ],
+        "sceneScopes": [
+          {
+            "questionId": "TE-14-05",
+            "purpose": "scene-comparison",
+            "supported": "뒤 동료가 중계자의 송구 대상을 정해 전달",
+            "missing": "여러 콜의 충돌이나 외야수의 망설임은 기록에 없음",
+            "ruleScope": "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외",
+            "relevance": "partial",
+            "matchedConditions": [
+              "throw"
+            ],
+            "differingConditions": []
+          }
+        ],
+        "relevance": "partial",
+        "relevanceExplanation": "요청의 일부 행동만 자료의 장면 비교 범위와 겹칩니다.",
+        "matchedConditions": [
+          "throw"
+        ],
+        "differingConditions": [],
+        "unmatchedConditions": [
+          "movement",
+          "direction",
+          "running"
+        ],
+        "ruleStatus": "unconfirmed",
+        "ruleExplanation": "요청의 규칙 적용과 판정은 확인되지 않았습니다."
+      },
+      {
+        "id": "TBX-03",
+        "sport": "baseball",
+        "sourceSport": "baseball",
+        "targetSport": "teeball",
+        "comparisonType": "shared-skill",
+        "title": "타구 백업에서 중계로",
+        "observed": "Kwan이 뒤에서 타구를 회수해 Rocchio에게 연결했고 Rocchio가 다음 송구를 했다.",
+        "context": "Guardians–Yankees · 8회 · 타구 백업 장면이며 악송구 백업 장면은 아님; 벽 반사·거리 차이와 홈 판정은 적용 범위 밖",
+        "sourceTitle": "MLB.com",
+        "sourceUrl": "https://www.mlb.com/news/lane-thomas-guardians-12-inning-win-over-yankees",
+        "evidenceLocator": "본문 130–131행; Kwan·Rocchio의 중계 설명",
+        "claimCheckStatus": "article-checked",
+        "factStatus": "article-checked",
+        "candidateGrade": "A",
+        "reviewStatus": "draft",
+        "aiUseBlocked": false,
+        "pilotMaterialReviewStatus": "accepted",
+        "videoReviewStatus": "not-viewed",
+        "matchDateStatus": "not-separately-verified; 게시일을 경기일로 전용하지 않음",
+        "educatorReviewStatus": "pending",
+        "expertReviewStatus": "pending",
+        "reuseStatus": "not-checked",
+        "limitations": [
+          "타구 백업 장면이며 악송구 백업 장면은 아님; 벽 반사·거리 차이와 홈 판정은 적용 범위 밖"
+        ],
+        "scopes": [
+          {
+            "questionId": "TE-10-05",
+            "purpose": "scene-comparison",
+            "supported": "타구 위치와 송구 연결",
+            "missing": "옆으로 구른 타구에 따른 중계자 위치 변경은 불명",
+            "ruleScope": "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외",
+            "relevance": "partial",
+            "matchedConditions": [
+              "throw"
+            ],
+            "differingConditions": []
+          }
+        ],
+        "sceneScopes": [
+          {
+            "questionId": "TE-10-05",
+            "purpose": "scene-comparison",
+            "supported": "타구 위치와 송구 연결",
+            "missing": "옆으로 구른 타구에 따른 중계자 위치 변경은 불명",
+            "ruleScope": "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외",
+            "relevance": "partial",
+            "matchedConditions": [
+              "throw"
+            ],
+            "differingConditions": []
+          }
+        ],
+        "relevance": "partial",
+        "relevanceExplanation": "요청의 일부 행동만 자료의 장면 비교 범위와 겹칩니다.",
+        "matchedConditions": [
+          "throw"
+        ],
+        "differingConditions": [],
+        "unmatchedConditions": [
+          "movement",
+          "direction",
+          "running"
+        ],
+        "ruleStatus": "unconfirmed",
+        "ruleExplanation": "요청의 규칙 적용과 판정은 확인되지 않았습니다."
+      },
+      {
+        "id": "TBX-19",
+        "sport": "baseball",
+        "sourceSport": "baseball",
+        "targetSport": "teeball",
+        "comparisonType": "shared-skill",
+        "title": "중계 수신 실패 뒤 백업 부재",
+        "observed": "중계 송구를 Smith가 잡지 못했고 뒤쪽 백업도 없었다.",
+        "context": "Dodgers–Rays, World Series Game 4 · 9회 · 외야수의 후속 이동은 불명이며 성공적인 연속 백업 장면은 아님; Jansen의 직책이 아닌 타격 뒤 지원 역할만 비교",
+        "sourceTitle": "MLB.com",
+        "sourceUrl": "https://www.mlb.com/news/world-series-game-4-2020-recap",
+        "evidenceLocator": "본문 168–175행; 중계 송구·수신 실패·백업 부재",
+        "claimCheckStatus": "article-checked",
+        "factStatus": "article-checked",
+        "candidateGrade": "A",
+        "reviewStatus": "draft",
+        "aiUseBlocked": false,
+        "pilotMaterialReviewStatus": "accepted",
+        "videoReviewStatus": "not-viewed",
+        "matchDateStatus": "not-separately-verified; 기사 게시일과 경기일은 별도",
+        "educatorReviewStatus": "pending",
+        "expertReviewStatus": "pending",
+        "reuseStatus": "not-checked",
+        "limitations": [
+          "외야수의 후속 이동은 불명이며 성공적인 연속 백업 장면은 아님; Jansen의 직책이 아닌 타격 뒤 지원 역할만 비교"
+        ],
+        "scopes": [
+          {
+            "questionId": "TE-13-04",
+            "purpose": "scene-comparison",
+            "supported": "중계 송구의 수신 실패와 뒤쪽 백업 부재",
+            "missing": "외야수의 후속 이동은 불명이며 성공적으로 백업을 계속한 장면은 아님",
+            "ruleScope": "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외",
+            "relevance": "partial",
+            "matchedConditions": [],
+            "differingConditions": [
+              "throw"
+            ]
+          }
+        ],
+        "sceneScopes": [
+          {
+            "questionId": "TE-13-04",
+            "purpose": "scene-comparison",
+            "supported": "중계 송구의 수신 실패와 뒤쪽 백업 부재",
+            "missing": "외야수의 후속 이동은 불명이며 성공적으로 백업을 계속한 장면은 아님",
+            "ruleScope": "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외",
+            "relevance": "partial",
+            "matchedConditions": [],
+            "differingConditions": [
+              "throw"
+            ]
+          }
+        ],
+        "relevance": "partial",
+        "relevanceExplanation": "요청의 일부 행동만 자료의 장면 비교 범위와 겹칩니다.",
+        "matchedConditions": [],
+        "differingConditions": [
+          "throw"
+        ],
+        "unmatchedConditions": [
+          "movement",
+          "direction",
+          "running"
+        ],
+        "ruleStatus": "unconfirmed",
+        "ruleExplanation": "요청의 규칙 적용과 판정은 확인되지 않았습니다."
+      },
+      {
+        "id": "TBX-12",
+        "sport": "baseball",
+        "sourceSport": "baseball",
+        "targetSport": "teeball",
+        "comparisonType": "shared-skill",
+        "title": "중계 수신·회전과 뒤쪽 백업 이동",
+        "observed": "Guillorme가 중계 공을 받아 돌아서 송구했다. Lugo는 홈 뒤 백업 위치로 달려갔다.",
+        "context": "Mets–Cubs · 9회 · Lugo의 투구 역할 대신 타격 뒤 가용 수비수의 지원 역할만 비교; 실제 악송구나 수신 실패를 회수한 장면은 아님",
+        "sourceTitle": "MLB.com",
+        "sourceUrl": "https://www.mlb.com/news/mets-relay-throws-out-cubs-jake-marisnick-at-home",
+        "evidenceLocator": "본문 108–110행; 홈 뒤 백업 이동·Pillar–Guillorme 연결",
+        "claimCheckStatus": "article-checked",
+        "factStatus": "article-checked",
+        "candidateGrade": "A",
+        "reviewStatus": "draft",
+        "aiUseBlocked": false,
+        "pilotMaterialReviewStatus": "accepted",
+        "videoReviewStatus": "not-viewed",
+        "matchDateStatus": "not-separately-verified; 게시일과 경기일을 별도 필드로 유지",
+        "educatorReviewStatus": "pending",
+        "expertReviewStatus": "pending",
+        "reuseStatus": "not-checked",
+        "limitations": [
+          "Lugo의 투구 역할 대신 타격 뒤 가용 수비수의 지원 역할만 비교; 실제 악송구나 수신 실패를 회수한 장면은 아님"
+        ],
+        "scopes": [
+          {
+            "questionId": "TE-10-04",
+            "purpose": "scene-comparison",
+            "supported": "중계자가 수신 후 회전해 다음 송구",
+            "missing": "방향을 몰라 여러 번 돌았던 문제 상황과는 다름",
+            "ruleScope": "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외",
+            "relevance": "candidate",
+            "matchedConditions": [
+              "throw",
+              "direction"
+            ],
+            "differingConditions": []
+          },
+          {
+            "questionId": "TE-13-06",
+            "purpose": "scene-comparison",
+            "supported": "중계 송구와 다른 수비수의 뒤쪽 백업 이동",
+            "missing": "백업을 양방향으로 나눴거나 한 명에게 집중한 조건은 불명",
+            "ruleScope": "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외",
+            "relevance": "partial",
+            "matchedConditions": [
+              "throw",
+              "movement"
+            ],
+            "differingConditions": []
+          }
+        ],
+        "sceneScopes": [
+          {
+            "questionId": "TE-10-04",
+            "purpose": "scene-comparison",
+            "supported": "중계자가 수신 후 회전해 다음 송구",
+            "missing": "방향을 몰라 여러 번 돌았던 문제 상황과는 다름",
+            "ruleScope": "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외",
+            "relevance": "candidate",
+            "matchedConditions": [
+              "throw",
+              "direction"
+            ],
+            "differingConditions": []
+          },
+          {
+            "questionId": "TE-13-06",
+            "purpose": "scene-comparison",
+            "supported": "중계 송구와 다른 수비수의 뒤쪽 백업 이동",
+            "missing": "백업을 양방향으로 나눴거나 한 명에게 집중한 조건은 불명",
+            "ruleScope": "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외",
+            "relevance": "partial",
+            "matchedConditions": [
+              "throw",
+              "movement"
+            ],
+            "differingConditions": []
+          }
+        ],
+        "relevance": "partial",
+        "relevanceExplanation": "요청의 일부 행동만 자료의 장면 비교 범위와 겹칩니다.",
+        "matchedConditions": [
+          "throw",
+          "direction",
+          "movement"
+        ],
+        "differingConditions": [],
+        "unmatchedConditions": [
+          "running"
+        ],
+        "ruleStatus": "unconfirmed",
+        "ruleExplanation": "요청의 규칙 적용과 판정은 확인되지 않았습니다."
+      },
+      {
+        "id": "TBX-01",
+        "sport": "baseball",
+        "sourceSport": "baseball",
+        "targetSport": "teeball",
+        "comparisonType": "shared-skill",
+        "title": "중계 위치·회전",
+        "observed": "Kirilloff는 우측으로 이동한 Correa에게 연결했다. Correa는 돌아서 송구했고 Julien은 2루를 맡았다.",
+        "context": "Twins–Dodgers · 7회 초 · 학생의 송구 능력·수비 인원·거리와 맞춰 비교; 홈 아웃 판정은 비교 범위에서 제외",
+        "sourceTitle": "MLB.com",
+        "sourceUrl": "https://www.mlb.com/news/carlos-correa-throws-out-shohei-ohtani-as-twins-beat-dodgers",
+        "evidenceLocator": "Correa positions and throws; 본문 110, 120, 132–133행",
+        "claimCheckStatus": "article-checked",
+        "factStatus": "article-checked",
+        "candidateGrade": "A",
+        "reviewStatus": "draft",
+        "aiUseBlocked": false,
+        "pilotMaterialReviewStatus": "accepted",
+        "videoReviewStatus": "not-viewed",
+        "matchDateStatus": "not-separately-verified; 게시일을 경기일로 전용하지 않음",
+        "educatorReviewStatus": "pending",
+        "expertReviewStatus": "pending",
+        "reuseStatus": "not-checked",
+        "limitations": [
+          "학생의 송구 능력·수비 인원·거리와 맞춰 비교; 홈 아웃 판정은 비교 범위에서 제외"
+        ],
+        "scopes": [
+          {
+            "questionId": "TE-10-01",
+            "purpose": "scene-comparison",
+            "supported": "중계자를 거친 송구",
+            "missing": "직접 송구가 어려운 원인이 선수의 송구 능력인지 불명",
+            "ruleScope": "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외",
+            "relevance": "partial",
+            "matchedConditions": [
+              "throw"
+            ],
+            "differingConditions": []
+          },
+          {
+            "questionId": "TE-10-04",
+            "purpose": "scene-comparison",
+            "supported": "수신 뒤 회전·다음 송구",
+            "missing": "방향을 몰라 여러 번 회전한 문제 상황과는 다름; 영상 동작은 미관찰",
+            "ruleScope": "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외",
+            "relevance": "candidate",
+            "matchedConditions": [
+              "throw",
+              "direction"
+            ],
+            "differingConditions": []
+          }
+        ],
+        "sceneScopes": [
+          {
+            "questionId": "TE-10-01",
+            "purpose": "scene-comparison",
+            "supported": "중계자를 거친 송구",
+            "missing": "직접 송구가 어려운 원인이 선수의 송구 능력인지 불명",
+            "ruleScope": "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외",
+            "relevance": "partial",
+            "matchedConditions": [
+              "throw"
+            ],
+            "differingConditions": []
+          },
+          {
+            "questionId": "TE-10-04",
+            "purpose": "scene-comparison",
+            "supported": "수신 뒤 회전·다음 송구",
+            "missing": "방향을 몰라 여러 번 회전한 문제 상황과는 다름; 영상 동작은 미관찰",
+            "ruleScope": "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외",
+            "relevance": "candidate",
+            "matchedConditions": [
+              "throw",
+              "direction"
+            ],
+            "differingConditions": []
+          }
+        ],
+        "relevance": "partial",
+        "relevanceExplanation": "요청의 일부 행동만 자료의 장면 비교 범위와 겹칩니다.",
+        "matchedConditions": [
+          "throw",
+          "direction"
+        ],
+        "differingConditions": [],
+        "unmatchedConditions": [
+          "movement",
+          "running"
+        ],
+        "ruleStatus": "unconfirmed",
+        "ruleExplanation": "요청의 규칙 적용과 판정은 확인되지 않았습니다."
+      },
+      {
+        "id": "TBX-02",
+        "sport": "baseball",
+        "sourceSport": "baseball",
+        "targetSport": "teeball",
+        "comparisonType": "shared-skill",
+        "title": "중계 중 시야 확인",
+        "observed": "Smith가 Newman에게 연결했다. Newman은 Marte의 콜을 듣지 못해 받은 뒤 돌아보았다.",
+        "context": "D-backs–Tigers · 타구 뒤 중계 장면 · 콜이 전달되지 않은 조건을 유지; 듣기 어려울 때의 최선 동작이나 티볼 적용 효과는 검증되지 않음",
+        "sourceTitle": "MLB.com",
+        "sourceUrl": "https://www.mlb.com/news/d-backs-rally-late-to-beat-tigers",
+        "evidenceLocator": "Newman couldn’t hear Marte; 본문 120–131행",
+        "claimCheckStatus": "article-checked",
+        "factStatus": "article-checked",
+        "candidateGrade": "A",
+        "reviewStatus": "draft",
+        "aiUseBlocked": false,
+        "pilotMaterialReviewStatus": "accepted",
+        "videoReviewStatus": "not-viewed",
+        "matchDateStatus": "not-separately-verified; 게시일을 경기일로 전용하지 않음",
+        "educatorReviewStatus": "pending",
+        "expertReviewStatus": "pending",
+        "reuseStatus": "not-checked",
+        "limitations": [
+          "콜이 전달되지 않은 조건을 유지; 듣기 어려울 때의 최선 동작이나 티볼 적용 효과는 검증되지 않음"
+        ],
+        "scopes": [
+          {
+            "questionId": "TE-10-04",
+            "purpose": "scene-comparison",
+            "supported": "수신 후 방향 확인·후속 송구",
+            "missing": "여러 번 회전한 장면은 아니며 소음으로 정보 전달이 어려웠던 조건",
+            "ruleScope": "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외",
+            "relevance": "candidate",
+            "matchedConditions": [
+              "throw",
+              "direction"
+            ],
+            "differingConditions": []
+          }
+        ],
+        "sceneScopes": [
+          {
+            "questionId": "TE-10-04",
+            "purpose": "scene-comparison",
+            "supported": "수신 후 방향 확인·후속 송구",
+            "missing": "여러 번 회전한 장면은 아니며 소음으로 정보 전달이 어려웠던 조건",
+            "ruleScope": "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외",
+            "relevance": "candidate",
+            "matchedConditions": [
+              "throw",
+              "direction"
+            ],
+            "differingConditions": []
+          }
+        ],
+        "relevance": "partial",
+        "relevanceExplanation": "요청의 일부 행동만 자료의 장면 비교 범위와 겹칩니다.",
+        "matchedConditions": [
+          "throw",
+          "direction"
+        ],
+        "differingConditions": [],
+        "unmatchedConditions": [
+          "movement",
+          "running"
+        ],
+        "ruleStatus": "unconfirmed",
+        "ruleExplanation": "요청의 규칙 적용과 판정은 확인되지 않았습니다."
+      },
+      {
+        "id": "TBX-11",
+        "sport": "baseball",
+        "sourceSport": "baseball",
+        "targetSport": "teeball",
+        "comparisonType": "shared-skill",
+        "title": "송구 방향 변화와 중계 위치·정보 전달",
+        "observed": "McLain은 송구 방향에 맞춰 위치를 바꿨다. 뒤에서 정보를 전달할 동료가 가까이 없었다.",
+        "context": "Reds–Braves · 9회 말 · 타구가 옆으로 굴러 위치를 바꾼 조건과 차이. 뒤 동료의 부재는 정보 전달 공백이며 악송구 회수 백업 부재로 해석하지 않음",
+        "sourceTitle": "MLB.com",
+        "sourceUrl": "https://www.mlb.com/reds/news/reds-lapse-on-defense-aids-braves-late-rally",
+        "evidenceLocator": "본문 233–250행; 특히 239–247행 중계 위치 변경과 정보 전달 공백",
+        "claimCheckStatus": "article-checked",
+        "factStatus": "article-checked",
+        "candidateGrade": "A",
+        "reviewStatus": "draft",
+        "aiUseBlocked": false,
+        "pilotMaterialReviewStatus": "accepted",
+        "videoReviewStatus": "not-viewed",
+        "matchDateStatus": "not-separately-verified; 게시일과 경기일을 별도 필드로 유지",
+        "educatorReviewStatus": "pending",
+        "expertReviewStatus": "pending",
+        "reuseStatus": "not-checked",
+        "limitations": [
+          "타구가 옆으로 굴러 위치를 바꾼 조건과 차이. 뒤 동료의 부재는 정보 전달 공백이며 악송구 회수 백업 부재로 해석하지 않음"
+        ],
+        "scopes": [
+          {
+            "questionId": "TE-10-02",
+            "purpose": "scene-comparison",
+            "supported": "중계 위치를 바꾼 뒤 후속 송구 지연",
+            "missing": "너무 가까이 선 중계 위치·두 송구의 거리 문제는 불명",
+            "ruleScope": "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외",
+            "relevance": "partial",
+            "matchedConditions": [
+              "throw"
+            ],
+            "differingConditions": []
+          },
+          {
+            "questionId": "TE-10-04",
+            "purpose": "scene-comparison",
+            "supported": "중계 수신 뒤 방향 확인·후속 송구의 지연",
+            "missing": "여러 번 회전한 장면은 아니며 송구 방향 변화와 동료 정보 전달 공백이 원문에 있음",
+            "ruleScope": "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외",
+            "relevance": "candidate",
+            "matchedConditions": [
+              "throw",
+              "direction"
+            ],
+            "differingConditions": []
+          },
+          {
+            "questionId": "TE-10-05",
+            "purpose": "scene-comparison",
+            "supported": "예상 송구 방향과 달라지자 중계자가 위치 변경",
+            "missing": "옆으로 굴러간 타구에 따른 변경이 아니라 외야수의 송구 방향 변화",
+            "ruleScope": "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외",
+            "relevance": "partial",
+            "matchedConditions": [
+              "throw",
+              "direction"
+            ],
+            "differingConditions": []
+          }
+        ],
+        "sceneScopes": [
+          {
+            "questionId": "TE-10-02",
+            "purpose": "scene-comparison",
+            "supported": "중계 위치를 바꾼 뒤 후속 송구 지연",
+            "missing": "너무 가까이 선 중계 위치·두 송구의 거리 문제는 불명",
+            "ruleScope": "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외",
+            "relevance": "partial",
+            "matchedConditions": [
+              "throw"
+            ],
+            "differingConditions": []
+          },
+          {
+            "questionId": "TE-10-04",
+            "purpose": "scene-comparison",
+            "supported": "중계 수신 뒤 방향 확인·후속 송구의 지연",
+            "missing": "여러 번 회전한 장면은 아니며 송구 방향 변화와 동료 정보 전달 공백이 원문에 있음",
+            "ruleScope": "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외",
+            "relevance": "candidate",
+            "matchedConditions": [
+              "throw",
+              "direction"
+            ],
+            "differingConditions": []
+          },
+          {
+            "questionId": "TE-10-05",
+            "purpose": "scene-comparison",
+            "supported": "예상 송구 방향과 달라지자 중계자가 위치 변경",
+            "missing": "옆으로 굴러간 타구에 따른 변경이 아니라 외야수의 송구 방향 변화",
+            "ruleScope": "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외",
+            "relevance": "partial",
+            "matchedConditions": [
+              "throw",
+              "direction"
+            ],
+            "differingConditions": []
+          }
+        ],
+        "relevance": "partial",
+        "relevanceExplanation": "요청의 일부 행동만 자료의 장면 비교 범위와 겹칩니다.",
+        "matchedConditions": [
+          "throw",
+          "direction"
+        ],
+        "differingConditions": [],
+        "unmatchedConditions": [
+          "movement",
+          "running"
+        ],
+        "ruleStatus": "unconfirmed",
+        "ruleExplanation": "요청의 규칙 적용과 판정은 확인되지 않았습니다."
+      }
+    ],
+    "allowedIds": [
+      "teeball_case_01",
+      "TBX-18",
+      "TBX-03",
+      "TBX-19",
+      "TBX-12",
+      "TBX-01",
+      "TBX-02",
+      "TBX-11"
+    ],
+    "preBudgetIds": [
+      "teeball_case_01",
+      "TBX-18",
+      "TBX-03",
+      "TBX-19",
+      "TBX-12",
+      "TBX-01",
+      "TBX-02",
+      "TBX-11"
+    ],
+    "promptIds": [
+      "teeball_case_01",
+      "TBX-18",
+      "TBX-03"
+    ],
+    "plan": {
+      "prompt": "<|im_start|>system\nSelect up to two relevant IDs. Return only JSON referenceIds. Profiles are limited evidence, not full cases; partial and unconfirmed do not mean exact matches. B is material-level evidence. Fields: id, source sport, target sport, relevance, unmatched, differing, rule status, grade, evidence. Evidence is complete observed text or one [supported, missing, rule scope]. Other source context, scopes and limits are omitted; do not infer their absence.<|im_end|>\n<|im_start|>user\n{\"request\":\"티볼 주자가 달리다 송구를 보고 되돌아가는 경기 사례를 비교해 주세요.\",\"sport\":\"teeball\",\"totalCandidates\":8,\"shownCandidates\":3,\"references\":[[\"teeball_case_01\",\"teeball\",\"teeball\",\"partial\",[\"movement\",\"direction\"],[],\"not-compared\",\"A\",\"2016년 간토 친선대회 아오바 미도리히가시-조후 리틀전에서 3루 주자가 있는 상황에 우익수 뜬공이 나왔다. 아오바 미도리히가시의 우익수는 태그업을 시도한 주자를 정확한 송구로 아웃시켰다. 팀 감독은 이 플레이가 경기 흐름을 바꿨다고 회고했다.\"],[\"TBX-18\",\"baseball\",\"teeball\",\"partial\",[\"movement\",\"direction\",\"running\"],[],\"unconfirmed\",\"A\",[\"뒤 동료가 중계자의 송구 대상을 정해 전달\",\"여러 콜의 충돌이나 외야수의 망설임은 기록에 없음\",\"타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외\"]],[\"TBX-03\",\"baseball\",\"teeball\",\"partial\",[\"movement\",\"direction\",\"running\"],[],\"unconfirmed\",\"A\",[\"타구 위치와 송구 연결\",\"옆으로 구른 타구에 따른 중계자 위치 변경은 불명\",\"타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외\"]]]}<|im_end|>\n<|im_start|>assistant\n",
+      "tokens": 492,
+      "references": [
+        [
+          "teeball_case_01",
+          "teeball",
+          "teeball",
+          "partial",
+          [
+            "movement",
+            "direction"
+          ],
+          [],
+          "not-compared",
+          "A",
+          "2016년 간토 친선대회 아오바 미도리히가시-조후 리틀전에서 3루 주자가 있는 상황에 우익수 뜬공이 나왔다. 아오바 미도리히가시의 우익수는 태그업을 시도한 주자를 정확한 송구로 아웃시켰다. 팀 감독은 이 플레이가 경기 흐름을 바꿨다고 회고했다."
+        ],
+        [
+          "TBX-18",
+          "baseball",
+          "teeball",
+          "partial",
+          [
+            "movement",
+            "direction",
+            "running"
+          ],
+          [],
+          "unconfirmed",
+          "A",
+          [
+            "뒤 동료가 중계자의 송구 대상을 정해 전달",
+            "여러 콜의 충돌이나 외야수의 망설임은 기록에 없음",
+            "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외"
+          ]
+        ],
+        [
+          "TBX-03",
+          "baseball",
+          "teeball",
+          "partial",
+          [
+            "movement",
+            "direction",
+            "running"
+          ],
+          [],
+          "unconfirmed",
+          "A",
+          [
+            "타구 위치와 송구 연결",
+            "옆으로 구른 타구에 따른 중계자 위치 변경은 불명",
+            "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외"
+          ]
+        ]
+      ],
+      "totalCount": 8,
+      "omittedCount": 5,
+      "omittedIds": [
+        "TBX-19",
+        "TBX-12",
+        "TBX-01",
+        "TBX-02",
+        "TBX-11"
+      ]
+    },
+    "inputTokens": 492
+  },
+  "model": {
+    "path": "/tmp/pe-wllama-review/qwen.gguf",
+    "bytes": 2104932768,
+    "sha256": "626b4a6678b86442240e33df819e00132d3ba7dddfe1cdc4fbb18e0a9615c62d"
+  },
+  "events": [
+    {
+      "at": "2026-11-17T12:24:33.075Z",
+      "type": "model-verified"
+    },
+    {
+      "at": "2026-11-17T12:24:37.068Z",
+      "type": "browser-ready",
+      "isolation": true
+    },
+    {
+      "at": "2026-11-17T12:24:37.621Z",
+      "type": "error",
+      "ms": 2091.219999999972,
+      "name": "TypeError",
+      "message": "Failed to fetch"
+    },
+    {
+      "at": "2026-11-17T12:24:37.863Z",
+      "type": "fatal",
+      "name": "Error",
+      "message": "page.evaluate: TypeError: Failed to fetch",
+      "stack": "page.evaluate: TypeError: Failed to fetch\n    at /workspace/P.E.-class-module/scripts/manual/tactics-speed-3b.cjs:17:659"
+    }
+  ],
+  "requests": [
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    },
+    {
+      "origin": "http://127.0.0.1:43325",
+      "external": false
+    }
+  ],
+  "browser": "155.0.8059.79",
+  "cleanedUp": true,
+  "fatal": {
+    "name": "Error",
+    "message": "page.evaluate: TypeError: Failed to fetch",
+    "stack": "page.evaluate: TypeError: Failed to fetch\n    at /workspace/P.E.-class-module/scripts/manual/tactics-speed-3b.cjs:17:659"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "packId": "d8e2998ea0232f33c4966cd99c47111d9799842a2f1e3875ea4877856b49a066",
+  "createdOn": "2026-11-12",
+  "counts": {
+    "total": 48,
+    "trainingCandidates": 36,
+    "evaluationHoldouts": 12,
+    "teacherReviewed": 0
+  },
+  "files": {
+    "draft-cases.jsonl": "c0f47689eec05faa02b7c7849a9426f8be84c3ee17fcfac52278fe9d9b96750a",
+    "review-sheet.csv": "c964047a7c6ef82fa75417582d1a1ed4ac3111ca6333feb0e9f3cee94e8aa332",
+    "review-pack.html": "69ae510e1e089afa91c9e2fff376fa1e33c571da307ba52be06d8287e0f13d20",
+    "sources.json": "4a284f34c64113e685adc825a5229a32c54ea2572409111a191a460ad73b1506"
+  }
+}

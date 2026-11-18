@@ -92,5 +92,19 @@
     board.teams = []; board.tokens = []; board.arrows = []; board.marks = [];
     board.snapshots = { before: null, after: null }; board.reflection = { planned: '', performed: '', next: '' };
   }
-  return Object.freeze({ PROMPTS, LIMITS, createBoard, addTeam, removeTeam, addToken, moveToken, removeToken, addArrow, moveArrow, removeArrow, addMark, moveMark, removeMark, saveSnapshot, setReflection, cloneBoard, clearBoard });
+  function anonymousLayout(source) {
+    if (!source || source.version !== 1) throw new Error('올바른 전술판 배치가 아니에요.');
+    const board = createBoard({ width: source.width, height: source.height });
+    for (const key of ['teams', 'tokens', 'arrows', 'marks']) if (!Array.isArray(source[key]) || source[key].length > LIMITS.objects) throw new Error('전술판 도형 수를 확인해 주세요.');
+    const teams = new Map();
+    for (const team of source.teams) {
+      if (!team || typeof team.id !== 'string' || teams.has(team.id)) throw new Error('팀 ID가 올바르지 않아요.');
+      teams.set(team.id, addTeam(board).id);
+    }
+    for (const token of source.tokens) addToken(board, { teamId: teams.get(token.teamId), x: token.x, y: token.y });
+    for (const arrow of source.arrows) addArrow(board, { kind: arrow.kind, from: { x: arrow.from?.x, y: arrow.from?.y }, to: { x: arrow.to?.x, y: arrow.to?.y } });
+    for (const mark of source.marks) addMark(board, { kind: mark.kind, x: mark.x, y: mark.y });
+    return board;
+  }
+  return Object.freeze({ PROMPTS, LIMITS, createBoard, addTeam, removeTeam, addToken, moveToken, removeToken, addArrow, moveArrow, removeArrow, addMark, moveMark, removeMark, saveSnapshot, setReflection, cloneBoard, clearBoard, anonymousLayout });
 }));

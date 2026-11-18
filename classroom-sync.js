@@ -9,7 +9,17 @@
       parentSignal?.addEventListener('abort', abort, { once: true });
       if (parentSignal?.aborted) controller.abort();
       const timer = setTimeout(abort, this.timeoutMs);
-      try { const response = await this.fetcher(url, { ...options, signal: controller.signal }); return { response, data: readJson ? await response.json() : undefined }; }
+      try {
+        const response = await this.fetcher(url, { ...options, redirect: 'error', cache: 'no-store', signal: controller.signal });
+        let data;
+        if (readJson) {
+          data = await response.json().catch(error => {
+            if (response.ok) throw error;
+            return null;
+          });
+        }
+        return { response, data };
+      }
       finally { clearTimeout(timer); parentSignal?.removeEventListener('abort', abort); }
     }
     async logout() {
@@ -21,7 +31,18 @@
     async request(path, body) {
       this.controller.signal.throwIfAborted();
       const { response, data: result } = await this.timedFetch(this.baseUrl + path, { method: body ? 'POST' : 'GET', headers: { Authorization: `Bearer ${this.token}`, ...(body ? { 'Content-Type': 'application/json' } : {}) }, ...(body ? { body: JSON.stringify(body) } : {}) }, this.controller.signal, true);
-      if (!response.ok) { const error = new Error(result.error || '전송 실패'); error.status = response.status; throw error; } return result;
+      if (!response.ok) {
+        const errors = {
+          401: '학급 서버 연결이 만료됐어요. 다시 연결해 주세요.',
+          409: '서버 자료와 충돌했어요. 게시판을 새로 읽고 전송 대기열을 확인해 주세요.',
+          413: '선택 장면이 너무 커요. 더 짧은 장면을 선택해 주세요.',
+          507: '학급 서버의 저장 공간이 부족해요. 교사에게 알려 주세요.',
+        };
+        const error = new Error(errors[response.status] || (response.status >= 500 ? '학급 서버에 연결하지 못했어요. 잠시 후 다시 시도해 주세요.' : result?.error || '전송 실패'));
+        error.status = response.status;
+        throw error;
+      }
+      return result;
     }
     async sync(state, persist) {
       for (const item of state.outbox.filter(entry => !['sent', 'cancelled'].includes(entry.status))) {

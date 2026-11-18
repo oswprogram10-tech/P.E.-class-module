@@ -1,0 +1,1161 @@
+{
+  "startedAt": "2026-11-16T05:36:38.632Z",
+  "sampling": "Each sport: lexicographically first prior positive with partial status (otherwise first positive); then first candidate-status prior positive in a different family (otherwise first positive in a different family); then first prior noCandidates. Prior results determine strata, not correctness. 15/450 exploratory sample, not a census.",
+  "sourceSha256": {
+    "docs/tactics-query-evaluation.csv": "08c7091b8880e332e6c26395f4e4d363ead461be1bd916ebbfed0ba6d126edf7",
+    "docs/tactics-retrieval-evaluation-2026-11-15.json": "686113f3bc297f1ff2d1b871a25c2f6cd1271c73d485679e945db1f19b510103",
+    "tactics-search-local.js": "98ca4266c01714a2a3d73702934c0330ccba7ee0cb065edae3003b8586fef074",
+    "tactics-local-advisor.js": "9150702425f0383dec6397d627608b99fd317d50dde415ea498f8fa8a2ade187",
+    "tactics-local-prompt.js": "1cc1e8f07171a341f8e5cc3dd60b1f300210be8ced3af7130cb45dc90cce24ea"
+  },
+  "model": {
+    "path": "/tmp/pe-wllama-review/qwen.gguf",
+    "bytes": 2104932768,
+    "sha256": "626b4a6678b86442240e33df819e00132d3ba7dddfe1cdc4fbb18e0a9615c62d"
+  },
+  "sample": [
+    {
+      "kind": "partial-preferred",
+      "question_id": "BA-01-04",
+      "sport": "basketball",
+      "scenario_family": "possession_pressure",
+      "question": "전면 압박에 막혀 공을 전개하기 어려운 상황 상황에서 양 팀의 움직임이 어떻게 이어졌는지 사례를 보고 싶어요.",
+      "candidate_case_ids": "basketball_case_34",
+      "candidate_status": "partial",
+      "research_lead_ids": "BKB-01",
+      "review_status": "needs_human_relevance_review",
+      "gap_note": "후보가 질문을 직접 뒷받침하는지 검토 필요; 조사 후보 출처가 있으나 카드 승인 전 별도 대조 필요",
+      "prior": {
+        "browserMismatch": false,
+        "questionId": "BA-01-04",
+        "sport": "basketball",
+        "scenarioFamily": "possession_pressure",
+        "candidateCount": 5,
+        "foundIds": [
+          "basketball_case_29",
+          "basketball_case_40",
+          "basketball_case_38",
+          "basketball_case_05",
+          "basketball_case_31"
+        ],
+        "referenceIds": [
+          "basketball_case_34"
+        ],
+        "hitIds": [],
+        "noReferenceList": false,
+        "noCandidates": false,
+        "schoolRulesNotVerified": true,
+        "wrongSportIds": [],
+        "blockedIds": [],
+        "scopeViolationIds": []
+      }
+    },
+    {
+      "kind": "candidate-other-family",
+      "question_id": "BA-02-01",
+      "sport": "basketball",
+      "scenario_family": "ball_screen_attack",
+      "question": "우리 팀은 볼스크린 뒤 수비가 붙거나 도움을 보내 공격이 막히는 상황 비슷한 실제 경기 사례를 찾아 비교하고 싶어요.",
+      "candidate_case_ids": "basketball_case_01|basketball_case_02|basketball_case_04|basketball_case_05|basketball_case_06|basketball_case_08|basketball_case_11|basketball_case_16|basketball_case_22|basketball_case_24|basketball_case_29|basketball_case_39|basketball_case_41|basketball_case_42",
+      "candidate_status": "candidate",
+      "research_lead_ids": "",
+      "review_status": "needs_human_relevance_review",
+      "gap_note": "임시 연결; 사람의 관련성·맥락 검토 필요",
+      "prior": {
+        "browserMismatch": false,
+        "questionId": "BA-02-01",
+        "sport": "basketball",
+        "scenarioFamily": "ball_screen_attack",
+        "candidateCount": 8,
+        "foundIds": [
+          "basketball_case_09",
+          "basketball_case_03",
+          "basketball_case_31",
+          "basketball_case_22",
+          "basketball_case_27",
+          "basketball_case_18",
+          "basketball_case_26",
+          "basketball_case_21"
+        ],
+        "referenceIds": [
+          "basketball_case_01",
+          "basketball_case_02",
+          "basketball_case_04",
+          "basketball_case_05",
+          "basketball_case_06",
+          "basketball_case_08",
+          "basketball_case_11",
+          "basketball_case_16",
+          "basketball_case_22",
+          "basketball_case_24",
+          "basketball_case_29",
+          "basketball_case_39",
+          "basketball_case_41",
+          "basketball_case_42"
+        ],
+        "hitIds": [
+          "basketball_case_22"
+        ],
+        "noReferenceList": false,
+        "noCandidates": false,
+        "schoolRulesNotVerified": true,
+        "wrongSportIds": [],
+        "blockedIds": [],
+        "scopeViolationIds": []
+      }
+    },
+    {
+      "kind": "noCandidate",
+      "question_id": "BA-01-01",
+      "sport": "basketball",
+      "scenario_family": "possession_pressure",
+      "question": "우리 팀은 전면 압박에 막혀 공을 전개하기 어려운 상황 비슷한 실제 경기 사례를 찾아 비교하고 싶어요.",
+      "candidate_case_ids": "basketball_case_34",
+      "candidate_status": "partial",
+      "research_lead_ids": "BKB-01",
+      "review_status": "needs_human_relevance_review",
+      "gap_note": "후보가 질문을 직접 뒷받침하는지 검토 필요; 조사 후보 출처가 있으나 카드 승인 전 별도 대조 필요",
+      "prior": {
+        "browserMismatch": false,
+        "questionId": "BA-01-01",
+        "sport": "basketball",
+        "scenarioFamily": "possession_pressure",
+        "candidateCount": 0,
+        "foundIds": [],
+        "referenceIds": [
+          "basketball_case_34"
+        ],
+        "hitIds": [],
+        "noReferenceList": false,
+        "noCandidates": true,
+        "schoolRulesNotVerified": false,
+        "wrongSportIds": [],
+        "blockedIds": [],
+        "scopeViolationIds": []
+      }
+    },
+    {
+      "kind": "partial-preferred",
+      "question_id": "VO-06-01",
+      "sport": "volleyball",
+      "scenario_family": "backcourt_defense",
+      "question": "우리 팀은 강타·연타·빈 곳 공격을 후위 수비가 받아내는 상황 비슷한 실제 경기 사례를 찾아 비교하고 싶어요.",
+      "candidate_case_ids": "volleyball_case_09|volleyball_case_23",
+      "candidate_status": "partial",
+      "research_lead_ids": "VBL-01",
+      "review_status": "needs_human_relevance_review",
+      "gap_note": "후보가 질문을 직접 뒷받침하는지 검토 필요; 조사 후보 출처가 있으나 카드 승인 전 별도 대조 필요",
+      "prior": {
+        "browserMismatch": false,
+        "questionId": "VO-06-01",
+        "sport": "volleyball",
+        "scenarioFamily": "backcourt_defense",
+        "candidateCount": 8,
+        "foundIds": [
+          "volleyball_case_14",
+          "volleyball_case_15",
+          "volleyball_case_23",
+          "volleyball_case_09",
+          "volleyball_case_32",
+          "volleyball_case_01",
+          "volleyball_case_02",
+          "volleyball_case_10"
+        ],
+        "referenceIds": [
+          "volleyball_case_09",
+          "volleyball_case_23"
+        ],
+        "hitIds": [
+          "volleyball_case_23",
+          "volleyball_case_09"
+        ],
+        "noReferenceList": false,
+        "noCandidates": false,
+        "schoolRulesNotVerified": true,
+        "wrongSportIds": [],
+        "blockedIds": [],
+        "scopeViolationIds": []
+      }
+    },
+    {
+      "kind": "candidate-other-family",
+      "question_id": "VO-01-01",
+      "sport": "volleyball",
+      "scenario_family": "serve_pressure",
+      "question": "우리 팀은 서브로 상대 리시브와 다음 공격을 흔드는 상황 비슷한 실제 경기 사례를 찾아 비교하고 싶어요.",
+      "candidate_case_ids": "volleyball_case_03|volleyball_case_08|volleyball_case_11|volleyball_case_12|volleyball_case_17|volleyball_case_19|volleyball_case_22|volleyball_case_27|volleyball_case_28|volleyball_case_30|volleyball_case_34|volleyball_case_36|volleyball_case_37|volleyball_case_39|volleyball_case_40",
+      "candidate_status": "candidate",
+      "research_lead_ids": "",
+      "review_status": "needs_human_relevance_review",
+      "gap_note": "임시 연결; 사람의 관련성·맥락 검토 필요",
+      "prior": {
+        "browserMismatch": false,
+        "questionId": "VO-01-01",
+        "sport": "volleyball",
+        "scenarioFamily": "serve_pressure",
+        "candidateCount": 8,
+        "foundIds": [
+          "volleyball_case_15",
+          "volleyball_case_25",
+          "volleyball_case_36",
+          "volleyball_case_20",
+          "volleyball_case_02",
+          "volleyball_case_01",
+          "volleyball_case_17",
+          "volleyball_case_34"
+        ],
+        "referenceIds": [
+          "volleyball_case_03",
+          "volleyball_case_08",
+          "volleyball_case_11",
+          "volleyball_case_12",
+          "volleyball_case_17",
+          "volleyball_case_19",
+          "volleyball_case_22",
+          "volleyball_case_27",
+          "volleyball_case_28",
+          "volleyball_case_30",
+          "volleyball_case_34",
+          "volleyball_case_36",
+          "volleyball_case_37",
+          "volleyball_case_39",
+          "volleyball_case_40"
+        ],
+        "hitIds": [
+          "volleyball_case_36",
+          "volleyball_case_17",
+          "volleyball_case_34"
+        ],
+        "noReferenceList": false,
+        "noCandidates": false,
+        "schoolRulesNotVerified": true,
+        "wrongSportIds": [],
+        "blockedIds": [],
+        "scopeViolationIds": []
+      }
+    },
+    {
+      "kind": "noCandidate",
+      "question_id": "VO-04-01",
+      "sport": "volleyball",
+      "scenario_family": "attack_against_block",
+      "question": "우리 팀은 상대 블록을 피해 공격하거나 블록을 이용하는 상황 비슷한 실제 경기 사례를 찾아 비교하고 싶어요.",
+      "candidate_case_ids": "volleyball_case_06|volleyball_case_09|volleyball_case_17|volleyball_case_24|volleyball_case_35|volleyball_case_38|volleyball_case_44",
+      "candidate_status": "candidate",
+      "research_lead_ids": "",
+      "review_status": "needs_human_relevance_review",
+      "gap_note": "임시 연결; 사람의 관련성·맥락 검토 필요",
+      "prior": {
+        "browserMismatch": false,
+        "questionId": "VO-04-01",
+        "sport": "volleyball",
+        "scenarioFamily": "attack_against_block",
+        "candidateCount": 0,
+        "foundIds": [],
+        "referenceIds": [
+          "volleyball_case_06",
+          "volleyball_case_09",
+          "volleyball_case_17",
+          "volleyball_case_24",
+          "volleyball_case_35",
+          "volleyball_case_38",
+          "volleyball_case_44"
+        ],
+        "hitIds": [],
+        "noReferenceList": false,
+        "noCandidates": true,
+        "schoolRulesNotVerified": false,
+        "wrongSportIds": [],
+        "blockedIds": [],
+        "scopeViolationIds": []
+      }
+    },
+    {
+      "kind": "partial-preferred",
+      "question_id": "SO-04-04",
+      "sport": "soccer",
+      "scenario_family": "low_block_attack",
+      "question": "낮고 좁은 수비 블록을 상대로 공간을 만드는 상황 상황에서 양 팀의 움직임이 어떻게 이어졌는지 사례를 보고 싶어요.",
+      "candidate_case_ids": "soccer_case_09|soccer_case_11|soccer_case_13",
+      "candidate_status": "partial",
+      "research_lead_ids": "",
+      "review_status": "needs_human_relevance_review",
+      "gap_note": "후보가 질문을 직접 뒷받침하는지 검토 필요",
+      "prior": {
+        "browserMismatch": false,
+        "questionId": "SO-04-04",
+        "sport": "soccer",
+        "scenarioFamily": "low_block_attack",
+        "candidateCount": 8,
+        "foundIds": [
+          "soccer_case_30",
+          "soccer_case_22",
+          "soccer_case_02",
+          "soccer_case_16",
+          "soccer_case_01",
+          "soccer_case_08",
+          "soccer_case_06",
+          "soccer_case_23"
+        ],
+        "referenceIds": [
+          "soccer_case_09",
+          "soccer_case_11",
+          "soccer_case_13"
+        ],
+        "hitIds": [],
+        "noReferenceList": false,
+        "noCandidates": false,
+        "schoolRulesNotVerified": true,
+        "wrongSportIds": [],
+        "blockedIds": [],
+        "scopeViolationIds": []
+      }
+    },
+    {
+      "kind": "candidate-other-family",
+      "question_id": "SO-01-01",
+      "sport": "soccer",
+      "scenario_family": "build_from_back",
+      "question": "우리 팀은 후방에서 압박을 받으며 짧게 전개하는 상황 비슷한 실제 경기 사례를 찾아 비교하고 싶어요.",
+      "candidate_case_ids": "soccer_case_01|soccer_case_07|soccer_case_18|soccer_case_24|soccer_case_29",
+      "candidate_status": "candidate",
+      "research_lead_ids": "",
+      "review_status": "needs_human_relevance_review",
+      "gap_note": "임시 연결; 사람의 관련성·맥락 검토 필요",
+      "prior": {
+        "browserMismatch": false,
+        "questionId": "SO-01-01",
+        "sport": "soccer",
+        "scenarioFamily": "build_from_back",
+        "candidateCount": 7,
+        "foundIds": [
+          "soccer_case_24",
+          "soccer_case_02",
+          "soccer_case_04",
+          "soccer_case_29",
+          "soccer_case_15",
+          "soccer_case_07",
+          "soccer_case_08"
+        ],
+        "referenceIds": [
+          "soccer_case_01",
+          "soccer_case_07",
+          "soccer_case_18",
+          "soccer_case_24",
+          "soccer_case_29"
+        ],
+        "hitIds": [
+          "soccer_case_24",
+          "soccer_case_29",
+          "soccer_case_07"
+        ],
+        "noReferenceList": false,
+        "noCandidates": false,
+        "schoolRulesNotVerified": true,
+        "wrongSportIds": [],
+        "blockedIds": [],
+        "scopeViolationIds": []
+      }
+    },
+    {
+      "kind": "noCandidate",
+      "question_id": "SO-04-01",
+      "sport": "soccer",
+      "scenario_family": "low_block_attack",
+      "question": "우리 팀은 낮고 좁은 수비 블록을 상대로 공간을 만드는 상황 비슷한 실제 경기 사례를 찾아 비교하고 싶어요.",
+      "candidate_case_ids": "soccer_case_09|soccer_case_11|soccer_case_13",
+      "candidate_status": "partial",
+      "research_lead_ids": "",
+      "review_status": "needs_human_relevance_review",
+      "gap_note": "후보가 질문을 직접 뒷받침하는지 검토 필요",
+      "prior": {
+        "browserMismatch": false,
+        "questionId": "SO-04-01",
+        "sport": "soccer",
+        "scenarioFamily": "low_block_attack",
+        "candidateCount": 0,
+        "foundIds": [],
+        "referenceIds": [
+          "soccer_case_09",
+          "soccer_case_11",
+          "soccer_case_13"
+        ],
+        "hitIds": [],
+        "noReferenceList": false,
+        "noCandidates": true,
+        "schoolRulesNotVerified": false,
+        "wrongSportIds": [],
+        "blockedIds": [],
+        "scopeViolationIds": []
+      }
+    },
+    {
+      "kind": "partial-preferred",
+      "question_id": "TE-01-04",
+      "sport": "teeball",
+      "scenario_family": "outfield_depth",
+      "question": "이전에 멀리 친 타자가 다시 나왔어요. 앞선 타구를 보고 다음 타석의 외야 위치를 바꾼 사례를 보고 싶어요.",
+      "candidate_case_ids": "teeball_case_02",
+      "candidate_status": "partial",
+      "research_lead_ids": "",
+      "review_status": "needs_human_relevance_review",
+      "gap_note": "질문 개정 v2; 타자별 조정만 확인; 앞선 타석을 근거로 바꿨는지는 불명; 임시 후보이며 사람 관련성 검토 전",
+      "prior": {
+        "browserMismatch": false,
+        "questionId": "TE-01-04",
+        "sport": "teeball",
+        "scenarioFamily": "outfield_depth",
+        "candidateCount": 8,
+        "foundIds": [
+          "TBX-03",
+          "TBX-15",
+          "teeball_case_03",
+          "TBX-14",
+          "teeball_case_01",
+          "TBX-05",
+          "TBX-10",
+          "teeball_case_04"
+        ],
+        "referenceIds": [
+          "teeball_case_02"
+        ],
+        "hitIds": [],
+        "noReferenceList": false,
+        "noCandidates": false,
+        "schoolRulesNotVerified": true,
+        "wrongSportIds": [],
+        "blockedIds": [],
+        "scopeViolationIds": []
+      }
+    },
+    {
+      "kind": "candidate-other-family",
+      "question_id": "TE-02-01",
+      "sport": "teeball",
+      "scenario_family": "fly_ball_tagup",
+      "question": "우리 경기는 뜬공 포구 뒤 정해진 절차를 지키면 다시 뛸 수 있어요. 3루 주자의 재출발에 외야 송구로 대응한 사례를 찾아주세요.",
+      "candidate_case_ids": "teeball_case_01",
+      "candidate_status": "candidate",
+      "research_lead_ids": "",
+      "review_status": "needs_human_relevance_review",
+      "gap_note": "질문 개정 v2; 3루 주자·뜬공 뒤 송구 아웃 확인; 두 경기의 주루 규칙 대조 필요; 임시 후보이며 사람 관련성 검토 전; 요청과 사례의 티볼 규칙 대조 전 확정 연결·학생 제공 보류",
+      "prior": {
+        "browserMismatch": false,
+        "questionId": "TE-02-01",
+        "sport": "teeball",
+        "scenarioFamily": "fly_ball_tagup",
+        "candidateCount": 8,
+        "foundIds": [
+          "teeball_case_01",
+          "TBX-15",
+          "TBX-05",
+          "TBX-07",
+          "TBX-14",
+          "teeball_case_03",
+          "TBX-18",
+          "teeball_case_05"
+        ],
+        "referenceIds": [
+          "teeball_case_01"
+        ],
+        "hitIds": [
+          "teeball_case_01"
+        ],
+        "noReferenceList": false,
+        "noCandidates": false,
+        "schoolRulesNotVerified": true,
+        "wrongSportIds": [],
+        "blockedIds": [],
+        "scopeViolationIds": []
+      }
+    },
+    {
+      "kind": "noCandidate",
+      "question_id": "TE-01-02",
+      "sport": "teeball",
+      "scenario_family": "outfield_depth",
+      "question": "외야가 너무 뒤에 서 있어서 앞에 떨어지는 타구를 자주 놓쳐요. 깊은 외야 앞에 타구가 떨어진 경기와 비교하고 싶어요.",
+      "candidate_case_ids": "teeball_case_03",
+      "candidate_status": "partial",
+      "research_lead_ids": "",
+      "review_status": "needs_human_relevance_review",
+      "gap_note": "질문 개정 v2; 깊은 외야 앞 타구는 확인되나 개별 수비 처리 장면은 없음; 임시 후보이며 사람 관련성 검토 전",
+      "prior": {
+        "browserMismatch": false,
+        "questionId": "TE-01-02",
+        "sport": "teeball",
+        "scenarioFamily": "outfield_depth",
+        "candidateCount": 0,
+        "foundIds": [],
+        "referenceIds": [
+          "teeball_case_03"
+        ],
+        "hitIds": [],
+        "noReferenceList": false,
+        "noCandidates": true,
+        "schoolRulesNotVerified": false,
+        "wrongSportIds": [],
+        "blockedIds": [],
+        "scopeViolationIds": []
+      }
+    },
+    {
+      "kind": "partial-preferred",
+      "question_id": "DO-14-01",
+      "sport": "dodgeball",
+      "scenario_family": "throw_recovery",
+      "question": "우리 팀은 던진 뒤 공을 회수하거나 다음 수비 위치로 복귀하는 상황 비슷한 실제 경기 사례를 찾아 비교하고 싶어요.",
+      "candidate_case_ids": "dodgeball_case_01|dodgeball_case_04",
+      "candidate_status": "partial",
+      "research_lead_ids": "",
+      "review_status": "needs_human_relevance_review",
+      "gap_note": "후보가 질문을 직접 뒷받침하는지 검토 필요",
+      "prior": {
+        "browserMismatch": false,
+        "questionId": "DO-14-01",
+        "sport": "dodgeball",
+        "scenarioFamily": "throw_recovery",
+        "candidateCount": 7,
+        "foundIds": [
+          "dodgeball_case_04",
+          "dodgeball_case_03",
+          "dodgeball_case_02",
+          "dodgeball_case_10",
+          "dodgeball_case_09",
+          "dodgeball_case_05",
+          "dodgeball_case_01"
+        ],
+        "referenceIds": [
+          "dodgeball_case_01",
+          "dodgeball_case_04"
+        ],
+        "hitIds": [
+          "dodgeball_case_04",
+          "dodgeball_case_01"
+        ],
+        "noReferenceList": false,
+        "noCandidates": false,
+        "schoolRulesNotVerified": true,
+        "wrongSportIds": [],
+        "blockedIds": [],
+        "scopeViolationIds": []
+      }
+    },
+    {
+      "kind": "candidate-other-family",
+      "question_id": "DO-01-01",
+      "sport": "dodgeball",
+      "scenario_family": "opening_throw",
+      "question": "우리 팀은 경기 시작 때 먼저 던지거나 공을 회수해 공격을 여는 상황 비슷한 실제 경기 사례를 찾아 비교하고 싶어요.",
+      "candidate_case_ids": "dodgeball_case_01|dodgeball_case_02",
+      "candidate_status": "candidate",
+      "research_lead_ids": "",
+      "review_status": "needs_human_relevance_review",
+      "gap_note": "임시 연결; 사람의 관련성·맥락 검토 필요",
+      "prior": {
+        "browserMismatch": false,
+        "questionId": "DO-01-01",
+        "sport": "dodgeball",
+        "scenarioFamily": "opening_throw",
+        "candidateCount": 5,
+        "foundIds": [
+          "dodgeball_case_01",
+          "dodgeball_case_04",
+          "dodgeball_case_02",
+          "dodgeball_case_09",
+          "dodgeball_case_05"
+        ],
+        "referenceIds": [
+          "dodgeball_case_01",
+          "dodgeball_case_02"
+        ],
+        "hitIds": [
+          "dodgeball_case_01",
+          "dodgeball_case_02"
+        ],
+        "noReferenceList": false,
+        "noCandidates": false,
+        "schoolRulesNotVerified": true,
+        "wrongSportIds": [],
+        "blockedIds": [],
+        "scopeViolationIds": []
+      }
+    },
+    {
+      "kind": "noCandidate",
+      "question_id": "DO-03-01",
+      "sport": "dodgeball",
+      "scenario_family": "team_throw",
+      "question": "우리 팀은 여러 선수가 타이밍을 맞춰 함께 던지는 상황 비슷한 실제 경기 사례를 찾아 비교하고 싶어요.",
+      "candidate_case_ids": "dodgeball_case_02|dodgeball_case_03|dodgeball_case_04",
+      "candidate_status": "candidate",
+      "research_lead_ids": "DDB-01,DDB-02",
+      "review_status": "needs_human_relevance_review",
+      "gap_note": "임시 연결; 사람의 관련성·맥락 검토 필요; 조사 후보 출처가 있으나 카드 승인 전 별도 대조 필요",
+      "prior": {
+        "browserMismatch": false,
+        "questionId": "DO-03-01",
+        "sport": "dodgeball",
+        "scenarioFamily": "team_throw",
+        "candidateCount": 0,
+        "foundIds": [],
+        "referenceIds": [
+          "dodgeball_case_02",
+          "dodgeball_case_03",
+          "dodgeball_case_04"
+        ],
+        "hitIds": [],
+        "noReferenceList": false,
+        "noCandidates": true,
+        "schoolRulesNotVerified": false,
+        "wrongSportIds": [],
+        "blockedIds": [],
+        "scopeViolationIds": []
+      }
+    }
+  ],
+  "results": [
+    {
+      "questionId": "BA-01-01",
+      "kind": "noCandidate",
+      "sport": "basketball",
+      "startedAt": "2026-11-16T05:36:46.746Z",
+      "browser": {
+        "prepared": [],
+        "allowedIds": [],
+        "promptIds": [],
+        "promptRefs": [],
+        "inputTokens": null,
+        "inputBudget": 512,
+        "result": {
+          "summary": "요청과 가까운 경기 자료를 찾지 못했습니다.",
+          "cases": [],
+          "comparisonLimit": "자료에 기록된 조건만 비교할 수 있습니다. 빠진 조건과 수업 규칙의 차이를 확인하세요.",
+          "model": "Qwen2.5-3B-Instruct Q4_K_M",
+          "modelUsed": false,
+          "resultKind": "retrieval",
+          "generatedAt": 1794807406756
+        },
+        "sourcePreserved": [],
+        "calls": {
+          "loads": 0,
+          "completions": 0,
+          "raw": "",
+          "finish": null
+        }
+      },
+      "latencyMs": 13
+    },
+    {
+      "questionId": "VO-04-01",
+      "kind": "noCandidate",
+      "sport": "volleyball",
+      "startedAt": "2026-11-16T05:36:46.758Z",
+      "browser": {
+        "prepared": [],
+        "allowedIds": [],
+        "promptIds": [],
+        "promptRefs": [],
+        "inputTokens": null,
+        "inputBudget": 512,
+        "result": {
+          "summary": "요청과 가까운 경기 자료를 찾지 못했습니다.",
+          "cases": [],
+          "comparisonLimit": "자료에 기록된 조건만 비교할 수 있습니다. 빠진 조건과 수업 규칙의 차이를 확인하세요.",
+          "model": "Qwen2.5-3B-Instruct Q4_K_M",
+          "modelUsed": false,
+          "resultKind": "retrieval",
+          "generatedAt": 1794807406771
+        },
+        "sourcePreserved": [],
+        "calls": {
+          "loads": 0,
+          "completions": 0,
+          "raw": "",
+          "finish": null
+        }
+      },
+      "latencyMs": 14
+    },
+    {
+      "questionId": "SO-04-01",
+      "kind": "noCandidate",
+      "sport": "soccer",
+      "startedAt": "2026-11-16T05:36:46.773Z",
+      "browser": {
+        "prepared": [],
+        "allowedIds": [],
+        "promptIds": [],
+        "promptRefs": [],
+        "inputTokens": null,
+        "inputBudget": 512,
+        "result": {
+          "summary": "요청과 가까운 경기 자료를 찾지 못했습니다.",
+          "cases": [],
+          "comparisonLimit": "자료에 기록된 조건만 비교할 수 있습니다. 빠진 조건과 수업 규칙의 차이를 확인하세요.",
+          "model": "Qwen2.5-3B-Instruct Q4_K_M",
+          "modelUsed": false,
+          "resultKind": "retrieval",
+          "generatedAt": 1794807406779
+        },
+        "sourcePreserved": [],
+        "calls": {
+          "loads": 0,
+          "completions": 0,
+          "raw": "",
+          "finish": null
+        }
+      },
+      "latencyMs": 10
+    },
+    {
+      "questionId": "TE-01-02",
+      "kind": "noCandidate",
+      "sport": "teeball",
+      "startedAt": "2026-11-16T05:36:46.786Z",
+      "browser": {
+        "prepared": [],
+        "allowedIds": [],
+        "promptIds": [],
+        "promptRefs": [],
+        "inputTokens": null,
+        "inputBudget": 512,
+        "result": {
+          "summary": "요청과 가까운 경기 자료를 찾지 못했습니다.",
+          "cases": [],
+          "comparisonLimit": "자료에 기록된 조건만 비교할 수 있습니다. 빠진 조건과 수업 규칙의 차이를 확인하세요.",
+          "model": "Qwen2.5-3B-Instruct Q4_K_M",
+          "modelUsed": false,
+          "resultKind": "retrieval",
+          "generatedAt": 1794807406788
+        },
+        "sourcePreserved": [],
+        "calls": {
+          "loads": 0,
+          "completions": 0,
+          "raw": "",
+          "finish": null
+        }
+      },
+      "latencyMs": 6
+    },
+    {
+      "questionId": "DO-03-01",
+      "kind": "noCandidate",
+      "sport": "dodgeball",
+      "startedAt": "2026-11-16T05:36:46.790Z",
+      "browser": {
+        "prepared": [],
+        "allowedIds": [],
+        "promptIds": [],
+        "promptRefs": [],
+        "inputTokens": null,
+        "inputBudget": 512,
+        "result": {
+          "summary": "요청과 가까운 경기 자료를 찾지 못했습니다.",
+          "cases": [],
+          "comparisonLimit": "자료에 기록된 조건만 비교할 수 있습니다. 빠진 조건과 수업 규칙의 차이를 확인하세요.",
+          "model": "Qwen2.5-3B-Instruct Q4_K_M",
+          "modelUsed": false,
+          "resultKind": "retrieval",
+          "generatedAt": 1794807406794
+        },
+        "sourcePreserved": [],
+        "calls": {
+          "loads": 0,
+          "completions": 0,
+          "raw": "",
+          "finish": null
+        }
+      },
+      "latencyMs": 6
+    }
+  ],
+  "requests": [
+    {
+      "url": "http://127.0.0.1:46227/",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:46227/styles.css",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:46227/frame-buffer.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:46227/timeline.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:46227/webm-muxer.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:46227/clip-exporter.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:46227/local-vault.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:46227/clip-repository.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:46227/classroom-model.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:46227/paps-criteria-data.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:46227/paps-criteria.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:46227/paps-bmi-criteria-data.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:46227/paps-bmi-criteria.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:46227/paps-program-selection.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:46227/paps-reports.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:46227/teacher-evaluations.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:46227/exercise-routines.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:46227/gps-missions.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:46227/qr-missions.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:46227/tactics-board.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:46227/tactics-sharing.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:46227/tactics-search-local.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:46227/tactics-team-request.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:46227/tactics-local-prompt.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:46227/tactics-local-advisor.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:46227/tactics-student-ui.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:46227/tactics-tools-ui.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:46227/wearable-bridge.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:46227/shot-history.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:46227/classroom-repository.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:46227/classroom-sync.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:46227/qrcode-generator.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:46227/classroom-tools-ui.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:46227/classroom-ui.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:46227/shot-history-ui.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:46227/pose-assets.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:46227/model-profiles.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:46227/pose-runtime.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:46227/pose-presence.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:46227/basketball-shot.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:46227/volleyball-cue.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:46227/shot-feedback.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:46227/pose-ui.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:46227/device-check.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:46227/device-check-ui.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:46227/app.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:46227/manifest.webmanifest",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:46227/icon.svg",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:46227/vendor/wllama-v3/index.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    }
+  ],
+  "events": [
+    {
+      "at": "2026-11-16T05:36:43.996Z",
+      "type": "model-verified"
+    },
+    {
+      "at": "2026-11-16T05:36:46.712Z",
+      "type": "browser-ready",
+      "browser": "155.0.8059.79",
+      "isolation": true
+    },
+    {
+      "at": "2026-11-16T05:36:46.744Z",
+      "type": "start",
+      "id": "BA-01-01",
+      "kind": "noCandidate"
+    },
+    {
+      "at": "2026-11-16T05:36:46.757Z",
+      "type": "result",
+      "id": "BA-01-01",
+      "latencyMs": 13,
+      "ids": [],
+      "loads": 0
+    },
+    {
+      "at": "2026-11-16T05:36:46.758Z",
+      "type": "start",
+      "id": "VO-04-01",
+      "kind": "noCandidate"
+    },
+    {
+      "at": "2026-11-16T05:36:46.772Z",
+      "type": "result",
+      "id": "VO-04-01",
+      "latencyMs": 14,
+      "ids": [],
+      "loads": 0
+    },
+    {
+      "at": "2026-11-16T05:36:46.772Z",
+      "type": "start",
+      "id": "SO-04-01",
+      "kind": "noCandidate"
+    },
+    {
+      "at": "2026-11-16T05:36:46.782Z",
+      "type": "result",
+      "id": "SO-04-01",
+      "latencyMs": 10,
+      "ids": [],
+      "loads": 0
+    },
+    {
+      "at": "2026-11-16T05:36:46.783Z",
+      "type": "start",
+      "id": "TE-01-02",
+      "kind": "noCandidate"
+    },
+    {
+      "at": "2026-11-16T05:36:46.789Z",
+      "type": "result",
+      "id": "TE-01-02",
+      "latencyMs": 6,
+      "ids": [],
+      "loads": 0
+    },
+    {
+      "at": "2026-11-16T05:36:46.789Z",
+      "type": "start",
+      "id": "DO-03-01",
+      "kind": "noCandidate"
+    },
+    {
+      "at": "2026-11-16T05:36:46.795Z",
+      "type": "result",
+      "id": "DO-03-01",
+      "latencyMs": 6,
+      "ids": [],
+      "loads": 0
+    },
+    {
+      "at": "2026-11-16T05:36:46.795Z",
+      "type": "install-start"
+    }
+  ],
+  "phase": "install",
+  "interruption": {
+    "manualSignal": "SIGINT during installation to add a host watchdog",
+    "subsequentObservation": "Parent observed an InvalidStateError at 2026-11-16T05:37:31.952Z in the original output after the snapshot; its cause is undetermined and may be associated with browser cleanup. Installation had not been confirmed."
+  }
+}

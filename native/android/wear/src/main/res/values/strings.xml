@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">PE Loop 심박</string>
+    <string name="watch_app_title">PELoop 수업 심박</string>
+    <string name="watch_model">현재 워치: %1$s</string>
+</resources>

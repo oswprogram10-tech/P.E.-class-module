@@ -50,6 +50,9 @@ let classroomUI = null;
 let poseUI = null;
 let shotFeedback = null;
 let shotHistory = null;
+let deviceCheckUI = null;
+let requestedTeacherPanel = 'settings';
+let teacherClassroomLoad = null;
 let pendingTransactions = 0;
 const repositoryTransaction = repository.transaction.bind(repository);
 repository.transaction = (...args) => {
@@ -427,6 +430,7 @@ async function startCamera() {
 }
 
 function stopCamera({ preserveSession = false } = {}) {
+  deviceCheckUI?.interrupt('촬영이 종료됐어요. 연속 40분 점검은 처음부터 다시 시작해 주세요.');
   shotHistory?.stop();
   poseUI?.suspend('촬영이 멈춰 전신 확인도 멈췄어요. 촬영을 다시 시작해 주세요.');
   if (saving) { savingInterrupted = true; cancelActiveSave('interrupted'); }
@@ -791,18 +795,60 @@ function revealTeacherContent() {
   $('teacherContentPanel').hidden = false; $('teacherMessage').textContent = '';
   $('teacherDelay').value = String(delaySeconds); $('teacherDelayValue').textContent = String(delaySeconds);
   syncShotControls(shotSettingsIssue);
-  showTeacherTab('settings'); updateClipCount(); refreshStorageInfo();
-  classroomUI?.teacherOpen().then(() => shotHistory?.open());
+  void openTeacherClassroom().then(() => shotHistory?.open());
+  showTeacherTab(requestedTeacherPanel); requestedTeacherPanel = 'settings'; updateClipCount(); refreshStorageInfo();
+  deviceCheckUI?.render();
+}
+
+function openTeacherClassroom() {
+  if (teacherClassroomLoad) return teacherClassroomLoad;
+  const load = classroomUI.teacherOpen().finally(() => {
+    if (teacherClassroomLoad === load) teacherClassroomLoad = null;
+  });
+  teacherClassroomLoad = load;
+  return load;
 }
 
 function showTeacherTab(panel) {
   if (!teacherUnlocked) return;
   document.querySelectorAll('.teacher-tab').forEach(tab => tab.classList.toggle('is-active', tab.dataset.panel === panel));
   $('settingsPanel').hidden = panel !== 'settings'; $('libraryPanel').hidden = panel !== 'library'; $('classroomPanel').hidden = panel !== 'classroom';
-  $('teacherContentTitle').textContent = panel === 'settings' ? '수업 설정' : panel === 'classroom' ? '학급 · 제출' : '저장한 클립';
-  if (panel === 'classroom' && !$('classroomTeacherRoot').children.length) classroomUI?.teacherOpen();
+  $('deviceCheckPanel').hidden = panel !== 'device-check';
+  $('teacherContentTitle').textContent = panel === 'settings' ? '수업 설정' : panel === 'classroom' ? '학급 · 제출' : panel === 'device-check' ? '교사 첫 사용 설정' : '저장한 클립';
+  if (panel === 'device-check') deviceCheckUI?.render();
+  if (panel === 'classroom' && !$('classroomTeacherRoot').children.length) void openTeacherClassroom();
   if (panel === 'library') loadLibrary();
   else { clearLibraryPreviewUrls(); refreshStorageInfo(); }
+}
+
+async function openTeacherSetupTarget(id, panel = 'classroom') {
+  if (!teacherUnlocked || !$('teacherDialog').open || document.hidden) return;
+  const generation = teacherGeneration;
+  showTeacherTab(panel);
+  if (panel === 'classroom') await teacherClassroomLoad;
+  const panelElement = $(panel === 'device-check' ? 'deviceCheckPanel' : `${panel}Panel`);
+  if (generation !== teacherGeneration || !teacherUnlocked || document.hidden || panelElement.hidden) return;
+  const configured = $(id);
+  const target = configured || $('newClassName');
+  if (!target) return;
+  let scrollTarget = target;
+  if (!configured) {
+    let hint = $('teacherSetupClassNotice');
+    if (!hint) {
+      hint = document.createElement('p');
+      hint.id = 'teacherSetupClassNotice';
+      hint.setAttribute('role', 'status');
+      hint.textContent = '먼저 학급을 만들거나 선택한 뒤 첫 사용 설정에서 필요한 기능을 열어 주세요.';
+      target.closest('.classroom-grid').before(hint);
+      target.setAttribute('aria-describedby', hint.id);
+    }
+    scrollTarget = hint;
+  }
+  for (let details = target.closest('details'); details; details = details.parentElement.closest('details')) details.open = true;
+  const focus = target.matches('details') ? target.querySelector(':scope > summary') : target;
+  if (!focus.matches('input, select, textarea, button, summary')) focus.tabIndex = -1;
+  focus.focus({ preventScroll: true });
+  scrollTarget.scrollIntoView({ block: 'start' });
 }
 
 function validLibrary(token, key) {
@@ -933,7 +979,10 @@ function closeTeacherAccess() {
   shotHistory?.close();
   teacherGeneration++; pinController?.abort(); pinController = null;
   classroomUI?.teacherClose();
+  teacherClassroomLoad = null;
   teacherUnlocked = false; pinBusy = false; clearPinInputs(); clearLibraryPreviewUrls();
+  requestedTeacherPanel = 'settings';
+  deviceCheckUI?.render();
   selectedDeleteId = null; if ($('deleteDialog').open) $('deleteDialog').close();
   $('teacherMessage').textContent = '';
   if (cameraStream) poseUI?.cameraStarted();
@@ -1214,7 +1263,10 @@ function wireEvents() {
   $('clipPreviewPlay').addEventListener('click', previewSelection);
   $('saveClipButton').addEventListener('click', saveSelectedClip);
   $('cancelSaveButton').addEventListener('click', () => cancelActiveSave('user'));
-  $('teacherButton').addEventListener('click', showTeacherDialog);
+  $('teacherButton').addEventListener('click', () => {
+    if (!vaultConfig && !vaultProblem) requestedTeacherPanel = 'device-check';
+    showTeacherDialog();
+  });
   $('createPinButton').addEventListener('click', createTeacherPin);
   $('unlockButton').addEventListener('click', unlockTeacher);
   $('newPin').addEventListener('keydown', (event) => { if (event.key === 'Enter') $('confirmPin').focus(); });
@@ -1251,6 +1303,10 @@ function wireEvents() {
   for (const id of ['classroomTeacherRoot', 'studentClassroomRoot']) $(id).addEventListener('change', () => poseUI?.setShotSettings(shotSettings));
   $('teacherLockButton').addEventListener('click', lockTeacherDialog);
   document.querySelectorAll('.teacher-tab').forEach((tab) => tab.addEventListener('click', () => showTeacherTab(tab.dataset.panel)));
+  $('teacherSetupGuideButton').addEventListener('click', () => showTeacherTab('device-check'));
+  for (const button of $('deviceCheckPanel').querySelectorAll('[data-teacher-setup-target]')) {
+    button.addEventListener('click', () => openTeacherSetupTarget(button.dataset.teacherSetupTarget, button.dataset.teacherSetupPanel));
+  }
   $('cancelDeleteButton').addEventListener('click', () => { selectedDeleteId = null; $('deleteDialog').close(); });
   $('deleteDialog').addEventListener('cancel', event => { if (deleting) event.preventDefault(); else selectedDeleteId = null; });
   $('confirmDeleteButton').addEventListener('click', deleteClip);
@@ -1274,6 +1330,11 @@ function wireEvents() {
   vaultChannel?.addEventListener('message', () => syncVaultRevision());
   window.addEventListener('storage', event => { if (event.key === 'pe-loop-vault-revision') syncVaultRevision(); });
   document.addEventListener('visibilitychange', () => {
+    if (document.hidden && classroomUI) {
+      window.ClassroomToolsUI?.stopGps(classroomUI);
+      window.ClassroomToolsUI?.stopScanner(classroomUI);
+    }
+    if (document.hidden) deviceCheckUI?.interrupt('다른 앱으로 전환하거나 화면을 잠가 점검이 중단됐어요. 40분을 새로 측정해 주세요.');
     if (document.hidden) { $('referenceVideo').pause(); $('referencePlay').textContent = '시범 영상 재생'; if ($('teacherDialog').open) { closeTeacherAccess(); $('teacherDialog').close(); } cancelActiveSave('interrupted'); interruptCamera('앱이 화면에서 벗어나 촬영을 멈췄어요. 돌아온 뒤 다시 시작해 주세요.'); }
     else { syncVaultRevision(); refreshRetention(); }
   });
@@ -1306,6 +1367,13 @@ async function init() {
   classroomUI = new ClassroomUI({ repository, access: () => ({ key: teacherKey, revision: vaultConfig?.revision, unlocked: teacherUnlocked }), decryptMetadata, decryptClip });
   shotHistory = new ShotHistoryUI({ classroom: classroomUI, repository, access: () => ({ key: teacherKey, revision: vaultConfig?.revision, unlocked: teacherUnlocked }), context: currentShotContext,
     active: () => Boolean(poseUI?.sport === 'basketball' && shotSettings.enabled && poseUI?.enabled && poseUI?.running && cameraStream && captureLoop && !saving && !document.hidden && !$('teacherDialog').open && !$('clipDialog').open), decryptMetadata });
+  deviceCheckUI = new DeviceCheckUI({
+    access: () => teacherUnlocked && Boolean(teacherKey) && $('teacherDialog').open && !document.hidden,
+    openTeacher: () => { if (!appReady || saving) return; requestedTeacherPanel = 'device-check'; showTeacherDialog(); },
+    startCamera: async () => { $('teacherDialog').close(); await startCamera(); },
+    stopCamera: () => stopCamera({ preserveSession: true }),
+    capture: () => ({ active: Boolean(cameraStream && captureLoop), frameAt: frameHistory.at(-1)?.time - performance.timeOrigin, frames: frameHistory.length, bytes: frameBuffer.bytes, bufferMs: frameBuffer.duration }),
+  });
   setDelay(settings.delaySeconds || 20, { persist: false });
   $('cameraButton').disabled = true; $('teacherButton').disabled = true;
   wireEvents(); setupInstallPrompt(); setupReferenceVideo(); registerServiceWorker(); runLoops();

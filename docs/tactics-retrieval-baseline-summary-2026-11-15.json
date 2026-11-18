@@ -1,0 +1,77 @@
+{
+  "totals": {
+    "questions": 450,
+    "noCandidates": 176,
+    "totalCandidates": 1886,
+    "referenceHitQuestions": 203,
+    "referenceListMissing": 34,
+    "schoolRulesNotVerified": 274,
+    "wrongSportCards": 0,
+    "blockedCards": 0,
+    "scopeViolationCards": 0,
+    "browserMismatchQuestions": 0
+  },
+  "bySport": {
+    "basketball": {
+      "questions": 90,
+      "noCandidates": 30,
+      "totalCandidates": 445,
+      "referenceHitQuestions": 50,
+      "referenceListMissing": 0,
+      "schoolRulesNotVerified": 60,
+      "wrongSportCards": 0,
+      "blockedCards": 0,
+      "scopeViolationCards": 0,
+      "browserMismatchQuestions": 0
+    },
+    "volleyball": {
+      "questions": 90,
+      "noCandidates": 29,
+      "totalCandidates": 350,
+      "referenceHitQuestions": 33,
+      "referenceListMissing": 0,
+      "schoolRulesNotVerified": 61,
+      "wrongSportCards": 0,
+      "blockedCards": 0,
+      "scopeViolationCards": 0,
+      "browserMismatchQuestions": 0
+    },
+    "soccer": {
+      "questions": 90,
+      "noCandidates": 32,
+      "totalCandidates": 399,
+      "referenceHitQuestions": 50,
+      "referenceListMissing": 0,
+      "schoolRulesNotVerified": 58,
+      "wrongSportCards": 0,
+      "blockedCards": 0,
+      "scopeViolationCards": 0,
+      "browserMismatchQuestions": 0
+    },
+    "teeball": {
+      "questions": 90,
+      "noCandidates": 33,
+      "totalCandidates": 404,
+      "referenceHitQuestions": 34,
+      "referenceListMissing": 34,
+      "schoolRulesNotVerified": 57,
+      "wrongSportCards": 0,
+      "blockedCards": 0,
+      "scopeViolationCards": 0,
+      "browserMismatchQuestions": 0
+    },
+    "dodgeball": {
+      "questions": 90,
+      "noCandidates": 52,
+      "totalCandidates": 288,
+      "referenceHitQuestions": 36,
+      "referenceListMissing": 0,
+      "schoolRulesNotVerified": 38,
+      "wrongSportCards": 0,
+      "blockedCards": 0,
+      "scopeViolationCards": 0,
+      "browserMismatchQuestions": 0
+    }
+  },
+  "scenarioFamilies": 75
+}

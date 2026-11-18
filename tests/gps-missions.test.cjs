@@ -1,0 +1,46 @@
+const { test } = require('node:test');
+const assert = require('node:assert/strict');
+const crypto = require('node:crypto');
+const G = require('../gps-missions');
+const Q = require('../qr-missions');
+const now = 1800000000000;
+const rule = { target: { latitude: 37.5, longitude: 127 }, radiusM: 30, safeArea: { latitude: 37.5, longitude: 127, radiusM: 100 }, safetyReviewed: true };
+const fix = { latitude: 37.50001, longitude: 127, accuracy: 5, timestamp: now };
+test('GPS arrival requires reviewed safe boundaries, a recent accurate fix, and the whole accuracy circle inside the target', () => {
+  assert.deepEqual(G.verify(rule, fix, now), { verified: true });
+  for (const patch of [{ accuracy: 100 }, { timestamp: now - 31000 }, { timestamp: now + 6000 }, { latitude: 37.51 }, { longitude: NaN }]) assert.throws(() => G.verify(rule, { ...fix, ...patch }, now));
+  assert.throws(() => G.validate({ ...rule, safetyReviewed: false }));
+  assert.throws(() => G.validate({ ...rule, radiusM: 201 }));
+  assert.throws(() => G.validate({ ...rule, target: { latitude: 37.5008, longitude: 127 } }));
+  assert.throws(() => G.verify(rule, { ...fix, latitude: 37.5002, accuracy: 15 }, now), /오차/);
+  assert.ok(G.distance({ latitude: 0, longitude: 179.9999 }, { latitude: 0, longitude: -179.9999 }) < 30);
+});
+test('GPS mission responses record only arrival, preserve idempotent retries and cannot bypass a fix with a boolean', () => {
+  const state = Q.createState();
+  const created = Q.createMission(state, { classId: 'class-a', title: '도착 연습', activities: [{ id: 'station-1', kind: 'station', title: '확인', instructions: '안전한 곳에서 확인', gps: rule }] });
+  const session = Q.scan(state, created.qrPayload, 'class-a');
+  assert.deepEqual(session.activity.gps, rule);
+  const body = { responseId: crypto.randomUUID(), sessionId: session.sessionId, missionId: created.mission.id, classId: 'class-a', activityId: 'station-1', completed: true, locationVerified: true };
+  assert.throws(() => Q.respond(state, body, { now }));
+  const result = Q.respond(state, body, { locationFix: fix, now });
+  assert.equal(result.status.completed, true);
+  assert.equal(result.response.body.locationVerified, true);
+  assert.equal(Q.respond(state, body, { now }).duplicate, true);
+  const serialized = Q.serialize(state);
+  assert.ok(!serialized.includes('37.50001'), 'actual coordinates must not be stored');
+  assert.ok(!serialized.includes('accuracy'));
+  assert.equal(Q.deserialize(serialized).responses[0].body.locationVerified, true);
+  const invalid = JSON.parse(serialized); delete invalid.responses[0].body.locationVerified;
+  assert.throws(() => Q.deserialize(JSON.stringify(invalid)), /GPS/);
+});
+test('one-shot location handles refusal, cancellation, late answers, and unavailable secure contexts', async () => {
+  let requests = 0, later;
+  const geolocation = { getCurrentPosition(success) { requests++; later = success; } };
+  const controller = new AbortController();
+  const promise = G.locate({ geolocation, secure: true, signal: controller.signal });
+  controller.abort(); await assert.rejects(promise, /취소/);
+  later({ coords: fix, timestamp: now }); assert.equal(requests, 1);
+  await assert.rejects(G.locate({ geolocation, secure: false }), /HTTPS/);
+  assert.equal(requests, 1);
+  await assert.rejects(G.locate({ secure: true, geolocation: { getCurrentPosition(_ok, reject) { reject({ code: 1 }); } } }), /거부/);
+});

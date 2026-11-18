@@ -1,0 +1,143 @@
+const assert = require('node:assert/strict');
+const { once } = require('node:events');
+const fs = require('node:fs/promises');
+const { withBrowser } = require('./browser-helper.cjs');
+const { createTacticsHub } = require('../server/tactics-hub');
+const { createLocalAdvisor } = require('../server/tactics-llm');
+const secret = 'browser-test-local-admin-secret-only-12345';
+async function teacher(page) {
+  await page.locator('#teacherButton').click(); await page.locator('#unlockPin').fill('123456'); await page.locator('#unlockButton').click(); await page.locator('#teacherContentPanel').waitFor({ state: 'visible' }); await page.locator('[data-panel="classroom"]').click();
+}
+async function classroom(page, name) {
+  await teacher(page); await page.locator('#newClassName').fill(name); await page.locator('#addClassButton').click(); await page.locator('#tacticsServer').waitFor({ state: 'attached' });
+  await page.locator('.classroom-tool').nth(4).locator(':scope > summary').click();
+}
+(async () => {
+  const modelCalls = [];
+  const advisor = createLocalAdvisor({ model: 'browser-test-local-model', fetcher: async (_url, options) => {
+    const body = JSON.parse(options.body); modelCalls.push(body);
+    const request = JSON.parse(body.messages[1].content);
+    const firstReference = request.references[0];
+    return { ok: true, json: async () => ({ message: { content: JSON.stringify({ summary: '요청과 비슷한 실제 경기 사례를 찾았습니다.', caseMatches: firstReference ? [{ referenceId: firstReference.id, similarity: '요청과 검색 후보의 경기 맥락을 비교할 수 있습니다.' }] : [], comparisonLimit: '실제 선수 구성과 경기 맥락은 전술판에 포함되지 않았습니다.' }) } }) };
+  } });
+  const hub = createTacticsHub({ adminToken: secret, advisor }); hub.server.listen(0, '127.0.0.1'); await once(hub.server, 'listening');
+  const serverUrl = 'http://127.0.0.1:' + hub.server.address().port;
+  try {
+    await withBrowser(async (page, errors, baseUrl) => {
+      await classroom(page, '공유 테스트반');
+      await page.locator('.classroom-tool').nth(4).getByRole('button', { name: '팀 추가', exact: true }).click();
+      await page.waitForFunction(() => classroomUI.state.tacticsBoards[0].board.teams.length === 1);
+      await page.selectOption('#tacticsTeam', 'team-1');
+      await page.locator('.classroom-tool').nth(4).getByRole('button', { name: '익명 토큰 추가', exact: true }).click();
+      await page.waitForFunction(() => classroomUI.state.tacticsBoards[0].board.tokens.length === 1);
+      const originalId = await page.evaluate(() => classroomUI.state.tacticsBoards[0].id);
+      await page.locator('#tacticsReflection-planned').fill('전송하지 않을 로컬 회고');
+      const previousTools = await page.locator('#tacticsConnectedTools').elementHandle();
+      await page.locator('.classroom-tool').nth(4).getByRole('button', { name: '익명 회고 저장', exact: true }).click();
+      await page.waitForFunction(node => !node.isConnected, previousTools);
+      await page.locator('#tacticsServer').waitFor({ state: 'visible' });
+      assert.deepEqual(await page.locator('#tacticsAiSport option').allTextContents(), ['농구', '배구', '축구', '티볼', '피구']);
+      await page.selectOption('#tacticsAiSport', 'soccer');
+      assert.match(await page.locator('#tacticsAiSportInfo').textContent(), /실제 경기 분석 사례 30개/);
+      const tacticGuide = page.locator('#soccerTacticsGuide');
+      assert.equal(await tacticGuide.locator('h6').count(), 19);
+      await tacticGuide.locator('summary').click();
+      assert.match(await tacticGuide.textContent(), /높은·낮은 수비 블록 구분은 정확한 분류가 아닙니다/);
+      assert.match(await tacticGuide.textContent(), /침대 축구/);
+      assert.match(await tacticGuide.textContent(), /조나 미스타/);
+      assert.equal(await tacticGuide.locator('a[href="./docs/soccer-tactics-reference.md"]').count(), 1);
+      await page.selectOption('#tacticsAiSport', 'teeball'); assert.match(await page.locator('#tacticsAiSportInfo').textContent(), /실제 경기 기록 4개/); assert.equal(await page.locator('#tacticsAiSportInfo a').count(), 3);
+      await page.selectOption('#tacticsAiSport', 'dodgeball'); assert.match(await page.locator('#tacticsAiSportInfo').textContent(), /실제 경기 사례 6개/); assert.equal(await page.locator('#tacticsAiSportInfo a').count(), 3);
+      await page.selectOption('#tacticsAiSport', 'basketball');
+      await page.locator('#tacticsServer').fill(serverUrl); await page.locator('#tacticsAdmin').fill(secret);
+      await page.locator('#tacticsShareCreate').click();
+      await page.waitForFunction(() => !!classroomUI.state.tacticsBoards[0].share);
+      await page.locator('#tacticsShareEditInvite').click();
+      const editCode = await page.locator('#tacticsInviteCode').inputValue();
+      await page.locator('#tacticsShareReadInvite').click();
+      const readCode = await page.locator('#tacticsInviteCode').inputValue();
+      const peerContext = await page.context().browser().newContext({ viewport: { width: 1280, height: 900 } });
+      try {
+        const peer = await peerContext.newPage(); peer.on('pageerror', error => errors.push(error.message));
+        await peer.goto(baseUrl); await peer.waitForFunction(() => appReady);
+        await peer.locator('#teacherButton').click(); await peer.locator('#newPin').fill('123456'); await peer.locator('#confirmPin').fill('123456'); await peer.locator('#createPinButton').click(); await peer.locator('#teacherContentPanel').waitFor({ state: 'visible' }); await peer.locator('#teacherDialog .close-button').click();
+        await classroom(peer, '다른 기기 테스트반');
+        await peer.locator('#tacticsJoinCode').fill(editCode); await peer.locator('#tacticsShareJoin').click();
+        await peer.waitForFunction(() => classroomUI.state.tacticsBoards.length === 2);
+        assert.equal(await peer.evaluate(() => classroomUI.state.tacticsBoards[1].board.reflection.planned), '');
+        await peer.selectOption('#tacticsToken', 'token-1'); await peer.locator('#tacticsX2').fill('300'); await peer.locator('#tacticsY2').fill('200');
+        await peer.locator('.classroom-tool').nth(4).getByRole('button', { name: '선택 토큰 좌표 이동', exact: true }).click();
+        await peer.waitForFunction(() => classroomUI.state.tacticsBoards[1].board.tokens[0].x === 300);
+        await peerContext.setOffline(true);
+        await peer.locator('#tacticsSharePublish').click();
+        await peer.waitForFunction(() => document.querySelector('#tacticsNetworkStatus').textContent.includes('네트워크'));
+        assert.equal(await peer.evaluate(() => classroomUI.state.tacticsBoards[1].share.version), 1);
+        await peerContext.setOffline(false);
+
+        let savedBeforeFailure = false;
+        const publishUrl = serverUrl + '/tactics/v1/boards/**';
+        await page.route(publishUrl, async route => {
+          if (route.request().method() !== 'PUT' || savedBeforeFailure) return route.continue();
+          const result = await route.fetch();
+          assert.equal(result.status(), 200);
+          savedBeforeFailure = true;
+          await route.fulfill({ status: 502, headers: { 'Access-Control-Allow-Origin': baseUrl }, body: 'Synthetic gateway failure after commit' });
+        });
+        await page.locator('#tacticsSharePublish').click();
+        await page.waitForFunction(() => classroomUI.state.tacticsBoards[0].share.version === 2);
+        assert.equal(savedBeforeFailure, true);
+        await page.waitForFunction(() => document.querySelector('#classroomStatus').textContent.includes('같은 배치'));
+        await page.unroute(publishUrl);
+        await peer.locator('#tacticsSharePublish').click(); await peer.waitForFunction(() => document.querySelector('#tacticsNetworkStatus').textContent.includes('다른 기기'));
+        assert.equal(await peer.evaluate(() => classroomUI.state.tacticsBoards[1].board.tokens[0].x), 300, 'conflict preserves the local draft');
+        await peer.locator('#tacticsSharePull').click(); await peer.waitForFunction(() => classroomUI.state.tacticsBoards.length === 3);
+        assert.equal(await peer.evaluate(() => classroomUI.state.tacticsBoards[2].board.tokens[0].x), 100);
+        assert.equal(await peer.evaluate(() => classroomUI.state.tacticsBoards[1].board.tokens[0].x), 300);
+        await peer.locator('#tacticsJoinCode').fill(readCode); await peer.locator('#tacticsShareJoin').click(); await peer.waitForFunction(() => classroomUI.state.tacticsBoards.length === 4);
+        assert.equal(await peer.locator('#tacticsSharePublish').isDisabled(), true);
+        await peer.evaluate(() => { window.confirm = () => true; }); await peer.locator('#tacticsShareDetach').click();
+        await peer.waitForFunction(() => !classroomUI.state.tacticsBoards[3].share);
+        assert.equal(await peer.locator('#tacticsShareCreate').isVisible(), true);
+      } finally { await peerContext.close(); }
+      await page.selectOption('#tacticsAiMode', 'server');
+      await page.locator('#tacticsAiRequest').fill('상대가 강하게 압박하는 상황에서 첫 패스 선택이 비슷한 실제 경기 사례를 찾아 주세요.');
+      await page.locator('#tacticsAiSuggest').click();
+      assert.match(await page.locator('#tacticsNetworkStatus').textContent(), /전송 범위/); assert.equal(modelCalls.length, 0);
+      await page.locator('#tacticsAiConsent').check();
+      await page.evaluate(() => classroomUI.state.students.push({ classId: classroomUI.classId, id: 'known-student-id', name: '민준', number: '8' }));
+      await page.locator('#tacticsAiRequest').fill('민준 학생이 압박을 받을 때 첫 패스 선택을 알고 싶어요.'); await page.locator('#tacticsAiSuggest').click();
+      assert.match(await page.locator('#tacticsNetworkStatus').textContent(), /학생 이름/); assert.equal(modelCalls.length, 0);
+      await page.locator('#tacticsAiRequest').fill('상대가 강하게 압박하는 상황에서 첫 패스 선택이 비슷한 실제 경기 사례를 찾아 주세요.'); await page.locator('#tacticsAiSuggest').click();
+      await page.waitForFunction(() => document.querySelector('#tacticsAiOutput').textContent.includes('경기 사례:'));
+      assert.match(await page.locator('#tacticsAiOutput').textContent(), /관련성:|규칙 확인:/);
+      assert.equal(modelCalls.length, 1);
+      const sentRequest = JSON.parse(modelCalls[0].messages[1].content);
+      assert.equal(sentRequest.request.request, '상대가 강하게 압박하는 상황에서 첫 패스 선택이 비슷한 실제 경기 사례를 찾아 주세요.');
+      assert.ok(sentRequest.references.length > 0 && sentRequest.references.length <= 8);
+      assert.ok(sentRequest.references.every(row => row.sport === 'basketball' && row.sourceUrl.startsWith('https://') && ['verified', 'article-checked'].includes(row.factStatus) && row.candidateGrade !== 'C'));
+      assert.ok(!JSON.stringify(modelCalls).includes('전송하지 않을'));
+      assert.ok(!JSON.stringify(modelCalls).includes('민준'));
+      assert.ok(!JSON.stringify(modelCalls).includes('공유 테스트반'));
+      await page.locator('#tacticsAiSaveExample').click(); assert.match(await page.locator('#tacticsNetworkStatus').textContent(), /확인한/);
+      await page.locator('#tacticsAiReviewed').check(); await page.locator('#tacticsAiSaveExample').click();
+      await page.waitForFunction(() => document.querySelector('#tacticsNetworkStatus').textContent.includes('저장했어요'));
+      const download = page.waitForEvent('download'); await page.locator('#tacticsAiExportExamples').click();
+      const file = await download, exported = await fs.readFile(await file.path(), 'utf8');
+      assert.equal(JSON.parse(exported).messages.at(-1).role, 'assistant'); assert.ok(!exported.includes('전송하지 않을'));
+      const encrypted = await page.evaluate(async () => JSON.stringify(await repository.classroomRead(vaultConfig.revision)));
+      assert.ok(!encrypted.includes(secret)); assert.ok(!encrypted.includes('readToken'));
+      await page.locator('.classroom-tool').nth(4).getByRole('button', { name: '현재 전술판 복제', exact: true }).click();
+      await page.waitForFunction(() => classroomUI.state.tacticsBoards.length === 2);
+      assert.equal(await page.evaluate(() => classroomUI.state.tacticsBoards[1].share), undefined);
+      await page.locator('.classroom-tool').nth(4).getByRole('button', { name: '새 빈 전술판 추가', exact: true }).click();
+      await page.waitForFunction(() => classroomUI.state.tacticsBoards.length === 3);
+      assert.equal(await page.evaluate(() => classroomUI.state.tacticsBoards[2].board.tokens.length), 0);
+      await page.selectOption('#tacticsBoardChoice', originalId);
+      await page.evaluate(() => { window.confirm = () => true; }); await page.locator('#tacticsShareRevoke').click();
+      await page.waitForFunction(() => !classroomUI.state.tacticsBoards[0].share);
+      await page.locator('#teacherLockButton').click(); assert.equal(await page.evaluate(() => classroomUI.tacticsAdminToken), null);
+      assert.deepEqual(errors, []);
+      console.log('Two isolated browser profiles: encrypted sharing, offline and lost-response recovery, edit/read rights, conflict/local draft preservation, latest-copy import, revoke, PIN cleanup and mock local-model flow passed.');
+    });
+  } finally { await new Promise(resolve => hub.server.close(resolve)); }
+})().catch(error => { console.error(error); process.exitCode = 1; });

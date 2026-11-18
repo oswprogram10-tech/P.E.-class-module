@@ -1,0 +1,58 @@
+name: PELoopAppleStudent
+options:
+  bundleIdPrefix: org.oswprogram10.peloop
+  deploymentTarget:
+    iOS: "16.0"
+    watchOS: "9.0"
+settings:
+  base:
+    SWIFT_VERSION: "5.9"
+    DEVELOPMENT_TEAM: ""
+    CODE_SIGN_STYLE: Automatic
+targets:
+  StudentPhone:
+    type: application
+    platform: iOS
+    sources:
+      - path: Shared
+      - path: StudentPhone
+    info:
+      path: StudentPhone/Info.plist
+    dependencies:
+      - target: StudentWatchApp
+        embed: true
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: org.oswprogram10.peloop.studentcompanion
+        IPHONEOS_DEPLOYMENT_TARGET: "16.0"
+        TARGETED_DEVICE_FAMILY: "1"
+        SWIFT_STRICT_CONCURRENCY: minimal
+  StudentWatchApp:
+    type: watchkit2-app
+    platform: watchOS
+    info:
+      path: StudentWatch/WatchAppInfo.plist
+    dependencies:
+      - target: StudentWatchExtension
+        embed: true
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: org.oswprogram10.peloop.studentcompanion.watchkitapp
+        WATCHOS_DEPLOYMENT_TARGET: "9.0"
+        TARGETED_DEVICE_FAMILY: "4"
+  StudentWatchExtension:
+    type: watchkit2-extension
+    platform: watchOS
+    sources:
+      - path: Shared
+      - path: StudentWatch
+    info:
+      path: StudentWatch/WatchExtensionInfo.plist
+    entitlements:
+      path: StudentWatch/StudentWatch.entitlements
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: org.oswprogram10.peloop.studentcompanion.watchkitapp.extension
+        WATCHOS_DEPLOYMENT_TARGET: "9.0"
+        TARGETED_DEVICE_FAMILY: "4"
+        SWIFT_STRICT_CONCURRENCY: minimal

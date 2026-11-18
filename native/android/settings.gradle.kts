@@ -15,4 +15,4 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "PELoopWearableRelay"
-include(":app")
+include(":app", ":studentPhone", ":wear")

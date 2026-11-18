@@ -32,6 +32,9 @@ test('four-year model cutoff and heart-rate capability are enforced', () => {
   assert.throws(() => Core.validateDevice({ ...galaxy, heartRateAvailable: false }, nowAt), /심박수/);
   assert.throws(() => Core.validateDevice({ ...galaxy, releaseDate: '2027-01-01' }, nowAt), /출시일/);
   assert.deepEqual({ ...Core.validateDevice(galaxy, nowAt) }, { platform: 'galaxy-watch', model: 'Galaxy Watch Test', releaseDate: '2023-07-01' });
+  const apple = { platform: 'apple-watch', model: 'Apple Watch (2023 candidate)', releaseDate: '2023-09-22', heartRateAvailable: true };
+  assert.deepEqual({ ...Core.validateDevice(apple, nowAt) }, { platform: 'apple-watch', model: 'Apple Watch (2023 candidate)', releaseDate: '2023-09-22' });
+  assert.throws(() => Core.validateDevice({ ...apple, releaseDate: '2022-09-23' }, nowAt), /출시일/);
 });
 
 test('pairing QR accepts only private-LAN, pinned, short-lived one-time invitations', () => {

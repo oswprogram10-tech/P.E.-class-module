@@ -1,0 +1,4440 @@
+{
+  "cpuMax": "200000 100000",
+  "affinity": "0-1",
+  "startedAt": "2026-11-17T01:06:30.144Z",
+  "sampling": "Each sport: lexicographically first prior positive with partial status (otherwise first positive); then first candidate-status prior positive in a different family (otherwise first positive in a different family); then first prior noCandidates. Prior results determine strata, not correctness. 15/450 exploratory sample, not a census.",
+  "sourceSha256": {
+    "tactics-search-local.js": "d39043bf518bddb818f6494110c7bf079d35d03bb489303f178fb93af08ae71a",
+    "tactics-local-advisor.js": "63143366c1c5031d2713cb611de27e9fb6a63d8754b165bb02f9848efdca74ea",
+    "tactics-local-prompt.js": "d8c2b3480f4432bc75a955bd8cc718d0f9f90481fa72046c8e68b3c258f91e33",
+    "scripts/manual/tactics-candidate-plan-3b.cjs": "0a1694150ee6896d2c056af166296bd3290c2c841e77256a9d654b2d88cd3377",
+    "vendor/wllama-v3/index.js": "fffd95c16ca191f31f4303664a05189c43d0cb20c52b67276c04e8857b138b64",
+    "vendor/wllama-v3/wasm/wllama.wasm": "79ac5be917b71d50571a4f584436a9f6baf6b6e57719d094ed8bd950e9a65780",
+    "vendor/wllama-v3/compat/wllama.wasm": "35df8c1e2f7dbd74b8e8b01054fb9f1fbe86cf566945fbf4cef3965855a8b92e",
+    "vendor/hf-tokenizers/tokenizers.mjs": "1c4a848f86156201c033d6cd08c4cf81ae1088552acec3367f31ef086edf5af0",
+    "vendor/qwen-tokenizer/tokenizer.json": "c0382117ea329cdf097041132f6d735924b697924d6f6fc3945713e96ce87539",
+    "vendor/qwen-tokenizer/tokenizer_config.json": "5b5d4f65d0acd3b2d56a35b56d374a36cbc1c8fa5cf3b3febbbfabf22f359583"
+  },
+  "model": {
+    "path": "/tmp/pe-wllama-review/qwen.gguf",
+    "bytes": 2104932768,
+    "sha256": "626b4a6678b86442240e33df819e00132d3ba7dddfe1cdc4fbb18e0a9615c62d"
+  },
+  "sample": [
+    {
+      "question_id": "empty",
+      "kind": "noCandidate",
+      "sport": "basketball",
+      "question": "바다에서 고래가 노래하는 장면을 찾아주세요."
+    },
+    {
+      "question_id": "multiple",
+      "kind": "multiple",
+      "sport": "teeball",
+      "question": "티볼 주자가 달리다 송구를 보고 되돌아가는 경기 사례를 비교해 주세요."
+    },
+    {
+      "question_id": "shared-skill",
+      "kind": "shared-skill",
+      "sport": "teeball",
+      "question": "티볼에서 타구를 잡은 수비수가 주자보다 먼저 베이스에 송구하는 장면을 비교해 주세요."
+    }
+  ],
+  "results": [
+    {
+      "questionId": "empty",
+      "kind": "noCandidate",
+      "sport": "basketball",
+      "startedAt": "2026-11-17T01:06:37.646Z",
+      "browser": {
+        "progress": [],
+        "prepared": [],
+        "allowedIds": [],
+        "preBudgetIds": [],
+        "promptIds": [],
+        "plan": null,
+        "promptRefs": [],
+        "inputTokens": null,
+        "tokenizerTokens": null,
+        "tokenReserve": 4,
+        "inputBudget": 512,
+        "result": {
+          "summary": "요청과 가까운 경기 자료를 찾지 못했습니다.",
+          "cases": [],
+          "comparisonLimit": "자료에 기록된 조건만 비교할 수 있습니다. 빠진 조건과 수업 규칙의 차이를 확인하세요.",
+          "model": "Qwen2.5-3B-Instruct Q4_K_M",
+          "modelUsed": false,
+          "resultKind": "retrieval",
+          "generatedAt": 1794877597658
+        },
+        "retrievalReferenceFieldsPreserved": [],
+        "calls": {
+          "loads": 0,
+          "completions": 0,
+          "raw": "",
+          "finish": null
+        }
+      },
+      "latencyMs": 16
+    },
+    {
+      "questionId": "multiple",
+      "kind": "multiple",
+      "sport": "teeball",
+      "startedAt": "2026-11-17T01:08:05.388Z",
+      "browser": {
+        "progress": [
+          {
+            "at": 1794877685419,
+            "phase": "tokenizing",
+            "message": "검색 후보의 입력 길이를 확인하는 중"
+          },
+          {
+            "at": 1794877686001,
+            "phase": "loading",
+            "message": "모델을 기기 메모리에 여는 중"
+          },
+          {
+            "at": 1794877717912,
+            "phase": "prefill",
+            "message": "모델이 입력을 처리하는 중",
+            "received": 492,
+            "total": 512
+          },
+          {
+            "at": 1794877828329,
+            "phase": "prefill",
+            "message": "모델이 입력을 처리하는 중",
+            "received": 0,
+            "total": 488
+          },
+          {
+            "at": 1794877933888,
+            "phase": "prefill",
+            "message": "모델이 입력을 처리하는 중",
+            "received": 128,
+            "total": 488
+          },
+          {
+            "at": 1794878037785,
+            "phase": "prefill",
+            "message": "모델이 입력을 처리하는 중",
+            "received": 256,
+            "total": 488
+          },
+          {
+            "at": 1794878130577,
+            "phase": "prefill",
+            "message": "모델이 입력을 처리하는 중",
+            "received": 384,
+            "total": 488
+          },
+          {
+            "at": 1794878132452,
+            "phase": "prefill",
+            "message": "모델이 입력을 처리하는 중",
+            "received": 488,
+            "total": 488
+          },
+          {
+            "at": 1794878133744,
+            "phase": "generating",
+            "message": "기기에서 사례를 선택하는 중",
+            "received": 1
+          },
+          {
+            "at": 1794878134900,
+            "phase": "generating",
+            "message": "기기에서 사례를 선택하는 중",
+            "received": 2
+          },
+          {
+            "at": 1794878136053,
+            "phase": "generating",
+            "message": "기기에서 사례를 선택하는 중",
+            "received": 3
+          },
+          {
+            "at": 1794878137233,
+            "phase": "generating",
+            "message": "기기에서 사례를 선택하는 중",
+            "received": 4
+          },
+          {
+            "at": 1794878138442,
+            "phase": "generating",
+            "message": "기기에서 사례를 선택하는 중",
+            "received": 5
+          },
+          {
+            "at": 1794878139607,
+            "phase": "generating",
+            "message": "기기에서 사례를 선택하는 중",
+            "received": 6
+          },
+          {
+            "at": 1794878140873,
+            "phase": "generating",
+            "message": "기기에서 사례를 선택하는 중",
+            "received": 7
+          },
+          {
+            "at": 1794878142074,
+            "phase": "generating",
+            "message": "기기에서 사례를 선택하는 중",
+            "received": 8
+          },
+          {
+            "at": 1794878143260,
+            "phase": "generating",
+            "message": "기기에서 사례를 선택하는 중",
+            "received": 9
+          },
+          {
+            "at": 1794878144440,
+            "phase": "generating",
+            "message": "기기에서 사례를 선택하는 중",
+            "received": 10
+          },
+          {
+            "at": 1794878145842,
+            "phase": "generating",
+            "message": "기기에서 사례를 선택하는 중",
+            "received": 11
+          },
+          {
+            "at": 1794878147083,
+            "phase": "generating",
+            "message": "기기에서 사례를 선택하는 중",
+            "received": 12
+          },
+          {
+            "at": 1794878148463,
+            "phase": "generating",
+            "message": "기기에서 사례를 선택하는 중",
+            "received": 13
+          },
+          {
+            "at": 1794878149702,
+            "phase": "generating",
+            "message": "기기에서 사례를 선택하는 중",
+            "received": 14
+          },
+          {
+            "at": 1794878150904,
+            "phase": "generating",
+            "message": "기기에서 사례를 선택하는 중",
+            "received": 15
+          },
+          {
+            "at": 1794878152183,
+            "phase": "generating",
+            "message": "기기에서 사례를 선택하는 중",
+            "received": 16
+          },
+          {
+            "at": 1794878153465,
+            "phase": "generating",
+            "message": "기기에서 사례를 선택하는 중",
+            "received": 17
+          },
+          {
+            "at": 1794878153467,
+            "phase": "generating",
+            "message": "기기에서 사례를 선택하는 중",
+            "received": 18
+          }
+        ],
+        "prepared": [
+          {
+            "id": "teeball_case_01",
+            "sport": "teeball",
+            "goal": "any",
+            "title": "3루 주자 플라이 아웃 뒤 우익수 송구로 태그업 저지",
+            "observed": "2016년 간토 친선대회 아오바 미도리히가시-조후 리틀전에서 3루 주자가 있는 상황에 우익수 뜬공이 나왔다. 아오바 미도리히가시의 우익수는 태그업을 시도한 주자를 정확한 송구로 아웃시켰다. 팀 감독은 이 플레이가 경기 흐름을 바꿨다고 회고했다.",
+            "context": "3루 주자와 외야 플라이 뒤 송구를 다룬 팀 사례다. 보도에는 송구 목적지, 거리, 아웃 판정의 세부 순서가 없다. 주자 속도·수비 숙련도와 해당 대회 규칙을 확인해야 하며, 한 번의 성공을 일반적인 선택으로 보지 않는다.",
+            "tacticTags": [
+              "티볼",
+              "외야 송구",
+              "태그업 수비"
+            ],
+            "sourceTitle": "ティーボール 青葉緑東が関東初優勝 出場７回目で悲願達成 | 青葉区 | タウンニュース",
+            "sourceUrl": "https://www.townnews.co.jp/0101/2016/06/09/335314.html",
+            "reviewStatus": "draft",
+            "candidateGrade": "A",
+            "factStatus": "verified",
+            "relevance": "partial",
+            "relevanceExplanation": "기록된 행동 중 일부만 요청과 겹칩니다.",
+            "matchedConditions": [
+              "throw",
+              "running"
+            ],
+            "differingConditions": [],
+            "unmatchedConditions": [
+              "movement",
+              "direction"
+            ],
+            "ruleStatus": "not-compared",
+            "ruleExplanation": "학교 규칙과의 일치는 확인하지 않았습니다."
+          },
+          {
+            "id": "TBX-18",
+            "sport": "baseball",
+            "sourceSport": "baseball",
+            "targetSport": "teeball",
+            "comparisonType": "shared-skill",
+            "title": "동료가 중계자의 송구 대상을 알려줌",
+            "observed": "Turang이 송구 대상을 알려주자 Ortiz가 중계 송구를 이어갔다.",
+            "context": "Brewers–Dodgers, NLCS Game 1 · 4회 · 여러 중계자의 콜이 충돌해 외야수가 망설인 조건은 아님; 태그업·포스 아웃·득점 판단은 비교하지 않음",
+            "sourceTitle": "MLB.com",
+            "sourceUrl": "https://www.mlb.com/amp/news/near-home-run-in-nlcs-game-1-causes-chaos-on-basepaths.html",
+            "evidenceLocator": "본문 33–35행; Turang의 대상 전달·Ortiz의 수신 회고",
+            "claimCheckStatus": "article-checked",
+            "factStatus": "article-checked",
+            "candidateGrade": "A",
+            "reviewStatus": "draft",
+            "aiUseBlocked": false,
+            "pilotMaterialReviewStatus": "accepted",
+            "videoReviewStatus": "not-viewed",
+            "matchDateStatus": "not-separately-verified; 기사 게시일과 경기일은 별도",
+            "educatorReviewStatus": "pending",
+            "expertReviewStatus": "pending",
+            "reuseStatus": "not-checked",
+            "limitations": [
+              "여러 중계자의 콜이 충돌해 외야수가 망설인 조건은 아님; 태그업·포스 아웃·득점 판단은 비교하지 않음"
+            ],
+            "scopes": [
+              {
+                "questionId": "TE-14-05",
+                "purpose": "scene-comparison",
+                "supported": "뒤 동료가 중계자의 송구 대상을 정해 전달",
+                "missing": "여러 콜의 충돌이나 외야수의 망설임은 기록에 없음",
+                "ruleScope": "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외",
+                "relevance": "partial",
+                "matchedConditions": [
+                  "throw"
+                ],
+                "differingConditions": []
+              }
+            ],
+            "sceneScopes": [
+              {
+                "questionId": "TE-14-05",
+                "purpose": "scene-comparison",
+                "supported": "뒤 동료가 중계자의 송구 대상을 정해 전달",
+                "missing": "여러 콜의 충돌이나 외야수의 망설임은 기록에 없음",
+                "ruleScope": "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외",
+                "relevance": "partial",
+                "matchedConditions": [
+                  "throw"
+                ],
+                "differingConditions": []
+              }
+            ],
+            "relevance": "partial",
+            "relevanceExplanation": "요청의 일부 행동만 자료의 장면 비교 범위와 겹칩니다.",
+            "matchedConditions": [
+              "throw"
+            ],
+            "differingConditions": [],
+            "unmatchedConditions": [
+              "movement",
+              "direction",
+              "running"
+            ],
+            "ruleStatus": "unconfirmed",
+            "ruleExplanation": "요청의 규칙 적용과 판정은 확인되지 않았습니다."
+          },
+          {
+            "id": "TBX-03",
+            "sport": "baseball",
+            "sourceSport": "baseball",
+            "targetSport": "teeball",
+            "comparisonType": "shared-skill",
+            "title": "타구 백업에서 중계로",
+            "observed": "Kwan이 뒤에서 타구를 회수해 Rocchio에게 연결했고 Rocchio가 다음 송구를 했다.",
+            "context": "Guardians–Yankees · 8회 · 타구 백업 장면이며 악송구 백업 장면은 아님; 벽 반사·거리 차이와 홈 판정은 적용 범위 밖",
+            "sourceTitle": "MLB.com",
+            "sourceUrl": "https://www.mlb.com/news/lane-thomas-guardians-12-inning-win-over-yankees",
+            "evidenceLocator": "본문 130–131행; Kwan·Rocchio의 중계 설명",
+            "claimCheckStatus": "article-checked",
+            "factStatus": "article-checked",
+            "candidateGrade": "A",
+            "reviewStatus": "draft",
+            "aiUseBlocked": false,
+            "pilotMaterialReviewStatus": "accepted",
+            "videoReviewStatus": "not-viewed",
+            "matchDateStatus": "not-separately-verified; 게시일을 경기일로 전용하지 않음",
+            "educatorReviewStatus": "pending",
+            "expertReviewStatus": "pending",
+            "reuseStatus": "not-checked",
+            "limitations": [
+              "타구 백업 장면이며 악송구 백업 장면은 아님; 벽 반사·거리 차이와 홈 판정은 적용 범위 밖"
+            ],
+            "scopes": [
+              {
+                "questionId": "TE-10-05",
+                "purpose": "scene-comparison",
+                "supported": "타구 위치와 송구 연결",
+                "missing": "옆으로 구른 타구에 따른 중계자 위치 변경은 불명",
+                "ruleScope": "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외",
+                "relevance": "partial",
+                "matchedConditions": [
+                  "throw"
+                ],
+                "differingConditions": []
+              }
+            ],
+            "sceneScopes": [
+              {
+                "questionId": "TE-10-05",
+                "purpose": "scene-comparison",
+                "supported": "타구 위치와 송구 연결",
+                "missing": "옆으로 구른 타구에 따른 중계자 위치 변경은 불명",
+                "ruleScope": "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외",
+                "relevance": "partial",
+                "matchedConditions": [
+                  "throw"
+                ],
+                "differingConditions": []
+              }
+            ],
+            "relevance": "partial",
+            "relevanceExplanation": "요청의 일부 행동만 자료의 장면 비교 범위와 겹칩니다.",
+            "matchedConditions": [
+              "throw"
+            ],
+            "differingConditions": [],
+            "unmatchedConditions": [
+              "movement",
+              "direction",
+              "running"
+            ],
+            "ruleStatus": "unconfirmed",
+            "ruleExplanation": "요청의 규칙 적용과 판정은 확인되지 않았습니다."
+          },
+          {
+            "id": "TBX-19",
+            "sport": "baseball",
+            "sourceSport": "baseball",
+            "targetSport": "teeball",
+            "comparisonType": "shared-skill",
+            "title": "중계 수신 실패 뒤 백업 부재",
+            "observed": "중계 송구를 Smith가 잡지 못했고 뒤쪽 백업도 없었다.",
+            "context": "Dodgers–Rays, World Series Game 4 · 9회 · 외야수의 후속 이동은 불명이며 성공적인 연속 백업 장면은 아님; Jansen의 직책이 아닌 타격 뒤 지원 역할만 비교",
+            "sourceTitle": "MLB.com",
+            "sourceUrl": "https://www.mlb.com/news/world-series-game-4-2020-recap",
+            "evidenceLocator": "본문 168–175행; 중계 송구·수신 실패·백업 부재",
+            "claimCheckStatus": "article-checked",
+            "factStatus": "article-checked",
+            "candidateGrade": "A",
+            "reviewStatus": "draft",
+            "aiUseBlocked": false,
+            "pilotMaterialReviewStatus": "accepted",
+            "videoReviewStatus": "not-viewed",
+            "matchDateStatus": "not-separately-verified; 기사 게시일과 경기일은 별도",
+            "educatorReviewStatus": "pending",
+            "expertReviewStatus": "pending",
+            "reuseStatus": "not-checked",
+            "limitations": [
+              "외야수의 후속 이동은 불명이며 성공적인 연속 백업 장면은 아님; Jansen의 직책이 아닌 타격 뒤 지원 역할만 비교"
+            ],
+            "scopes": [
+              {
+                "questionId": "TE-13-04",
+                "purpose": "scene-comparison",
+                "supported": "중계 송구의 수신 실패와 뒤쪽 백업 부재",
+                "missing": "외야수의 후속 이동은 불명이며 성공적으로 백업을 계속한 장면은 아님",
+                "ruleScope": "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외",
+                "relevance": "partial",
+                "matchedConditions": [],
+                "differingConditions": [
+                  "throw"
+                ]
+              }
+            ],
+            "sceneScopes": [
+              {
+                "questionId": "TE-13-04",
+                "purpose": "scene-comparison",
+                "supported": "중계 송구의 수신 실패와 뒤쪽 백업 부재",
+                "missing": "외야수의 후속 이동은 불명이며 성공적으로 백업을 계속한 장면은 아님",
+                "ruleScope": "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외",
+                "relevance": "partial",
+                "matchedConditions": [],
+                "differingConditions": [
+                  "throw"
+                ]
+              }
+            ],
+            "relevance": "partial",
+            "relevanceExplanation": "요청의 일부 행동만 자료의 장면 비교 범위와 겹칩니다.",
+            "matchedConditions": [],
+            "differingConditions": [
+              "throw"
+            ],
+            "unmatchedConditions": [
+              "movement",
+              "direction",
+              "running"
+            ],
+            "ruleStatus": "unconfirmed",
+            "ruleExplanation": "요청의 규칙 적용과 판정은 확인되지 않았습니다."
+          },
+          {
+            "id": "TBX-12",
+            "sport": "baseball",
+            "sourceSport": "baseball",
+            "targetSport": "teeball",
+            "comparisonType": "shared-skill",
+            "title": "중계 수신·회전과 뒤쪽 백업 이동",
+            "observed": "Guillorme가 중계 공을 받아 돌아서 송구했다. Lugo는 홈 뒤 백업 위치로 달려갔다.",
+            "context": "Mets–Cubs · 9회 · Lugo의 투구 역할 대신 타격 뒤 가용 수비수의 지원 역할만 비교; 실제 악송구나 수신 실패를 회수한 장면은 아님",
+            "sourceTitle": "MLB.com",
+            "sourceUrl": "https://www.mlb.com/news/mets-relay-throws-out-cubs-jake-marisnick-at-home",
+            "evidenceLocator": "본문 108–110행; 홈 뒤 백업 이동·Pillar–Guillorme 연결",
+            "claimCheckStatus": "article-checked",
+            "factStatus": "article-checked",
+            "candidateGrade": "A",
+            "reviewStatus": "draft",
+            "aiUseBlocked": false,
+            "pilotMaterialReviewStatus": "accepted",
+            "videoReviewStatus": "not-viewed",
+            "matchDateStatus": "not-separately-verified; 게시일과 경기일을 별도 필드로 유지",
+            "educatorReviewStatus": "pending",
+            "expertReviewStatus": "pending",
+            "reuseStatus": "not-checked",
+            "limitations": [
+              "Lugo의 투구 역할 대신 타격 뒤 가용 수비수의 지원 역할만 비교; 실제 악송구나 수신 실패를 회수한 장면은 아님"
+            ],
+            "scopes": [
+              {
+                "questionId": "TE-10-04",
+                "purpose": "scene-comparison",
+                "supported": "중계자가 수신 후 회전해 다음 송구",
+                "missing": "방향을 몰라 여러 번 돌았던 문제 상황과는 다름",
+                "ruleScope": "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외",
+                "relevance": "candidate",
+                "matchedConditions": [
+                  "throw",
+                  "direction"
+                ],
+                "differingConditions": []
+              },
+              {
+                "questionId": "TE-13-06",
+                "purpose": "scene-comparison",
+                "supported": "중계 송구와 다른 수비수의 뒤쪽 백업 이동",
+                "missing": "백업을 양방향으로 나눴거나 한 명에게 집중한 조건은 불명",
+                "ruleScope": "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외",
+                "relevance": "partial",
+                "matchedConditions": [
+                  "throw",
+                  "movement"
+                ],
+                "differingConditions": []
+              }
+            ],
+            "sceneScopes": [
+              {
+                "questionId": "TE-10-04",
+                "purpose": "scene-comparison",
+                "supported": "중계자가 수신 후 회전해 다음 송구",
+                "missing": "방향을 몰라 여러 번 돌았던 문제 상황과는 다름",
+                "ruleScope": "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외",
+                "relevance": "candidate",
+                "matchedConditions": [
+                  "throw",
+                  "direction"
+                ],
+                "differingConditions": []
+              },
+              {
+                "questionId": "TE-13-06",
+                "purpose": "scene-comparison",
+                "supported": "중계 송구와 다른 수비수의 뒤쪽 백업 이동",
+                "missing": "백업을 양방향으로 나눴거나 한 명에게 집중한 조건은 불명",
+                "ruleScope": "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외",
+                "relevance": "partial",
+                "matchedConditions": [
+                  "throw",
+                  "movement"
+                ],
+                "differingConditions": []
+              }
+            ],
+            "relevance": "partial",
+            "relevanceExplanation": "요청의 일부 행동만 자료의 장면 비교 범위와 겹칩니다.",
+            "matchedConditions": [
+              "throw",
+              "direction",
+              "movement"
+            ],
+            "differingConditions": [],
+            "unmatchedConditions": [
+              "running"
+            ],
+            "ruleStatus": "unconfirmed",
+            "ruleExplanation": "요청의 규칙 적용과 판정은 확인되지 않았습니다."
+          },
+          {
+            "id": "TBX-01",
+            "sport": "baseball",
+            "sourceSport": "baseball",
+            "targetSport": "teeball",
+            "comparisonType": "shared-skill",
+            "title": "중계 위치·회전",
+            "observed": "Kirilloff는 우측으로 이동한 Correa에게 연결했다. Correa는 돌아서 송구했고 Julien은 2루를 맡았다.",
+            "context": "Twins–Dodgers · 7회 초 · 학생의 송구 능력·수비 인원·거리와 맞춰 비교; 홈 아웃 판정은 비교 범위에서 제외",
+            "sourceTitle": "MLB.com",
+            "sourceUrl": "https://www.mlb.com/news/carlos-correa-throws-out-shohei-ohtani-as-twins-beat-dodgers",
+            "evidenceLocator": "Correa positions and throws; 본문 110, 120, 132–133행",
+            "claimCheckStatus": "article-checked",
+            "factStatus": "article-checked",
+            "candidateGrade": "A",
+            "reviewStatus": "draft",
+            "aiUseBlocked": false,
+            "pilotMaterialReviewStatus": "accepted",
+            "videoReviewStatus": "not-viewed",
+            "matchDateStatus": "not-separately-verified; 게시일을 경기일로 전용하지 않음",
+            "educatorReviewStatus": "pending",
+            "expertReviewStatus": "pending",
+            "reuseStatus": "not-checked",
+            "limitations": [
+              "학생의 송구 능력·수비 인원·거리와 맞춰 비교; 홈 아웃 판정은 비교 범위에서 제외"
+            ],
+            "scopes": [
+              {
+                "questionId": "TE-10-01",
+                "purpose": "scene-comparison",
+                "supported": "중계자를 거친 송구",
+                "missing": "직접 송구가 어려운 원인이 선수의 송구 능력인지 불명",
+                "ruleScope": "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외",
+                "relevance": "partial",
+                "matchedConditions": [
+                  "throw"
+                ],
+                "differingConditions": []
+              },
+              {
+                "questionId": "TE-10-04",
+                "purpose": "scene-comparison",
+                "supported": "수신 뒤 회전·다음 송구",
+                "missing": "방향을 몰라 여러 번 회전한 문제 상황과는 다름; 영상 동작은 미관찰",
+                "ruleScope": "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외",
+                "relevance": "candidate",
+                "matchedConditions": [
+                  "throw",
+                  "direction"
+                ],
+                "differingConditions": []
+              }
+            ],
+            "sceneScopes": [
+              {
+                "questionId": "TE-10-01",
+                "purpose": "scene-comparison",
+                "supported": "중계자를 거친 송구",
+                "missing": "직접 송구가 어려운 원인이 선수의 송구 능력인지 불명",
+                "ruleScope": "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외",
+                "relevance": "partial",
+                "matchedConditions": [
+                  "throw"
+                ],
+                "differingConditions": []
+              },
+              {
+                "questionId": "TE-10-04",
+                "purpose": "scene-comparison",
+                "supported": "수신 뒤 회전·다음 송구",
+                "missing": "방향을 몰라 여러 번 회전한 문제 상황과는 다름; 영상 동작은 미관찰",
+                "ruleScope": "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외",
+                "relevance": "candidate",
+                "matchedConditions": [
+                  "throw",
+                  "direction"
+                ],
+                "differingConditions": []
+              }
+            ],
+            "relevance": "partial",
+            "relevanceExplanation": "요청의 일부 행동만 자료의 장면 비교 범위와 겹칩니다.",
+            "matchedConditions": [
+              "throw",
+              "direction"
+            ],
+            "differingConditions": [],
+            "unmatchedConditions": [
+              "movement",
+              "running"
+            ],
+            "ruleStatus": "unconfirmed",
+            "ruleExplanation": "요청의 규칙 적용과 판정은 확인되지 않았습니다."
+          },
+          {
+            "id": "TBX-02",
+            "sport": "baseball",
+            "sourceSport": "baseball",
+            "targetSport": "teeball",
+            "comparisonType": "shared-skill",
+            "title": "중계 중 시야 확인",
+            "observed": "Smith가 Newman에게 연결했다. Newman은 Marte의 콜을 듣지 못해 받은 뒤 돌아보았다.",
+            "context": "D-backs–Tigers · 타구 뒤 중계 장면 · 콜이 전달되지 않은 조건을 유지; 듣기 어려울 때의 최선 동작이나 티볼 적용 효과는 검증되지 않음",
+            "sourceTitle": "MLB.com",
+            "sourceUrl": "https://www.mlb.com/news/d-backs-rally-late-to-beat-tigers",
+            "evidenceLocator": "Newman couldn’t hear Marte; 본문 120–131행",
+            "claimCheckStatus": "article-checked",
+            "factStatus": "article-checked",
+            "candidateGrade": "A",
+            "reviewStatus": "draft",
+            "aiUseBlocked": false,
+            "pilotMaterialReviewStatus": "accepted",
+            "videoReviewStatus": "not-viewed",
+            "matchDateStatus": "not-separately-verified; 게시일을 경기일로 전용하지 않음",
+            "educatorReviewStatus": "pending",
+            "expertReviewStatus": "pending",
+            "reuseStatus": "not-checked",
+            "limitations": [
+              "콜이 전달되지 않은 조건을 유지; 듣기 어려울 때의 최선 동작이나 티볼 적용 효과는 검증되지 않음"
+            ],
+            "scopes": [
+              {
+                "questionId": "TE-10-04",
+                "purpose": "scene-comparison",
+                "supported": "수신 후 방향 확인·후속 송구",
+                "missing": "여러 번 회전한 장면은 아니며 소음으로 정보 전달이 어려웠던 조건",
+                "ruleScope": "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외",
+                "relevance": "candidate",
+                "matchedConditions": [
+                  "throw",
+                  "direction"
+                ],
+                "differingConditions": []
+              }
+            ],
+            "sceneScopes": [
+              {
+                "questionId": "TE-10-04",
+                "purpose": "scene-comparison",
+                "supported": "수신 후 방향 확인·후속 송구",
+                "missing": "여러 번 회전한 장면은 아니며 소음으로 정보 전달이 어려웠던 조건",
+                "ruleScope": "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외",
+                "relevance": "candidate",
+                "matchedConditions": [
+                  "throw",
+                  "direction"
+                ],
+                "differingConditions": []
+              }
+            ],
+            "relevance": "partial",
+            "relevanceExplanation": "요청의 일부 행동만 자료의 장면 비교 범위와 겹칩니다.",
+            "matchedConditions": [
+              "throw",
+              "direction"
+            ],
+            "differingConditions": [],
+            "unmatchedConditions": [
+              "movement",
+              "running"
+            ],
+            "ruleStatus": "unconfirmed",
+            "ruleExplanation": "요청의 규칙 적용과 판정은 확인되지 않았습니다."
+          },
+          {
+            "id": "TBX-11",
+            "sport": "baseball",
+            "sourceSport": "baseball",
+            "targetSport": "teeball",
+            "comparisonType": "shared-skill",
+            "title": "송구 방향 변화와 중계 위치·정보 전달",
+            "observed": "McLain은 송구 방향에 맞춰 위치를 바꿨다. 뒤에서 정보를 전달할 동료가 가까이 없었다.",
+            "context": "Reds–Braves · 9회 말 · 타구가 옆으로 굴러 위치를 바꾼 조건과 차이. 뒤 동료의 부재는 정보 전달 공백이며 악송구 회수 백업 부재로 해석하지 않음",
+            "sourceTitle": "MLB.com",
+            "sourceUrl": "https://www.mlb.com/reds/news/reds-lapse-on-defense-aids-braves-late-rally",
+            "evidenceLocator": "본문 233–250행; 특히 239–247행 중계 위치 변경과 정보 전달 공백",
+            "claimCheckStatus": "article-checked",
+            "factStatus": "article-checked",
+            "candidateGrade": "A",
+            "reviewStatus": "draft",
+            "aiUseBlocked": false,
+            "pilotMaterialReviewStatus": "accepted",
+            "videoReviewStatus": "not-viewed",
+            "matchDateStatus": "not-separately-verified; 게시일과 경기일을 별도 필드로 유지",
+            "educatorReviewStatus": "pending",
+            "expertReviewStatus": "pending",
+            "reuseStatus": "not-checked",
+            "limitations": [
+              "타구가 옆으로 굴러 위치를 바꾼 조건과 차이. 뒤 동료의 부재는 정보 전달 공백이며 악송구 회수 백업 부재로 해석하지 않음"
+            ],
+            "scopes": [
+              {
+                "questionId": "TE-10-02",
+                "purpose": "scene-comparison",
+                "supported": "중계 위치를 바꾼 뒤 후속 송구 지연",
+                "missing": "너무 가까이 선 중계 위치·두 송구의 거리 문제는 불명",
+                "ruleScope": "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외",
+                "relevance": "partial",
+                "matchedConditions": [
+                  "throw"
+                ],
+                "differingConditions": []
+              },
+              {
+                "questionId": "TE-10-04",
+                "purpose": "scene-comparison",
+                "supported": "중계 수신 뒤 방향 확인·후속 송구의 지연",
+                "missing": "여러 번 회전한 장면은 아니며 송구 방향 변화와 동료 정보 전달 공백이 원문에 있음",
+                "ruleScope": "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외",
+                "relevance": "candidate",
+                "matchedConditions": [
+                  "throw",
+                  "direction"
+                ],
+                "differingConditions": []
+              },
+              {
+                "questionId": "TE-10-05",
+                "purpose": "scene-comparison",
+                "supported": "예상 송구 방향과 달라지자 중계자가 위치 변경",
+                "missing": "옆으로 굴러간 타구에 따른 변경이 아니라 외야수의 송구 방향 변화",
+                "ruleScope": "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외",
+                "relevance": "partial",
+                "matchedConditions": [
+                  "throw",
+                  "direction"
+                ],
+                "differingConditions": []
+              }
+            ],
+            "sceneScopes": [
+              {
+                "questionId": "TE-10-02",
+                "purpose": "scene-comparison",
+                "supported": "중계 위치를 바꾼 뒤 후속 송구 지연",
+                "missing": "너무 가까이 선 중계 위치·두 송구의 거리 문제는 불명",
+                "ruleScope": "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외",
+                "relevance": "partial",
+                "matchedConditions": [
+                  "throw"
+                ],
+                "differingConditions": []
+              },
+              {
+                "questionId": "TE-10-04",
+                "purpose": "scene-comparison",
+                "supported": "중계 수신 뒤 방향 확인·후속 송구의 지연",
+                "missing": "여러 번 회전한 장면은 아니며 송구 방향 변화와 동료 정보 전달 공백이 원문에 있음",
+                "ruleScope": "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외",
+                "relevance": "candidate",
+                "matchedConditions": [
+                  "throw",
+                  "direction"
+                ],
+                "differingConditions": []
+              },
+              {
+                "questionId": "TE-10-05",
+                "purpose": "scene-comparison",
+                "supported": "예상 송구 방향과 달라지자 중계자가 위치 변경",
+                "missing": "옆으로 굴러간 타구에 따른 변경이 아니라 외야수의 송구 방향 변화",
+                "ruleScope": "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외",
+                "relevance": "partial",
+                "matchedConditions": [
+                  "throw",
+                  "direction"
+                ],
+                "differingConditions": []
+              }
+            ],
+            "relevance": "partial",
+            "relevanceExplanation": "요청의 일부 행동만 자료의 장면 비교 범위와 겹칩니다.",
+            "matchedConditions": [
+              "throw",
+              "direction"
+            ],
+            "differingConditions": [],
+            "unmatchedConditions": [
+              "movement",
+              "running"
+            ],
+            "ruleStatus": "unconfirmed",
+            "ruleExplanation": "요청의 규칙 적용과 판정은 확인되지 않았습니다."
+          }
+        ],
+        "allowedIds": [
+          "teeball_case_01",
+          "TBX-18",
+          "TBX-03",
+          "TBX-19",
+          "TBX-12",
+          "TBX-01",
+          "TBX-02",
+          "TBX-11"
+        ],
+        "preBudgetIds": [
+          "teeball_case_01",
+          "TBX-18",
+          "TBX-03",
+          "TBX-19",
+          "TBX-12",
+          "TBX-01",
+          "TBX-02",
+          "TBX-11"
+        ],
+        "promptIds": [
+          "teeball_case_01",
+          "TBX-18",
+          "TBX-03"
+        ],
+        "plan": {
+          "prompt": "<|im_start|>system\nSelect up to two relevant IDs. Return only JSON referenceIds. Profiles are limited evidence, not full cases; partial and unconfirmed do not mean exact matches. B is material-level evidence. Fields: id, source sport, target sport, relevance, unmatched, differing, rule status, grade, evidence. Evidence is complete observed text or one [supported, missing, rule scope]. Other source context, scopes and limits are omitted; do not infer their absence.<|im_end|>\n<|im_start|>user\n{\"request\":\"티볼 주자가 달리다 송구를 보고 되돌아가는 경기 사례를 비교해 주세요.\",\"sport\":\"teeball\",\"totalCandidates\":8,\"shownCandidates\":3,\"references\":[[\"teeball_case_01\",\"teeball\",\"teeball\",\"partial\",[\"movement\",\"direction\"],[],\"not-compared\",\"A\",\"2016년 간토 친선대회 아오바 미도리히가시-조후 리틀전에서 3루 주자가 있는 상황에 우익수 뜬공이 나왔다. 아오바 미도리히가시의 우익수는 태그업을 시도한 주자를 정확한 송구로 아웃시켰다. 팀 감독은 이 플레이가 경기 흐름을 바꿨다고 회고했다.\"],[\"TBX-18\",\"baseball\",\"teeball\",\"partial\",[\"movement\",\"direction\",\"running\"],[],\"unconfirmed\",\"A\",[\"뒤 동료가 중계자의 송구 대상을 정해 전달\",\"여러 콜의 충돌이나 외야수의 망설임은 기록에 없음\",\"타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외\"]],[\"TBX-03\",\"baseball\",\"teeball\",\"partial\",[\"movement\",\"direction\",\"running\"],[],\"unconfirmed\",\"A\",[\"타구 위치와 송구 연결\",\"옆으로 구른 타구에 따른 중계자 위치 변경은 불명\",\"타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외\"]]]}<|im_end|>\n<|im_start|>assistant\n",
+          "tokens": 492,
+          "references": [
+            [
+              "teeball_case_01",
+              "teeball",
+              "teeball",
+              "partial",
+              [
+                "movement",
+                "direction"
+              ],
+              [],
+              "not-compared",
+              "A",
+              "2016년 간토 친선대회 아오바 미도리히가시-조후 리틀전에서 3루 주자가 있는 상황에 우익수 뜬공이 나왔다. 아오바 미도리히가시의 우익수는 태그업을 시도한 주자를 정확한 송구로 아웃시켰다. 팀 감독은 이 플레이가 경기 흐름을 바꿨다고 회고했다."
+            ],
+            [
+              "TBX-18",
+              "baseball",
+              "teeball",
+              "partial",
+              [
+                "movement",
+                "direction",
+                "running"
+              ],
+              [],
+              "unconfirmed",
+              "A",
+              [
+                "뒤 동료가 중계자의 송구 대상을 정해 전달",
+                "여러 콜의 충돌이나 외야수의 망설임은 기록에 없음",
+                "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외"
+              ]
+            ],
+            [
+              "TBX-03",
+              "baseball",
+              "teeball",
+              "partial",
+              [
+                "movement",
+                "direction",
+                "running"
+              ],
+              [],
+              "unconfirmed",
+              "A",
+              [
+                "타구 위치와 송구 연결",
+                "옆으로 구른 타구에 따른 중계자 위치 변경은 불명",
+                "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외"
+              ]
+            ]
+          ],
+          "totalCount": 8,
+          "omittedCount": 5,
+          "omittedIds": [
+            "TBX-19",
+            "TBX-12",
+            "TBX-01",
+            "TBX-02",
+            "TBX-11"
+          ]
+        },
+        "promptRefs": [
+          [
+            "teeball_case_01",
+            "teeball",
+            "teeball",
+            "partial",
+            [
+              "movement",
+              "direction"
+            ],
+            [],
+            "not-compared",
+            "A",
+            "2016년 간토 친선대회 아오바 미도리히가시-조후 리틀전에서 3루 주자가 있는 상황에 우익수 뜬공이 나왔다. 아오바 미도리히가시의 우익수는 태그업을 시도한 주자를 정확한 송구로 아웃시켰다. 팀 감독은 이 플레이가 경기 흐름을 바꿨다고 회고했다."
+          ],
+          [
+            "TBX-18",
+            "baseball",
+            "teeball",
+            "partial",
+            [
+              "movement",
+              "direction",
+              "running"
+            ],
+            [],
+            "unconfirmed",
+            "A",
+            [
+              "뒤 동료가 중계자의 송구 대상을 정해 전달",
+              "여러 콜의 충돌이나 외야수의 망설임은 기록에 없음",
+              "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외"
+            ]
+          ],
+          [
+            "TBX-03",
+            "baseball",
+            "teeball",
+            "partial",
+            [
+              "movement",
+              "direction",
+              "running"
+            ],
+            [],
+            "unconfirmed",
+            "A",
+            [
+              "타구 위치와 송구 연결",
+              "옆으로 구른 타구에 따른 중계자 위치 변경은 불명",
+              "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외"
+            ]
+          ]
+        ],
+        "inputTokens": 492,
+        "tokenizerTokens": 488,
+        "tokenReserve": 4,
+        "inputBudget": 512,
+        "result": {
+          "summary": "2개의 비교할 경기 자료를 찾았습니다.",
+          "cases": [
+            {
+              "id": "teeball_case_01",
+              "sport": "teeball",
+              "goal": "any",
+              "title": "3루 주자 플라이 아웃 뒤 우익수 송구로 태그업 저지",
+              "observed": "2016년 간토 친선대회 아오바 미도리히가시-조후 리틀전에서 3루 주자가 있는 상황에 우익수 뜬공이 나왔다. 아오바 미도리히가시의 우익수는 태그업을 시도한 주자를 정확한 송구로 아웃시켰다. 팀 감독은 이 플레이가 경기 흐름을 바꿨다고 회고했다.",
+              "context": "3루 주자와 외야 플라이 뒤 송구를 다룬 팀 사례다. 보도에는 송구 목적지, 거리, 아웃 판정의 세부 순서가 없다. 주자 속도·수비 숙련도와 해당 대회 규칙을 확인해야 하며, 한 번의 성공을 일반적인 선택으로 보지 않는다.",
+              "tacticTags": [
+                "티볼",
+                "외야 송구",
+                "태그업 수비"
+              ],
+              "sourceTitle": "ティーボール 青葉緑東が関東初優勝 出場７回目で悲願達成 | 青葉区 | タウンニュース",
+              "sourceUrl": "https://www.townnews.co.jp/0101/2016/06/09/335314.html",
+              "reviewStatus": "draft",
+              "candidateGrade": "A",
+              "factStatus": "verified",
+              "relevance": "partial",
+              "relevanceExplanation": "기록된 행동 중 일부만 요청과 겹칩니다.",
+              "matchedConditions": [
+                "throw",
+                "running"
+              ],
+              "differingConditions": [],
+              "unmatchedConditions": [
+                "movement",
+                "direction"
+              ],
+              "ruleStatus": "not-compared",
+              "ruleExplanation": "학교 규칙과의 일치는 확인하지 않았습니다.",
+              "similarity": "자료에 기록된 내용: 2016년 간토 친선대회 아오바 미도리히가시-조후 리틀전에서 3루 주자가 있는 상황에 우익수 뜬공이 나왔다. 아오바 미도리히가시의 우익수는 태그업을 시도한 주자를 정확한 송구로 아웃시켰다. 팀 감독은 이 플레이가 경기 흐름을 바꿨다고 회고했다.",
+              "similarityOrigin": "source"
+            },
+            {
+              "id": "TBX-18",
+              "sport": "baseball",
+              "sourceSport": "baseball",
+              "targetSport": "teeball",
+              "comparisonType": "shared-skill",
+              "title": "동료가 중계자의 송구 대상을 알려줌",
+              "observed": "Turang이 송구 대상을 알려주자 Ortiz가 중계 송구를 이어갔다.",
+              "context": "Brewers–Dodgers, NLCS Game 1 · 4회 · 여러 중계자의 콜이 충돌해 외야수가 망설인 조건은 아님; 태그업·포스 아웃·득점 판단은 비교하지 않음",
+              "sourceTitle": "MLB.com",
+              "sourceUrl": "https://www.mlb.com/amp/news/near-home-run-in-nlcs-game-1-causes-chaos-on-basepaths.html",
+              "evidenceLocator": "본문 33–35행; Turang의 대상 전달·Ortiz의 수신 회고",
+              "claimCheckStatus": "article-checked",
+              "factStatus": "article-checked",
+              "candidateGrade": "A",
+              "reviewStatus": "draft",
+              "aiUseBlocked": false,
+              "pilotMaterialReviewStatus": "accepted",
+              "videoReviewStatus": "not-viewed",
+              "matchDateStatus": "not-separately-verified; 기사 게시일과 경기일은 별도",
+              "educatorReviewStatus": "pending",
+              "expertReviewStatus": "pending",
+              "reuseStatus": "not-checked",
+              "limitations": [
+                "여러 중계자의 콜이 충돌해 외야수가 망설인 조건은 아님; 태그업·포스 아웃·득점 판단은 비교하지 않음"
+              ],
+              "scopes": [
+                {
+                  "questionId": "TE-14-05",
+                  "purpose": "scene-comparison",
+                  "supported": "뒤 동료가 중계자의 송구 대상을 정해 전달",
+                  "missing": "여러 콜의 충돌이나 외야수의 망설임은 기록에 없음",
+                  "ruleScope": "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외",
+                  "relevance": "partial",
+                  "matchedConditions": [
+                    "throw"
+                  ],
+                  "differingConditions": []
+                }
+              ],
+              "sceneScopes": [
+                {
+                  "questionId": "TE-14-05",
+                  "purpose": "scene-comparison",
+                  "supported": "뒤 동료가 중계자의 송구 대상을 정해 전달",
+                  "missing": "여러 콜의 충돌이나 외야수의 망설임은 기록에 없음",
+                  "ruleScope": "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외",
+                  "relevance": "partial",
+                  "matchedConditions": [
+                    "throw"
+                  ],
+                  "differingConditions": []
+                }
+              ],
+              "relevance": "partial",
+              "relevanceExplanation": "요청의 일부 행동만 자료의 장면 비교 범위와 겹칩니다.",
+              "matchedConditions": [
+                "throw"
+              ],
+              "differingConditions": [],
+              "unmatchedConditions": [
+                "movement",
+                "direction",
+                "running"
+              ],
+              "ruleStatus": "unconfirmed",
+              "ruleExplanation": "요청의 규칙 적용과 판정은 확인되지 않았습니다.",
+              "similarity": "자료에서 확인된 비교 범위: 뒤 동료가 중계자의 송구 대상을 정해 전달",
+              "similarityOrigin": "source"
+            }
+          ],
+          "comparisonLimit": "자료에 기록된 조건만 비교할 수 있습니다. 빠진 조건과 수업 규칙의 차이를 확인하세요. 모델은 제한적인 근거 프로파일로 검색 후보 8개 중 3개를 검토했습니다. 모델 입력에는 원문 전체와 다른 비교 범위 및 제한이 생략될 수 있으므로 전체 자료와 빠진 조건을 확인하세요.",
+          "model": "Qwen2.5-3B-Instruct Q4_K_M",
+          "modelUsed": true,
+          "resultKind": "model-selection",
+          "generatedAt": 1794878153474,
+          "modelAttempted": true,
+          "modelCoverage": {
+            "retrieved": 8,
+            "shown": 3,
+            "omittedIds": [
+              "TBX-19",
+              "TBX-12",
+              "TBX-01",
+              "TBX-02",
+              "TBX-11"
+            ]
+          }
+        },
+        "retrievalReferenceFieldsPreserved": [
+          {
+            "id": "teeball_case_01",
+            "preserved": true
+          },
+          {
+            "id": "TBX-18",
+            "preserved": true
+          }
+        ],
+        "calls": {
+          "loads": 1,
+          "completions": 1,
+          "raw": "{\"referenceIds\":[\"teeball_case_01\",\"TBX-18\"]}",
+          "finish": "stop",
+          "loadOptions": {
+            "n_ctx": 1024,
+            "n_batch": 128,
+            "n_ubatch": 64,
+            "n_threads": 2
+          },
+          "engine": {
+            "threads": 2,
+            "multithread": true,
+            "context": {
+              "_name": "load_res",
+              "success": true,
+              "n_ctx": 1024,
+              "n_batch": 128,
+              "n_ubatch": 64,
+              "n_vocab": 151936,
+              "n_ctx_train": 32768,
+              "n_embd": 2048,
+              "n_layer": 36,
+              "metadata_key": [
+                "general.quantization_version",
+                "tokenizer.chat_template",
+                "tokenizer.ggml.bos_token_id",
+                "tokenizer.ggml.padding_token_id",
+                "tokenizer.ggml.eos_token_id",
+                "tokenizer.ggml.pre",
+                "tokenizer.ggml.model",
+                "qwen2.attention.layer_norm_rms_epsilon",
+                "qwen2.rope.freq_base",
+                "qwen2.attention.head_count_kv",
+                "qwen2.embedding_length",
+                "qwen2.context_length",
+                "general.type",
+                "qwen2.attention.head_count",
+                "qwen2.feed_forward_length",
+                "general.architecture",
+                "qwen2.block_count",
+                "general.file_type",
+                "general.size_label",
+                "tokenizer.ggml.add_bos_token",
+                "general.version",
+                "general.finetune",
+                "general.name"
+              ],
+              "metadata_val": [
+                "2",
+                "{%- if tools %}\n    {{- '<|im_start|>system\\n' }}\n    {%- if messages[0]['role'] == 'system' %}\n        {{- messages[0]['content'] }}\n    {%- else %}\n        {{- 'You are Qwen, created by Alibaba Cloud. You are a helpful assistant.' }}\n    {%- endif %}\n    {{- \"\\n\\n# Tools\\n\\nYou may call one or more functions to assist with the user query.\\n\\nYou are provided with function signatures within <tools></tools> XML tags:\\n<tools>\" }}\n    {%- for tool in tools %}\n        {{- \"\\n\" }}\n        {{- tool | tojson }}\n    {%- endfor %}\n    {{- \"\\n</tools>\\n\\nFor each function call, return a json object with function name and arguments within <tool_call></tool_call> XML tags:\\n<tool_call>\\n{{\\\"name\\\": <function-name>, \\\"arguments\\\": <args-json-object>}}\\n</tool_call><|im_end|>\\n\" }}\n{%- else %}\n    {%- if messages[0]['role'] == 'system' %}\n        {{- '<|im_start|>system\\n' + messages[0]['content'] + '<|im_end|>\\n' }}\n    {%- else %}\n        {{- '<|im_start|>system\\nYou are Qwen, created by Alibaba Cloud. You are a helpful assistant.<|im_end|>\\n' }}\n    {%- endif %}\n{%- endif %}\n{%- for message in messages %}\n    {%- if (message.role == \"user\") or (message.role == \"system\" and not loop.first) or (message.role == \"assistant\" and not message.tool_calls) %}\n        {{- '<|im_start|>' + message.role + '\\n' + message.content + '<|im_end|>' + '\\n' }}\n    {%- elif message.role == \"assistant\" %}\n        {{- '<|im_start|>' + message.role }}\n        {%- if message.content %}\n            {{- '\\n' + message.content }}\n        {%- endif %}\n        {%- for tool_call in message.tool_calls %}\n            {%- if tool_call.function is defined %}\n                {%- set tool_call = tool_call.function %}\n            {%- endif %}\n            {{- '\\n<tool_call>\\n{\"name\": \"' }}\n            {{- tool_call.name }}\n            {{- '\", \"arguments\": ' }}\n            {{- tool_call.arguments | tojson }}\n            {{- '}\\n</tool_call>' }}\n        {%- endfor %}\n        {{- '<|im_end|>\\n' }}\n    {%- elif message.role == \"tool\" %}\n        {%- if (loop.index0 == 0) or (messages[loop.index0 - 1].role != \"tool\") %}\n            {{- '<|im_start|>user' }}\n        {%- endif %}\n        {{- '\\n<tool_response>\\n' }}\n        {{- message.content }}\n        {{- '\\n</tool_response>' }}\n        {%- if loop.last or (messages[loop.index0 + 1].role != \"tool\") %}\n            {{- '<|im_end|>\\n' }}\n        {%- endif %}\n    {%- endif %}\n{%- endfor %}\n{%- if add_generation_prompt %}\n    {{- '<|im_start|>assistant\\n' }}\n{%- endif %}\n",
+                "151643",
+                "151643",
+                "151645",
+                "qwen2",
+                "gpt2",
+                "0.000001",
+                "1000000.000000",
+                "2",
+                "2048",
+                "32768",
+                "model",
+                "16",
+                "11008",
+                "qwen2",
+                "36",
+                "15",
+                "3.4B",
+                "false",
+                "v0.1-v0.1",
+                "qwen2.5-3b-instruct",
+                "qwen2.5-3b-instruct"
+              ],
+              "token_bos": 151643,
+              "token_eos": 151645,
+              "token_eot": 151645,
+              "list_tokens_eog": [
+                128247,
+                151643,
+                151645,
+                151662,
+                151663,
+                151664
+              ],
+              "add_bos_token": false,
+              "add_eos_token": false,
+              "has_encoder": false,
+              "token_decoder_start": -1,
+              "media_marker": "<__media_FABvuwIrcDbszngtMKtagAmzWnTcHexO__>",
+              "has_image_input": false,
+              "has_audio_input": false,
+              "has_audio_output": false,
+              "has_chat": true,
+              "has_audio_stream": false,
+              "has_live_asr": false,
+              "audio_input_rate": 0,
+              "audio_output_rate": 0,
+              "audio_voices": [],
+              "metadata": {
+                "general.quantization_version": "2",
+                "tokenizer.chat_template": "{%- if tools %}\n    {{- '<|im_start|>system\\n' }}\n    {%- if messages[0]['role'] == 'system' %}\n        {{- messages[0]['content'] }}\n    {%- else %}\n        {{- 'You are Qwen, created by Alibaba Cloud. You are a helpful assistant.' }}\n    {%- endif %}\n    {{- \"\\n\\n# Tools\\n\\nYou may call one or more functions to assist with the user query.\\n\\nYou are provided with function signatures within <tools></tools> XML tags:\\n<tools>\" }}\n    {%- for tool in tools %}\n        {{- \"\\n\" }}\n        {{- tool | tojson }}\n    {%- endfor %}\n    {{- \"\\n</tools>\\n\\nFor each function call, return a json object with function name and arguments within <tool_call></tool_call> XML tags:\\n<tool_call>\\n{{\\\"name\\\": <function-name>, \\\"arguments\\\": <args-json-object>}}\\n</tool_call><|im_end|>\\n\" }}\n{%- else %}\n    {%- if messages[0]['role'] == 'system' %}\n        {{- '<|im_start|>system\\n' + messages[0]['content'] + '<|im_end|>\\n' }}\n    {%- else %}\n        {{- '<|im_start|>system\\nYou are Qwen, created by Alibaba Cloud. You are a helpful assistant.<|im_end|>\\n' }}\n    {%- endif %}\n{%- endif %}\n{%- for message in messages %}\n    {%- if (message.role == \"user\") or (message.role == \"system\" and not loop.first) or (message.role == \"assistant\" and not message.tool_calls) %}\n        {{- '<|im_start|>' + message.role + '\\n' + message.content + '<|im_end|>' + '\\n' }}\n    {%- elif message.role == \"assistant\" %}\n        {{- '<|im_start|>' + message.role }}\n        {%- if message.content %}\n            {{- '\\n' + message.content }}\n        {%- endif %}\n        {%- for tool_call in message.tool_calls %}\n            {%- if tool_call.function is defined %}\n                {%- set tool_call = tool_call.function %}\n            {%- endif %}\n            {{- '\\n<tool_call>\\n{\"name\": \"' }}\n            {{- tool_call.name }}\n            {{- '\", \"arguments\": ' }}\n            {{- tool_call.arguments | tojson }}\n            {{- '}\\n</tool_call>' }}\n        {%- endfor %}\n        {{- '<|im_end|>\\n' }}\n    {%- elif message.role == \"tool\" %}\n        {%- if (loop.index0 == 0) or (messages[loop.index0 - 1].role != \"tool\") %}\n            {{- '<|im_start|>user' }}\n        {%- endif %}\n        {{- '\\n<tool_response>\\n' }}\n        {{- message.content }}\n        {{- '\\n</tool_response>' }}\n        {%- if loop.last or (messages[loop.index0 + 1].role != \"tool\") %}\n            {{- '<|im_end|>\\n' }}\n        {%- endif %}\n    {%- endif %}\n{%- endfor %}\n{%- if add_generation_prompt %}\n    {{- '<|im_start|>assistant\\n' }}\n{%- endif %}\n",
+                "tokenizer.ggml.bos_token_id": "151643",
+                "tokenizer.ggml.padding_token_id": "151643",
+                "tokenizer.ggml.eos_token_id": "151645",
+                "tokenizer.ggml.pre": "qwen2",
+                "tokenizer.ggml.model": "gpt2",
+                "qwen2.attention.layer_norm_rms_epsilon": "0.000001",
+                "qwen2.rope.freq_base": "1000000.000000",
+                "qwen2.attention.head_count_kv": "2",
+                "qwen2.embedding_length": "2048",
+                "qwen2.context_length": "32768",
+                "general.type": "model",
+                "qwen2.attention.head_count": "16",
+                "qwen2.feed_forward_length": "11008",
+                "general.architecture": "qwen2",
+                "qwen2.block_count": "36",
+                "general.file_type": "15",
+                "general.size_label": "3.4B",
+                "tokenizer.ggml.add_bos_token": "false",
+                "general.version": "v0.1-v0.1",
+                "general.finetune": "qwen2.5-3b-instruct",
+                "general.name": "qwen2.5-3b-instruct"
+              }
+            }
+          },
+          "prompt": "<|im_start|>system\nSelect up to two relevant IDs. Return only JSON referenceIds. Profiles are limited evidence, not full cases; partial and unconfirmed do not mean exact matches. B is material-level evidence. Fields: id, source sport, target sport, relevance, unmatched, differing, rule status, grade, evidence. Evidence is complete observed text or one [supported, missing, rule scope]. Other source context, scopes and limits are omitted; do not infer their absence.<|im_end|>\n<|im_start|>user\n{\"request\":\"티볼 주자가 달리다 송구를 보고 되돌아가는 경기 사례를 비교해 주세요.\",\"sport\":\"teeball\",\"totalCandidates\":8,\"shownCandidates\":3,\"references\":[[\"teeball_case_01\",\"teeball\",\"teeball\",\"partial\",[\"movement\",\"direction\"],[],\"not-compared\",\"A\",\"2016년 간토 친선대회 아오바 미도리히가시-조후 리틀전에서 3루 주자가 있는 상황에 우익수 뜬공이 나왔다. 아오바 미도리히가시의 우익수는 태그업을 시도한 주자를 정확한 송구로 아웃시켰다. 팀 감독은 이 플레이가 경기 흐름을 바꿨다고 회고했다.\"],[\"TBX-18\",\"baseball\",\"teeball\",\"partial\",[\"movement\",\"direction\",\"running\"],[],\"unconfirmed\",\"A\",[\"뒤 동료가 중계자의 송구 대상을 정해 전달\",\"여러 콜의 충돌이나 외야수의 망설임은 기록에 없음\",\"타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외\"]],[\"TBX-03\",\"baseball\",\"teeball\",\"partial\",[\"movement\",\"direction\",\"running\"],[],\"unconfirmed\",\"A\",[\"타구 위치와 송구 연결\",\"옆으로 구른 타구에 따른 중계자 위치 변경은 불명\",\"타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외\"]]]}<|im_end|>\n<|im_start|>assistant\n",
+          "grammar": "root ::= \"{\\\"referenceIds\\\":\" selection \"}\"\nselection ::= \"[]\" | \"[\\\"teeball_case_01\\\"]\" | \"[\\\"TBX-18\\\"]\" | \"[\\\"TBX-03\\\"]\" | \"[\\\"teeball_case_01\\\",\\\"TBX-18\\\"]\" | \"[\\\"teeball_case_01\\\",\\\"TBX-03\\\"]\" | \"[\\\"TBX-18\\\",\\\"teeball_case_01\\\"]\" | \"[\\\"TBX-18\\\",\\\"TBX-03\\\"]\" | \"[\\\"TBX-03\\\",\\\"teeball_case_01\\\"]\" | \"[\\\"TBX-03\\\",\\\"TBX-18\\\"]\"",
+          "maxTokens": 96,
+          "temperature": 0.2
+        }
+      },
+      "latencyMs": 469107
+    },
+    {
+      "questionId": "shared-skill",
+      "kind": "shared-skill",
+      "sport": "teeball",
+      "startedAt": "2026-11-17T01:15:54.505Z",
+      "browser": {
+        "progress": [
+          {
+            "at": 1794878154545,
+            "phase": "tokenizing",
+            "message": "검색 후보의 입력 길이를 확인하는 중"
+          },
+          {
+            "at": 1794878155252,
+            "phase": "loading",
+            "message": "모델을 기기 메모리에 여는 중"
+          },
+          {
+            "at": 1794878173960,
+            "phase": "prefill",
+            "message": "모델이 입력을 처리하는 중",
+            "received": 506,
+            "total": 512
+          },
+          {
+            "at": 1794878280804,
+            "phase": "prefill",
+            "message": "모델이 입력을 처리하는 중",
+            "received": 0,
+            "total": 502
+          },
+          {
+            "at": 1794878385572,
+            "phase": "prefill",
+            "message": "모델이 입력을 처리하는 중",
+            "received": 128,
+            "total": 502
+          },
+          {
+            "at": 1794878489754,
+            "phase": "prefill",
+            "message": "모델이 입력을 처리하는 중",
+            "received": 256,
+            "total": 502
+          },
+          {
+            "at": 1794878597381,
+            "phase": "prefill",
+            "message": "모델이 입력을 처리하는 중",
+            "received": 384,
+            "total": 502
+          },
+          {
+            "at": 1794878598642,
+            "phase": "prefill",
+            "message": "모델이 입력을 처리하는 중",
+            "received": 502,
+            "total": 502
+          },
+          {
+            "at": 1794878599801,
+            "phase": "generating",
+            "message": "기기에서 사례를 선택하는 중",
+            "received": 1
+          },
+          {
+            "at": 1794878600953,
+            "phase": "generating",
+            "message": "기기에서 사례를 선택하는 중",
+            "received": 2
+          },
+          {
+            "at": 1794878602101,
+            "phase": "generating",
+            "message": "기기에서 사례를 선택하는 중",
+            "received": 3
+          },
+          {
+            "at": 1794878603253,
+            "phase": "generating",
+            "message": "기기에서 사례를 선택하는 중",
+            "received": 4
+          },
+          {
+            "at": 1794878604416,
+            "phase": "generating",
+            "message": "기기에서 사례를 선택하는 중",
+            "received": 5
+          },
+          {
+            "at": 1794878605575,
+            "phase": "generating",
+            "message": "기기에서 사례를 선택하는 중",
+            "received": 6
+          },
+          {
+            "at": 1794878606734,
+            "phase": "generating",
+            "message": "기기에서 사례를 선택하는 중",
+            "received": 7
+          },
+          {
+            "at": 1794878607898,
+            "phase": "generating",
+            "message": "기기에서 사례를 선택하는 중",
+            "received": 8
+          },
+          {
+            "at": 1794878609046,
+            "phase": "generating",
+            "message": "기기에서 사례를 선택하는 중",
+            "received": 9
+          },
+          {
+            "at": 1794878610217,
+            "phase": "generating",
+            "message": "기기에서 사례를 선택하는 중",
+            "received": 10
+          },
+          {
+            "at": 1794878611399,
+            "phase": "generating",
+            "message": "기기에서 사례를 선택하는 중",
+            "received": 11
+          },
+          {
+            "at": 1794878612569,
+            "phase": "generating",
+            "message": "기기에서 사례를 선택하는 중",
+            "received": 12
+          },
+          {
+            "at": 1794878613740,
+            "phase": "generating",
+            "message": "기기에서 사례를 선택하는 중",
+            "received": 13
+          },
+          {
+            "at": 1794878614937,
+            "phase": "generating",
+            "message": "기기에서 사례를 선택하는 중",
+            "received": 14
+          },
+          {
+            "at": 1794878616121,
+            "phase": "generating",
+            "message": "기기에서 사례를 선택하는 중",
+            "received": 15
+          },
+          {
+            "at": 1794878616122,
+            "phase": "generating",
+            "message": "기기에서 사례를 선택하는 중",
+            "received": 16
+          }
+        ],
+        "prepared": [
+          {
+            "id": "TBX-13",
+            "sport": "baseball",
+            "sourceSport": "baseball",
+            "targetSport": "teeball",
+            "comparisonType": "shared-skill",
+            "title": "라인 쪽 첫 발과 출발 위치",
+            "observed": "McGonigle은 출발 위치에서 라인 쪽으로 먼저 움직인 뒤 땅볼을 막고 송구했다.",
+            "context": "Tigers–Orioles spring training · 2회 · 개인별 능력 차이를 반영한 배치나 내야수 사이 간격은 불명; 짧은 전방 타구가 아닌 라인 쪽 타구",
+            "sourceTitle": "MLB.com",
+            "sourceUrl": "https://www.mlb.com/dbacks/news/kevin-mcgonigle-shines-on-defense-behind-justin-verlander",
+            "evidenceLocator": "본문 238–241행; pre-pitch positioning·첫 발·라인 쪽 타구 접근",
+            "claimCheckStatus": "article-checked",
+            "factStatus": "article-checked",
+            "candidateGrade": "A",
+            "reviewStatus": "draft",
+            "aiUseBlocked": false,
+            "pilotMaterialReviewStatus": "accepted",
+            "videoReviewStatus": "not-viewed",
+            "matchDateStatus": "not-separately-verified; 게시일과 경기일을 별도 필드로 유지",
+            "educatorReviewStatus": "pending",
+            "expertReviewStatus": "pending",
+            "reuseStatus": "not-checked",
+            "limitations": [
+              "개인별 능력 차이를 반영한 배치나 내야수 사이 간격은 불명; 짧은 전방 타구가 아닌 라인 쪽 타구"
+            ],
+            "scopes": [
+              {
+                "questionId": "TE-11-03",
+                "purpose": "scene-comparison",
+                "supported": "라인 쪽 타구에 대한 출발 위치·첫 움직임",
+                "missing": "여러 내야수 사이의 간격은 불명",
+                "ruleScope": "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외",
+                "relevance": "partial",
+                "matchedConditions": [
+                  "hit"
+                ],
+                "differingConditions": []
+              },
+              {
+                "questionId": "TE-09-01",
+                "purpose": "scene-comparison",
+                "supported": "타격 후 땅볼을 향한 내야수의 접근",
+                "missing": "타자 앞쪽 짧은 타구가 아닌 라인 쪽 타구",
+                "ruleScope": "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외",
+                "relevance": "partial",
+                "matchedConditions": [
+                  "hit"
+                ],
+                "differingConditions": []
+              }
+            ],
+            "sceneScopes": [
+              {
+                "questionId": "TE-11-03",
+                "purpose": "scene-comparison",
+                "supported": "라인 쪽 타구에 대한 출발 위치·첫 움직임",
+                "missing": "여러 내야수 사이의 간격은 불명",
+                "ruleScope": "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외",
+                "relevance": "partial",
+                "matchedConditions": [
+                  "hit"
+                ],
+                "differingConditions": []
+              },
+              {
+                "questionId": "TE-09-01",
+                "purpose": "scene-comparison",
+                "supported": "타격 후 땅볼을 향한 내야수의 접근",
+                "missing": "타자 앞쪽 짧은 타구가 아닌 라인 쪽 타구",
+                "ruleScope": "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외",
+                "relevance": "partial",
+                "matchedConditions": [
+                  "hit"
+                ],
+                "differingConditions": []
+              }
+            ],
+            "relevance": "partial",
+            "relevanceExplanation": "요청의 일부 행동만 자료의 장면 비교 범위와 겹칩니다.",
+            "matchedConditions": [
+              "hit"
+            ],
+            "differingConditions": [],
+            "unmatchedConditions": [
+              "throw",
+              "defense",
+              "catch",
+              "running"
+            ],
+            "ruleStatus": "unconfirmed",
+            "ruleExplanation": "요청의 규칙 적용과 판정은 확인되지 않았습니다."
+          },
+          {
+            "id": "TBX-15",
+            "sport": "baseball",
+            "sourceSport": "baseball",
+            "targetSport": "teeball",
+            "comparisonType": "shared-skill",
+            "title": "얕은 외야 위치에서 뒤 타구를 추적해 포구",
+            "observed": "얕게 선 Martin이 뒤쪽으로 날아온 타구를 달려가 잡았다.",
+            "context": "Twins–Red Sox · 8회 · 같은 타자의 짧고 긴 타구가 교차한 장면은 아님; 우천·경기장·선수 능력 차이가 있고 실제 영상은 미시청",
+            "sourceTitle": "MLB.com",
+            "sourceUrl": "https://www.mlb.com/twins/news/twins-sweep-red-sox-at-fenway-park",
+            "evidenceLocator": "본문 148–154행; Martin의 얕은 출발 위치·running catch 설명",
+            "claimCheckStatus": "article-checked",
+            "factStatus": "article-checked",
+            "candidateGrade": "A",
+            "reviewStatus": "draft",
+            "aiUseBlocked": false,
+            "pilotMaterialReviewStatus": "accepted",
+            "videoReviewStatus": "not-viewed",
+            "matchDateStatus": "not-separately-verified; 기사 게시일과 경기일은 별도",
+            "educatorReviewStatus": "pending",
+            "expertReviewStatus": "pending",
+            "reuseStatus": "not-checked",
+            "limitations": [
+              "같은 타자의 짧고 긴 타구가 교차한 장면은 아님; 우천·경기장·선수 능력 차이가 있고 실제 영상은 미시청"
+            ],
+            "scopes": [
+              {
+                "questionId": "TE-03-02",
+                "purpose": "scene-comparison",
+                "supported": "뜬공을 추적해 포구한 결과; 기존 티볼 라이너 사례와 함께 비교 가능",
+                "missing": "타구 높이만 바꿔 비교한 동일 조건 장면이 아니며 타구 높이 수치·학생 영상은 없음",
+                "ruleScope": "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외",
+                "relevance": "partial",
+                "matchedConditions": [
+                  "hit"
+                ],
+                "differingConditions": []
+              }
+            ],
+            "sceneScopes": [
+              {
+                "questionId": "TE-03-02",
+                "purpose": "scene-comparison",
+                "supported": "뜬공을 추적해 포구한 결과; 기존 티볼 라이너 사례와 함께 비교 가능",
+                "missing": "타구 높이만 바꿔 비교한 동일 조건 장면이 아니며 타구 높이 수치·학생 영상은 없음",
+                "ruleScope": "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외",
+                "relevance": "partial",
+                "matchedConditions": [
+                  "hit"
+                ],
+                "differingConditions": []
+              }
+            ],
+            "relevance": "partial",
+            "relevanceExplanation": "요청의 일부 행동만 자료의 장면 비교 범위와 겹칩니다.",
+            "matchedConditions": [
+              "hit"
+            ],
+            "differingConditions": [],
+            "unmatchedConditions": [
+              "throw",
+              "defense",
+              "catch",
+              "running"
+            ],
+            "ruleStatus": "unconfirmed",
+            "ruleExplanation": "요청의 규칙 적용과 판정은 확인되지 않았습니다."
+          },
+          {
+            "id": "TBX-14",
+            "sport": "baseball",
+            "sourceSport": "baseball",
+            "targetSport": "teeball",
+            "comparisonType": "shared-skill",
+            "title": "앞쪽 타구 대비 배치 뒤 머리 위 뜬공",
+            "observed": "얕게 선 Williams의 머리 위로 Rosario의 뜬공이 넘어갔다. 앞쪽의 약한 타구를 대비한 배치였다.",
+            "context": "Phillies–Mets · 6회 · 선수·감독의 회고는 더 뒤에 섰으면 잡았을지 단정하지 않음; 정지한 공 타격·티볼 수비 거리·인원 차이를 유지",
+            "sourceTitle": "MLB.com",
+            "sourceUrl": "https://www.mlb.com/phillies/news/carlos-santana-nola-strong-in-phillies-loss-c270848420",
+            "evidenceLocator": "본문 159–167행; outfield positioning·weaker contact 설명",
+            "claimCheckStatus": "article-checked",
+            "factStatus": "article-checked",
+            "candidateGrade": "A",
+            "reviewStatus": "draft",
+            "aiUseBlocked": false,
+            "pilotMaterialReviewStatus": "accepted",
+            "videoReviewStatus": "not-viewed",
+            "matchDateStatus": "not-separately-verified; 기사 게시일과 경기일은 별도",
+            "educatorReviewStatus": "pending",
+            "expertReviewStatus": "pending",
+            "reuseStatus": "not-checked",
+            "limitations": [
+              "선수·감독의 회고는 더 뒤에 섰으면 잡았을지 단정하지 않음; 정지한 공 타격·티볼 수비 거리·인원 차이를 유지"
+            ],
+            "scopes": [
+              {
+                "questionId": "TE-01-03",
+                "purpose": "scene-comparison",
+                "supported": "앞쪽 약한 타구를 대비한 전진 배치 뒤 머리 위 타구 허용",
+                "missing": "앞뒤 공간을 성공적으로 나눠 지킨 사례가 아닌 예상과 달랐던 장면",
+                "ruleScope": "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외",
+                "relevance": "partial",
+                "matchedConditions": [
+                  "hit"
+                ],
+                "differingConditions": []
+              },
+              {
+                "questionId": "TE-01-06",
+                "purpose": "scene-comparison",
+                "supported": "예상한 짧은 타구와 실제 뒤쪽 타구 사이의 불일치",
+                "missing": "같은 타자가 짧고 긴 타구를 번갈아 보낸 순서는 기록에 없음",
+                "ruleScope": "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외",
+                "relevance": "partial",
+                "matchedConditions": [
+                  "hit"
+                ],
+                "differingConditions": []
+              },
+              {
+                "questionId": "TE-03-06",
+                "purpose": "scene-comparison",
+                "supported": "약한 타구 예상의 전진 배치 뒤 수비수 머리 위로 간 타구",
+                "missing": "티볼에서 정지한 공을 친 조건과 다름; 타자의 공간 공략 의도는 불명",
+                "ruleScope": "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외",
+                "relevance": "partial",
+                "matchedConditions": [
+                  "defense",
+                  "hit"
+                ],
+                "differingConditions": []
+              }
+            ],
+            "sceneScopes": [
+              {
+                "questionId": "TE-01-03",
+                "purpose": "scene-comparison",
+                "supported": "앞쪽 약한 타구를 대비한 전진 배치 뒤 머리 위 타구 허용",
+                "missing": "앞뒤 공간을 성공적으로 나눠 지킨 사례가 아닌 예상과 달랐던 장면",
+                "ruleScope": "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외",
+                "relevance": "partial",
+                "matchedConditions": [
+                  "hit"
+                ],
+                "differingConditions": []
+              },
+              {
+                "questionId": "TE-01-06",
+                "purpose": "scene-comparison",
+                "supported": "예상한 짧은 타구와 실제 뒤쪽 타구 사이의 불일치",
+                "missing": "같은 타자가 짧고 긴 타구를 번갈아 보낸 순서는 기록에 없음",
+                "ruleScope": "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외",
+                "relevance": "partial",
+                "matchedConditions": [
+                  "hit"
+                ],
+                "differingConditions": []
+              },
+              {
+                "questionId": "TE-03-06",
+                "purpose": "scene-comparison",
+                "supported": "약한 타구 예상의 전진 배치 뒤 수비수 머리 위로 간 타구",
+                "missing": "티볼에서 정지한 공을 친 조건과 다름; 타자의 공간 공략 의도는 불명",
+                "ruleScope": "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외",
+                "relevance": "partial",
+                "matchedConditions": [
+                  "defense",
+                  "hit"
+                ],
+                "differingConditions": []
+              }
+            ],
+            "relevance": "partial",
+            "relevanceExplanation": "요청의 일부 행동만 자료의 장면 비교 범위와 겹칩니다.",
+            "matchedConditions": [
+              "hit",
+              "defense"
+            ],
+            "differingConditions": [],
+            "unmatchedConditions": [
+              "throw",
+              "catch",
+              "running"
+            ],
+            "ruleStatus": "unconfirmed",
+            "ruleExplanation": "요청의 규칙 적용과 판정은 확인되지 않았습니다."
+          },
+          {
+            "id": "TBX-03",
+            "sport": "baseball",
+            "sourceSport": "baseball",
+            "targetSport": "teeball",
+            "comparisonType": "shared-skill",
+            "title": "타구 백업에서 중계로",
+            "observed": "Kwan이 뒤에서 타구를 회수해 Rocchio에게 연결했고 Rocchio가 다음 송구를 했다.",
+            "context": "Guardians–Yankees · 8회 · 타구 백업 장면이며 악송구 백업 장면은 아님; 벽 반사·거리 차이와 홈 판정은 적용 범위 밖",
+            "sourceTitle": "MLB.com",
+            "sourceUrl": "https://www.mlb.com/news/lane-thomas-guardians-12-inning-win-over-yankees",
+            "evidenceLocator": "본문 130–131행; Kwan·Rocchio의 중계 설명",
+            "claimCheckStatus": "article-checked",
+            "factStatus": "article-checked",
+            "candidateGrade": "A",
+            "reviewStatus": "draft",
+            "aiUseBlocked": false,
+            "pilotMaterialReviewStatus": "accepted",
+            "videoReviewStatus": "not-viewed",
+            "matchDateStatus": "not-separately-verified; 게시일을 경기일로 전용하지 않음",
+            "educatorReviewStatus": "pending",
+            "expertReviewStatus": "pending",
+            "reuseStatus": "not-checked",
+            "limitations": [
+              "타구 백업 장면이며 악송구 백업 장면은 아님; 벽 반사·거리 차이와 홈 판정은 적용 범위 밖"
+            ],
+            "scopes": [
+              {
+                "questionId": "TE-10-03",
+                "purpose": "scene-comparison",
+                "supported": "타구 회수 후 중계",
+                "missing": "중계자 출발 위치·이동은 불명",
+                "ruleScope": "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외",
+                "relevance": "partial",
+                "matchedConditions": [
+                  "hit"
+                ],
+                "differingConditions": []
+              },
+              {
+                "questionId": "TE-10-05",
+                "purpose": "scene-comparison",
+                "supported": "타구 위치와 송구 연결",
+                "missing": "옆으로 구른 타구에 따른 중계자 위치 변경은 불명",
+                "ruleScope": "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외",
+                "relevance": "partial",
+                "matchedConditions": [
+                  "throw",
+                  "hit"
+                ],
+                "differingConditions": []
+              }
+            ],
+            "sceneScopes": [
+              {
+                "questionId": "TE-10-03",
+                "purpose": "scene-comparison",
+                "supported": "타구 회수 후 중계",
+                "missing": "중계자 출발 위치·이동은 불명",
+                "ruleScope": "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외",
+                "relevance": "partial",
+                "matchedConditions": [
+                  "hit"
+                ],
+                "differingConditions": []
+              },
+              {
+                "questionId": "TE-10-05",
+                "purpose": "scene-comparison",
+                "supported": "타구 위치와 송구 연결",
+                "missing": "옆으로 구른 타구에 따른 중계자 위치 변경은 불명",
+                "ruleScope": "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외",
+                "relevance": "partial",
+                "matchedConditions": [
+                  "throw",
+                  "hit"
+                ],
+                "differingConditions": []
+              }
+            ],
+            "relevance": "partial",
+            "relevanceExplanation": "요청의 일부 행동만 자료의 장면 비교 범위와 겹칩니다.",
+            "matchedConditions": [
+              "hit",
+              "throw"
+            ],
+            "differingConditions": [],
+            "unmatchedConditions": [
+              "defense",
+              "catch",
+              "running"
+            ],
+            "ruleStatus": "unconfirmed",
+            "ruleExplanation": "요청의 규칙 적용과 판정은 확인되지 않았습니다."
+          },
+          {
+            "id": "teeball_case_03",
+            "sport": "teeball",
+            "goal": "any",
+            "title": "깊은 외야 앞에 라이너성 타구를 보낸 고베 B팀",
+            "observed": "같은 2023년 결승 토너먼트의 결승에서 고베 B팀은 가사도 윙스(加佐登ウイングス)와 맞붙었다. 현장 관찰자는 가사도 외야가 깊게 서 있었고 고베 타자들이 그 앞에 라이너성 타구를 보냈다고 기록했다. 그는 이 결승에서도 내·외야 포지셔닝이 승부에 큰 영향을 주었으며, 고베도 타자에 따른 수비 위치 조정을 어느 정도 해 둔 것으로 보였다고 적었다.",
+            "context": "관찰자가 기록한 깊은 외야 앞 타구와 두 팀의 수비 위치에 관한 경기 패턴이다. 개별 타구의 정확한 방향·결과·점수 기여는 분리되어 있지 않고 영상 시각도 제공되지 않는다. 준결승의 타자별 외야 시프트 사례와 별개의 결승 사례로 보존하며, 외야 앞을 노리는 타격을 정답으로 취급하지 않는다.",
+            "tacticTags": [
+              "티볼",
+              "타구 방향",
+              "깊은 외야 대응"
+            ],
+            "sourceTitle": "少年の夢: ティーボールは優勝！4年振りの全国大会へ！",
+            "sourceUrl": "https://uehira.blogspot.com/2023/05/4.html?m=0",
+            "reviewStatus": "draft",
+            "candidateGrade": "B",
+            "factStatus": "verified",
+            "relevance": "partial",
+            "relevanceExplanation": "기록된 행동 중 일부만 요청과 겹칩니다.",
+            "matchedConditions": [
+              "defense",
+              "hit"
+            ],
+            "differingConditions": [],
+            "unmatchedConditions": [
+              "throw",
+              "catch",
+              "running"
+            ],
+            "ruleStatus": "not-compared",
+            "ruleExplanation": "학교 규칙과의 일치는 확인하지 않았습니다."
+          },
+          {
+            "id": "TBX-08",
+            "sport": "baseball",
+            "sourceSport": "baseball",
+            "targetSport": "teeball",
+            "comparisonType": "shared-skill",
+            "title": "짧은 땅볼 뒤 빈 베이스 지원",
+            "observed": "Lowe가 짧은 땅볼을 처리한 뒤 1루를 지원한 King에게 던졌지만 King이 잡지 못했다.",
+            "context": "Rangers–White Sox · 8회 · King의 투구 기능 대신 타격 뒤 가용 수비수의 지원 역할만 비교; 베이스 터치·아웃 규칙은 비교 범위 밖",
+            "sourceTitle": "MLB.com",
+            "sourceUrl": "https://www.mlb.com/news/matt-bush-texas-bullpen-piece-together-nine-innings",
+            "evidenceLocator": "본문 134행; slow grounder to first 설명",
+            "claimCheckStatus": "article-checked",
+            "factStatus": "article-checked",
+            "candidateGrade": "A",
+            "reviewStatus": "draft",
+            "aiUseBlocked": false,
+            "pilotMaterialReviewStatus": "accepted",
+            "videoReviewStatus": "not-viewed",
+            "matchDateStatus": "not-separately-verified; 게시일을 경기일로 전용하지 않음",
+            "educatorReviewStatus": "pending",
+            "expertReviewStatus": "pending",
+            "reuseStatus": "not-checked",
+            "limitations": [
+              "King의 투구 기능 대신 타격 뒤 가용 수비수의 지원 역할만 비교; 베이스 터치·아웃 규칙은 비교 범위 밖"
+            ],
+            "scopes": [
+              {
+                "questionId": "TE-09-02",
+                "purpose": "scene-comparison",
+                "supported": "타구 처리·송구 수신 역할",
+                "missing": "두 내야수가 동시에 같은 타구로 접근한 조건은 불명",
+                "ruleScope": "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외",
+                "relevance": "partial",
+                "matchedConditions": [
+                  "throw",
+                  "hit"
+                ],
+                "differingConditions": []
+              }
+            ],
+            "sceneScopes": [
+              {
+                "questionId": "TE-09-02",
+                "purpose": "scene-comparison",
+                "supported": "타구 처리·송구 수신 역할",
+                "missing": "두 내야수가 동시에 같은 타구로 접근한 조건은 불명",
+                "ruleScope": "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외",
+                "relevance": "partial",
+                "matchedConditions": [
+                  "throw",
+                  "hit"
+                ],
+                "differingConditions": []
+              }
+            ],
+            "relevance": "partial",
+            "relevanceExplanation": "요청의 일부 행동만 자료의 장면 비교 범위와 겹칩니다.",
+            "matchedConditions": [
+              "throw",
+              "hit"
+            ],
+            "differingConditions": [],
+            "unmatchedConditions": [
+              "defense",
+              "catch",
+              "running"
+            ],
+            "ruleStatus": "unconfirmed",
+            "ruleExplanation": "요청의 규칙 적용과 판정은 확인되지 않았습니다."
+          },
+          {
+            "id": "TBX-09",
+            "sport": "baseball",
+            "sourceSport": "baseball",
+            "targetSport": "teeball",
+            "comparisonType": "shared-skill",
+            "title": "느린 땅볼에 전진했으나 처리 실패",
+            "observed": "Mercer는 느린 땅볼에 전진했으나 처리하지 못했다.",
+            "context": "Pirates–Cardinals · 5회 · 짧은 전방 타구의 길이와 놓친 뒤 재확보는 불명; 성공한 포구 사례가 아님",
+            "sourceTitle": "MLB.com",
+            "sourceUrl": "https://www.mlb.com/news/pirates-jordy-mercer-strong-on-defense-in-rain/c-135813232",
+            "evidenceLocator": "본문 185–190행; Scruggs의 slow roller 처리 문단",
+            "claimCheckStatus": "article-checked",
+            "factStatus": "article-checked",
+            "candidateGrade": "A",
+            "reviewStatus": "draft",
+            "aiUseBlocked": false,
+            "pilotMaterialReviewStatus": "accepted",
+            "videoReviewStatus": "not-viewed",
+            "matchDateStatus": "not-separately-verified; 게시일과 경기일을 별도 필드로 유지",
+            "educatorReviewStatus": "pending",
+            "expertReviewStatus": "pending",
+            "reuseStatus": "not-checked",
+            "limitations": [
+              "짧은 전방 타구의 길이와 놓친 뒤 재확보는 불명; 성공한 포구 사례가 아님"
+            ],
+            "scopes": [
+              {
+                "questionId": "TE-09-06",
+                "purpose": "scene-comparison",
+                "supported": "전진 후 타구 처리 실패",
+                "missing": "불규칙 바운드와 놓친 뒤 재확보 행동은 불명",
+                "ruleScope": "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외",
+                "relevance": "partial",
+                "matchedConditions": [
+                  "hit"
+                ],
+                "differingConditions": []
+              }
+            ],
+            "sceneScopes": [
+              {
+                "questionId": "TE-09-06",
+                "purpose": "scene-comparison",
+                "supported": "전진 후 타구 처리 실패",
+                "missing": "불규칙 바운드와 놓친 뒤 재확보 행동은 불명",
+                "ruleScope": "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외",
+                "relevance": "partial",
+                "matchedConditions": [
+                  "hit"
+                ],
+                "differingConditions": []
+              }
+            ],
+            "relevance": "partial",
+            "relevanceExplanation": "요청의 일부 행동만 자료의 장면 비교 범위와 겹칩니다.",
+            "matchedConditions": [
+              "hit"
+            ],
+            "differingConditions": [],
+            "unmatchedConditions": [
+              "throw",
+              "defense",
+              "catch",
+              "running"
+            ],
+            "ruleStatus": "unconfirmed",
+            "ruleExplanation": "요청의 규칙 적용과 판정은 확인되지 않았습니다."
+          },
+          {
+            "id": "TBX-18",
+            "sport": "baseball",
+            "sourceSport": "baseball",
+            "targetSport": "teeball",
+            "comparisonType": "shared-skill",
+            "title": "동료가 중계자의 송구 대상을 알려줌",
+            "observed": "Turang이 송구 대상을 알려주자 Ortiz가 중계 송구를 이어갔다.",
+            "context": "Brewers–Dodgers, NLCS Game 1 · 4회 · 여러 중계자의 콜이 충돌해 외야수가 망설인 조건은 아님; 태그업·포스 아웃·득점 판단은 비교하지 않음",
+            "sourceTitle": "MLB.com",
+            "sourceUrl": "https://www.mlb.com/amp/news/near-home-run-in-nlcs-game-1-causes-chaos-on-basepaths.html",
+            "evidenceLocator": "본문 33–35행; Turang의 대상 전달·Ortiz의 수신 회고",
+            "claimCheckStatus": "article-checked",
+            "factStatus": "article-checked",
+            "candidateGrade": "A",
+            "reviewStatus": "draft",
+            "aiUseBlocked": false,
+            "pilotMaterialReviewStatus": "accepted",
+            "videoReviewStatus": "not-viewed",
+            "matchDateStatus": "not-separately-verified; 기사 게시일과 경기일은 별도",
+            "educatorReviewStatus": "pending",
+            "expertReviewStatus": "pending",
+            "reuseStatus": "not-checked",
+            "limitations": [
+              "여러 중계자의 콜이 충돌해 외야수가 망설인 조건은 아님; 태그업·포스 아웃·득점 판단은 비교하지 않음"
+            ],
+            "scopes": [
+              {
+                "questionId": "TE-14-05",
+                "purpose": "scene-comparison",
+                "supported": "뒤 동료가 중계자의 송구 대상을 정해 전달",
+                "missing": "여러 콜의 충돌이나 외야수의 망설임은 기록에 없음",
+                "ruleScope": "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외",
+                "relevance": "partial",
+                "matchedConditions": [
+                  "throw"
+                ],
+                "differingConditions": []
+              }
+            ],
+            "sceneScopes": [
+              {
+                "questionId": "TE-14-05",
+                "purpose": "scene-comparison",
+                "supported": "뒤 동료가 중계자의 송구 대상을 정해 전달",
+                "missing": "여러 콜의 충돌이나 외야수의 망설임은 기록에 없음",
+                "ruleScope": "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외",
+                "relevance": "partial",
+                "matchedConditions": [
+                  "throw"
+                ],
+                "differingConditions": []
+              }
+            ],
+            "relevance": "partial",
+            "relevanceExplanation": "요청의 일부 행동만 자료의 장면 비교 범위와 겹칩니다.",
+            "matchedConditions": [
+              "throw"
+            ],
+            "differingConditions": [],
+            "unmatchedConditions": [
+              "defense",
+              "catch",
+              "hit",
+              "running"
+            ],
+            "ruleStatus": "unconfirmed",
+            "ruleExplanation": "요청의 규칙 적용과 판정은 확인되지 않았습니다."
+          }
+        ],
+        "allowedIds": [
+          "TBX-13",
+          "TBX-15",
+          "TBX-14",
+          "TBX-03",
+          "teeball_case_03",
+          "TBX-08",
+          "TBX-09",
+          "TBX-18"
+        ],
+        "preBudgetIds": [
+          "TBX-13",
+          "TBX-15",
+          "TBX-14",
+          "TBX-03",
+          "teeball_case_03",
+          "TBX-08",
+          "TBX-09",
+          "TBX-18"
+        ],
+        "promptIds": [
+          "TBX-13",
+          "TBX-15",
+          "TBX-14"
+        ],
+        "plan": {
+          "prompt": "<|im_start|>system\nSelect up to two relevant IDs. Return only JSON referenceIds. Profiles are limited evidence, not full cases; partial and unconfirmed do not mean exact matches. B is material-level evidence. Fields: id, source sport, target sport, relevance, unmatched, differing, rule status, grade, evidence. Evidence is complete observed text or one [supported, missing, rule scope]. Other source context, scopes and limits are omitted; do not infer their absence.<|im_end|>\n<|im_start|>user\n{\"request\":\"티볼에서 타구를 잡은 수비수가 주자보다 먼저 베이스에 송구하는 장면을 비교해 주세요.\",\"sport\":\"teeball\",\"totalCandidates\":8,\"shownCandidates\":3,\"references\":[[\"TBX-13\",\"baseball\",\"teeball\",\"partial\",[\"throw\",\"defense\",\"catch\",\"running\"],[],\"unconfirmed\",\"A\",[\"라인 쪽 타구에 대한 출발 위치·첫 움직임\",\"여러 내야수 사이의 간격은 불명\",\"타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외\"]],[\"TBX-15\",\"baseball\",\"teeball\",\"partial\",[\"throw\",\"defense\",\"catch\",\"running\"],[],\"unconfirmed\",\"A\",[\"뜬공을 추적해 포구한 결과; 기존 티볼 라이너 사례와 함께 비교 가능\",\"타구 높이만 바꿔 비교한 동일 조건 장면이 아니며 타구 높이 수치·학생 영상은 없음\",\"타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외\"]],[\"TBX-14\",\"baseball\",\"teeball\",\"partial\",[\"throw\",\"catch\",\"running\"],[],\"unconfirmed\",\"A\",[\"약한 타구 예상의 전진 배치 뒤 수비수 머리 위로 간 타구\",\"티볼에서 정지한 공을 친 조건과 다름; 타자의 공간 공략 의도는 불명\",\"타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외\"]]]}<|im_end|>\n<|im_start|>assistant\n",
+          "tokens": 506,
+          "references": [
+            [
+              "TBX-13",
+              "baseball",
+              "teeball",
+              "partial",
+              [
+                "throw",
+                "defense",
+                "catch",
+                "running"
+              ],
+              [],
+              "unconfirmed",
+              "A",
+              [
+                "라인 쪽 타구에 대한 출발 위치·첫 움직임",
+                "여러 내야수 사이의 간격은 불명",
+                "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외"
+              ]
+            ],
+            [
+              "TBX-15",
+              "baseball",
+              "teeball",
+              "partial",
+              [
+                "throw",
+                "defense",
+                "catch",
+                "running"
+              ],
+              [],
+              "unconfirmed",
+              "A",
+              [
+                "뜬공을 추적해 포구한 결과; 기존 티볼 라이너 사례와 함께 비교 가능",
+                "타구 높이만 바꿔 비교한 동일 조건 장면이 아니며 타구 높이 수치·학생 영상은 없음",
+                "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외"
+              ]
+            ],
+            [
+              "TBX-14",
+              "baseball",
+              "teeball",
+              "partial",
+              [
+                "throw",
+                "catch",
+                "running"
+              ],
+              [],
+              "unconfirmed",
+              "A",
+              [
+                "약한 타구 예상의 전진 배치 뒤 수비수 머리 위로 간 타구",
+                "티볼에서 정지한 공을 친 조건과 다름; 타자의 공간 공략 의도는 불명",
+                "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외"
+              ]
+            ]
+          ],
+          "totalCount": 8,
+          "omittedCount": 5,
+          "omittedIds": [
+            "TBX-03",
+            "teeball_case_03",
+            "TBX-08",
+            "TBX-09",
+            "TBX-18"
+          ]
+        },
+        "promptRefs": [
+          [
+            "TBX-13",
+            "baseball",
+            "teeball",
+            "partial",
+            [
+              "throw",
+              "defense",
+              "catch",
+              "running"
+            ],
+            [],
+            "unconfirmed",
+            "A",
+            [
+              "라인 쪽 타구에 대한 출발 위치·첫 움직임",
+              "여러 내야수 사이의 간격은 불명",
+              "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외"
+            ]
+          ],
+          [
+            "TBX-15",
+            "baseball",
+            "teeball",
+            "partial",
+            [
+              "throw",
+              "defense",
+              "catch",
+              "running"
+            ],
+            [],
+            "unconfirmed",
+            "A",
+            [
+              "뜬공을 추적해 포구한 결과; 기존 티볼 라이너 사례와 함께 비교 가능",
+              "타구 높이만 바꿔 비교한 동일 조건 장면이 아니며 타구 높이 수치·학생 영상은 없음",
+              "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외"
+            ]
+          ],
+          [
+            "TBX-14",
+            "baseball",
+            "teeball",
+            "partial",
+            [
+              "throw",
+              "catch",
+              "running"
+            ],
+            [],
+            "unconfirmed",
+            "A",
+            [
+              "약한 타구 예상의 전진 배치 뒤 수비수 머리 위로 간 타구",
+              "티볼에서 정지한 공을 친 조건과 다름; 타자의 공간 공략 의도는 불명",
+              "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외"
+            ]
+          ]
+        ],
+        "inputTokens": 506,
+        "tokenizerTokens": 502,
+        "tokenReserve": 4,
+        "inputBudget": 512,
+        "result": {
+          "summary": "2개의 비교할 경기 자료를 찾았습니다.",
+          "cases": [
+            {
+              "id": "TBX-13",
+              "sport": "baseball",
+              "sourceSport": "baseball",
+              "targetSport": "teeball",
+              "comparisonType": "shared-skill",
+              "title": "라인 쪽 첫 발과 출발 위치",
+              "observed": "McGonigle은 출발 위치에서 라인 쪽으로 먼저 움직인 뒤 땅볼을 막고 송구했다.",
+              "context": "Tigers–Orioles spring training · 2회 · 개인별 능력 차이를 반영한 배치나 내야수 사이 간격은 불명; 짧은 전방 타구가 아닌 라인 쪽 타구",
+              "sourceTitle": "MLB.com",
+              "sourceUrl": "https://www.mlb.com/dbacks/news/kevin-mcgonigle-shines-on-defense-behind-justin-verlander",
+              "evidenceLocator": "본문 238–241행; pre-pitch positioning·첫 발·라인 쪽 타구 접근",
+              "claimCheckStatus": "article-checked",
+              "factStatus": "article-checked",
+              "candidateGrade": "A",
+              "reviewStatus": "draft",
+              "aiUseBlocked": false,
+              "pilotMaterialReviewStatus": "accepted",
+              "videoReviewStatus": "not-viewed",
+              "matchDateStatus": "not-separately-verified; 게시일과 경기일을 별도 필드로 유지",
+              "educatorReviewStatus": "pending",
+              "expertReviewStatus": "pending",
+              "reuseStatus": "not-checked",
+              "limitations": [
+                "개인별 능력 차이를 반영한 배치나 내야수 사이 간격은 불명; 짧은 전방 타구가 아닌 라인 쪽 타구"
+              ],
+              "scopes": [
+                {
+                  "questionId": "TE-11-03",
+                  "purpose": "scene-comparison",
+                  "supported": "라인 쪽 타구에 대한 출발 위치·첫 움직임",
+                  "missing": "여러 내야수 사이의 간격은 불명",
+                  "ruleScope": "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외",
+                  "relevance": "partial",
+                  "matchedConditions": [
+                    "hit"
+                  ],
+                  "differingConditions": []
+                },
+                {
+                  "questionId": "TE-09-01",
+                  "purpose": "scene-comparison",
+                  "supported": "타격 후 땅볼을 향한 내야수의 접근",
+                  "missing": "타자 앞쪽 짧은 타구가 아닌 라인 쪽 타구",
+                  "ruleScope": "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외",
+                  "relevance": "partial",
+                  "matchedConditions": [
+                    "hit"
+                  ],
+                  "differingConditions": []
+                }
+              ],
+              "sceneScopes": [
+                {
+                  "questionId": "TE-11-03",
+                  "purpose": "scene-comparison",
+                  "supported": "라인 쪽 타구에 대한 출발 위치·첫 움직임",
+                  "missing": "여러 내야수 사이의 간격은 불명",
+                  "ruleScope": "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외",
+                  "relevance": "partial",
+                  "matchedConditions": [
+                    "hit"
+                  ],
+                  "differingConditions": []
+                },
+                {
+                  "questionId": "TE-09-01",
+                  "purpose": "scene-comparison",
+                  "supported": "타격 후 땅볼을 향한 내야수의 접근",
+                  "missing": "타자 앞쪽 짧은 타구가 아닌 라인 쪽 타구",
+                  "ruleScope": "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외",
+                  "relevance": "partial",
+                  "matchedConditions": [
+                    "hit"
+                  ],
+                  "differingConditions": []
+                }
+              ],
+              "relevance": "partial",
+              "relevanceExplanation": "요청의 일부 행동만 자료의 장면 비교 범위와 겹칩니다.",
+              "matchedConditions": [
+                "hit"
+              ],
+              "differingConditions": [],
+              "unmatchedConditions": [
+                "throw",
+                "defense",
+                "catch",
+                "running"
+              ],
+              "ruleStatus": "unconfirmed",
+              "ruleExplanation": "요청의 규칙 적용과 판정은 확인되지 않았습니다.",
+              "similarity": "자료에서 확인된 비교 범위: 라인 쪽 타구에 대한 출발 위치·첫 움직임 · 타격 후 땅볼을 향한 내야수의 접근",
+              "similarityOrigin": "source"
+            },
+            {
+              "id": "TBX-15",
+              "sport": "baseball",
+              "sourceSport": "baseball",
+              "targetSport": "teeball",
+              "comparisonType": "shared-skill",
+              "title": "얕은 외야 위치에서 뒤 타구를 추적해 포구",
+              "observed": "얕게 선 Martin이 뒤쪽으로 날아온 타구를 달려가 잡았다.",
+              "context": "Twins–Red Sox · 8회 · 같은 타자의 짧고 긴 타구가 교차한 장면은 아님; 우천·경기장·선수 능력 차이가 있고 실제 영상은 미시청",
+              "sourceTitle": "MLB.com",
+              "sourceUrl": "https://www.mlb.com/twins/news/twins-sweep-red-sox-at-fenway-park",
+              "evidenceLocator": "본문 148–154행; Martin의 얕은 출발 위치·running catch 설명",
+              "claimCheckStatus": "article-checked",
+              "factStatus": "article-checked",
+              "candidateGrade": "A",
+              "reviewStatus": "draft",
+              "aiUseBlocked": false,
+              "pilotMaterialReviewStatus": "accepted",
+              "videoReviewStatus": "not-viewed",
+              "matchDateStatus": "not-separately-verified; 기사 게시일과 경기일은 별도",
+              "educatorReviewStatus": "pending",
+              "expertReviewStatus": "pending",
+              "reuseStatus": "not-checked",
+              "limitations": [
+                "같은 타자의 짧고 긴 타구가 교차한 장면은 아님; 우천·경기장·선수 능력 차이가 있고 실제 영상은 미시청"
+              ],
+              "scopes": [
+                {
+                  "questionId": "TE-03-02",
+                  "purpose": "scene-comparison",
+                  "supported": "뜬공을 추적해 포구한 결과; 기존 티볼 라이너 사례와 함께 비교 가능",
+                  "missing": "타구 높이만 바꿔 비교한 동일 조건 장면이 아니며 타구 높이 수치·학생 영상은 없음",
+                  "ruleScope": "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외",
+                  "relevance": "partial",
+                  "matchedConditions": [
+                    "hit"
+                  ],
+                  "differingConditions": []
+                }
+              ],
+              "sceneScopes": [
+                {
+                  "questionId": "TE-03-02",
+                  "purpose": "scene-comparison",
+                  "supported": "뜬공을 추적해 포구한 결과; 기존 티볼 라이너 사례와 함께 비교 가능",
+                  "missing": "타구 높이만 바꿔 비교한 동일 조건 장면이 아니며 타구 높이 수치·학생 영상은 없음",
+                  "ruleScope": "타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외",
+                  "relevance": "partial",
+                  "matchedConditions": [
+                    "hit"
+                  ],
+                  "differingConditions": []
+                }
+              ],
+              "relevance": "partial",
+              "relevanceExplanation": "요청의 일부 행동만 자료의 장면 비교 범위와 겹칩니다.",
+              "matchedConditions": [
+                "hit"
+              ],
+              "differingConditions": [],
+              "unmatchedConditions": [
+                "throw",
+                "defense",
+                "catch",
+                "running"
+              ],
+              "ruleStatus": "unconfirmed",
+              "ruleExplanation": "요청의 규칙 적용과 판정은 확인되지 않았습니다.",
+              "similarity": "자료에서 확인된 비교 범위: 뜬공을 추적해 포구한 결과; 기존 티볼 라이너 사례와 함께 비교 가능",
+              "similarityOrigin": "source"
+            }
+          ],
+          "comparisonLimit": "자료에 기록된 조건만 비교할 수 있습니다. 빠진 조건과 수업 규칙의 차이를 확인하세요. 모델은 제한적인 근거 프로파일로 검색 후보 8개 중 3개를 검토했습니다. 모델 입력에는 원문 전체와 다른 비교 범위 및 제한이 생략될 수 있으므로 전체 자료와 빠진 조건을 확인하세요.",
+          "model": "Qwen2.5-3B-Instruct Q4_K_M",
+          "modelUsed": true,
+          "resultKind": "model-selection",
+          "generatedAt": 1794878616130,
+          "modelAttempted": true,
+          "modelCoverage": {
+            "retrieved": 8,
+            "shown": 3,
+            "omittedIds": [
+              "TBX-03",
+              "teeball_case_03",
+              "TBX-08",
+              "TBX-09",
+              "TBX-18"
+            ]
+          }
+        },
+        "retrievalReferenceFieldsPreserved": [
+          {
+            "id": "TBX-13",
+            "preserved": true
+          },
+          {
+            "id": "TBX-15",
+            "preserved": true
+          }
+        ],
+        "calls": {
+          "loads": 1,
+          "completions": 1,
+          "raw": "{\"referenceIds\":[\"TBX-13\",\"TBX-15\"]}",
+          "finish": "stop",
+          "loadOptions": {
+            "n_ctx": 1024,
+            "n_batch": 128,
+            "n_ubatch": 64,
+            "n_threads": 2
+          },
+          "engine": {
+            "threads": 2,
+            "multithread": true,
+            "context": {
+              "_name": "load_res",
+              "success": true,
+              "n_ctx": 1024,
+              "n_batch": 128,
+              "n_ubatch": 64,
+              "n_vocab": 151936,
+              "n_ctx_train": 32768,
+              "n_embd": 2048,
+              "n_layer": 36,
+              "metadata_key": [
+                "general.quantization_version",
+                "tokenizer.chat_template",
+                "tokenizer.ggml.bos_token_id",
+                "tokenizer.ggml.padding_token_id",
+                "tokenizer.ggml.eos_token_id",
+                "tokenizer.ggml.pre",
+                "tokenizer.ggml.model",
+                "qwen2.attention.layer_norm_rms_epsilon",
+                "qwen2.rope.freq_base",
+                "qwen2.attention.head_count_kv",
+                "qwen2.embedding_length",
+                "qwen2.context_length",
+                "general.type",
+                "qwen2.attention.head_count",
+                "qwen2.feed_forward_length",
+                "general.architecture",
+                "qwen2.block_count",
+                "general.file_type",
+                "general.size_label",
+                "tokenizer.ggml.add_bos_token",
+                "general.version",
+                "general.finetune",
+                "general.name"
+              ],
+              "metadata_val": [
+                "2",
+                "{%- if tools %}\n    {{- '<|im_start|>system\\n' }}\n    {%- if messages[0]['role'] == 'system' %}\n        {{- messages[0]['content'] }}\n    {%- else %}\n        {{- 'You are Qwen, created by Alibaba Cloud. You are a helpful assistant.' }}\n    {%- endif %}\n    {{- \"\\n\\n# Tools\\n\\nYou may call one or more functions to assist with the user query.\\n\\nYou are provided with function signatures within <tools></tools> XML tags:\\n<tools>\" }}\n    {%- for tool in tools %}\n        {{- \"\\n\" }}\n        {{- tool | tojson }}\n    {%- endfor %}\n    {{- \"\\n</tools>\\n\\nFor each function call, return a json object with function name and arguments within <tool_call></tool_call> XML tags:\\n<tool_call>\\n{{\\\"name\\\": <function-name>, \\\"arguments\\\": <args-json-object>}}\\n</tool_call><|im_end|>\\n\" }}\n{%- else %}\n    {%- if messages[0]['role'] == 'system' %}\n        {{- '<|im_start|>system\\n' + messages[0]['content'] + '<|im_end|>\\n' }}\n    {%- else %}\n        {{- '<|im_start|>system\\nYou are Qwen, created by Alibaba Cloud. You are a helpful assistant.<|im_end|>\\n' }}\n    {%- endif %}\n{%- endif %}\n{%- for message in messages %}\n    {%- if (message.role == \"user\") or (message.role == \"system\" and not loop.first) or (message.role == \"assistant\" and not message.tool_calls) %}\n        {{- '<|im_start|>' + message.role + '\\n' + message.content + '<|im_end|>' + '\\n' }}\n    {%- elif message.role == \"assistant\" %}\n        {{- '<|im_start|>' + message.role }}\n        {%- if message.content %}\n            {{- '\\n' + message.content }}\n        {%- endif %}\n        {%- for tool_call in message.tool_calls %}\n            {%- if tool_call.function is defined %}\n                {%- set tool_call = tool_call.function %}\n            {%- endif %}\n            {{- '\\n<tool_call>\\n{\"name\": \"' }}\n            {{- tool_call.name }}\n            {{- '\", \"arguments\": ' }}\n            {{- tool_call.arguments | tojson }}\n            {{- '}\\n</tool_call>' }}\n        {%- endfor %}\n        {{- '<|im_end|>\\n' }}\n    {%- elif message.role == \"tool\" %}\n        {%- if (loop.index0 == 0) or (messages[loop.index0 - 1].role != \"tool\") %}\n            {{- '<|im_start|>user' }}\n        {%- endif %}\n        {{- '\\n<tool_response>\\n' }}\n        {{- message.content }}\n        {{- '\\n</tool_response>' }}\n        {%- if loop.last or (messages[loop.index0 + 1].role != \"tool\") %}\n            {{- '<|im_end|>\\n' }}\n        {%- endif %}\n    {%- endif %}\n{%- endfor %}\n{%- if add_generation_prompt %}\n    {{- '<|im_start|>assistant\\n' }}\n{%- endif %}\n",
+                "151643",
+                "151643",
+                "151645",
+                "qwen2",
+                "gpt2",
+                "0.000001",
+                "1000000.000000",
+                "2",
+                "2048",
+                "32768",
+                "model",
+                "16",
+                "11008",
+                "qwen2",
+                "36",
+                "15",
+                "3.4B",
+                "false",
+                "v0.1-v0.1",
+                "qwen2.5-3b-instruct",
+                "qwen2.5-3b-instruct"
+              ],
+              "token_bos": 151643,
+              "token_eos": 151645,
+              "token_eot": 151645,
+              "list_tokens_eog": [
+                128247,
+                151643,
+                151645,
+                151662,
+                151663,
+                151664
+              ],
+              "add_bos_token": false,
+              "add_eos_token": false,
+              "has_encoder": false,
+              "token_decoder_start": -1,
+              "media_marker": "<__media_PZZ6GmYhvIIGxIMHUwW3ZadKNMZsf07I__>",
+              "has_image_input": false,
+              "has_audio_input": false,
+              "has_audio_output": false,
+              "has_chat": true,
+              "has_audio_stream": false,
+              "has_live_asr": false,
+              "audio_input_rate": 0,
+              "audio_output_rate": 0,
+              "audio_voices": [],
+              "metadata": {
+                "general.quantization_version": "2",
+                "tokenizer.chat_template": "{%- if tools %}\n    {{- '<|im_start|>system\\n' }}\n    {%- if messages[0]['role'] == 'system' %}\n        {{- messages[0]['content'] }}\n    {%- else %}\n        {{- 'You are Qwen, created by Alibaba Cloud. You are a helpful assistant.' }}\n    {%- endif %}\n    {{- \"\\n\\n# Tools\\n\\nYou may call one or more functions to assist with the user query.\\n\\nYou are provided with function signatures within <tools></tools> XML tags:\\n<tools>\" }}\n    {%- for tool in tools %}\n        {{- \"\\n\" }}\n        {{- tool | tojson }}\n    {%- endfor %}\n    {{- \"\\n</tools>\\n\\nFor each function call, return a json object with function name and arguments within <tool_call></tool_call> XML tags:\\n<tool_call>\\n{{\\\"name\\\": <function-name>, \\\"arguments\\\": <args-json-object>}}\\n</tool_call><|im_end|>\\n\" }}\n{%- else %}\n    {%- if messages[0]['role'] == 'system' %}\n        {{- '<|im_start|>system\\n' + messages[0]['content'] + '<|im_end|>\\n' }}\n    {%- else %}\n        {{- '<|im_start|>system\\nYou are Qwen, created by Alibaba Cloud. You are a helpful assistant.<|im_end|>\\n' }}\n    {%- endif %}\n{%- endif %}\n{%- for message in messages %}\n    {%- if (message.role == \"user\") or (message.role == \"system\" and not loop.first) or (message.role == \"assistant\" and not message.tool_calls) %}\n        {{- '<|im_start|>' + message.role + '\\n' + message.content + '<|im_end|>' + '\\n' }}\n    {%- elif message.role == \"assistant\" %}\n        {{- '<|im_start|>' + message.role }}\n        {%- if message.content %}\n            {{- '\\n' + message.content }}\n        {%- endif %}\n        {%- for tool_call in message.tool_calls %}\n            {%- if tool_call.function is defined %}\n                {%- set tool_call = tool_call.function %}\n            {%- endif %}\n            {{- '\\n<tool_call>\\n{\"name\": \"' }}\n            {{- tool_call.name }}\n            {{- '\", \"arguments\": ' }}\n            {{- tool_call.arguments | tojson }}\n            {{- '}\\n</tool_call>' }}\n        {%- endfor %}\n        {{- '<|im_end|>\\n' }}\n    {%- elif message.role == \"tool\" %}\n        {%- if (loop.index0 == 0) or (messages[loop.index0 - 1].role != \"tool\") %}\n            {{- '<|im_start|>user' }}\n        {%- endif %}\n        {{- '\\n<tool_response>\\n' }}\n        {{- message.content }}\n        {{- '\\n</tool_response>' }}\n        {%- if loop.last or (messages[loop.index0 + 1].role != \"tool\") %}\n            {{- '<|im_end|>\\n' }}\n        {%- endif %}\n    {%- endif %}\n{%- endfor %}\n{%- if add_generation_prompt %}\n    {{- '<|im_start|>assistant\\n' }}\n{%- endif %}\n",
+                "tokenizer.ggml.bos_token_id": "151643",
+                "tokenizer.ggml.padding_token_id": "151643",
+                "tokenizer.ggml.eos_token_id": "151645",
+                "tokenizer.ggml.pre": "qwen2",
+                "tokenizer.ggml.model": "gpt2",
+                "qwen2.attention.layer_norm_rms_epsilon": "0.000001",
+                "qwen2.rope.freq_base": "1000000.000000",
+                "qwen2.attention.head_count_kv": "2",
+                "qwen2.embedding_length": "2048",
+                "qwen2.context_length": "32768",
+                "general.type": "model",
+                "qwen2.attention.head_count": "16",
+                "qwen2.feed_forward_length": "11008",
+                "general.architecture": "qwen2",
+                "qwen2.block_count": "36",
+                "general.file_type": "15",
+                "general.size_label": "3.4B",
+                "tokenizer.ggml.add_bos_token": "false",
+                "general.version": "v0.1-v0.1",
+                "general.finetune": "qwen2.5-3b-instruct",
+                "general.name": "qwen2.5-3b-instruct"
+              }
+            }
+          },
+          "maxTokens": 96,
+          "temperature": 0.2,
+          "prompt": "<|im_start|>system\nSelect up to two relevant IDs. Return only JSON referenceIds. Profiles are limited evidence, not full cases; partial and unconfirmed do not mean exact matches. B is material-level evidence. Fields: id, source sport, target sport, relevance, unmatched, differing, rule status, grade, evidence. Evidence is complete observed text or one [supported, missing, rule scope]. Other source context, scopes and limits are omitted; do not infer their absence.<|im_end|>\n<|im_start|>user\n{\"request\":\"티볼에서 타구를 잡은 수비수가 주자보다 먼저 베이스에 송구하는 장면을 비교해 주세요.\",\"sport\":\"teeball\",\"totalCandidates\":8,\"shownCandidates\":3,\"references\":[[\"TBX-13\",\"baseball\",\"teeball\",\"partial\",[\"throw\",\"defense\",\"catch\",\"running\"],[],\"unconfirmed\",\"A\",[\"라인 쪽 타구에 대한 출발 위치·첫 움직임\",\"여러 내야수 사이의 간격은 불명\",\"타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외\"]],[\"TBX-15\",\"baseball\",\"teeball\",\"partial\",[\"throw\",\"defense\",\"catch\",\"running\"],[],\"unconfirmed\",\"A\",[\"뜬공을 추적해 포구한 결과; 기존 티볼 라이너 사례와 함께 비교 가능\",\"타구 높이만 바꿔 비교한 동일 조건 장면이 아니며 타구 높이 수치·학생 영상은 없음\",\"타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외\"]],[\"TBX-14\",\"baseball\",\"teeball\",\"partial\",[\"throw\",\"catch\",\"running\"],[],\"unconfirmed\",\"A\",[\"약한 타구 예상의 전진 배치 뒤 수비수 머리 위로 간 타구\",\"티볼에서 정지한 공을 친 조건과 다름; 타자의 공간 공략 의도는 불명\",\"타격 후 공통 수비 행동만 비교; 아웃·득점·도루·투구 규칙 적용 제외\"]]]}<|im_end|>\n<|im_start|>assistant\n",
+          "grammar": "root ::= \"{\\\"referenceIds\\\":\" selection \"}\"\nselection ::= \"[]\" | \"[\\\"TBX-13\\\"]\" | \"[\\\"TBX-15\\\"]\" | \"[\\\"TBX-14\\\"]\" | \"[\\\"TBX-13\\\",\\\"TBX-15\\\"]\" | \"[\\\"TBX-13\\\",\\\"TBX-14\\\"]\" | \"[\\\"TBX-15\\\",\\\"TBX-13\\\"]\" | \"[\\\"TBX-15\\\",\\\"TBX-14\\\"]\" | \"[\\\"TBX-14\\\",\\\"TBX-13\\\"]\" | \"[\\\"TBX-14\\\",\\\"TBX-15\\\"]\""
+        }
+      },
+      "latencyMs": 462615
+    }
+  ],
+  "requests": [
+    {
+      "url": "http://127.0.0.1:40999/",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/styles.css",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/frame-buffer.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/timeline.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/webm-muxer.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/clip-exporter.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/local-vault.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/clip-repository.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/classroom-model.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/paps-criteria-data.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/paps-criteria.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/paps-bmi-criteria-data.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/paps-bmi-criteria.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/paps-program-selection.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/paps-reports.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/teacher-evaluations.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/exercise-routines.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/gps-missions.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/qr-missions.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/tactics-board.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/tactics-sharing.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/tactics-search-local.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/tactics-team-request.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/tactics-local-prompt.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/tactics-local-advisor.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/tactics-student-ui.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/tactics-tools-ui.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/wearable-bridge.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/shot-history.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/classroom-repository.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/classroom-sync.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/qrcode-generator.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/classroom-tools-ui.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/classroom-ui.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/shot-history-ui.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/pose-assets.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/model-profiles.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/pose-runtime.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/pose-presence.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/basketball-shot.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/volleyball-cue.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/shot-feedback.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/pose-ui.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/device-check.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/device-check-ui.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/app.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/manifest.webmanifest",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/sw.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/icon.svg",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/index.html",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/styles.css",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/app.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/pose-assets.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/model-profiles.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/volleyball-cue.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/pose-runtime.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/pose-presence.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/basketball-shot.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/shot-feedback.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/shot-history.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/shot-history-ui.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/pose-ui.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/pose-worker.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/classroom-model.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/paps-criteria-data.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/paps-criteria.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/paps-bmi-criteria-data.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/paps-bmi-criteria.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/paps-program-selection.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/paps-reports.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/teacher-evaluations.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/exercise-routines.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/gps-missions.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/qr-missions.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/tactics-board.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/tactics-sharing.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/tactics-search-local.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/tactics-team-request.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/tactics-local-prompt.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/tactics-local-advisor.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/tactics-student-ui.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/vendor/wllama-v3/index.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/vendor/wllama-v3/wasm/wllama.wasm",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/vendor/wllama-v3/compat/wllama.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/vendor/wllama-v3/compat/wllama.wasm",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/vendor/hf-tokenizers/tokenizers.mjs",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/vendor/qwen-tokenizer/tokenizer.json",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/vendor/qwen-tokenizer/tokenizer_config.json",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/vendor/noble-hashes/sha256.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/vendor/noble-hashes/_md.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/vendor/noble-hashes/_assert.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/vendor/noble-hashes/utils.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/vendor/noble-hashes/crypto.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/tactics-tools-ui.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/wearable-bridge.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/classroom-tools-ui.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/classroom-repository.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/classroom-sync.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/classroom-ui.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/qrcode-generator.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/local-vault.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/clip-repository.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/webm-muxer.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/clip-exporter.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/timeline.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/frame-buffer.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/device-check.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/device-check-ui.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/manifest.webmanifest",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/icon.svg",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/icon-192.png",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/icon-512.png",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/vendor/wllama-v3/index.js",
+      "method": "GET",
+      "external": false,
+      "phase": "setup"
+    },
+    {
+      "url": "http://127.0.0.1:40999/vendor/noble-hashes/sha256.js",
+      "method": "GET",
+      "external": false,
+      "phase": "install"
+    },
+    {
+      "url": "http://127.0.0.1:40999/test-model.gguf",
+      "method": "GET",
+      "external": false,
+      "phase": "install"
+    },
+    {
+      "url": "http://127.0.0.1:40999/vendor/noble-hashes/_md.js",
+      "method": "GET",
+      "external": false,
+      "phase": "install"
+    },
+    {
+      "url": "http://127.0.0.1:40999/vendor/noble-hashes/utils.js",
+      "method": "GET",
+      "external": false,
+      "phase": "install"
+    },
+    {
+      "url": "http://127.0.0.1:40999/vendor/noble-hashes/_assert.js",
+      "method": "GET",
+      "external": false,
+      "phase": "install"
+    },
+    {
+      "url": "http://127.0.0.1:40999/vendor/noble-hashes/crypto.js",
+      "method": "GET",
+      "external": false,
+      "phase": "install"
+    },
+    {
+      "url": "http://127.0.0.1:40999/",
+      "method": "GET",
+      "external": false,
+      "phase": "offline"
+    },
+    {
+      "url": "http://127.0.0.1:40999/styles.css",
+      "method": "GET",
+      "external": false,
+      "phase": "offline"
+    },
+    {
+      "url": "http://127.0.0.1:40999/frame-buffer.js",
+      "method": "GET",
+      "external": false,
+      "phase": "offline"
+    },
+    {
+      "url": "http://127.0.0.1:40999/timeline.js",
+      "method": "GET",
+      "external": false,
+      "phase": "offline"
+    },
+    {
+      "url": "http://127.0.0.1:40999/webm-muxer.js",
+      "method": "GET",
+      "external": false,
+      "phase": "offline"
+    },
+    {
+      "url": "http://127.0.0.1:40999/clip-exporter.js",
+      "method": "GET",
+      "external": false,
+      "phase": "offline"
+    },
+    {
+      "url": "http://127.0.0.1:40999/local-vault.js",
+      "method": "GET",
+      "external": false,
+      "phase": "offline"
+    },
+    {
+      "url": "http://127.0.0.1:40999/classroom-model.js",
+      "method": "GET",
+      "external": false,
+      "phase": "offline"
+    },
+    {
+      "url": "http://127.0.0.1:40999/paps-criteria.js",
+      "method": "GET",
+      "external": false,
+      "phase": "offline"
+    },
+    {
+      "url": "http://127.0.0.1:40999/paps-bmi-criteria-data.js",
+      "method": "GET",
+      "external": false,
+      "phase": "offline"
+    },
+    {
+      "url": "http://127.0.0.1:40999/clip-repository.js",
+      "method": "GET",
+      "external": false,
+      "phase": "offline"
+    },
+    {
+      "url": "http://127.0.0.1:40999/paps-bmi-criteria.js",
+      "method": "GET",
+      "external": false,
+      "phase": "offline"
+    },
+    {
+      "url": "http://127.0.0.1:40999/paps-program-selection.js",
+      "method": "GET",
+      "external": false,
+      "phase": "offline"
+    },
+    {
+      "url": "http://127.0.0.1:40999/paps-criteria-data.js",
+      "method": "GET",
+      "external": false,
+      "phase": "offline"
+    },
+    {
+      "url": "http://127.0.0.1:40999/paps-reports.js",
+      "method": "GET",
+      "external": false,
+      "phase": "offline"
+    },
+    {
+      "url": "http://127.0.0.1:40999/teacher-evaluations.js",
+      "method": "GET",
+      "external": false,
+      "phase": "offline"
+    },
+    {
+      "url": "http://127.0.0.1:40999/exercise-routines.js",
+      "method": "GET",
+      "external": false,
+      "phase": "offline"
+    },
+    {
+      "url": "http://127.0.0.1:40999/gps-missions.js",
+      "method": "GET",
+      "external": false,
+      "phase": "offline"
+    },
+    {
+      "url": "http://127.0.0.1:40999/tactics-board.js",
+      "method": "GET",
+      "external": false,
+      "phase": "offline"
+    },
+    {
+      "url": "http://127.0.0.1:40999/tactics-sharing.js",
+      "method": "GET",
+      "external": false,
+      "phase": "offline"
+    },
+    {
+      "url": "http://127.0.0.1:40999/qr-missions.js",
+      "method": "GET",
+      "external": false,
+      "phase": "offline"
+    },
+    {
+      "url": "http://127.0.0.1:40999/tactics-team-request.js",
+      "method": "GET",
+      "external": false,
+      "phase": "offline"
+    },
+    {
+      "url": "http://127.0.0.1:40999/tactics-local-prompt.js",
+      "method": "GET",
+      "external": false,
+      "phase": "offline"
+    },
+    {
+      "url": "http://127.0.0.1:40999/tactics-search-local.js",
+      "method": "GET",
+      "external": false,
+      "phase": "offline"
+    },
+    {
+      "url": "http://127.0.0.1:40999/tactics-local-advisor.js",
+      "method": "GET",
+      "external": false,
+      "phase": "offline"
+    },
+    {
+      "url": "http://127.0.0.1:40999/tactics-student-ui.js",
+      "method": "GET",
+      "external": false,
+      "phase": "offline"
+    },
+    {
+      "url": "http://127.0.0.1:40999/wearable-bridge.js",
+      "method": "GET",
+      "external": false,
+      "phase": "offline"
+    },
+    {
+      "url": "http://127.0.0.1:40999/classroom-repository.js",
+      "method": "GET",
+      "external": false,
+      "phase": "offline"
+    },
+    {
+      "url": "http://127.0.0.1:40999/classroom-sync.js",
+      "method": "GET",
+      "external": false,
+      "phase": "offline"
+    },
+    {
+      "url": "http://127.0.0.1:40999/tactics-tools-ui.js",
+      "method": "GET",
+      "external": false,
+      "phase": "offline"
+    },
+    {
+      "url": "http://127.0.0.1:40999/shot-history.js",
+      "method": "GET",
+      "external": false,
+      "phase": "offline"
+    },
+    {
+      "url": "http://127.0.0.1:40999/qrcode-generator.js",
+      "method": "GET",
+      "external": false,
+      "phase": "offline"
+    },
+    {
+      "url": "http://127.0.0.1:40999/classroom-ui.js",
+      "method": "GET",
+      "external": false,
+      "phase": "offline"
+    },
+    {
+      "url": "http://127.0.0.1:40999/pose-assets.js",
+      "method": "GET",
+      "external": false,
+      "phase": "offline"
+    },
+    {
+      "url": "http://127.0.0.1:40999/model-profiles.js",
+      "method": "GET",
+      "external": false,
+      "phase": "offline"
+    },
+    {
+      "url": "http://127.0.0.1:40999/shot-history-ui.js",
+      "method": "GET",
+      "external": false,
+      "phase": "offline"
+    },
+    {
+      "url": "http://127.0.0.1:40999/pose-presence.js",
+      "method": "GET",
+      "external": false,
+      "phase": "offline"
+    },
+    {
+      "url": "http://127.0.0.1:40999/basketball-shot.js",
+      "method": "GET",
+      "external": false,
+      "phase": "offline"
+    },
+    {
+      "url": "http://127.0.0.1:40999/volleyball-cue.js",
+      "method": "GET",
+      "external": false,
+      "phase": "offline"
+    },
+    {
+      "url": "http://127.0.0.1:40999/pose-runtime.js",
+      "method": "GET",
+      "external": false,
+      "phase": "offline"
+    },
+    {
+      "url": "http://127.0.0.1:40999/shot-feedback.js",
+      "method": "GET",
+      "external": false,
+      "phase": "offline"
+    },
+    {
+      "url": "http://127.0.0.1:40999/classroom-tools-ui.js",
+      "method": "GET",
+      "external": false,
+      "phase": "offline"
+    },
+    {
+      "url": "http://127.0.0.1:40999/device-check-ui.js",
+      "method": "GET",
+      "external": false,
+      "phase": "offline"
+    },
+    {
+      "url": "http://127.0.0.1:40999/pose-ui.js",
+      "method": "GET",
+      "external": false,
+      "phase": "offline"
+    },
+    {
+      "url": "http://127.0.0.1:40999/device-check.js",
+      "method": "GET",
+      "external": false,
+      "phase": "offline"
+    },
+    {
+      "url": "http://127.0.0.1:40999/app.js",
+      "method": "GET",
+      "external": false,
+      "phase": "offline"
+    },
+    {
+      "url": "http://127.0.0.1:40999/manifest.webmanifest",
+      "method": "GET",
+      "external": false,
+      "phase": "offline"
+    },
+    {
+      "url": "http://127.0.0.1:40999/icon.svg",
+      "method": "GET",
+      "external": false,
+      "phase": "offline"
+    },
+    {
+      "url": "http://127.0.0.1:40999/vendor/wllama-v3/index.js",
+      "method": "GET",
+      "external": false,
+      "phase": "offline"
+    },
+    {
+      "url": "http://127.0.0.1:40999/vendor/qwen-tokenizer/tokenizer.json",
+      "method": "GET",
+      "external": false,
+      "phase": "multiple"
+    },
+    {
+      "url": "http://127.0.0.1:40999/vendor/qwen-tokenizer/tokenizer_config.json",
+      "method": "GET",
+      "external": false,
+      "phase": "multiple"
+    },
+    {
+      "url": "http://127.0.0.1:40999/vendor/hf-tokenizers/tokenizers.mjs",
+      "method": "GET",
+      "external": false,
+      "phase": "multiple"
+    },
+    {
+      "url": "http://127.0.0.1:40999/vendor/wllama-v3/wasm/wllama.wasm",
+      "method": "GET",
+      "external": false,
+      "phase": "multiple"
+    },
+    {
+      "url": "http://127.0.0.1:40999/vendor/qwen-tokenizer/tokenizer.json",
+      "method": "GET",
+      "external": false,
+      "phase": "multiple"
+    },
+    {
+      "url": "http://127.0.0.1:40999/vendor/qwen-tokenizer/tokenizer_config.json",
+      "method": "GET",
+      "external": false,
+      "phase": "multiple"
+    },
+    {
+      "url": "http://127.0.0.1:40999/vendor/qwen-tokenizer/tokenizer.json",
+      "method": "GET",
+      "external": false,
+      "phase": "shared-skill"
+    },
+    {
+      "url": "http://127.0.0.1:40999/vendor/qwen-tokenizer/tokenizer_config.json",
+      "method": "GET",
+      "external": false,
+      "phase": "shared-skill"
+    },
+    {
+      "url": "http://127.0.0.1:40999/vendor/wllama-v3/wasm/wllama.wasm",
+      "method": "GET",
+      "external": false,
+      "phase": "shared-skill"
+    },
+    {
+      "url": "http://127.0.0.1:40999/vendor/qwen-tokenizer/tokenizer.json",
+      "method": "GET",
+      "external": false,
+      "phase": "shared-skill"
+    },
+    {
+      "url": "http://127.0.0.1:40999/vendor/qwen-tokenizer/tokenizer_config.json",
+      "method": "GET",
+      "external": false,
+      "phase": "shared-skill"
+    }
+  ],
+  "events": [
+    {
+      "at": "2026-11-17T01:06:34.632Z",
+      "type": "model-verified"
+    },
+    {
+      "at": "2026-11-17T01:06:37.611Z",
+      "type": "browser-ready",
+      "browser": "155.0.8059.79",
+      "isolation": true
+    },
+    {
+      "at": "2026-11-17T01:06:37.645Z",
+      "type": "start",
+      "id": "empty",
+      "kind": "noCandidate"
+    },
+    {
+      "at": "2026-11-17T01:06:37.661Z",
+      "type": "result",
+      "id": "empty",
+      "latencyMs": 16,
+      "ids": [],
+      "loads": 0
+    },
+    {
+      "at": "2026-11-17T01:06:37.662Z",
+      "type": "install-start"
+    },
+    {
+      "at": "2026-11-17T01:08:04.905Z",
+      "type": "installed"
+    },
+    {
+      "at": "2026-11-17T01:08:05.385Z",
+      "type": "offline-ready",
+      "installed": true
+    },
+    {
+      "at": "2026-11-17T01:08:05.387Z",
+      "type": "start",
+      "id": "multiple",
+      "kind": "multiple"
+    },
+    {
+      "at": "2026-11-17T01:15:54.494Z",
+      "type": "result",
+      "id": "multiple",
+      "latencyMs": 469107,
+      "ids": [
+        "teeball_case_01",
+        "TBX-18"
+      ],
+      "loads": 1
+    },
+    {
+      "at": "2026-11-17T01:15:54.504Z",
+      "type": "start",
+      "id": "shared-skill",
+      "kind": "shared-skill"
+    },
+    {
+      "at": "2026-11-17T01:23:37.118Z",
+      "type": "result",
+      "id": "shared-skill",
+      "latencyMs": 462615,
+      "ids": [
+        "TBX-13",
+        "TBX-15"
+      ],
+      "loads": 1
+    },
+    {
+      "at": "2026-11-17T01:23:37.124Z",
+      "type": "complete"
+    }
+  ],
+  "live": [
+    {
+      "at": "2026-11-17T01:08:05.425Z",
+      "phase": "multiple",
+      "type": "progress",
+      "progress": {
+        "phase": "tokenizing",
+        "message": "검색 후보의 입력 길이를 확인하는 중"
+      }
+    },
+    {
+      "at": "2026-11-17T01:08:06.002Z",
+      "phase": "multiple",
+      "type": "progress",
+      "progress": {
+        "phase": "loading",
+        "message": "모델을 기기 메모리에 여는 중"
+      }
+    },
+    {
+      "at": "2026-11-17T01:08:37.917Z",
+      "phase": "multiple",
+      "type": "progress",
+      "progress": {
+        "phase": "prefill",
+        "message": "모델이 입력을 처리하는 중",
+        "received": 492,
+        "total": 512
+      }
+    },
+    {
+      "at": "2026-11-17T01:10:28.372Z",
+      "phase": "multiple",
+      "type": "progress",
+      "progress": {
+        "phase": "prefill",
+        "message": "모델이 입력을 처리하는 중",
+        "received": 0,
+        "total": 488
+      }
+    },
+    {
+      "at": "2026-11-17T01:12:13.893Z",
+      "phase": "multiple",
+      "type": "progress",
+      "progress": {
+        "phase": "prefill",
+        "message": "모델이 입력을 처리하는 중",
+        "received": 128,
+        "total": 488
+      }
+    },
+    {
+      "at": "2026-11-17T01:13:57.789Z",
+      "phase": "multiple",
+      "type": "progress",
+      "progress": {
+        "phase": "prefill",
+        "message": "모델이 입력을 처리하는 중",
+        "received": 256,
+        "total": 488
+      }
+    },
+    {
+      "at": "2026-11-17T01:15:30.630Z",
+      "phase": "multiple",
+      "type": "progress",
+      "progress": {
+        "phase": "prefill",
+        "message": "모델이 입력을 처리하는 중",
+        "received": 384,
+        "total": 488
+      }
+    },
+    {
+      "at": "2026-11-17T01:15:32.455Z",
+      "phase": "multiple",
+      "type": "progress",
+      "progress": {
+        "phase": "prefill",
+        "message": "모델이 입력을 처리하는 중",
+        "received": 488,
+        "total": 488
+      }
+    },
+    {
+      "at": "2026-11-17T01:15:33.748Z",
+      "phase": "multiple",
+      "type": "chunk",
+      "text": "{\""
+    },
+    {
+      "at": "2026-11-17T01:15:33.760Z",
+      "phase": "multiple",
+      "type": "progress",
+      "progress": {
+        "phase": "generating",
+        "message": "기기에서 사례를 선택하는 중",
+        "received": 1
+      }
+    },
+    {
+      "at": "2026-11-17T01:15:34.902Z",
+      "phase": "multiple",
+      "type": "chunk",
+      "text": "reference"
+    },
+    {
+      "at": "2026-11-17T01:15:34.902Z",
+      "phase": "multiple",
+      "type": "progress",
+      "progress": {
+        "phase": "generating",
+        "message": "기기에서 사례를 선택하는 중",
+        "received": 2
+      }
+    },
+    {
+      "at": "2026-11-17T01:15:36.054Z",
+      "phase": "multiple",
+      "type": "chunk",
+      "text": "Ids"
+    },
+    {
+      "at": "2026-11-17T01:15:36.059Z",
+      "phase": "multiple",
+      "type": "progress",
+      "progress": {
+        "phase": "generating",
+        "message": "기기에서 사례를 선택하는 중",
+        "received": 3
+      }
+    },
+    {
+      "at": "2026-11-17T01:15:37.236Z",
+      "phase": "multiple",
+      "type": "chunk",
+      "text": "\":[\""
+    },
+    {
+      "at": "2026-11-17T01:15:37.240Z",
+      "phase": "multiple",
+      "type": "progress",
+      "progress": {
+        "phase": "generating",
+        "message": "기기에서 사례를 선택하는 중",
+        "received": 4
+      }
+    },
+    {
+      "at": "2026-11-17T01:15:38.443Z",
+      "phase": "multiple",
+      "type": "chunk",
+      "text": "te"
+    },
+    {
+      "at": "2026-11-17T01:15:38.447Z",
+      "phase": "multiple",
+      "type": "progress",
+      "progress": {
+        "phase": "generating",
+        "message": "기기에서 사례를 선택하는 중",
+        "received": 5
+      }
+    },
+    {
+      "at": "2026-11-17T01:15:39.609Z",
+      "phase": "multiple",
+      "type": "chunk",
+      "text": "eb"
+    },
+    {
+      "at": "2026-11-17T01:15:39.610Z",
+      "phase": "multiple",
+      "type": "progress",
+      "progress": {
+        "phase": "generating",
+        "message": "기기에서 사례를 선택하는 중",
+        "received": 6
+      }
+    },
+    {
+      "at": "2026-11-17T01:15:40.878Z",
+      "phase": "multiple",
+      "type": "chunk",
+      "text": "all"
+    },
+    {
+      "at": "2026-11-17T01:15:40.883Z",
+      "phase": "multiple",
+      "type": "progress",
+      "progress": {
+        "phase": "generating",
+        "message": "기기에서 사례를 선택하는 중",
+        "received": 7
+      }
+    },
+    {
+      "at": "2026-11-17T01:15:42.075Z",
+      "phase": "multiple",
+      "type": "chunk",
+      "text": "_case"
+    },
+    {
+      "at": "2026-11-17T01:15:42.091Z",
+      "phase": "multiple",
+      "type": "progress",
+      "progress": {
+        "phase": "generating",
+        "message": "기기에서 사례를 선택하는 중",
+        "received": 8
+      }
+    },
+    {
+      "at": "2026-11-17T01:15:43.263Z",
+      "phase": "multiple",
+      "type": "chunk",
+      "text": "_"
+    },
+    {
+      "at": "2026-11-17T01:15:43.265Z",
+      "phase": "multiple",
+      "type": "progress",
+      "progress": {
+        "phase": "generating",
+        "message": "기기에서 사례를 선택하는 중",
+        "received": 9
+      }
+    },
+    {
+      "at": "2026-11-17T01:15:44.441Z",
+      "phase": "multiple",
+      "type": "chunk",
+      "text": "0"
+    },
+    {
+      "at": "2026-11-17T01:15:44.443Z",
+      "phase": "multiple",
+      "type": "progress",
+      "progress": {
+        "phase": "generating",
+        "message": "기기에서 사례를 선택하는 중",
+        "received": 10
+      }
+    },
+    {
+      "at": "2026-11-17T01:15:45.844Z",
+      "phase": "multiple",
+      "type": "chunk",
+      "text": "1"
+    },
+    {
+      "at": "2026-11-17T01:15:45.852Z",
+      "phase": "multiple",
+      "type": "progress",
+      "progress": {
+        "phase": "generating",
+        "message": "기기에서 사례를 선택하는 중",
+        "received": 11
+      }
+    },
+    {
+      "at": "2026-11-17T01:15:47.085Z",
+      "phase": "multiple",
+      "type": "chunk",
+      "text": "\",\""
+    },
+    {
+      "at": "2026-11-17T01:15:47.091Z",
+      "phase": "multiple",
+      "type": "progress",
+      "progress": {
+        "phase": "generating",
+        "message": "기기에서 사례를 선택하는 중",
+        "received": 12
+      }
+    },
+    {
+      "at": "2026-11-17T01:15:48.467Z",
+      "phase": "multiple",
+      "type": "chunk",
+      "text": "TB"
+    },
+    {
+      "at": "2026-11-17T01:15:48.475Z",
+      "phase": "multiple",
+      "type": "progress",
+      "progress": {
+        "phase": "generating",
+        "message": "기기에서 사례를 선택하는 중",
+        "received": 13
+      }
+    },
+    {
+      "at": "2026-11-17T01:15:49.707Z",
+      "phase": "multiple",
+      "type": "chunk",
+      "text": "X"
+    },
+    {
+      "at": "2026-11-17T01:15:49.711Z",
+      "phase": "multiple",
+      "type": "progress",
+      "progress": {
+        "phase": "generating",
+        "message": "기기에서 사례를 선택하는 중",
+        "received": 14
+      }
+    },
+    {
+      "at": "2026-11-17T01:15:50.906Z",
+      "phase": "multiple",
+      "type": "chunk",
+      "text": "-"
+    },
+    {
+      "at": "2026-11-17T01:15:50.911Z",
+      "phase": "multiple",
+      "type": "progress",
+      "progress": {
+        "phase": "generating",
+        "message": "기기에서 사례를 선택하는 중",
+        "received": 15
+      }
+    },
+    {
+      "at": "2026-11-17T01:15:52.184Z",
+      "phase": "multiple",
+      "type": "chunk",
+      "text": "1"
+    },
+    {
+      "at": "2026-11-17T01:15:52.192Z",
+      "phase": "multiple",
+      "type": "progress",
+      "progress": {
+        "phase": "generating",
+        "message": "기기에서 사례를 선택하는 중",
+        "received": 16
+      }
+    },
+    {
+      "at": "2026-11-17T01:15:53.467Z",
+      "phase": "multiple",
+      "type": "chunk",
+      "text": "8"
+    },
+    {
+      "at": "2026-11-17T01:15:53.480Z",
+      "phase": "multiple",
+      "type": "progress",
+      "progress": {
+        "phase": "generating",
+        "message": "기기에서 사례를 선택하는 중",
+        "received": 17
+      }
+    },
+    {
+      "at": "2026-11-17T01:15:53.480Z",
+      "phase": "multiple",
+      "type": "chunk",
+      "text": "\"]}"
+    },
+    {
+      "at": "2026-11-17T01:15:53.480Z",
+      "phase": "multiple",
+      "type": "progress",
+      "progress": {
+        "phase": "generating",
+        "message": "기기에서 사례를 선택하는 중",
+        "received": 18
+      }
+    },
+    {
+      "at": "2026-11-17T01:15:54.546Z",
+      "phase": "shared-skill",
+      "type": "progress",
+      "progress": {
+        "phase": "tokenizing",
+        "message": "검색 후보의 입력 길이를 확인하는 중"
+      }
+    },
+    {
+      "at": "2026-11-17T01:15:55.254Z",
+      "phase": "shared-skill",
+      "type": "progress",
+      "progress": {
+        "phase": "loading",
+        "message": "모델을 기기 메모리에 여는 중"
+      }
+    },
+    {
+      "at": "2026-11-17T01:16:13.980Z",
+      "phase": "shared-skill",
+      "type": "progress",
+      "progress": {
+        "phase": "prefill",
+        "message": "모델이 입력을 처리하는 중",
+        "received": 506,
+        "total": 512
+      }
+    },
+    {
+      "at": "2026-11-17T01:18:00.813Z",
+      "phase": "shared-skill",
+      "type": "progress",
+      "progress": {
+        "phase": "prefill",
+        "message": "모델이 입력을 처리하는 중",
+        "received": 0,
+        "total": 502
+      }
+    },
+    {
+      "at": "2026-11-17T01:19:45.611Z",
+      "phase": "shared-skill",
+      "type": "progress",
+      "progress": {
+        "phase": "prefill",
+        "message": "모델이 입력을 처리하는 중",
+        "received": 128,
+        "total": 502
+      }
+    },
+    {
+      "at": "2026-11-17T01:21:29.789Z",
+      "phase": "shared-skill",
+      "type": "progress",
+      "progress": {
+        "phase": "prefill",
+        "message": "모델이 입력을 처리하는 중",
+        "received": 256,
+        "total": 502
+      }
+    },
+    {
+      "at": "2026-11-17T01:23:17.402Z",
+      "phase": "shared-skill",
+      "type": "progress",
+      "progress": {
+        "phase": "prefill",
+        "message": "모델이 입력을 처리하는 중",
+        "received": 384,
+        "total": 502
+      }
+    },
+    {
+      "at": "2026-11-17T01:23:18.669Z",
+      "phase": "shared-skill",
+      "type": "progress",
+      "progress": {
+        "phase": "prefill",
+        "message": "모델이 입력을 처리하는 중",
+        "received": 502,
+        "total": 502
+      }
+    },
+    {
+      "at": "2026-11-17T01:23:19.809Z",
+      "phase": "shared-skill",
+      "type": "chunk",
+      "text": "{\""
+    },
+    {
+      "at": "2026-11-17T01:23:19.810Z",
+      "phase": "shared-skill",
+      "type": "progress",
+      "progress": {
+        "phase": "generating",
+        "message": "기기에서 사례를 선택하는 중",
+        "received": 1
+      }
+    },
+    {
+      "at": "2026-11-17T01:23:20.954Z",
+      "phase": "shared-skill",
+      "type": "chunk",
+      "text": "reference"
+    },
+    {
+      "at": "2026-11-17T01:23:20.961Z",
+      "phase": "shared-skill",
+      "type": "progress",
+      "progress": {
+        "phase": "generating",
+        "message": "기기에서 사례를 선택하는 중",
+        "received": 2
+      }
+    },
+    {
+      "at": "2026-11-17T01:23:22.103Z",
+      "phase": "shared-skill",
+      "type": "chunk",
+      "text": "Ids"
+    },
+    {
+      "at": "2026-11-17T01:23:22.103Z",
+      "phase": "shared-skill",
+      "type": "progress",
+      "progress": {
+        "phase": "generating",
+        "message": "기기에서 사례를 선택하는 중",
+        "received": 3
+      }
+    },
+    {
+      "at": "2026-11-17T01:23:23.255Z",
+      "phase": "shared-skill",
+      "type": "chunk",
+      "text": "\":[\""
+    },
+    {
+      "at": "2026-11-17T01:23:23.263Z",
+      "phase": "shared-skill",
+      "type": "progress",
+      "progress": {
+        "phase": "generating",
+        "message": "기기에서 사례를 선택하는 중",
+        "received": 4
+      }
+    },
+    {
+      "at": "2026-11-17T01:23:24.417Z",
+      "phase": "shared-skill",
+      "type": "chunk",
+      "text": "TB"
+    },
+    {
+      "at": "2026-11-17T01:23:24.420Z",
+      "phase": "shared-skill",
+      "type": "progress",
+      "progress": {
+        "phase": "generating",
+        "message": "기기에서 사례를 선택하는 중",
+        "received": 5
+      }
+    },
+    {
+      "at": "2026-11-17T01:23:25.576Z",
+      "phase": "shared-skill",
+      "type": "chunk",
+      "text": "X"
+    },
+    {
+      "at": "2026-11-17T01:23:25.577Z",
+      "phase": "shared-skill",
+      "type": "progress",
+      "progress": {
+        "phase": "generating",
+        "message": "기기에서 사례를 선택하는 중",
+        "received": 6
+      }
+    },
+    {
+      "at": "2026-11-17T01:23:26.736Z",
+      "phase": "shared-skill",
+      "type": "chunk",
+      "text": "-"
+    },
+    {
+      "at": "2026-11-17T01:23:26.741Z",
+      "phase": "shared-skill",
+      "type": "progress",
+      "progress": {
+        "phase": "generating",
+        "message": "기기에서 사례를 선택하는 중",
+        "received": 7
+      }
+    },
+    {
+      "at": "2026-11-17T01:23:27.900Z",
+      "phase": "shared-skill",
+      "type": "chunk",
+      "text": "1"
+    },
+    {
+      "at": "2026-11-17T01:23:27.902Z",
+      "phase": "shared-skill",
+      "type": "progress",
+      "progress": {
+        "phase": "generating",
+        "message": "기기에서 사례를 선택하는 중",
+        "received": 8
+      }
+    },
+    {
+      "at": "2026-11-17T01:23:29.048Z",
+      "phase": "shared-skill",
+      "type": "chunk",
+      "text": "3"
+    },
+    {
+      "at": "2026-11-17T01:23:29.055Z",
+      "phase": "shared-skill",
+      "type": "progress",
+      "progress": {
+        "phase": "generating",
+        "message": "기기에서 사례를 선택하는 중",
+        "received": 9
+      }
+    },
+    {
+      "at": "2026-11-17T01:23:30.219Z",
+      "phase": "shared-skill",
+      "type": "chunk",
+      "text": "\",\""
+    },
+    {
+      "at": "2026-11-17T01:23:30.219Z",
+      "phase": "shared-skill",
+      "type": "progress",
+      "progress": {
+        "phase": "generating",
+        "message": "기기에서 사례를 선택하는 중",
+        "received": 10
+      }
+    },
+    {
+      "at": "2026-11-17T01:23:31.400Z",
+      "phase": "shared-skill",
+      "type": "chunk",
+      "text": "TB"
+    },
+    {
+      "at": "2026-11-17T01:23:31.407Z",
+      "phase": "shared-skill",
+      "type": "progress",
+      "progress": {
+        "phase": "generating",
+        "message": "기기에서 사례를 선택하는 중",
+        "received": 11
+      }
+    },
+    {
+      "at": "2026-11-17T01:23:32.573Z",
+      "phase": "shared-skill",
+      "type": "chunk",
+      "text": "X"
+    },
+    {
+      "at": "2026-11-17T01:23:32.579Z",
+      "phase": "shared-skill",
+      "type": "progress",
+      "progress": {
+        "phase": "generating",
+        "message": "기기에서 사례를 선택하는 중",
+        "received": 12
+      }
+    },
+    {
+      "at": "2026-11-17T01:23:33.741Z",
+      "phase": "shared-skill",
+      "type": "chunk",
+      "text": "-"
+    },
+    {
+      "at": "2026-11-17T01:23:33.743Z",
+      "phase": "shared-skill",
+      "type": "progress",
+      "progress": {
+        "phase": "generating",
+        "message": "기기에서 사례를 선택하는 중",
+        "received": 13
+      }
+    },
+    {
+      "at": "2026-11-17T01:23:34.939Z",
+      "phase": "shared-skill",
+      "type": "chunk",
+      "text": "1"
+    },
+    {
+      "at": "2026-11-17T01:23:34.948Z",
+      "phase": "shared-skill",
+      "type": "progress",
+      "progress": {
+        "phase": "generating",
+        "message": "기기에서 사례를 선택하는 중",
+        "received": 14
+      }
+    },
+    {
+      "at": "2026-11-17T01:23:36.123Z",
+      "phase": "shared-skill",
+      "type": "chunk",
+      "text": "5"
+    },
+    {
+      "at": "2026-11-17T01:23:36.123Z",
+      "phase": "shared-skill",
+      "type": "progress",
+      "progress": {
+        "phase": "generating",
+        "message": "기기에서 사례를 선택하는 중",
+        "received": 15
+      }
+    },
+    {
+      "at": "2026-11-17T01:23:36.126Z",
+      "phase": "shared-skill",
+      "type": "chunk",
+      "text": "\"]}"
+    },
+    {
+      "at": "2026-11-17T01:23:36.126Z",
+      "phase": "shared-skill",
+      "type": "progress",
+      "progress": {
+        "phase": "generating",
+        "message": "기기에서 사례를 선택하는 중",
+        "received": 16
+      }
+    }
+  ],
+  "phase": "shared-skill",
+  "completedAt": "2026-11-17T01:23:37.124Z",
+  "samplingCorrection": {
+    "originalSampling": "Each sport: lexicographically first prior positive with partial status (otherwise first positive); then first candidate-status prior positive in a different family (otherwise first positive in a different family); then first prior noCandidates. Prior results determine strata, not correctness. 15/450 exploratory sample, not a census.",
+    "correctedSampling": "Two independently written fixed requests plus one empty-case control; exploratory execution, not an accuracy evaluation.",
+    "reason": "The harness carried an obsolete description copied from the previous 15-question harness. The sample array and actual calls were always the three fixed entries recorded here.",
+    "rawEvidenceFile": "tactics-candidate-plan-model-2026-11-17-raw.json",
+    "rawEvidenceSha256": "b66d61996835418ca65e2e3941cff5990dbe6380da8978b09876a00c7b38a54f",
+    "harnessSha256AtExecution": "0a1694150ee6896d2c056af166296bd3290c2c841e77256a9d654b2d88cd3377",
+    "harnessSha256AfterCorrection": "2bd525c2893996c35a0956259a7804fbcca41fc5eeeb38c2d1c7754a57138846"
+  }
+}

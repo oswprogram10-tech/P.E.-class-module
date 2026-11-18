@@ -57,6 +57,130 @@ test('공식 측정 단위에 맞춰 제자리멀리뛰기를 0.1cm까지 기록
   })), /소수 첫째 자리/);
 });
 
+test('공식 50m 달리기 기록은 초 단위 소수 둘째 자리까지 저장한다', () => {
+  const { state, classroom, student } = base();
+  const record = M.add(state, 'measurements', measurement(classroom.id, student.id, {
+    itemId: 'sprint-50m', value: 10.21, unit: '초',
+  }));
+  assert.equal(record.value, 10.21);
+  assert.equal(record.unit, '초');
+  assert.throws(() => M.add(state, 'measurements', measurement(classroom.id, student.id, {
+    itemId: 'sprint-50m', value: 10.215, unit: '초',
+  })), /소수 둘째 자리/);
+});
+
+test('오래달리기-걷기와 PEI는 규정상 가능한 측정 범위를 확인해 저장한다', () => {
+  const { state, classroom, student } = base();
+  const run = M.add(state, 'measurements', measurement(classroom.id, student.id, {
+    itemId: 'run-walk-1000m', value: 480, unit: '초',
+    assessmentGradeGroupId: 'elementary-5', assessmentTargetGroupId: 'female',
+  }));
+  assert.equal(run.distanceMeters, 1000);
+  assert.equal(run.assessmentGradeGroupId, 'elementary-5');
+  assert.equal(run.assessmentTargetGroupId, 'female');
+  assert.throws(() => M.add(state, 'measurements', measurement(classroom.id, student.id, {
+    itemId: 'run-walk-1000m', value: 480, unit: '초',
+    assessmentGradeGroupId: 'middle-1', assessmentTargetGroupId: 'male',
+  })), /거리·실시 학년·평가표/);
+  assert.throws(() => M.add(state, 'measurements', measurement(classroom.id, student.id, {
+    itemId: 'run-walk-1200m', value: 600, unit: '초',
+    assessmentGradeGroupId: 'middle-1', assessmentTargetGroupId: 'male',
+  })), /거리·실시 학년·평가표/);
+  assert.throws(() => M.add(state, 'measurements', measurement(classroom.id, student.id, {
+    itemId: 'step-test-pei', value: 52.0, unit: '점',
+  })), /거리·실시 학년·평가표/);
+
+  const pei = M.add(state, 'measurements', measurement(classroom.id, student.id, {
+    itemId: 'step-test-pei', value: 52.0, unit: '점',
+    assessmentGradeGroupId: 'high-3', assessmentTargetGroupId: 'male',
+  }));
+  assert.equal(pei.value, 52.0);
+  assert.deepEqual(M.measurementProtocol('step-test-pei', 'elementary-5', 'female'), { stepBoxHeightCm: 20.3, cadencePerMinute: 24, durationMinutes: 3 });
+  assert.deepEqual(M.measurementProtocol('step-test-pei', 'middle-2', 'female'), { stepBoxHeightCm: 45.7, cadencePerMinute: 24, durationMinutes: 3 });
+  assert.deepEqual(M.measurementProtocol('step-test-pei', 'high-3', 'male'), { stepBoxHeightCm: 50.8, cadencePerMinute: 30, durationMinutes: 3 });
+  assert.equal(M.measurementProtocol('step-test-pei', 'elementary-4', 'male'), null);
+});
+
+test('팔굽혀펴기와 종합유연성은 별표 4의 중·고 학년·평가표 구분에 맞춰 입력한다', () => {
+  const { state, classroom, student } = base();
+  const malePushups = M.add(state, 'measurements', measurement(classroom.id, student.id, {
+    itemId: 'push-ups', value: 24, unit: '회',
+    assessmentGradeGroupId: 'middle-1', assessmentTargetGroupId: 'male',
+  }));
+  assert.equal(malePushups.value, 24);
+  assert.throws(() => M.add(state, 'measurements', measurement(classroom.id, student.id, {
+    itemId: 'push-ups', value: 24, unit: '회',
+    assessmentGradeGroupId: 'middle-1', assessmentTargetGroupId: 'female',
+  })), /거리·실시 학년·평가표/);
+  const femalePushups = M.add(state, 'measurements', measurement(classroom.id, student.id, {
+    itemId: 'knee-push-ups', value: 45, unit: '회',
+    assessmentGradeGroupId: 'middle-1', assessmentTargetGroupId: 'female',
+  }));
+  assert.equal(femalePushups.value, 45);
+  assert.throws(() => M.add(state, 'measurements', measurement(classroom.id, student.id, {
+    itemId: 'knee-push-ups', value: 45, unit: '회',
+    assessmentGradeGroupId: 'middle-1', assessmentTargetGroupId: 'male',
+  })), /거리·실시 학년·평가표/);
+  const flexibility = M.add(state, 'measurements', measurement(classroom.id, student.id, {
+    itemId: 'comprehensive-flexibility', value: 8, unit: '점',
+    assessmentGradeGroupId: 'high-3', assessmentTargetGroupId: 'female',
+  }));
+  assert.equal(flexibility.value, 8);
+  assert.throws(() => M.add(state, 'measurements', measurement(classroom.id, student.id, {
+    itemId: 'comprehensive-flexibility', value: 8, unit: '점',
+    assessmentGradeGroupId: 'elementary-6', assessmentTargetGroupId: 'female',
+  })), /거리·실시 학년·평가표/);
+  assert.deepEqual(M.measurementProtocol('push-ups', 'middle-1', 'male'), {
+    barHeightCm: 30, barWidthMinCm: 110, chestClearanceMaxCm: 10, elbowAngleDegrees: 90,
+  });
+  assert.deepEqual(M.measurementProtocol('knee-push-ups', 'middle-1', 'female'), {
+    chestClearanceMaxCm: 15, elbowAngleDegrees: 90, kneeSupported: true,
+    handPlacement: 'shoulder width + one hand length forward, then two hand lengths outward',
+  });
+  assert.deepEqual(M.measurementProtocol('comprehensive-flexibility', 'middle-1', 'female'), {
+    parts: ['shoulder', 'trunk', 'side', 'lower-body'], attemptsPerSide: 1, scorePerPartMax: 2, maxScore: 8,
+  });
+  assert.equal(M.measurementProtocol('comprehensive-flexibility', 'elementary-6', 'female'), null);
+});
+
+test('BMI는 키·몸무게에서 0.1 단위 올림 계산하고 원자료와 기준 구간을 함께 기록한다', () => {
+  const { state, classroom, student } = base();
+  assert.equal(M.calculateBmi(160, 60), 23.5);
+  assert.equal(M.calculateBmi(160, 56.3), 22.0);
+  assert.equal(M.calculateBmi(200, 100), 25.0);
+  assert.throws(() => M.calculateBmi(160.05, 60), /소수 첫째 자리/);
+  assert.throws(() => M.calculateBmi(40, 60), /50~250cm/);
+  const bmi = M.add(state, 'measurements', measurement(classroom.id, student.id, {
+    itemId: 'body-mass-index', value: 0, unit: 'kg/m²', heightCm: 160, weightKg: 60,
+    assessmentGradeGroupId: 'elementary-5', assessmentTargetGroupId: 'male',
+    criteriaGradeGroupId: 'elementary-5', criteriaTargetGroupId: 'male', criteriaSourceVersion: 'MOE-354-2025-03-10-annex4-bmi',
+    studentConsentConfirmed: true, guardianConsentConfirmed: true,
+  }));
+  assert.equal(bmi.value, 23.5, 'BMI is derived from height and weight rather than trusting submitted value');
+  assert.equal(bmi.heightCm, 160);
+  assert.equal(bmi.weightKg, 60);
+  assert.equal(Object.hasOwn(bmi, 'studentConsentConfirmed'), false);
+  assert.equal(Object.hasOwn(bmi, 'guardianConsentConfirmed'), false);
+  assert.throws(() => M.add(state, 'measurements', measurement(classroom.id, student.id, {
+    itemId: 'body-mass-index', value: 0, unit: 'kg/m²', heightCm: 160, weightKg: 60,
+    assessmentGradeGroupId: 'elementary-5', assessmentTargetGroupId: 'male', studentConsentConfirmed: true,
+  })), /학생 본인과 보호자의 동의/);
+  const edited = M.updateMeasurement(state, bmi.id, measurement(classroom.id, student.id, {
+    itemId: 'body-mass-index', value: 1, unit: 'kg/m²', heightCm: 160, weightKg: 56.3,
+    assessmentGradeGroupId: 'elementary-5', assessmentTargetGroupId: 'male',
+    criteriaGradeGroupId: 'elementary-5', criteriaTargetGroupId: 'male', criteriaSourceVersion: 'MOE-354-2025-03-10-annex4-bmi',
+    studentConsentConfirmed: true, guardianConsentConfirmed: true,
+  }), bmi.inputAt + 1000);
+  assert.equal(edited.value, 22.0);
+  assert.equal(edited.changeHistory[0].before.weightKg, 60);
+  assert.equal(edited.changeHistory[0].after.weightKg, 56.3);
+  assert.throws(() => M.add(state, 'measurements', measurement(classroom.id, student.id, {
+    itemId: 'body-mass-index', value: null, unit: 'kg/m²', heightCm: 160, weightKg: 60,
+    assessmentGradeGroupId: 'elementary-5', assessmentTargetGroupId: 'male', missingReason: 'absent',
+    studentConsentConfirmed: true, guardianConsentConfirmed: true,
+  })), /결측이면 키와 몸무게/);
+});
+
 test('개별 등급 조회 범위는 명시적으로 고정하고 수정 이력에 이전·새 기준을 남긴다', () => {
   const { state, classroom, student } = base();
   const papsScope = {

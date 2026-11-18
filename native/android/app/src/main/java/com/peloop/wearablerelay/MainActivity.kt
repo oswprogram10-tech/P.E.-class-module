@@ -6,6 +6,7 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.webkit.PermissionRequest
+import android.webkit.GeolocationPermissions
 import android.webkit.WebChromeClient
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
@@ -23,6 +24,7 @@ internal class MainActivity : android.app.Activity() {
     private lateinit var webView: WebView
     private lateinit var nativeBridge: NativeWearableBridge
     private var pendingCameraPermission: PermissionRequest? = null
+    private var pendingLocationPermission: Pair<String, GeolocationPermissions.Callback>? = null
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,7 +44,7 @@ internal class MainActivity : android.app.Activity() {
             WebViewFeature.isFeatureSupported(WebViewFeature.SERVICE_WORKER_SHOULD_INTERCEPT_REQUEST)) {
             ServiceWorkerControllerCompat.getInstance().setServiceWorkerClient(object : ServiceWorkerClientCompat() {
                 override fun shouldInterceptRequest(request: WebResourceRequest): WebResourceResponse? =
-                    if (isTrustedAppUrl(request.url)) assetLoader.shouldInterceptRequest(request.url) else null
+                    if (isTrustedAppUrl(request.url)) isolatedAsset(assetLoader.shouldInterceptRequest(request.url)) else null
             })
         }
 
@@ -50,6 +52,7 @@ internal class MainActivity : android.app.Activity() {
         webView.settings.apply {
             javaScriptEnabled = true
             domStorageEnabled = true
+            setGeolocationEnabled(true)
             allowFileAccess = false
             allowContentAccess = false
             mixedContentMode = WebSettings.MIXED_CONTENT_NEVER_ALLOW
@@ -58,7 +61,7 @@ internal class MainActivity : android.app.Activity() {
         }
         webView.webViewClient = object : WebViewClient() {
             override fun shouldInterceptRequest(view: WebView?, request: WebResourceRequest): WebResourceResponse? =
-                assetLoader.shouldInterceptRequest(request.url)
+                if (isTrustedAppUrl(request.url)) isolatedAsset(assetLoader.shouldInterceptRequest(request.url)) else null
 
             override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest): Boolean = !isTrustedAppUrl(request.url)
 
@@ -66,7 +69,7 @@ internal class MainActivity : android.app.Activity() {
                 handler?.cancel()
             }
         }
-        webView.webChromeClient = cameraOnlyWebChromeClient()
+        webView.webChromeClient = appWebChromeClient()
         if (WebViewFeature.isFeatureSupported(WebViewFeature.WEB_MESSAGE_LISTENER)) {
             WebViewCompat.addWebMessageListener(webView, "PELoopNativeHost", setOf(NativeWearableBridge.APP_ORIGIN)) { _, message, sourceOrigin, isMainFrame, replyProxy ->
                 nativeBridge.onPostMessage(message.data, sourceOrigin, isMainFrame, replyProxy)
@@ -76,6 +79,9 @@ internal class MainActivity : android.app.Activity() {
     }
 
     override fun onDestroy() {
+        val locationRequest = pendingLocationPermission
+        pendingLocationPermission = null
+        locationRequest?.let { (origin, callback) -> callback.invoke(origin, false, false) }
         pendingCameraPermission?.deny()
         pendingCameraPermission = null
         if (::nativeBridge.isInitialized) nativeBridge.close()
@@ -86,16 +92,43 @@ internal class MainActivity : android.app.Activity() {
         super.onDestroy()
     }
 
-    @Deprecated("Use the runtime camera permission callback")
+    @Deprecated("Use runtime permission callbacks")
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == LOCATION_PERMISSION_REQUEST) {
+            val pending = pendingLocationPermission ?: return
+            pendingLocationPermission = null
+            val allowed = !isFinishing && !isDestroyed && grantResults.any { it == PackageManager.PERMISSION_GRANTED }
+            pending.second.invoke(pending.first, allowed, false)
+            return
+        }
         if (requestCode != CAMERA_PERMISSION_REQUEST) return
         val request = pendingCameraPermission ?: return
         pendingCameraPermission = null
         if (grantResults.firstOrNull() == PackageManager.PERMISSION_GRANTED) request.grant(arrayOf(PermissionRequest.RESOURCE_VIDEO_CAPTURE)) else request.deny()
     }
 
-    private fun cameraOnlyWebChromeClient() = object : WebChromeClient() {
+    private fun appWebChromeClient() = object : WebChromeClient() {
+        override fun onGeolocationPermissionsShowPrompt(origin: String, callback: GeolocationPermissions.Callback) {
+            if (!isTrustedAppUrl(Uri.parse(origin)) || pendingLocationPermission != null || isFinishing || isDestroyed) {
+                callback.invoke(origin, false, false)
+                return
+            }
+            if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
+                checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                callback.invoke(origin, true, false)
+            } else {
+                pendingLocationPermission = origin to callback
+                requestPermissions(arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_PERMISSION_REQUEST)
+            }
+        }
+
+        override fun onGeolocationPermissionsHidePrompt() {
+            val locationRequest = pendingLocationPermission
+            pendingLocationPermission = null
+            locationRequest?.let { (origin, callback) -> callback.invoke(origin, false, false) }
+        }
+
         override fun onPermissionRequest(request: PermissionRequest) {
             val cameraOnly = request.resources.size == 1 && request.resources[0] == PermissionRequest.RESOURCE_VIDEO_CAPTURE
             if (!isTrustedAppUrl(request.origin) || !cameraOnly || pendingCameraPermission != null) {
@@ -111,6 +144,13 @@ internal class MainActivity : android.app.Activity() {
         }
     }
 
+    // Only wrap responses produced by the app asset loader. External requests retain
+    // their own response headers and the existing CORS and permission checks.
+    private fun isolatedAsset(response: WebResourceResponse?): WebResourceResponse? {
+        if (response != null) response.responseHeaders = isolationHeaders(response.responseHeaders)
+        return response
+    }
+
     private fun isTrustedAppUrl(uri: Uri): Boolean =
         uri.scheme == "https" && uri.host == "appassets.androidplatform.net" && uri.port == -1 && uri.userInfo == null
 
@@ -124,5 +164,6 @@ internal class MainActivity : android.app.Activity() {
 
     companion object {
         private const val CAMERA_PERMISSION_REQUEST = 7102
+        private const val LOCATION_PERMISSION_REQUEST = 7103
     }
 }

@@ -13,6 +13,7 @@
   const MAX_SESSIONS = 1000;
   const MAX_RESPONSES = 20000;
   const MAX_ACTIVITIES = 100;
+  const GPS = typeof module !== 'undefined' && module.exports ? require('./gps-missions.js') : root.GpsMissions;
   const fail = message => { throw new Error(message); };
   const isObject = value => value !== null && typeof value === 'object' && !Array.isArray(value) && (Object.getPrototypeOf(value) === Object.prototype || Object.getPrototypeOf(value) === null);
   const string = (value, max, field) => {
@@ -83,6 +84,7 @@
     if (input.criteria != null) activity.criteria = string(input.criteria, 1500, 'criteria');
     const quiz = cleanQuiz(input.quiz);
     if (quiz) activity.quiz = quiz;
+    if (input.gps != null) activity.gps = GPS.validate(input.gps);
     return activity;
   }
   function createMission(state, definition, options = {}) {
@@ -118,6 +120,7 @@
     if (activity.groupId) value.groupId = activity.groupId;
     if (activity.criteria) value.criteria = activity.criteria;
     if (activity.quiz) value.quiz = { prompt: activity.quiz.prompt, options: clone(activity.quiz.options) };
+    if (activity.gps) value.gps = clone(activity.gps);
     return value;
   }
   function status(state, session) {
@@ -155,7 +158,7 @@
     if (session.missionId !== mission.id || session.classId !== mission.classId) fail('Response does not match this mission and class.');
     const activityId = string(input.activityId, 80, 'activity ID');
     const activity = mission.activities[session.activityIndex];
-    const responseBody = { sessionId: session.id, missionId: mission.id, classId: mission.classId, run: session.run, activityId, ...(input.groupId == null ? {} : { groupId: string(input.groupId, 80, 'group ID') }), ...(input.answerOptionId == null ? {} : { answerOptionId: string(input.answerOptionId, 80, 'answer option ID') }), completed: input.completed === true };
+    const responseBody = { sessionId: session.id, missionId: mission.id, classId: mission.classId, run: session.run, activityId, ...(input.groupId == null ? {} : { groupId: string(input.groupId, 80, 'group ID') }), ...(input.answerOptionId == null ? {} : { answerOptionId: string(input.answerOptionId, 80, 'answer option ID') }), ...(mission.activities.find(item => item.id === activityId)?.gps ? { locationVerified: true } : {}), completed: input.completed === true };
     const duplicate = state.responses.find(item => item.id === responseId);
     if (duplicate) {
       if (JSON.stringify(duplicate.body) !== JSON.stringify(responseBody)) fail('Response ID was already used for a different response.');
@@ -165,6 +168,7 @@
     if (session.phase !== 'active') fail('QR mission is not active.');
     if (responseBody.groupId !== activity.groupId) fail('Activity group does not match.');
     if (input.completed !== true) fail('Activity must be marked complete.');
+    if (activity.gps) GPS.verify(activity.gps, options.locationFix, Number.isFinite(options.now) ? options.now : Date.now());
     if (activity.quiz) {
       if (!activity.quiz.options.some(option => option.id === responseBody.answerOptionId)) fail('Select a valid quiz option.');
       if (!responseBody.answerOptionId) fail('Quiz response is required.');
@@ -223,8 +227,9 @@
       const session = clean.sessions.find(item => item.id === source.body.sessionId);
       const mission = clean.missions.find(item => item.id === source.body.missionId);
       if (!session || !mission || session.missionId !== mission.id || source.body.classId !== mission.classId || !Number.isInteger(source.body.run) || source.body.run < 1 || !mission.activities.some(item => item.id === source.body.activityId) || !Number.isFinite(source.createdAt)) fail('Invalid serialized response.');
-      const body = { sessionId: session.id, missionId: mission.id, classId: mission.classId, run: source.body.run, activityId: source.body.activityId, ...(source.body.groupId == null ? {} : { groupId: string(source.body.groupId, 80, 'group ID') }), ...(source.body.answerOptionId == null ? {} : { answerOptionId: string(source.body.answerOptionId, 80, 'answer option ID') }), completed: source.body.completed };
+      const body = { sessionId: session.id, missionId: mission.id, classId: mission.classId, run: source.body.run, activityId: source.body.activityId, ...(source.body.groupId == null ? {} : { groupId: string(source.body.groupId, 80, 'group ID') }), ...(source.body.answerOptionId == null ? {} : { answerOptionId: string(source.body.answerOptionId, 80, 'answer option ID') }), ...(source.body.locationVerified === true ? { locationVerified: true } : {}), completed: source.body.completed };
       const activity = mission.activities.find(item => item.id === body.activityId);
+      if (Boolean(activity.gps) !== Boolean(body.locationVerified)) fail('Invalid GPS arrival record.');
       if (body.groupId !== activity.groupId || body.completed !== true || (activity.quiz ? !activity.quiz.options.some(option => option.id === body.answerOptionId) : !!body.answerOptionId)) fail('Invalid serialized response.');
       const correct = activity.quiz?.correctOptionId ? body.answerOptionId === activity.quiz.correctOptionId : undefined;
       if (source.correct !== undefined && source.correct !== correct) fail('Invalid serialized response.');

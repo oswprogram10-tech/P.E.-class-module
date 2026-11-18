@@ -1,0 +1,406 @@
+{
+  "version": 1,
+  "reviewedAt": "2026-11-15",
+  "purpose": "축구 SO-15 및 피구 DO-12/DO-13의 실제 경기 원문 후보를 조사하고 근거가 제한된 부분 연결을 제안한다.",
+  "cases": [
+    {
+      "id": "TLSD-01",
+      "title": "코너킥에서 Hummels의 파 포스트 헤더",
+      "matchLabel": "Paris Saint-Germain–Borussia Dortmund, UEFA Champions League semi-final second leg",
+      "matchDate": null,
+      "period": "50분",
+      "sourceSport": "soccer",
+      "publisher": "UEFA",
+      "sourceUrl": "https://www.uefa.com/uefachampionsleague/news/028d-1ad595ace294-82328f2f6d36-1000--highlights-report-dortmund-beat-paris-to-reach-final/",
+      "publishedDate": "2024-05-07",
+      "sourceClaim": "Julian Brandt의 코너킥이 파 포스트에서 공간을 만든 Mats Hummels를 찾아 헤더 골로 이어졌다.",
+      "evidenceLocator": "UEFA 기사 본문 42행: 코너킥, Hummels의 파 포스트 공간 확보, 헤더와 득점 서술. 경기·스코어는 4–12행.",
+      "matchDateStatus": "게시일은 2024-05-07. 페이지는 PSG 0-1 Dortmund 준결승 2차전으로 명시하지만, 경기 날짜를 게시일과 별도로 확인하지 않아 matchDate는 null.",
+      "videoReviewStatus": "not-viewed",
+      "sharedElements": "코너킥을 받은 선수가 파 포스트 공간에서 헤더로 마무리한 한 번의 세트피스 연결.",
+      "formatRulesContext": "UEFA 챔피언스리그 성인 11인 축구의 코너킥. 기사에는 세부 코너 전술, 양 팀 전체 배치, 이후 수비 전환이 기록되지 않음.",
+      "questionLinks": [
+        {
+          "questionId": "SO-15-01",
+          "proposedRelevance": "partial",
+          "supported": "코너킥에서 Hummels가 파 포스트 공간을 잡고 헤더로 득점한 연결이 기록됨.",
+          "missingConditions": "전원 조직 공격·수비의 배치와 세트피스 이후 재정렬은 설명되지 않으며 프리킥·스로인 사례도 아님."
+        },
+        {
+          "questionId": "SO-15-02",
+          "proposedRelevance": "partial",
+          "supported": "실제 경기에서 코너킥 뒤 공간 확보와 헤더 득점이 이어짐.",
+          "missingConditions": "선수별 역할이나 공수 전체 흐름은 기사에 없고, 프리킥·스로인 뒤 장면은 아님."
+        },
+        {
+          "questionId": "SO-15-03",
+          "proposedRelevance": "partial",
+          "supported": "코너킥이 파 포스트 헤더로 연결된 사례를 비교할 수 있음.",
+          "missingConditions": "학생 팀의 조직 움직임과 비교할 세부 배치·콜 정보가 없음."
+        },
+        {
+          "questionId": "SO-15-04",
+          "proposedRelevance": "partial",
+          "supported": "코너킥에서 헤더 득점으로 이어진 공격 결과가 명시됨.",
+          "missingConditions": "양 팀의 연속 움직임과 수비 대응은 설명되지 않음."
+        },
+        {
+          "questionId": "SO-15-05",
+          "proposedRelevance": "partial",
+          "supported": "공간을 확보한 공격수와 코너킥 배달 사이의 연결을 제한적으로 비교할 수 있음.",
+          "missingConditions": "기사에 구체적인 선수 이동·마크 방식은 없으며 팀 조직 전술의 유사성을 확정할 수 없음."
+        },
+        {
+          "questionId": "SO-15-06",
+          "proposedRelevance": "partial",
+          "supported": "코너킥 뒤 파 포스트 헤더 득점이라는 실제 사례가 있음.",
+          "missingConditions": "조직 공수 전체와 다른 종류의 재개 장면을 보여주지 않음."
+        }
+      ],
+      "rightsStatus": "unverified",
+      "educatorReview": "pending",
+      "expertReview": "pending",
+      "runtimeEligible": false
+    },
+    {
+      "id": "TLSD-02",
+      "title": "코너킥을 발리로 마무리한 Akanji",
+      "matchLabel": "Manchester City–Copenhagen, UEFA Champions League round of 16 second leg",
+      "matchDate": null,
+      "period": "5분",
+      "sourceSport": "soccer",
+      "publisher": "UEFA",
+      "sourceUrl": "https://www.uefa.com/uefachampionsleague/news/028b-1a58e9f003fe-e058903a49c2-1000--report-city-cruise-into-quarter-finals/",
+      "publishedDate": "2024-03-06",
+      "sourceClaim": "Manuel Akanji가 Julián Álvarez의 코너킥을 정확한 발리로 연결해 Manchester City의 선제골을 넣었다.",
+      "evidenceLocator": "UEFA 기사 본문 27행: Álvarez 코너킥에서 Akanji 발리 득점까지 설명; 경기·득점 시점은 4–20행.",
+      "matchDateStatus": "게시일은 2024-03-06. 기사 제목은 해당 날짜의 2차전으로 특정하지만 게시일과 경기일을 따로 대조하지 않아 matchDate는 null.",
+      "videoReviewStatus": "not-viewed",
+      "sharedElements": "코너킥을 동료가 발리 슛으로 연결한 세트피스 장면.",
+      "formatRulesContext": "UEFA 챔피언스리그 성인 11인 축구의 코너킥. 코너 공격 전술·상대 수비 배치나 이후 조직 수비는 보도되지 않음.",
+      "questionLinks": [
+        {
+          "questionId": "SO-15-01",
+          "proposedRelevance": "partial",
+          "supported": "코너킥에서 Akanji의 발리 득점으로 이어진 실제 연결이 있음.",
+          "missingConditions": "조직적인 전원 이동·수비 대응은 설명되지 않음; 프리킥과 스로인 사례도 아님."
+        },
+        {
+          "questionId": "SO-15-02",
+          "proposedRelevance": "partial",
+          "supported": "경기 기록이 코너킥 직후의 발리 득점을 설명함.",
+          "missingConditions": "득점 전 팀 배치와 세트피스 이후 공수 재정렬은 확인되지 않음."
+        },
+        {
+          "questionId": "SO-15-03",
+          "proposedRelevance": "partial",
+          "supported": "코너킥에서 발리로 마무리한 한 장면을 참고할 수 있음.",
+          "missingConditions": "선수별 역할이나 전술 선택에 관한 비교 자료는 부족함."
+        },
+        {
+          "questionId": "SO-15-04",
+          "proposedRelevance": "partial",
+          "supported": "코너킥이 발리 슛과 득점으로 이어진 결과가 명시됨.",
+          "missingConditions": "양 팀 전체의 연속 움직임은 기사에 기재되지 않음."
+        },
+        {
+          "questionId": "SO-15-05",
+          "proposedRelevance": "partial",
+          "supported": "코너킥 배달과 동료의 발리 마무리만 제한적으로 연결 가능함.",
+          "missingConditions": "학생 팀과 대조할 위치·마크·콜은 기록되지 않음."
+        },
+        {
+          "questionId": "SO-15-06",
+          "proposedRelevance": "partial",
+          "supported": "코너킥 이후 득점한 실제 사례임.",
+          "missingConditions": "조직된 공수 전부나 프리킥·스로인 후 장면은 다루지 않음."
+        }
+      ],
+      "rightsStatus": "unverified",
+      "educatorReview": "pending",
+      "expertReview": "pending",
+      "runtimeEligible": false
+    },
+    {
+      "id": "TLSD-03",
+      "title": "코너킥과 프리킥 뒤 나온 Arsenal 헤더 기회",
+      "matchLabel": "Porto–Arsenal, UEFA Champions League round of 16 first leg",
+      "matchDate": null,
+      "period": "35분 및 종료 직전",
+      "sourceSport": "soccer",
+      "publisher": "UEFA",
+      "sourceUrl": "https://www.uefa.com/uefachampionsleague/news/028a-1a3cc57ad0b0-69ccf18a34b5-1000--highlights-report-late-galeno-stunner-gives-porto-win/",
+      "publishedDate": "2024-02-21",
+      "sourceClaim": "William Saliba가 Bukayo Saka의 코너킥에서, Gabriel이 Declan Rice의 늦은 프리킥에서 각각 헤더 기회를 얻었다.",
+      "evidenceLocator": "UEFA 기사 “Match in brief: Galeno leaves it late” 문단, 본문 28–29행: Saka 코너킥 뒤 Saliba 헤더와 종료 직전 Rice 프리킥 뒤 Gabriel 헤더; 경기·시간은 4–19행.",
+      "matchDateStatus": "게시일은 2024-02-21. UEFA 기사 제목에 1차전이라고 명시되나 경기 날짜를 게시일과 별도로 검증하지 않아 matchDate는 null.",
+      "videoReviewStatus": "not-viewed",
+      "sharedElements": "같은 경기에서 코너킥과 프리킥이 각각 동료의 헤더 기회로 연결된 장면.",
+      "formatRulesContext": "UEFA 챔피언스리그 성인 11인 축구. 기사에는 두 헤더 기회가 기록되지만 득점은 아니며 세트피스 전술·전체 공수 배치는 없음.",
+      "questionLinks": [
+        {
+          "questionId": "SO-15-01",
+          "proposedRelevance": "partial",
+          "supported": "코너킥과 프리킥 뒤 Arsenal 선수가 각각 헤더 기회를 만든 것이 기록됨.",
+          "missingConditions": "조직 전술, 양 팀 전체 움직임과 스로인 장면은 확인되지 않음."
+        },
+        {
+          "questionId": "SO-15-02",
+          "proposedRelevance": "partial",
+          "supported": "경기 중 두 재개 상황 뒤 헤더 기회가 이어짐.",
+          "missingConditions": "각 재개 전후 선수 배치와 팀 전체 대응은 기사에 없음."
+        },
+        {
+          "questionId": "SO-15-03",
+          "proposedRelevance": "partial",
+          "supported": "코너킥·프리킥이 헤더 기회로 이어진 사례 비교에 한정해 참고 가능함.",
+          "missingConditions": "해당 기회가 조직된 공격 패턴이었는지 설명할 근거가 없음."
+        },
+        {
+          "questionId": "SO-15-04",
+          "proposedRelevance": "partial",
+          "supported": "두 세트피스에서 공격자가 헤더를 시도한 결과가 서술됨.",
+          "missingConditions": "양 팀 선수들의 연속 동작이나 수비 재정렬은 서술되지 않음."
+        },
+        {
+          "questionId": "SO-15-05",
+          "proposedRelevance": "partial",
+          "supported": "코너킥과 프리킥의 헤더 연결 결과를 제한적으로 비교할 수 있음.",
+          "missingConditions": "선수 역할·위치와 학생 팀 상황 사이의 유사성이 확인되지 않음."
+        },
+        {
+          "questionId": "SO-15-06",
+          "proposedRelevance": "partial",
+          "supported": "두 종류의 세트피스 뒤 실제 헤더 기회가 있었음.",
+          "missingConditions": "득점 또는 조직 수비 장면이 아니고 스로인도 다루지 않음."
+        }
+      ],
+      "rightsStatus": "unverified",
+      "educatorReview": "pending",
+      "expertReview": "pending",
+      "runtimeEligible": false
+    },
+    {
+      "id": "TLSD-04",
+      "title": "세 명만 남은 MSU가 투구를 피하고 다시 정비",
+      "matchLabel": "Michigan State–Kent State, Summit Street Slugfest 2",
+      "matchDate": null,
+      "period": "후반, MSU에 3명만 남은 시점",
+      "sourceSport": "dodgeball",
+      "publisher": "National Collegiate Dodgeball Association (NCDA)",
+      "sourceUrl": "https://ncdadodgeball.com/blog/summit-street-slugfest-2-the-sluggening-recap-2/5878",
+      "publishedDate": "2015-10-15",
+      "sourceClaim": "NCDA 경기 회고는 MSU가 회피 후 재정비하고, 한 캐치로 동료를 복귀시킨 뒤 투구를 이어갔다고 기록한다.",
+      "evidenceLocator": "NCDA 원문 25–28행: Kent와의 경기 요약; 27행은 3명만 남은 회피·재정비·캐치, 28행은 투구로 경기 지연 설명.",
+      "matchDateStatus": "게시일은 2015-10-15. 본문은 대회 일요일 및 Kent 경기라고만 하며 개별 경기일은 별도 확인하지 않아 null.",
+      "videoReviewStatus": "not-viewed",
+      "sharedElements": "수적 열세에서 날아오는 공을 피한 뒤 플레이를 이어간다는 최소 행동 공통점.",
+      "formatRulesContext": "NCDA 대학 클럽 경기. 회고는 10초 shot clock과 catch 뒤 동료 복귀를 명시함. 이 경기의 공 재질·공 수는 해당 장면에서 확인되지 않으며 다른 규칙의 학교 피구와 같다고 가정하지 않음.",
+      "questionLinks": [
+        {
+          "questionId": "DO-12-01",
+          "proposedRelevance": "partial",
+          "supported": "세 명만 남은 상황에서 MSU가 회피하고 다시 정비했다고 기록됨.",
+          "missingConditions": "팀 간격 유지, 어떤 투구를 어떻게 피했는지, 동료와의 거리·방향은 없음."
+        },
+        {
+          "questionId": "DO-12-02",
+          "proposedRelevance": "partial",
+          "supported": "회피 후 정비하고 캐치로 동료가 복귀한 경기 흐름이 기록됨.",
+          "missingConditions": "팀 간격을 유지하며 반복 투구를 피했는지는 설명되지 않음."
+        },
+        {
+          "questionId": "DO-12-03",
+          "proposedRelevance": "partial",
+          "supported": "수적 열세 상황에서 회피 후 경기 지속이라는 공통 행동만 비교 가능함.",
+          "missingConditions": "공간 확보·팀 간격·회피 방향은 원문에 없음."
+        },
+        {
+          "questionId": "DO-12-04",
+          "proposedRelevance": "partial",
+          "supported": "상대 투구 압박 뒤 회피·재정비와 캐치가 이어짐.",
+          "missingConditions": "양 팀 전체 이동과 팀 간격은 기술되지 않음."
+        },
+        {
+          "questionId": "DO-12-05",
+          "proposedRelevance": "partial",
+          "supported": "열세에서 회피한 뒤 재정비한 상황을 제한적으로 비교할 수 있음.",
+          "missingConditions": "효과적인 간격 유지 사례라고 단정할 근거가 없음."
+        },
+        {
+          "questionId": "DO-12-06",
+          "proposedRelevance": "partial",
+          "supported": "회고에 회피·재정비라는 동작 결과가 직접 서술됨.",
+          "missingConditions": "특정 회피 동작, 위치 또는 간격의 유지 여부는 확인되지 않음."
+        }
+      ],
+      "rightsStatus": "unverified",
+      "educatorReview": "pending",
+      "expertReview": "pending",
+      "runtimeEligible": false
+    },
+    {
+      "id": "TLSD-05",
+      "title": "코너에서 팀 투구를 받은 Jones의 캐치와 경계선 상황",
+      "matchLabel": "Ohio State–Michigan State, Summit Street Slugfest 2",
+      "matchDate": null,
+      "period": "전반, MSU에 두 명만 남은 시점",
+      "sourceSport": "dodgeball",
+      "publisher": "National Collegiate Dodgeball Association (NCDA)",
+      "sourceUrl": "https://ncdadodgeball.com/blog/summit-street-slugfest-2-the-sluggening-recap-2/5878",
+      "publishedDate": "2015-10-15",
+      "sourceClaim": "Ohio State는 코너에 있던 Matt Jones에게 팀 투구를 했고 Jones는 경계 밖으로 넘어지며 공을 잡았다.",
+      "evidenceLocator": "NCDA 원문 15–18행: OSU–MSU 경기; 16행은 남은 두 선수와 코너의 Jones를 겨냥한 팀 투구, 17행은 넘어지는 중 캐치·발의 인바운드 유지 및 동료 복귀.",
+      "matchDateStatus": "게시일은 2015-10-15. 본문은 대회 일요일 경기라고만 하며 개별 경기 날짜를 따로 확인하지 않아 null.",
+      "videoReviewStatus": "not-viewed",
+      "sharedElements": "경계 부근의 코너에서 팀 투구를 받은 상황과 캐치 후 경기 복귀.",
+      "formatRulesContext": "NCDA 대학 클럽 경기. 기사에는 두 선수만 남은 시점, 팀 투구, 경계선 판정, 캐치로 동료 복귀가 서술됨. 이 경기의 공 재질은 원문에서 확인되지 않으며 다른 피구 규칙에 그대로 적용할 수 없음.",
+      "questionLinks": [
+        {
+          "questionId": "DO-12-01",
+          "proposedRelevance": "partial",
+          "supported": "코너에서 날아온 팀 투구를 받은 상황이 기록되어 투구 압박의 사례가 됨.",
+          "missingConditions": "피하면서 팀 간격을 유지했거나 공을 회피한 사례는 아님."
+        },
+        {
+          "questionId": "DO-12-02",
+          "proposedRelevance": "partial",
+          "supported": "팀 투구와 경계선 부근 캐치 후 동료 복귀라는 경기 흐름이 기록됨.",
+          "missingConditions": "팀 간격 유지나 회피 동작은 보고되지 않음."
+        },
+        {
+          "questionId": "DO-12-03",
+          "proposedRelevance": "partial",
+          "supported": "코너에서 압박받은 선수의 경기 상황을 제한적으로 비교할 수 있음.",
+          "missingConditions": "팀 간격·회피로 투구를 피하는 행동은 확인되지 않음."
+        },
+        {
+          "questionId": "DO-12-04",
+          "proposedRelevance": "partial",
+          "supported": "한 선수가 코너에서 팀 투구를 받고 캐치한 결과가 서술됨.",
+          "missingConditions": "양 팀 전체 이동이나 팀 간격은 기재되지 않음."
+        },
+        {
+          "questionId": "DO-12-05",
+          "proposedRelevance": "partial",
+          "supported": "투구 압박과 코너 부근의 경계 상황을 질문 장면과 제한적으로 견줄 수 있음.",
+          "missingConditions": "간격 유지의 성공 사례로 제시할 근거가 없음."
+        },
+        {
+          "questionId": "DO-12-06",
+          "proposedRelevance": "partial",
+          "supported": "팀 투구와 코너·경계선 부근 캐치의 구체 장면이 기록됨.",
+          "missingConditions": "회피 기술과 팀 간격 유지 동작은 나오지 않음."
+        },
+        {
+          "questionId": "DO-13-01",
+          "proposedRelevance": "partial",
+          "supported": "상대 팀이 코너에 있던 Jones를 팀 투구의 대상으로 삼은 장면이 위치 압박 상황의 비교 자료가 됨.",
+          "missingConditions": "코너나 후방에 몰리지 않도록 위치를 유지한 사례가 아니며, 캐치 중 발을 인바운드에 둔 것만 기록됨."
+        },
+        {
+          "questionId": "DO-13-02",
+          "proposedRelevance": "partial",
+          "supported": "두 명만 남은 Jones가 코너에서 팀 투구를 받은 상황이 원문에 명시됨.",
+          "missingConditions": "자리 유지, 코트 중앙 복귀 또는 팀 간격 변화는 설명되지 않음."
+        },
+        {
+          "questionId": "DO-13-03",
+          "proposedRelevance": "partial",
+          "supported": "코너 쪽에서 상대 투구를 받은 수적 열세 상황을 제한 비교할 수 있음.",
+          "missingConditions": "코너 압박을 피하고 위치를 유지한 행동이라는 근거는 없음."
+        },
+        {
+          "questionId": "DO-13-04",
+          "proposedRelevance": "partial",
+          "supported": "코너의 선수가 팀 투구를 받았다는 위치·상황만 기록됨.",
+          "missingConditions": "양 팀의 위치 이동과 압박을 벗어난 결과는 원문에 없음."
+        },
+        {
+          "questionId": "DO-13-05",
+          "proposedRelevance": "partial",
+          "supported": "코너에서 압박을 받는 상황의 사례로만 사용할 수 있음.",
+          "missingConditions": "가장자리나 후방에 몰리지 않고 위치를 유지하는 긍정 사례가 아님."
+        },
+        {
+          "questionId": "DO-13-06",
+          "proposedRelevance": "partial",
+          "supported": "코너의 Jones에게 팀 투구가 이어진 실제 상황이 있음.",
+          "missingConditions": "위치를 유지하거나 가장자리에서 벗어난 행동은 보고되지 않음."
+        }
+      ],
+      "rightsStatus": "unverified",
+      "educatorReview": "pending",
+      "expertReview": "pending",
+      "runtimeEligible": false
+    },
+    {
+      "id": "TLSD-06",
+      "title": "팀 투구를 잡은 뒤 이어진 회피",
+      "matchLabel": "Resistance–Venom, NDA Morgantown 2025 tournament",
+      "matchDate": null,
+      "period": "NDA 결승 후반의 catch·dodge 장면",
+      "sourceSport": "dodgeball",
+      "publisher": "National Dodgeball Association (NDA)",
+      "sourceUrl": "https://www.ndadodgeball.com/blog-posts/nda-morgantown-2025-recap",
+      "publishedDate": "2025-06-06",
+      "sourceClaim": "NDA 회고는 팀 투구를 받은 catch 뒤 dodge가 이어져 Resistance가 2대1 우위를 얻었다고 설명한다.",
+      "evidenceLocator": "NDA 원문 39–48행: 결승 흐름; 46행은 팀 투구에 대한 catch와 이후 dodge, 그 결과의 수적 우위를 설명.",
+      "matchDateStatus": "게시일은 2025-06-06. 본문은 ‘last weekend’ 결승으로 설명하나 정확한 개별 경기 날짜를 따로 확인하지 않아 null.",
+      "videoReviewStatus": "not-viewed",
+      "sharedElements": "상대의 팀 투구를 받은 뒤 회피 행동이 이어지고 수적 상황이 바뀐 순서.",
+      "formatRulesContext": "NDA Morgantown 2025 성인 대회 회고. 이 장면에서 공 재질, 코트 내 인원, catch의 복귀 효과는 적혀 있지 않으므로 학교 피구 규칙으로 일반화하지 않음.",
+      "questionLinks": [
+        {
+          "questionId": "DO-12-01",
+          "proposedRelevance": "partial",
+          "supported": "팀 투구를 받은 뒤 dodge가 이어진 순서와 수적 우위 변화가 기록됨.",
+          "missingConditions": "팀 간격 유지, dodge 방식·방향·상대적 위치는 언급되지 않음."
+        },
+        {
+          "questionId": "DO-12-02",
+          "proposedRelevance": "partial",
+          "supported": "결승 중 팀 투구 뒤 catch와 회피가 차례로 이어짐.",
+          "missingConditions": "계속된 투구를 피하며 팀 간격을 유지했는지는 알 수 없음."
+        },
+        {
+          "questionId": "DO-12-03",
+          "proposedRelevance": "partial",
+          "supported": "투구와 회피가 이어진 최소 공통 행동을 비교할 수 있음.",
+          "missingConditions": "팀원 사이 간격이나 회피 뒤 위치 유지 설명은 없음."
+        },
+        {
+          "questionId": "DO-12-04",
+          "proposedRelevance": "partial",
+          "supported": "양 팀의 팀 투구·catch·dodge 순서와 숫자 우위가 서술됨.",
+          "missingConditions": "양쪽 선수들의 전체 이동·거리·공간 분배는 기술되지 않음."
+        },
+        {
+          "questionId": "DO-12-05",
+          "proposedRelevance": "partial",
+          "supported": "상대 팀 투구 뒤 회피가 나타난 경기 장면으로 제한 비교 가능함.",
+          "missingConditions": "간격 유지에 성공했다는 내용은 없음."
+        },
+        {
+          "questionId": "DO-12-06",
+          "proposedRelevance": "partial",
+          "supported": "원문에 팀 투구 후 dodge 행동이 직접 기록됨.",
+          "missingConditions": "구체적인 회피 동작이나 팀 간격·위치 유지 조건은 설명하지 않음."
+        }
+      ],
+      "rightsStatus": "unverified",
+      "educatorReview": "pending",
+      "expertReview": "pending",
+      "runtimeEligible": false
+    }
+  ],
+  "heldQuestions": [],
+  "rulesCaveat": "피구 자료는 서로 다른 규칙 맥락의 NCDA 대학 클럽 경기와 NDA 대회 경기다. 공 재질과 인원, catch 후 복귀 규칙은 대회·규칙에 따라 달라질 수 있다. NCDA 회고는 catch 뒤 동료 복귀를 명시하지만 해당 경기의 공 재질은 확인되지 않는다. NDA 장면은 공 재질·정확한 코트 내 인원·catch 복귀 효과를 밝히지 않는다. 두 형식을 같은 규칙으로 보거나 수업 피구에 그대로 옮기지 않는다.",
+  "reviewStatus": {
+    "educator": "pending",
+    "expert": "pending",
+    "runtimeEligible": false,
+    "rights": "unverified",
+    "videoReview": "not-viewed"
+  }
+}

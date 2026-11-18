@@ -1,0 +1,95 @@
+{
+  "schemaVersion": 1,
+  "id": "volleyball_case_18",
+  "sport": "volleyball",
+  "rulesContext": {
+    "format": "실내 배구",
+    "edition": "CEV Champions League 2025-2026",
+    "division": "남자부",
+    "notes": "세부 경기 규칙의 별도 버전 정보는 출처에서 확인하지 않음."
+  },
+  "match": {
+    "competition": "CEV Champions League",
+    "stage": "3라운드 예선 1차전",
+    "date": "2025-11-19",
+    "teams": ["CV Guaguas Las Palmas", "VC Levski Sofia"],
+    "result": "CV Guaguas 3-0 VC Levski Sofia; 세트 점수 25-17, 25-23, 25-18"
+  },
+  "scene": {
+    "level": "match-flow",
+    "period": "2세트 후반",
+    "timeSeconds": { "start": null, "end": null },
+    "situation": "CV Guaguas의 21-16 리드가 23-23 동점으로 좁혀진 뒤 마지막 두 점으로 세트를 마무리한 경기 흐름. 랠리별 장면은 기사에서 분리할 수 없음.",
+    "scoreMarkers": [
+      { "label": "리드", "score": "21-16", "sourceClaimIds": ["claim-score-flow"] },
+      { "label": "동점", "score": "23-23", "sourceClaimIds": ["claim-score-flow"] },
+      { "label": "세트 종료", "score": "25-23", "sourceClaimIds": ["claim-set-result"] }
+    ],
+    "events": [
+      {
+        "order": 1,
+        "actor": "CV Guaguas",
+        "action": "2세트 후반 21-16으로 앞섰다.",
+        "response": "VC Levski Sofia가 23-23 동점을 만들었다.",
+        "result": "CV Guaguas가 이어진 두 점을 얻어 25-23으로 세트를 마쳤다.",
+        "sourceClaimIds": ["claim-score-flow", "claim-set-result"]
+      }
+    ],
+    "recordedOutcome": "CV Guaguas가 2세트를 25-23으로 이기고 경기에서 3-0으로 승리했다."
+  },
+  "sourceClaims": [
+    {
+      "id": "claim-score-flow",
+      "statement": "구단 리포트는 2세트에서 Guaguas가 21-16으로 앞선 뒤 23-23 동점을 허용했다고 기록한다.",
+      "sourceId": "guaguas-match-report",
+      "locator": "본문의 2세트 전개 문단(‘Con ese panorama’로 시작)",
+      "checkStatus": "verified",
+      "note": "접근한 구단 경기 리포트의 문장과 대조함. 랠리별 행동은 포함하지 않는다."
+    },
+    {
+      "id": "claim-set-result",
+      "statement": "구단 리포트는 Guaguas가 마지막 두 점을 얻어 25-23으로 세트를 마쳤고, 경기에서 3-0으로 이겼다고 기록한다.",
+      "sourceId": "guaguas-match-report",
+      "locator": "본문의 2세트 전개 문단 및 경기 결과 블록",
+      "checkStatus": "verified",
+      "note": "세트·경기 점수 대조 완료. 이 점수만으로 전술의 효과를 추론하지 않는다."
+    }
+  ],
+  "interpretation": {
+    "sourceAnalysis": null,
+    "analystObservation": "이 리포트는 2세트의 점수 흐름은 설명하지만 연속 랠리나 선수별 선택은 제시하지 않는다.",
+    "limitations": [
+      "장면 수준의 수비 배치, 서브권, 로테이션, 득점 방법은 확인되지 않음.",
+      "구단 리포트 하나에 근거하며 독립적인 기록지나 영상 타임스탬프는 대조하지 않음."
+    ],
+    "studentQuestions": [
+      "21-16에서 23-23으로 바뀐 구간을 더 자세히 비교하려면 어떤 경기 기록이나 영상을 추가로 찾아야 할까?"
+    ]
+  },
+  "searchTags": ["배구", "세트 후반", "리드 변화", "접전", "점수 흐름"],
+  "sources": [
+    {
+      "id": "guaguas-match-report",
+      "title": "Champions League 2025 | Un acertado Guaguas superó en tres sets al Levski Sofía",
+      "publisher": "Club Voleibol Guaguas",
+      "url": "https://clubvoleibolguaguas.com/champions-league-2025-un-acertado-guaguas-supero-en-tres-sets-al-levski-sofia/",
+      "publishedAt": "2025-11-19",
+      "accessedAt": "2026-11-13",
+      "kind": "team-account",
+      "language": "es",
+      "locator": "2세트 전개 문단과 경기 결과 블록",
+      "reuse": {
+        "status": "not-checked",
+        "scope": [],
+        "note": "공개 접근만 확인. 기사·사진·영상의 재사용, 재배포, 모델 학습 허가는 확인하지 않음."
+      }
+    }
+  ],
+  "review": {
+    "factStatus": "partial",
+    "evidenceStatus": "partial",
+    "educatorStatus": "pending",
+    "expertStatus": "pending",
+    "reviews": []
+  }
+}
